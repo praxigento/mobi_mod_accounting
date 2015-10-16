@@ -7,5 +7,5 @@
 namespace Praxigento\Accounting;
 
 class Config {
-
+    const MODULE = 'Praxigento_Accounting';
 }
