@@ -13,6 +13,7 @@ use Praxigento\Accounting\Lib\Entity\Account as Account;
 use Praxigento\Accounting\Lib\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Lib\Entity\Type\Operation as TypeOperation;
 use Praxigento\Accounting\Lib\Entity\Type\Period as TypePeriod;
+use Praxigento\Core\Lib\Context;
 use Praxigento\Core\Lib\Setup\Db as Db;
 
 class InstallSchema implements InstallSchemaInterface {
@@ -23,8 +24,7 @@ class InstallSchema implements InstallSchemaInterface {
     ) {
         $installer = $setup;
         $installer->startSetup();
-        $conn = $installer->getConnection();
-
+        Context::get()->setSchemaSetup($setup);
 
         /**
          * DEM processor.
