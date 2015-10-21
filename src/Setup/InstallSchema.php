@@ -7,7 +7,7 @@ namespace Praxigento\Accounting\Setup;
 
 use Praxigento\Core\Lib\Setup\Schema\Base as SchemaBase;
 
-class Schema extends SchemaBase {
+class InstallSchema extends SchemaBase {
 
     /**
      * InstallSchema constructor.
