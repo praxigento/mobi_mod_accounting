@@ -4,5 +4,7 @@
 
     <preference for="Praxigento\Accounting\Lib\Service\IAccount"
                 type="Praxigento\Accounting\Lib\Service\Account\Call"/>
+    <preference for="Praxigento\Accounting\Lib\Service\IOperation"
+                type="Praxigento\Accounting\Lib\Service\Operation\Call"/>
 
 </config>
