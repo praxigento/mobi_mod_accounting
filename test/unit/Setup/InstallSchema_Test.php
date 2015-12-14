@@ -11,6 +11,10 @@ include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
 class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
 
+    public static function tearDownAfterClass() {
+        Context::reset();
+    }
+
     public function test_constructor() {
         $obj = new InstallSchema();
         $this->assertInstanceOf('Praxigento\Accounting\Setup\InstallSchema', $obj);
@@ -19,29 +23,6 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
     public function test_install() {
         /** === Test Data === */
         /** === Mocks === */
-        $mockCtx = $this
-            ->getMockBuilder('Praxigento\Core\Lib\Context')
-            ->disableOriginalConstructor()
-            ->getMock();
-        //  $obm = Context::instance()->getObjectManager();
-        $mockObm = $this
-            ->getMockBuilder('Praxigento\Core\Lib\Context\IObjectManager')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $mockCtx
-            ->expects($this->any())
-            ->method('getObjectManager')
-            ->willReturn($mockObm);
-        // $setupDb = $obm->get('Praxigento\Core\Lib\Setup\Db');
-        $mockSetupDb = $this
-            ->getMockBuilder('Praxigento\Core\Lib\Setup\Db')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $mockObm
-            ->expects($this->once())
-            ->method('get')
-            ->with('Praxigento\Core\Lib\Setup\Db')
-            ->willReturn($mockSetupDb);
         // parameters for install(...)
         $mockSetup = $this
             ->getMockBuilder('Magento\Framework\Setup\SchemaSetupInterface')
@@ -51,6 +32,39 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
             ->getMockBuilder('Magento\Framework\Setup\ModuleContextInterface')
             ->disableOriginalConstructor()
             ->getMock();
+
+        // $setup->startSetup();
+        $mockSetup
+            ->expects($this->once())
+            ->method('startSetup');
+        // $obm = Context::instance()->getObjectManager();
+        $mockCtx = $this
+            ->getMockBuilder('Praxigento\Core\Lib\Context')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mockObm = $this
+            ->getMockBuilder('Praxigento\Core\Lib\Context\IObjectManager')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mockCtx
+            ->expects($this->any())
+            ->method('getObjectManager')
+            ->willReturn($mockObm);
+        // $moduleSchema = $obm->get($this->_classSchema);
+        $mockCoreSchema = $this
+            ->getMockBuilder('Praxigento\Accounting\Lib\Setup\Schema')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mockObm
+            ->expects($this->once())
+            ->method('get')
+            ->with('Praxigento\Accounting\Lib\Setup\Schema')
+            ->willReturn($mockCoreSchema);
+        // $moduleSchema->setup();
+        $mockSetup
+            ->expects($this->once())
+            ->method('endSetup');
+        // Setup mocks to MOBI context
         Context::set($mockCtx);
         /** === Test itself === */
         $obj = new InstallSchema();

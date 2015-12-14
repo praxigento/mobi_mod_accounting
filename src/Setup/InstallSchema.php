@@ -5,14 +5,12 @@
  */
 namespace Praxigento\Accounting\Setup;
 
-use Praxigento\Core\Lib\Setup\Schema\Base as SchemaBase;
-
-class InstallSchema extends SchemaBase {
+class InstallSchema extends \Praxigento\Core\Setup\Schema\Base {
 
     /**
      * InstallSchema constructor.
      */
     public function __construct() {
-        parent::__construct('\Praxigento\Accounting\Lib\Setup\Schema');
+        parent::__construct('Praxigento\Accounting\Lib\Setup\Schema');
     }
 }
