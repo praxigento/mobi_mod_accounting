@@ -4,7 +4,15 @@
 
     <preference for="Praxigento\Accounting\Lib\Service\IAccount"
                 type="Praxigento\Accounting\Lib\Service\Account\Call"/>
+    <preference for="Praxigento\Accounting\Lib\Service\IBalance"
+                type="Praxigento\Accounting\Lib\Service\Balance\Call"/>
     <preference for="Praxigento\Accounting\Lib\Service\IOperation"
                 type="Praxigento\Accounting\Lib\Service\Operation\Call"/>
+    <preference for="Praxigento\Accounting\Lib\Service\ITransaction"
+                type="Praxigento\Accounting\Lib\Service\Transaction\Call"/>
+    <preference for="Praxigento\Accounting\Lib\Service\ITypeAsset"
+                type="Praxigento\Accounting\Lib\Service\Type\Asset\Call"/>
+    <preference for="Praxigento\Accounting\Lib\Service\ITypeOperation"
+                type="Praxigento\Accounting\Lib\Service\Type\Operation\Call"/>
 
 </config>
