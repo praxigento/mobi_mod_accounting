@@ -2,6 +2,11 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
 
+    <!-- Repos -->
+    <preference for="Praxigento\Accounting\Lib\Repo\IModule"
+                type="Praxigento\Accounting\Lib\Repo\Def\Module"/>
+
+    <!-- Services -->
     <preference for="Praxigento\Accounting\Lib\Service\IAccount"
                 type="Praxigento\Accounting\Lib\Service\Account\Call"/>
     <preference for="Praxigento\Accounting\Lib\Service\IBalance"
