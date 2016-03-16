@@ -20,4 +20,8 @@
     <preference for="Praxigento\Accounting\Lib\Service\ITypeOperation"
                 type="Praxigento\Accounting\Lib\Service\Type\Operation\Call"/>
 
+    <!-- API Services -->
+    <preference for="Praxigento\Accounting\Api\AccountInterface"
+                type="Praxigento\Accounting\Api\Def\Account"/>
+
 </config>
