@@ -1,0 +1,14 @@
+<?php
+/**
+ * User: Alex Gusev <alex@flancer64.com>
+ */
+namespace Praxigento\Accounting\Lib\Service\Balance\Response;
+
+class Reset extends \Praxigento\Core\Lib\Service\Base\Response {
+    const ROWS_DELETED = 'rows_deleted';
+
+    public function getRowsDeleted() {
+        $result = $this->getData(self::ROWS_DELETED);
+        return $result;
+    }
+}
