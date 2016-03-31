@@ -7,7 +7,7 @@ namespace Praxigento\Accounting\Lib\Service\Operation;
 use Praxigento\Accounting\Lib\Entity\Transaction;
 use Praxigento\Core\Lib\Service\Repo\Response\AddEntity as RepoAddEntityResponse;
 
-include_once(__DIR__ . '/../../phpunit_bootstrap.php');
+include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
     /** @var  Call */

@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Entity;
 
-include_once(__DIR__ . '/../phpunit_bootstrap.php');
+include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
 class Balance_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase
 {

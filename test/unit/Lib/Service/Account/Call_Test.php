@@ -9,7 +9,7 @@ use Praxigento\Accounting\Lib\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Lib\Service\Type\Asset\Response\GetByCode as TypeAssetResponseGetByCode;
 use Praxigento\Core\Lib\Service\Repo\Response\GetEntities as GetEntitiesResponse;
 
-include_once(__DIR__ . '/../../phpunit_bootstrap.php');
+include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
     /**

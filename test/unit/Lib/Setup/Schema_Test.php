@@ -11,7 +11,7 @@ use Praxigento\Accounting\Lib\Entity\Transaction as Transaction;
 use Praxigento\Accounting\Lib\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Lib\Entity\Type\Operation as TypeOperation;
 
-include_once(__DIR__ . '/../phpunit_bootstrap.php');
+include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
 class Schema_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
 

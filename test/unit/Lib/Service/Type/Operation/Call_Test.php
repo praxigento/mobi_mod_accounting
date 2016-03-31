@@ -6,7 +6,7 @@ namespace Praxigento\Accounting\Lib\Service\Type\Operation;
 
 use Praxigento\Accounting\Lib\Entity\Type\Operation as TypeOperation;
 
-include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
+include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 
 class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
 
