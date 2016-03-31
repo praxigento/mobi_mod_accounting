@@ -1,0 +1,312 @@
+{
+  "dBEAR": {
+    "package": {
+      "Praxigento": {
+        "alias": "prxgt",
+        "comment": "Root namespace for Praxigento modules",
+        "package": {
+          "Accounting": {
+            "alias": "acc",
+            "comment": "Top level package for Praxigento_Accounting module",
+            "package": {
+              "Type": {
+                "alias": "type",
+                "comment": "Types codifiers in Praxigento_Accounting",
+                "entity": {
+                  "Asset": {
+                    "alias": "asset",
+                    "comment": "Asset type.",
+                    "attribute": {
+                      "Id": {
+                        "alias": "id",
+                        "comment": "Instance ID.",
+                        "nullable": false,
+                        "type": {"integer": {"unsigned": true, "autoincrement": true}}
+                      },
+                      "Code": {
+                        "alias": "code",
+                        "comment": "Code of the asset (pv, int, ext, intEUR, ...).",
+                        "nullable": false,
+                        "type": {"text": {"length": 32}}
+                      },
+                      "Note": {
+                        "alias": "note",
+                        "comment": "Description of the asset (PV, internal money, ...).",
+                        "nullable": false,
+                        "type": {"text": {}}
+                      }
+                    },
+                    "index": {
+                      "primary": {"type": "primary", "aliases": ["id", "code"]},
+                      "uniqueCode": {"type": "unique", "aliases": ["code"]}
+                    }
+                  },
+                  "Operation": {
+                    "alias": "oper",
+                    "comment": "Operation type.",
+                    "attribute": {
+                      "Id": {
+                        "alias": "id",
+                        "comment": "Instance ID.",
+                        "nullable": false,
+                        "type": {"integer": {"unsigned": true, "autoincrement": true}}
+                      },
+                      "Code": {
+                        "alias": "code",
+                        "comment": "Code of the operation (int, ...).",
+                        "nullable": false,
+                        "type": {"text": {"length": 32}}
+                      },
+                      "Note": {
+                        "alias": "note",
+                        "comment": "Description of the operation (Internal Transfer, ...).",
+                        "nullable": false,
+                        "type": {"text": {}}
+                      }
+                    },
+                    "index": {
+                      "primary": {"type": "primary", "aliases": ["id"]},
+                      "uniqueCode": {"type": "unique", "aliases": ["code"]}
+                    }
+                  }
+                }
+              }
+            },
+            "entity": {
+              "Account": {
+                "alias": "account",
+                "comment": "Asset account for the Customer.",
+                "attribute": {
+                  "Id": {
+                    "alias": "id",
+                    "comment": "Instance ID.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true, "autoincrement": true}}
+                  },
+                  "CustomerId": {
+                    "alias": "customer_id",
+                    "comment": "Reference to the customer.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true}}
+                  },
+                  "AssetId": {
+                    "alias": "asset_type_id",
+                    "comment": "Reference to the asset.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true}}
+                  },
+                  "Balance": {
+                    "alias": "balance",
+                    "comment": "Current balance value.",
+                    "nullable": false,
+                    "type": {"numeric": {"precision": 12, "scale": 4}}
+                  }
+                },
+                "index": {
+                  "primary": {"type": "primary", "aliases": ["id"]},
+                  "uniqueAssetForCustomer": {"type": "unique", "aliases": ["customer_id", "asset_type_id"]}
+                },
+                "relation": {
+                  "toMageCustomer": {
+                    "comment": "Not only downline tree customers have an account, there is service customers in MOBI.",
+                    "own": {"aliases": ["customer_id"]},
+                    "reference": {
+                      "entity": {"completeAlias": "customer_entity"},
+                      "aliases": ["entity_id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  },
+                  "toAsset": {
+                    "own": {"aliases": ["asset_type_id"]},
+                    "reference": {
+                      "entity": {"completeAlias": "prxgt_acc_type_asset"},
+                      "aliases": ["id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  }
+                }
+              },
+              "Balance": {
+                "alias": "balance",
+                "comment": "Asset balance for period.",
+                "attribute": {
+                  "AccountId": {
+                    "alias": "account_id",
+                    "comment": "Reference to customer's asset account.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true}}
+                  },
+                  "Date": {
+                    "alias": "date",
+                    "comment": "Balance date ('YYYYMMDD').",
+                    "nullable": false,
+                    "type": {"text": {"length": 8}}
+                  },
+                  "OpeningBalance": {
+                    "alias": "opening_balance",
+                    "comment": "Balance on the start of the period.",
+                    "nullable": false,
+                    "type": {"numeric": {"precision": 12, "scale": 4}}
+                  },
+                  "TotalDebit": {
+                    "alias": "total_debit",
+                    "comment": "Total amount of all debit transactions from account fo period.",
+                    "nullable": false,
+                    "type": {"numeric": {"precision": 12, "scale": 4}}
+                  },
+                  "TotalCredit": {
+                    "alias": "total_credit",
+                    "comment": "Total amount of all credit transactions to account for period.",
+                    "nullable": false,
+                    "type": {"numeric": {"precision": 12, "scale": 4}}
+                  },
+                  "ClosingBalance": {
+                    "alias": "closing_balance",
+                    "comment": "Balance on the end of the period.",
+                    "nullable": false,
+                    "type": {"numeric": {"precision": 12, "scale": 4}}
+                  }
+                },
+                "index": {
+                  "primary": {"type": "primary", "aliases": ["account_id", "date"]}
+                },
+                "relation": {
+                  "toAccount": {
+                    "own": {"aliases": ["account_id"]},
+                    "reference": {
+                      "entity": {"completeAlias": "prxgt_acc_account"},
+                      "aliases": ["id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  }
+                }
+              },
+              "Operation": {
+                "alias": "operation",
+                "comment": "Operations with assets (transactions set).",
+                "attribute": {
+                  "Id": {
+                    "alias": "id",
+                    "comment": "Instance ID.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true, "autoincrement": true}}
+                  },
+                  "TypeId": {
+                    "alias": "type_id",
+                    "comment": "Reference to the operation type.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true}}
+                  },
+                  "DatePerformed": {
+                    "alias": "date_performed",
+                    "comment": "Timestamp when operation was really performed.",
+                    "nullable": false,
+                    "default": "current",
+                    "type": {"datetime": {}}
+                  },
+                  "Note": {
+                    "alias": "note",
+                    "comment": "Operation description.",
+                    "nullable": false,
+                    "type": {"text": {"length": 255}}
+                  }
+                },
+                "index": {
+                  "primary": {"type": "primary", "aliases": ["id"]}
+                },
+                "relation": {
+                  "toOpeartionType": {
+                    "own": {"aliases": ["type_id"]},
+                    "reference": {
+                      "entity": {"completeAlias": "prxgt_acc_type_operation"},
+                      "aliases": ["id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  }
+                }
+              },
+              "Transaction": {
+                "alias": "transaction",
+                "comment": "Atomic transaction of the assets.",
+                "attribute": {
+                  "Id": {
+                    "alias": "id",
+                    "comment": "Instance ID.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true, "autoincrement": true}}
+                  },
+                  "OperationId": {
+                    "alias": "operation_id",
+                    "comment": "Reference to the related operation.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true}}
+                  },
+                  "DateApplied": {
+                    "alias": "date_applied",
+                    "comment": "Time when transaction was applied to the account balances (can be in the past).",
+                    "nullable": false,
+                    "default": "current",
+                    "type": {"datetime": {}}
+                  },
+                  "DebitAccountId": {
+                    "alias": "debit_acc_id",
+                    "comment": "Reference to debit account.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true}}
+                  },
+                  "CreditAccountId": {
+                    "alias": "credit_acc_id",
+                    "comment": "Reference to credit account.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true}}
+                  },
+                  "Value": {
+                    "alias": "value",
+                    "comment": "Change value (positive only).",
+                    "nullable": false,
+                    "type": {"numeric": {"unsigned": true, "precision": 12, "scale": 4}}
+                  },
+                  "Note": {
+                    "alias": "note",
+                    "comment": "Transaction description.",
+                    "nullable": false,
+                    "type": {"text": {"length": 255}}
+                  }
+                },
+                "index": {
+                  "primary": {"type": "primary", "aliases": ["id"]}
+                },
+                "relation": {
+                  "toOpeartion": {
+                    "own": {"aliases": ["operation_id"]},
+                    "reference": {
+                      "entity": {"completeAlias": "prxgt_acc_operation"},
+                      "aliases": ["id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  },
+                  "toDebitAccount": {
+                    "own": {"aliases": ["debit_acc_id"]},
+                    "reference": {
+                      "entity": {"completeAlias": "prxgt_acc_account"},
+                      "aliases": ["id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  },
+                  "toCreditAccount": {
+                    "own": {"aliases": ["credit_acc_id"]},
+                    "reference": {
+                      "entity": {"completeAlias": "prxgt_acc_account"},
+                      "aliases": ["id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
