@@ -9,10 +9,10 @@ use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
-use Praxigento\Accounting\Lib\Entity\Account as Account;
-use Praxigento\Accounting\Lib\Entity\Balance as Balance;
-use Praxigento\Accounting\Lib\Entity\Operation as Operation;
-use Praxigento\Accounting\Lib\Entity\Transaction as Transaction;
+use Praxigento\Accounting\Data\Entity\Account as Account;
+use Praxigento\Accounting\Data\Entity\Balance as Balance;
+use Praxigento\Accounting\Data\Entity\Operation as Operation;
+use Praxigento\Accounting\Data\Entity\Transaction as Transaction;
 use Praxigento\Core\Lib\Setup\Db as Db;
 
 class InstallSchema extends \Praxigento\Core\Setup\Schema\Base

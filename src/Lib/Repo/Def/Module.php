@@ -6,9 +6,9 @@
 namespace Praxigento\Accounting\Lib\Repo\Def;
 
 use Praxigento\Accounting\Config as Cfg;
-use Praxigento\Accounting\Lib\Entity\Account;
-use Praxigento\Accounting\Lib\Entity\Balance;
-use Praxigento\Accounting\Lib\Entity\Transaction;
+use Praxigento\Accounting\Data\Entity\Account;
+use Praxigento\Accounting\Data\Entity\Balance;
+use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
 use Praxigento\Accounting\Lib\Repo\IModule;
@@ -70,7 +70,7 @@ class Module extends Base implements IModule
         $on = $asAccount . '.' . Account::ATTR_ID . '=' . $asBalance . '.' . Balance::ATTR_ACCOUNT_ID;
         $query->joinLeft([$asBalance => $tblBalance], $on, [Balance::ATTR_DATE]);
         /* where */
-        $query->where($asAccount . '.' . Account::ATTR_ASSET_TYPE__ID . '=:typeId');
+        $query->where($asAccount . '.' . Account::ATTR_ASSET_TYPE_ID . '=:typeId');
         $bind = ['typeId' => $assetTypeId];
         /* order by */
         $query->order([$asBalance . '.' . Balance::ATTR_DATE . ' DESC']);
@@ -148,7 +148,7 @@ class Module extends Base implements IModule
         ];
         $query->joinLeft([$asBal => $tblBalance], $on, $cols);
         /* where */
-        $whereByAssetType = $asAccount . '.' . Account::ATTR_ASSET_TYPE__ID . '=:asset_type_id';
+        $whereByAssetType = $asAccount . '.' . Account::ATTR_ASSET_TYPE_ID . '=:asset_type_id';
         $whereByDate = $asBal . '.' . Balance::ATTR_DATE . ' IS NOT NULL';
         $query->where("$whereByAssetType AND $whereByDate");
         $bind['asset_type_id'] = (int)$assetTypeId;
@@ -212,7 +212,7 @@ class Module extends Base implements IModule
         $on = $asAccount . '.' . Account::ATTR_ID . '=' . $asTrans . '.' . Transaction::ATTR_DEBIT_ACC_ID;
         $query->joinLeft([$asTrans => $tblTrans], $on, [Transaction::ATTR_DATE_APPLIED]);
         /* where */
-        $query->where($asAccount . '.' . Account::ATTR_ASSET_TYPE__ID . '=:typeId');
+        $query->where($asAccount . '.' . Account::ATTR_ASSET_TYPE_ID . '=:typeId');
         $bind = ['typeId' => $assetTypeId];
         $query->where($asTrans . '.' . Transaction::ATTR_DATE_APPLIED . ' IS NOT NULL');
         /* order by */
@@ -255,7 +255,7 @@ class Module extends Base implements IModule
         $on = $asAccount . '.' . Account::ATTR_ID . '=' . $asTrans . '.' . Transaction::ATTR_DEBIT_ACC_ID;
         $query->join([$asTrans => $tblTrans], $on);
         /* where */
-        $query->where($asAccount . '.' . Account::ATTR_ASSET_TYPE__ID . '=:asset_type_id');
+        $query->where($asAccount . '.' . Account::ATTR_ASSET_TYPE_ID . '=:asset_type_id');
         $query->where($asTrans . '.' . Transaction::ATTR_ID . ' IS NOT NULL');
         $query->where($asTrans . '.' . Transaction::ATTR_DATE_APPLIED . '>=:date_from');
         $query->where($asTrans . '.' . Transaction::ATTR_DATE_APPLIED . '<=:date_to');

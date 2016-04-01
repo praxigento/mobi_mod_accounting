@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Transaction;
 
-use Praxigento\Accounting\Lib\Entity\Account;
+use Praxigento\Accounting\Data\Entity\Account;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
@@ -43,7 +43,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $mRespByPk
             ->expects($this->at(1))
             ->method('getData')
-            ->with($this->equalTo(Account::ATTR_ASSET_TYPE__ID))
+            ->with($this->equalTo(Account::ATTR_ASSET_TYPE_ID))
             ->will($this->returnValue($ASSET_TYPE_ID));
         // $creditAccId = $respByPk->getData(Account::ATTR_ID);
         $mRespByPk
@@ -55,7 +55,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $mRespByPk
             ->expects($this->at(3))
             ->method('getData')
-            ->with($this->equalTo(Account::ATTR_ASSET_TYPE__ID))
+            ->with($this->equalTo(Account::ATTR_ASSET_TYPE_ID))
             ->will($this->returnValue($ASSET_TYPE_ID));
         // $respAdd = $this->_callRepo->addEntity($reqAdd);
         $mRespAdd = $this->_mockFor('\Praxigento\Core\Lib\Service\Repo\Response\AddEntity');
@@ -119,7 +119,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $mRespByPk
             ->expects($this->at(1))
             ->method('getData')
-            ->with($this->equalTo(Account::ATTR_ASSET_TYPE__ID))
+            ->with($this->equalTo(Account::ATTR_ASSET_TYPE_ID))
             ->will($this->returnValue($ASSET_TYPE_ID_DEBIT));
         // $creditAccId = $respByPk->getData(Account::ATTR_ID);
         $mRespByPk
@@ -131,7 +131,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $mRespByPk
             ->expects($this->at(3))
             ->method('getData')
-            ->with($this->equalTo(Account::ATTR_ASSET_TYPE__ID))
+            ->with($this->equalTo(Account::ATTR_ASSET_TYPE_ID))
             ->will($this->returnValue($ASSET_TYPE_ID_CREDIT));
         // $this->_conn->rollBack();
         $mConn

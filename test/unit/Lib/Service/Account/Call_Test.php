@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Account;
 
-use Praxigento\Accounting\Lib\Entity\Account as Account;
+use Praxigento\Accounting\Data\Entity\Account as Account;
 use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Lib\Service\Type\Asset\Response\GetByCode as TypeAssetResponseGetByCode;
 use Praxigento\Core\Lib\Service\Repo\Response\GetEntities as GetEntitiesResponse;
@@ -115,7 +115,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
         $mRespGet = new Response\Get();
         $mRespGet->setAsSucceed();
         $mRespGet->setData(
-            [Account::ATTR_ASSET_TYPE__ID => $ASSET_TYPE_ID, Account::ATTR_CUST_ID => $CUST_ID]
+            [Account::ATTR_ASSET_TYPE_ID => $ASSET_TYPE_ID, Account::ATTR_CUST_ID => $CUST_ID]
         );
         $call->expects($this->once())
             ->method('get')
@@ -193,7 +193,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
         $mResp->setData([
             [
                 Account::ATTR_ID => $ACCOUNT_ID,
-                Account::ATTR_ASSET_TYPE__ID => $ASSET_TYPE_ID
+                Account::ATTR_ASSET_TYPE_ID => $ASSET_TYPE_ID
             ]
         ]);
         $mCallRepo
@@ -252,7 +252,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
         $mData = [
             Account::ATTR_ID => $ACCOUNT_ID,
             Account::ATTR_CUST_ID => $CUST_ID,
-            Account::ATTR_ASSET_TYPE__ID => $ASSET_TYPE_ID
+            Account::ATTR_ASSET_TYPE_ID => $ASSET_TYPE_ID
         ];
         $mConn->expects($this->once())
             ->method('fetchRow')
@@ -316,7 +316,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
         $mData = [
             Account::ATTR_ID => $ACCOUNT_ID,
             Account::ATTR_CUST_ID => $CUST_ID,
-            Account::ATTR_ASSET_TYPE__ID => $ASSET_TYPE_ID
+            Account::ATTR_ASSET_TYPE_ID => $ASSET_TYPE_ID
         ];
         $mConn->expects($this->once())
             ->method('fetchRow')
@@ -370,7 +370,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
         $mData = [
             Account::ATTR_ID => $ACCOUNT_ID,
             Account::ATTR_CUST_ID => $CUST_ID,
-            Account::ATTR_ASSET_TYPE__ID => $ASSET_TYPE_ID
+            Account::ATTR_ASSET_TYPE_ID => $ASSET_TYPE_ID
         ];
         $mConn->expects($this->once())
             ->method('fetchRow')

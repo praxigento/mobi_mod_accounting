@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Account;
 
-use Praxigento\Accounting\Lib\Entity\Account as Account;
+use Praxigento\Accounting\Data\Entity\Account as Account;
 use Praxigento\Accounting\Lib\Service\IAccount;
 use Praxigento\Accounting\Lib\Service\Type\Asset\Request\GetByCode as TypeAssetRequestGetByCode;
 use Praxigento\Core\Lib\Service\Base\Call as BaseCall;
@@ -75,7 +75,7 @@ class Call extends BaseCall implements IAccount {
             }
             /* get account by customerId & assetTypeId */
             $query->where(Account::ATTR_CUST_ID . '=:customerId');
-            $query->where(Account::ATTR_ASSET_TYPE__ID . '=:assetTypeId');
+            $query->where(Account::ATTR_ASSET_TYPE_ID . '=:assetTypeId');
             $bind = [ 'customerId' => $customerId, 'assetTypeId' => $assetTypeId ];
         }
         /* perform query and analyze result */
@@ -89,7 +89,7 @@ class Call extends BaseCall implements IAccount {
                 /* not found - add new account */
                 $data = [
                     Account::ATTR_CUST_ID        => $customerId,
-                    Account::ATTR_ASSET_TYPE__ID => $assetTypeId,
+                    Account::ATTR_ASSET_TYPE_ID => $assetTypeId,
                     Account::ATTR_BALANCE        => 0
                 ];
                 $this->_getConn()->insert($tbl, $data);
@@ -134,7 +134,7 @@ class Call extends BaseCall implements IAccount {
                 if($resp->isSucceed()) {
                     $mapped = [ ];
                     foreach($resp->getData() as $one) {
-                        $mapped[$one[Account::ATTR_ASSET_TYPE__ID]] = $one;
+                        $mapped[$one[Account::ATTR_ASSET_TYPE_ID]] = $one;
                     }
                     $this->_cachedRepresentativeAccs = $mapped;
                 }
@@ -150,7 +150,7 @@ class Call extends BaseCall implements IAccount {
                     $req->setCreateNewAccountIfMissed();
                     $resp = $this->get($req);
                     $accData = $resp->getData();
-                    $this->_cachedRepresentativeAccs[$accData[Account::ATTR_ASSET_TYPE__ID]] = $accData;
+                    $this->_cachedRepresentativeAccs[$accData[Account::ATTR_ASSET_TYPE_ID]] = $accData;
                     $result->setData($accData);
                     $result->setAsSucceed();
                 }

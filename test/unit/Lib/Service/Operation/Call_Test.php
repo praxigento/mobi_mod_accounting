@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Operation;
 
-use Praxigento\Accounting\Lib\Entity\Transaction;
+use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Core\Lib\Service\Repo\Response\AddEntity as RepoAddEntityResponse;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');

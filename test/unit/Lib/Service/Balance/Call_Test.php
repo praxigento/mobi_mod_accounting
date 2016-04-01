@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Balance;
 
-use Praxigento\Accounting\Lib\Entity\Balance;
+use Praxigento\Accounting\Data\Entity\Balance;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 

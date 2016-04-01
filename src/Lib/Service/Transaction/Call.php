@@ -5,8 +5,8 @@
 
 namespace Praxigento\Accounting\Lib\Service\Transaction;
 
-use Praxigento\Accounting\Lib\Entity\Account as Account;
-use Praxigento\Accounting\Lib\Entity\Transaction as Transaction;
+use Praxigento\Accounting\Data\Entity\Account as Account;
+use Praxigento\Accounting\Data\Entity\Transaction as Transaction;
 use Praxigento\Accounting\Lib\Service\Account\Request\UpdateBalance as UpdateBalanceRequest;
 use Praxigento\Accounting\Lib\Service\ITransaction;
 use Praxigento\Core\Lib\Service\Repo\Request\AddEntity as AddEntityRequest;
@@ -52,12 +52,12 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ITransactio
             $reqByPk = new  GetEntityByPkRequest(Account::ENTITY_NAME, [ Account::ATTR_ID => $debitAccId ]);
             $respByPk = $this->_callRepo->getEntityByPk($reqByPk);
             $debitAccId = $respByPk->getData(Account::ATTR_ID);
-            $debitAssetTypeId = $respByPk->getData(Account::ATTR_ASSET_TYPE__ID);
+            $debitAssetTypeId = $respByPk->getData(Account::ATTR_ASSET_TYPE_ID);
             /* get account type for credit account */
             $reqByPk = new  GetEntityByPkRequest(Account::ENTITY_NAME, [ Account::ATTR_ID => $creditAccId ]);
             $respByPk = $this->_callRepo->getEntityByPk($reqByPk);
             $creditAccId = $respByPk->getData(Account::ATTR_ID);
-            $creditAssetTypeId = $respByPk->getData(Account::ATTR_ASSET_TYPE__ID);
+            $creditAssetTypeId = $respByPk->getData(Account::ATTR_ASSET_TYPE_ID);
             /* asset types should be equals */
             if(
                 !is_null($debitAssetTypeId) &&

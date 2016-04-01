@@ -5,7 +5,7 @@
 
 namespace Praxigento\Accounting\Lib\Service\Balance;
 
-use Praxigento\Accounting\Lib\Entity\Balance;
+use Praxigento\Accounting\Data\Entity\Balance;
 use Praxigento\Accounting\Lib\Service\IBalance;
 use Praxigento\Core\Lib\Tool\Period;
 

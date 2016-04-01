@@ -5,7 +5,7 @@
 namespace Praxigento\Accounting\Lib\Service\Operation;
 
 use Praxigento\Accounting\Lib\Context;
-use Praxigento\Accounting\Lib\Entity\Transaction;
+use Praxigento\Accounting\Data\Entity\Transaction;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 

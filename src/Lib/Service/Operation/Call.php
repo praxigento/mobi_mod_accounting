@@ -5,7 +5,7 @@
 
 namespace Praxigento\Accounting\Lib\Service\Operation;
 
-use Praxigento\Accounting\Lib\Entity\Operation;
+use Praxigento\Accounting\Data\Entity\Operation;
 use Praxigento\Core\Lib\Service\Repo\Request\AddEntity as AddEntityRequest;
 use Praxigento\Core\Lib\Service\Repo\Response\AddEntity as AddEntityResponse;
 

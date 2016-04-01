@@ -4,9 +4,9 @@
  */
 namespace Praxigento\Accounting\Lib\Test\Story01;
 
-use Praxigento\Accounting\Lib\Entity\Account;
-use Praxigento\Accounting\Lib\Entity\Balance;
-use Praxigento\Accounting\Lib\Entity\Transaction;
+use Praxigento\Accounting\Data\Entity\Account;
+use Praxigento\Accounting\Data\Entity\Balance;
+use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
 use Praxigento\Accounting\Lib\Service\Account\Request\Get as AccountGetRequest;
