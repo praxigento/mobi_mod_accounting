@@ -33,7 +33,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         parent::setUp();
         $this->mLogger = $this->_mock(\Psr\Log\LoggerInterface::class);
         $this->mConn = $this->_mock(\Zend_Db_Adapter_Abstract::class);
-        $this->mDba = $this->_mockDba($this->mConn);
+        $this->mDba = $this->_mockRsrcConnOld($this->mConn);
         $this->mToolbox = $this->_mock(\Praxigento\Core\Lib\IToolbox::class);
         $this->mCallRepo = $this->_mock(\Praxigento\Core\Lib\Service\IRepo::class);
         $this->mCallTypeOperation = $this->_mock(\Praxigento\Accounting\Lib\Service\Type\Operation\Call::class);
