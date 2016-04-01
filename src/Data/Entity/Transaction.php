@@ -2,7 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Accounting\Lib\Entity;
+namespace Praxigento\Accounting\Data\Entity;
 
 use Praxigento\Core\Data\Entity\Base as EntityBase;
 

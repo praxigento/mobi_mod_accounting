@@ -1,74 +1,68 @@
 <?php
 /**
- * Empty class to get stub for tests
  * User: Alex Gusev <alex@flancer64.com>
  */
 namespace Praxigento\Accounting\Setup;
 
+use Flancer32\Lib\DataObject;
+use Praxigento\Accounting\Data\Entity\Account as Account;
+use Praxigento\Accounting\Data\Entity\Balance as Balance;
+use Praxigento\Accounting\Data\Entity\Operation as Operation;
+use Praxigento\Accounting\Data\Entity\Transaction as Transaction;
+use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
+use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
 use Praxigento\Core\Lib\Context;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
-class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
+class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
+{
+    /** @var  \Praxigento\Accounting\Setup\InstallSchema */
+    private $obj;
+    /** @var  \Mockery\MockInterface */
+    private $mDem;
+    /** @var  \Mockery\MockInterface */
+    private $mSetup;
+    /** @var  \Mockery\MockInterface */
+    private $mContext;
 
-    public static function tearDownAfterClass() {
-        Context::reset();
+    public function setUp()
+    {
+        parent::setUp();
+        $this->mSetup = $this->_mock(\Magento\Framework\Setup\SchemaSetupInterface::class);
+        $this->mContext = $this->_mock(\Magento\Framework\Setup\ModuleContextInterface::class);
+        $this->mDem = $this->_mock(\Praxigento\Core\Setup\Dem\Tool::class);
+        $this->obj = new \Praxigento\Accounting\Setup\InstallSchema($this->mDem);
     }
 
-    public function test_constructor() {
-        $obj = new InstallSchema();
-        $this->assertInstanceOf(\Praxigento\Accounting\Setup\InstallSchema::class, $obj);
-    }
-
-    public function test_install() {
-        /** === Test Data === */
-        /** === Mocks === */
-        // parameters for install(...)
-        $mockSetup = $this
-            ->getMockBuilder('Magento\Framework\Setup\SchemaSetupInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $mockMageCtx = $this
-            ->getMockBuilder('Magento\Framework\Setup\ModuleContextInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-
+    public function test_install()
+    {
+        /* === Test Data === */
+        /* === Setup Mocks === */
         // $setup->startSetup();
-        $mockSetup
-            ->expects($this->once())
-            ->method('startSetup');
-        // $obm = Context::instance()->getObjectManager();
-        $mockCtx = $this
-            ->getMockBuilder('Praxigento\Core\Lib\Context')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $mockObm = $this
-            ->getMockBuilder('Praxigento\Core\Lib\Context\IObjectManager')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $mockCtx
-            ->expects($this->any())
-            ->method('getObjectManager')
-            ->willReturn($mockObm);
-        // $moduleSchema = $obm->get($this->_classSchema);
-        $mockCoreSchema = $this
-            ->getMockBuilder('Praxigento\Accounting\Lib\Setup\Schema')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $mockObm
-            ->expects($this->once())
-            ->method('get')
-            ->with('Praxigento\Accounting\Lib\Setup\Schema')
-            ->willReturn($mockCoreSchema);
-        // $moduleSchema->setup();
-        $mockSetup
-            ->expects($this->once())
-            ->method('endSetup');
-        // Setup mocks to MOBI context
-        Context::set($mockCtx);
-        /** === Test itself === */
-        $obj = new InstallSchema();
-        $obj->install($mockSetup, $mockMageCtx);
-        $this->assertInstanceOf(\Praxigento\Accounting\Setup\InstallSchema::class, $obj);
+        $this->mSetup
+            ->shouldReceive('startSetup')->once();
+        // $demPackage = $this->_toolDem->readDemPackage($pathToFile, $pathToNode);
+        $mDemPackage = $this->_mock(DataObject::class);
+        $this->mDem
+            ->shouldReceive('readDemPackage')->once()
+            ->withArgs([anything(), '/dBEAR/package/Praxigento/package/Accounting'])
+            ->andReturn($mDemPackage);
+        // $demEntity = $demPackage->getData('package/Type/entity/Asset');
+        $mDemPackage->shouldReceive('getData');
+        //
+        // $this->_toolDem->createEntity($entityAlias, $demEntity);
+        //
+        $this->mDem->shouldReceive('createEntity')->withArgs([TypeAsset::ENTITY_NAME, anything()]);
+        $this->mDem->shouldReceive('createEntity')->withArgs([TypeOperation::ENTITY_NAME, anything()]);
+        $this->mDem->shouldReceive('createEntity')->withArgs([Account::ENTITY_NAME, anything()]);
+        $this->mDem->shouldReceive('createEntity')->withArgs([Operation::ENTITY_NAME, anything()]);
+        $this->mDem->shouldReceive('createEntity')->withArgs([Transaction::ENTITY_NAME, anything()]);
+        $this->mDem->shouldReceive('createEntity')->withArgs([Balance::ENTITY_NAME, anything()]);
+        // $setup->endSetup();
+        $this->mSetup
+            ->shouldReceive('endSetup')->once();
+        /* === Call and asserts  === */
+        $this->obj->install($this->mSetup, $this->mContext);
     }
 }
