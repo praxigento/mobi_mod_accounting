@@ -12,28 +12,26 @@ use Praxigento\Core\Lib\Service\Repo\Request\GetEntities as GetEntitiesRequest;
 
 class Call extends BaseCall implements IAccount
 {
-    /**
-     * @var \Praxigento\Accounting\Repo\Type\IAsset
-     */
+    /** @var \Praxigento\Accounting\Repo\Type\IAsset */
     protected $_repoTypeAsset;
-    /**
-     * @var \Praxigento\Accounting\Lib\Repo\IModule
-     */
+    /** @var \Praxigento\Accounting\Lib\Repo\IModule */
     protected $_repoMod;
-    /**
-     * @var array save accounts data for representative customer.
-     */
+    /** @var array save accounts data for representative customer. */
     protected $_cachedRepresentativeAccs = [];
+    /** @var  \Praxigento\Accounting\Repo\IAccount */
+    protected $_repoAccount;
 
     /**
      * Call constructor.
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
+        \Praxigento\Accounting\Repo\IAccount $repoAccount,
         \Praxigento\Accounting\Repo\Type\IAsset $repoTypeAsset,
         \Praxigento\Accounting\Lib\Repo\IModule $repoMod
     ) {
         parent::__construct($logger);
+        $this->_repoAccount = $repoAccount;
         $this->_repoTypeAsset = $repoTypeAsset;
         $this->_repoMod = $repoMod;
     }
@@ -60,35 +58,19 @@ class Call extends BaseCall implements IAccount
         $assetTypeId = $request->getAssetTypeId();
         $assetTypeCode = $request->getAssetTypeCode();
         $createNewAccountIfMissed = $request->getCreateNewAccountIfMissed();
-        /** @var  $query \Zend_Db_Select */
-        $query = $this->_getConn()->select();
-        $tbl = $this->_getTableName(Account::ENTITY_NAME);
-        $query->from($tbl);
         /* accountId has the highest priority */
         if ($accountId) {
-            $query->where(Account::ATTR_ID . '=:accountId');
-            $bind = ['accountId' => $accountId];
-            $this->_logger->info("There is account ID in request (#{$accountId}).");
+            $data = $this->_repoAccount->getById($accountId);
         } else {
-            $this->_logger->info("There is customer ID in request (#{$customerId}).");
-            if ($assetTypeId) {
-                /* use asset type ID from request */
-                $this->_logger->info("There is asset type ID in request (#{$assetTypeId}).");
-            } else {
+            /* try to look up by customer id & asset type id */
+            if (!$assetTypeId) {
                 /* get asset type ID by asset code */
-                $reqTypeAsset = new TypeAssetRequestGetByCode($assetTypeCode);
-                $respTypeAsset = $this->_repoTypeAsset->getByCode($reqTypeAsset);
-                $assetTypeId = $respTypeAsset->getId();
-                $this->_logger->info("There is only asset type code ({$assetTypeCode}) in request, asset type id = $assetTypeId.");
+                $assetTypeId = $this->_repoTypeAsset->getIdByCode($assetTypeCode);
             }
             /* get account by customerId & assetTypeId */
-            $query->where(Account::ATTR_CUST_ID . '=:customerId');
-            $query->where(Account::ATTR_ASSET_TYPE_ID . '=:assetTypeId');
-            $bind = ['customerId' => $customerId, 'assetTypeId' => $assetTypeId];
+            $data = $this->_repoAccount->getByCustomerId($customerId, $assetTypeId);
         }
-        /* perform query and analyze result */
-        // $sql = (string)$query;
-        $data = $this->_getConn()->fetchRow($query, $bind);
+        /* analyze found data */
         if (is_array($data)) {
             $result->setData($data);
             $result->setAsSucceed();
@@ -100,10 +82,9 @@ class Call extends BaseCall implements IAccount
                     Account::ATTR_ASSET_TYPE_ID => $assetTypeId,
                     Account::ATTR_BALANCE => 0
                 ];
-                $this->_getConn()->insert($tbl, $data);
-                $accId = $this->_getConn()->lastInsertId($tbl);
-                $data[Account::ATTR_ID] = $accId;
-                $result->setData($data);
+                $created = $this->_repoAccount->create($data);
+                $accId = $created[Account::ATTR_ID];
+                $result->setData($created);
                 $result->setAsSucceed();
                 $this->_logger->info("There is no account for customer #{$customerId} and asset type #$assetTypeId. New account #$accId is created.");
             }

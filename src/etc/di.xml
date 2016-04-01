@@ -3,6 +3,8 @@
         xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
 
     <!-- Repos -->
+    <preference for="Praxigento\Accounting\Repo\IAccount"
+                type="Praxigento\Accounting\Repo\Def\Account"/>
     <preference for="Praxigento\Accounting\Repo\Type\IAsset"
                 type="Praxigento\Accounting\Repo\Type\Def\Asset"/>
     <preference for="Praxigento\Accounting\Repo\Type\IOperation"
