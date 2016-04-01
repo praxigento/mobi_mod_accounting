@@ -5,30 +5,30 @@
 
 namespace Praxigento\Accounting\Lib\Service\Operation;
 
-use Praxigento\Accounting\Data\Entity\Operation;
-use Praxigento\Core\Lib\Service\Repo\Request\AddEntity as AddEntityRequest;
-use Praxigento\Core\Lib\Service\Repo\Response\AddEntity as AddEntityResponse;
+use Praxigento\Accounting\Data\Entity\Operation as EntityOperation;
 
-class Call extends \Praxigento\Core\Lib\Service\Base\Call implements \Praxigento\Accounting\Lib\Service\IOperation {
-    /** @var  \Praxigento\Accounting\Lib\Service\Type\Operation\Call */
-    protected $_callTypeOperation;
+class Call extends \Praxigento\Core\Lib\Service\Base\Call implements \Praxigento\Accounting\Lib\Service\IOperation
+{
     /** @var Sub\Add */
     protected $_subAdd;
-    /** @var \Praxigento\Accounting\Lib\Repo\IModule */
-    protected $_repoMod;
+    /** @var  \Praxigento\Accounting\Repo\IOperation */
+    protected $_repoOper;
+    /** @var  \Praxigento\Accounting\Repo\Type\IOperation */
+    protected $_repoTypeOper;
+    /** @var  \Praxigento\Core\Lib\Context\ITransactionManager */
+    protected $_manTrans;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Lib\Context\IDbAdapter $dba,
-        \Praxigento\Core\Lib\IToolbox $toolbox,
-        \Praxigento\Core\Lib\Service\IRepo $callRepo,
-        \Praxigento\Accounting\Lib\Service\Type\Operation\Call $callTypeOperation,
-        \Praxigento\Accounting\Lib\Repo\IModule $repoMod,
+        \Praxigento\Core\Lib\Context\ITransactionManager $manTrans,
+        \Praxigento\Accounting\Repo\IOperation $repoOper,
+        \Praxigento\Accounting\Repo\Type\IOperation $repoTypeOper,
         Sub\Add $subAdd
     ) {
-        parent::__construct($logger, $dba, $toolbox, $callRepo);
-        $this->_callTypeOperation = $callTypeOperation;
-        $this->_repoMod = $repoMod;
+        parent::__construct($logger);
+        $this->_manTrans = $manTrans;
+        $this->_repoTypeOper = $repoTypeOper;
+        $this->_repoOper = $repoOper;
         $this->_subAdd = $subAdd;
     }
 
@@ -39,39 +39,35 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements \Praxigento
      *
      * @return Response\Add
      */
-    public function add(Request\Add $req) {
+    public function add(Request\Add $req)
+    {
         $result = new Response\Add();
         $operationTypeId = $req->getOperationTypeId();
         $operationTypeCode = $req->getOperationTypeCode();
         $datePerformed = $req->getDatePerformed();
         $transactions = $req->getTransactions();
         $asRef = $req->getAsTransRef();
-        $conn = $this->_getConn();
-        $conn->beginTransaction();
+        $trans = $this->_manTrans->transactionBegin();
         try {
             /* add operation itself */
-            if(!$operationTypeId) {
-                $operationTypeId = $this->_repoMod->getTypeOperationIdByCode($operationTypeCode);
+            if (!$operationTypeId) {
+                $operationTypeId = $this->_repoTypeOper->getIdByCode($operationTypeCode);
             }
             $bindToAdd = [
-                Operation::ATTR_TYPE_ID        => $operationTypeId,
-                Operation::ATTR_DATE_PREFORMED => $datePerformed
+                EntityOperation::ATTR_TYPE_ID => $operationTypeId,
+                EntityOperation::ATTR_DATE_PREFORMED => $datePerformed
             ];
-            $reqAdd = new  AddEntityRequest(Operation::ENTITY_NAME, $bindToAdd);
-            /** @var  $respAdd AddEntityResponse */
-            $respAdd = $this->_callRepo->addEntity($reqAdd);
-            if($respAdd->isSucceed()) {
-                $operId = $respAdd->getIdInserted();
+            $created = $this->_repoOper->create($bindToAdd);
+            if ($created && isset($created[EntityOperation::ATTR_ID])) {
+                $operId = $created[EntityOperation::ATTR_ID];
                 $transIds = $this->_subAdd->transactions($operId, $transactions, $datePerformed, $asRef);
                 $result->setOperationId($operId);
                 $result->setTransactionsIds($transIds);
-                $conn->commit();
+                $this->_manTrans->transactionCommit($trans);
                 $result->setAsSucceed();
             }
         } finally {
-            if(!$result->isSucceed()) {
-                $conn->rollback();
-            }
+            $this->_manTrans->transactionClose($trans);
         }
         return $result;
     }

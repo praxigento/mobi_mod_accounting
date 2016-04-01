@@ -58,4 +58,19 @@ class Account extends Base implements IAccount
         $result = $this->_repoBasic->getEntityByPk($entity, $pk);
         return $result;
     }
+
+    public function updateBalance($accountId, $delta)
+    {
+        $tbl = $this->_dba->getTableName(EntityAccount::ENTITY_NAME);
+        /* wrap expression into \Zend_Db_Expr */
+        if ($delta < 0) {
+            $exp = new \Zend_Db_Expr(EntityAccount::ATTR_BALANCE . '-' . abs($delta));
+        } else {
+            $exp = new \Zend_Db_Expr(EntityAccount::ATTR_BALANCE . '+' . abs($delta));
+        }
+        $bind = [EntityAccount::ATTR_BALANCE => $exp];
+        $where = EntityAccount::ATTR_ID . '=' . $accountId;
+        $rowsUpdated = $this->_dba->update($tbl, $bind, $where);
+        return $rowsUpdated;
+    }
 }

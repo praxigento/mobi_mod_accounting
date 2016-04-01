@@ -160,28 +160,18 @@ class Call extends BaseCall implements IAccount
      * @param Request\UpdateBalance $request
      *
      * @return Response\UpdateBalance
+     * @deprecated This operation is used inside Accounting module only (use Account repo inside module).
      */
     public function updateBalance(Request\UpdateBalance $request)
     {
         $result = new Response\UpdateBalance();
         $accountId = $request->getAccountId();
         $changeValue = $request->getChangeValue();
-        $accId = $this->_getConn()->quote($accountId, \Zend_Db::INT_TYPE);
-        $value = $this->_getConn()->quote($changeValue, \Zend_Db::FLOAT_TYPE);
-        if ($accId) {
-            $tbl = $this->_getTableName(Account::ENTITY_NAME);
-            if ($value < 0) {
-                $exp = new \Zend_Db_Expr(Account::ATTR_BALANCE . '-' . abs($value));
-            } else {
-                $exp = new \Zend_Db_Expr(Account::ATTR_BALANCE . '+' . abs($value));
-            }
-            $bind = [Account::ATTR_BALANCE => $exp];
-            $where = Account::ATTR_ID . '=' . $accId;
-            $rowsUpdated = $this->_getConn()->update($tbl, $bind, $where);
-            if ($rowsUpdated) {
-                $result->setData(['rows_updated' => $rowsUpdated]);
-                $result->setAsSucceed();
-            }
+
+        $rowsUpdated = $this->_repoAccount->updateBalance($accountId, $changeValue);
+        if ($rowsUpdated) {
+            $result->setData(['rows_updated' => $rowsUpdated]);
+            $result->setAsSucceed();
         }
         return $result;
     }

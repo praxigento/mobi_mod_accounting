@@ -13,4 +13,6 @@ interface IAccount
     public function getByCustomerId($customerId, $assetTypeId);
 
     public function getById($accountId);
+
+    public function updateBalance($accountId, $delta);
 }
