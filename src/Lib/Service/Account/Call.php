@@ -10,31 +10,38 @@ use Praxigento\Accounting\Lib\Service\Type\Asset\Request\GetByCode as TypeAssetR
 use Praxigento\Core\Lib\Service\Base\Call as BaseCall;
 use Praxigento\Core\Lib\Service\Repo\Request\GetEntities as GetEntitiesRequest;
 
-class Call extends BaseCall implements IAccount {
+class Call extends BaseCall implements IAccount
+{
     /**
-     * @var \Praxigento\Accounting\Lib\Service\Type\Asset\Call
+     * @var \Praxigento\Accounting\Repo\Type\IAsset
      */
-    protected $_callTypeAsset;
+    protected $_repoTypeAsset;
     /**
      * @var \Praxigento\Accounting\Lib\Repo\IModule
      */
     protected $_repoMod;
-    protected $_cachedRepresentativeAccs = [ ];
+    /**
+     * @var array save accounts data for representative customer.
+     */
+    protected $_cachedRepresentativeAccs = [];
 
     /**
      * Call constructor.
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Lib\Context\IDbAdapter $dba,
-        \Praxigento\Core\Lib\IToolbox $toolbox,
-        \Praxigento\Core\Lib\Service\IRepo $callRepo,
-        \Praxigento\Accounting\Lib\Service\ITypeAsset $callTypeAsset,
+        \Praxigento\Accounting\Repo\Type\IAsset $repoTypeAsset,
         \Praxigento\Accounting\Lib\Repo\IModule $repoMod
     ) {
-        parent::__construct($logger, $dba, $toolbox, $callRepo);
-        $this->_callTypeAsset = $callTypeAsset;
+        parent::__construct($logger);
+        $this->_repoTypeAsset = $repoTypeAsset;
         $this->_repoMod = $repoMod;
+    }
+
+    public function cacheReset()
+    {
+        $this->_cachedRepresentativeAccs = [];
+        $this->_repoMod->cacheReset();
     }
 
     /**
@@ -44,7 +51,8 @@ class Call extends BaseCall implements IAccount {
      *
      * @return Response\Get
      */
-    public function get(Request\Get $request) {
+    public function get(Request\Get $request)
+    {
         $result = new Response\Get();
         $this->_logger->info("'Get account' operation is called.");
         $accountId = $request->getAccountId();
@@ -57,40 +65,40 @@ class Call extends BaseCall implements IAccount {
         $tbl = $this->_getTableName(Account::ENTITY_NAME);
         $query->from($tbl);
         /* accountId has the highest priority */
-        if($accountId) {
+        if ($accountId) {
             $query->where(Account::ATTR_ID . '=:accountId');
-            $bind = [ 'accountId' => $accountId ];
+            $bind = ['accountId' => $accountId];
             $this->_logger->info("There is account ID in request (#{$accountId}).");
         } else {
             $this->_logger->info("There is customer ID in request (#{$customerId}).");
-            if($assetTypeId) {
+            if ($assetTypeId) {
                 /* use asset type ID from request */
                 $this->_logger->info("There is asset type ID in request (#{$assetTypeId}).");
             } else {
                 /* get asset type ID by asset code */
                 $reqTypeAsset = new TypeAssetRequestGetByCode($assetTypeCode);
-                $respTypeAsset = $this->_callTypeAsset->getByCode($reqTypeAsset);
+                $respTypeAsset = $this->_repoTypeAsset->getByCode($reqTypeAsset);
                 $assetTypeId = $respTypeAsset->getId();
                 $this->_logger->info("There is only asset type code ({$assetTypeCode}) in request, asset type id = $assetTypeId.");
             }
             /* get account by customerId & assetTypeId */
             $query->where(Account::ATTR_CUST_ID . '=:customerId');
             $query->where(Account::ATTR_ASSET_TYPE_ID . '=:assetTypeId');
-            $bind = [ 'customerId' => $customerId, 'assetTypeId' => $assetTypeId ];
+            $bind = ['customerId' => $customerId, 'assetTypeId' => $assetTypeId];
         }
         /* perform query and analyze result */
         // $sql = (string)$query;
         $data = $this->_getConn()->fetchRow($query, $bind);
-        if(is_array($data)) {
+        if (is_array($data)) {
             $result->setData($data);
             $result->setAsSucceed();
         } else {
-            if($createNewAccountIfMissed) {
+            if ($createNewAccountIfMissed) {
                 /* not found - add new account */
                 $data = [
-                    Account::ATTR_CUST_ID        => $customerId,
+                    Account::ATTR_CUST_ID => $customerId,
                     Account::ATTR_ASSET_TYPE_ID => $assetTypeId,
-                    Account::ATTR_BALANCE        => 0
+                    Account::ATTR_BALANCE => 0
                 ];
                 $this->_getConn()->insert($tbl, $data);
                 $accId = $this->_getConn()->lastInsertId($tbl);
@@ -109,18 +117,19 @@ class Call extends BaseCall implements IAccount {
      *
      * @return Response\GetRepresentative
      */
-    public function getRepresentative(Request\GetRepresentative $request) {
+    public function getRepresentative(Request\GetRepresentative $request)
+    {
         $result = new Response\GetRepresentative();
         $typeId = $request->getAssetTypeId();
         $typeCode = $request->getAssetTypeCode();
         $this->_logger->info("'Get representative account' operation is called.");
-        if(is_null($typeId)) {
+        if (is_null($typeId)) {
             $reqCode = new TypeAssetRequestGetByCode($typeCode);
-            $respCode = $this->_callTypeAsset->getByCode($reqCode);
+            $respCode = $this->_repoTypeAsset->getByCode($reqCode);
             $typeId = $respCode->getId();
         }
-        if(!is_null($typeId)) {
-            if(isset($this->_cachedRepresentativeAccs[$typeId])) {
+        if (!is_null($typeId)) {
+            if (isset($this->_cachedRepresentativeAccs[$typeId])) {
                 $result->setData($this->_cachedRepresentativeAccs[$typeId]);
                 $result->setAsSucceed();
             } else {
@@ -131,15 +140,15 @@ class Call extends BaseCall implements IAccount {
                 $where = Account::ATTR_CUST_ID . '=' . $customerId;
                 $req = new GetEntitiesRequest(Account::ENTITY_NAME, $where);
                 $resp = $this->_callRepo->getEntities($req);
-                if($resp->isSucceed()) {
-                    $mapped = [ ];
-                    foreach($resp->getData() as $one) {
+                if ($resp->isSucceed()) {
+                    $mapped = [];
+                    foreach ($resp->getData() as $one) {
                         $mapped[$one[Account::ATTR_ASSET_TYPE_ID]] = $one;
                     }
                     $this->_cachedRepresentativeAccs = $mapped;
                 }
                 /* check selected accounts */
-                if(isset($this->_cachedRepresentativeAccs[$typeId])) {
+                if (isset($this->_cachedRepresentativeAccs[$typeId])) {
                     $result->setData($this->_cachedRepresentativeAccs[$typeId]);
                     $result->setAsSucceed();
                 } else {
@@ -158,7 +167,7 @@ class Call extends BaseCall implements IAccount {
         } else {
             $this->_logger->error("Asset type is not defined (asset code: $typeCode).");
         }
-        if($result->isSucceed()) {
+        if ($result->isSucceed()) {
             $repAccId = $result->getData(Account::ATTR_ID);
             $this->_logger->info("Representative account #$repAccId is found.");
         }
@@ -171,32 +180,28 @@ class Call extends BaseCall implements IAccount {
      *
      * @return Response\UpdateBalance
      */
-    public function updateBalance(Request\UpdateBalance $request) {
+    public function updateBalance(Request\UpdateBalance $request)
+    {
         $result = new Response\UpdateBalance();
         $accountId = $request->getAccountId();
         $changeValue = $request->getChangeValue();
         $accId = $this->_getConn()->quote($accountId, \Zend_Db::INT_TYPE);
         $value = $this->_getConn()->quote($changeValue, \Zend_Db::FLOAT_TYPE);
-        if($accId) {
+        if ($accId) {
             $tbl = $this->_getTableName(Account::ENTITY_NAME);
-            if($value < 0) {
+            if ($value < 0) {
                 $exp = new \Zend_Db_Expr(Account::ATTR_BALANCE . '-' . abs($value));
             } else {
                 $exp = new \Zend_Db_Expr(Account::ATTR_BALANCE . '+' . abs($value));
             }
-            $bind = [ Account::ATTR_BALANCE => $exp ];
+            $bind = [Account::ATTR_BALANCE => $exp];
             $where = Account::ATTR_ID . '=' . $accId;
             $rowsUpdated = $this->_getConn()->update($tbl, $bind, $where);
-            if($rowsUpdated) {
-                $result->setData([ 'rows_updated' => $rowsUpdated ]);
+            if ($rowsUpdated) {
+                $result->setData(['rows_updated' => $rowsUpdated]);
                 $result->setAsSucceed();
             }
         }
         return $result;
-    }
-
-    public function cacheReset() {
-        $this->_cachedRepresentativeAccs = [ ];
-        $this->_repoMod->cacheReset();
     }
 }

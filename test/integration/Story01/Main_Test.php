@@ -51,10 +51,10 @@ class Main_IntegrationTest extends BaseIntegrationTest {
      */
     public function __construct() {
         parent::__construct();
-        $this->_callAccount = $this->_obm->get(\Praxigento\Accounting\Lib\Service\IAccount::class);
-        $this->_callBalance = $this->_obm->get(\Praxigento\Accounting\Lib\Service\Balance\Call::class);
-        $this->_callOperation = $this->_obm->get(\Praxigento\Accounting\Lib\Service\Operation\Call::class);
-        $this->_callRepo = $this->_obm->get(\Praxigento\Core\Lib\Service\IRepo::class);
+        $this->_callAccount = $this->_manObj->get(\Praxigento\Accounting\Lib\Service\IAccount::class);
+        $this->_callBalance = $this->_manObj->get(\Praxigento\Accounting\Lib\Service\Balance\Call::class);
+        $this->_callOperation = $this->_manObj->get(\Praxigento\Accounting\Lib\Service\Operation\Call::class);
+        $this->_callRepo = $this->_manObj->get(\Praxigento\Core\Lib\Service\IRepo::class);
     }
 
     private function _calculateBalances() {

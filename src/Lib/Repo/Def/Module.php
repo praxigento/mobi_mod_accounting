@@ -25,12 +25,12 @@ class Module extends Base implements IModule
      * @var int
      */
     protected $_cachedRepresentativeCustomerId;
-    /** @var  \Praxigento\Core\Lib\Repo\IBasic */
+    /** @var  \Praxigento\Core\Repo\IBasic */
     protected $_repoBasic;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $rsrcConn,
-        \Praxigento\Core\Lib\Repo\IBasic $repoBasic
+        \Praxigento\Core\Repo\IBasic $repoBasic
     ) {
         parent::__construct($rsrcConn);
         $this->_repoBasic = $repoBasic;
