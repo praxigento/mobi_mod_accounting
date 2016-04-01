@@ -5,7 +5,8 @@
 
 namespace Praxigento\Accounting\Lib\Repo;
 
-interface IModule extends \Praxigento\Core\Lib\Repo\IModule {
+interface IModule
+{
     /**
      * Reset cached data.
      */
@@ -67,5 +68,9 @@ interface IModule extends \Praxigento\Core\Lib\Repo\IModule {
      */
     public function getTypeOperationIdByCode($code);
 
+    /**
+     * @param $updateData
+     * @return mixed
+     */
     public function updateBalances($updateData);
 }
