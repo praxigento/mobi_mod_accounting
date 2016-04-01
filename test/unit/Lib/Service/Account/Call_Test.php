@@ -5,19 +5,21 @@
 namespace Praxigento\Accounting\Lib\Service\Account;
 
 use Praxigento\Accounting\Lib\Entity\Account as Account;
-use Praxigento\Accounting\Lib\Entity\Type\Asset as TypeAsset;
+use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Lib\Service\Type\Asset\Response\GetByCode as TypeAssetResponseGetByCode;
 use Praxigento\Core\Lib\Service\Repo\Response\GetEntities as GetEntitiesResponse;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
-class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
+class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
+{
     /**
      * Prepare mocks and object to test.
      *
      * @return array
      */
-    private function _prepareMocks() {
+    private function _prepareMocks()
+    {
         $mLogger = $this->_mockLogger();
         $mConn = $this->_mockConnection();
         $mDba = $this->_mockDbAdapter(null, $mConn);
@@ -27,19 +29,20 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $mRepoMod = $this->_mockFor('\Praxigento\Accounting\Lib\Repo\IModule');
         $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mCallTypeAsset, $mRepoMod);
         $result = [
-            'mLogger'        => $mLogger,
-            'mDba'           => $mDba,
-            'mConn'          => $mConn,
-            'mToolbox'       => $mToolbox,
-            'mCallRepo'      => $mCallRepo,
+            'mLogger' => $mLogger,
+            'mDba' => $mDba,
+            'mConn' => $mConn,
+            'mToolbox' => $mToolbox,
+            'mCallRepo' => $mCallRepo,
             'mCallTypeAsset' => $mCallTypeAsset,
-            'mRepoMod'       => $mRepoMod,
-            'call'           => $call
+            'mRepoMod' => $mRepoMod,
+            'call' => $call
         ];
         return $result;
     }
 
-    public function test_cacheReset() {
+    public function test_cacheReset()
+    {
         /** === Test Data === */
 
         /** === Extract mocks === */
@@ -61,7 +64,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $call->cacheReset();
     }
 
-    public function test_getRepresentative_byAssetCode_accountCreated() {
+    public function test_getRepresentative_byAssetCode_accountCreated()
+    {
         /** === Test Data === */
         $CUST_ID = '21';
         $ASSET_TYPE_ID = '12';
@@ -83,7 +87,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         // $respCode = $this->_callTypeAsset->getByCode($reqCode);
         $mRespCode = new \Praxigento\Accounting\Lib\Service\Type\Asset\Response\GetByCode();
         $mRespCode->setAsSucceed();
-        $mRespCode->setData([ TypeAsset::ATTR_ID => $ASSET_TYPE_ID ]);
+        $mRespCode->setData([TypeAsset::ATTR_ID => $ASSET_TYPE_ID]);
         $mCallTypeAsset
             ->expects($this->once())
             ->method('getByCode')
@@ -104,18 +108,18 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         /** mock some methods in the service  */
         $call = $this
             ->getMockBuilder('Praxigento\Accounting\Lib\Service\Account\Call')
-            ->setMethods([ 'get' ])
-            ->setConstructorArgs([ $mLogger, $mDba, $mToolbox, $mCallRepo, $mCallTypeAsset, $mRepoMod ])
+            ->setMethods(['get'])
+            ->setConstructorArgs([$mLogger, $mDba, $mToolbox, $mCallRepo, $mCallTypeAsset, $mRepoMod])
             ->getMock();
         // $resp = $this->get($req);
         $mRespGet = new Response\Get();
         $mRespGet->setAsSucceed();
         $mRespGet->setData(
-            [ Account::ATTR_ASSET_TYPE__ID => $ASSET_TYPE_ID, Account::ATTR_CUST_ID => $CUST_ID ]
+            [Account::ATTR_ASSET_TYPE__ID => $ASSET_TYPE_ID, Account::ATTR_CUST_ID => $CUST_ID]
         );
         $call->expects($this->once())
-             ->method('get')
-             ->willReturn($mRespGet);
+            ->method('get')
+            ->willReturn($mRespGet);
         /** tests  */
         $req = new Request\GetRepresentative();
         $req->setAssetTypeCode($ASSET_CODE);
@@ -124,7 +128,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $this->assertEquals($CUST_ID, $resp->getData(Account::ATTR_CUST_ID));
     }
 
-    public function test_getRepresentative_byAssetCode_idNotFound() {
+    public function test_getRepresentative_byAssetCode_idNotFound()
+    {
         /** === Test Data === */
         $ASSET_CODE = 'TEST_ASSET';
 
@@ -156,7 +161,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $this->assertFalse($resp->isSucceed());
     }
 
-    public function test_getRepresentative_byAssetId_accountsFound() {
+    public function test_getRepresentative_byAssetId_accountsFound()
+    {
         /** === Test Data === */
         $CUST_ID = '21';
         $ASSET_TYPE_ID = '12';
@@ -186,7 +192,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $mResp->setAsSucceed();
         $mResp->setData([
             [
-                Account::ATTR_ID             => $ACCOUNT_ID,
+                Account::ATTR_ID => $ACCOUNT_ID,
                 Account::ATTR_ASSET_TYPE__ID => $ASSET_TYPE_ID
             ]
         ]);
@@ -207,7 +213,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $this->assertEquals($ACCOUNT_ID, $resp->getData(Account::ATTR_ID));
     }
 
-    public function test_get_byAccountId() {
+    public function test_get_byAccountId()
+    {
         /** === Test Data === */
         $CUST_ID = '21';
         $ASSET_TYPE_ID = '12';
@@ -243,13 +250,13 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
             ->with($this->equalTo($TABLE));
         // $data = $this->_conn->fetchRow($query, [ 'customerId' => $customerId, 'assetTypeId' => $assetTypeId ]);
         $mData = [
-            Account::ATTR_ID             => $ACCOUNT_ID,
-            Account::ATTR_CUST_ID        => $CUST_ID,
+            Account::ATTR_ID => $ACCOUNT_ID,
+            Account::ATTR_CUST_ID => $CUST_ID,
             Account::ATTR_ASSET_TYPE__ID => $ASSET_TYPE_ID
         ];
         $mConn->expects($this->once())
-              ->method('fetchRow')
-              ->will($this->returnValue($mData));
+            ->method('fetchRow')
+            ->will($this->returnValue($mData));
 
         /** === Call and asserts  === */
         $req = new Request\Get();
@@ -258,7 +265,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $this->assertTrue($resp->isSucceed());
     }
 
-    public function test_get_byAssetCode() {
+    public function test_get_byAssetCode()
+    {
         /** === Test Data === */
         $CUST_ID = '21';
         $ASSET_TYPE_ID = '12';
@@ -306,13 +314,13 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
             ->with($this->equalTo($TABLE));
         // $data = $this->_conn->fetchRow($query, [ 'customerId' => $customerId, 'assetTypeId' => $assetTypeId ]);
         $mData = [
-            Account::ATTR_ID             => $ACCOUNT_ID,
-            Account::ATTR_CUST_ID        => $CUST_ID,
+            Account::ATTR_ID => $ACCOUNT_ID,
+            Account::ATTR_CUST_ID => $CUST_ID,
             Account::ATTR_ASSET_TYPE__ID => $ASSET_TYPE_ID
         ];
         $mConn->expects($this->once())
-              ->method('fetchRow')
-              ->will($this->returnValue($mData));
+            ->method('fetchRow')
+            ->will($this->returnValue($mData));
 
         /** === Call and asserts  === */
         $req = new Request\Get();
@@ -322,7 +330,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $this->assertTrue($resp->isSucceed());
     }
 
-    public function test_get_byAssetId() {
+    public function test_get_byAssetId()
+    {
         /** === Test Data === */
         $CUST_ID = '21';
         $ASSET_TYPE_ID = '12';
@@ -359,13 +368,13 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
             ->with($this->equalTo($TABLE));
         // $data = $this->_conn->fetchRow($query, [ 'customerId' => $customerId, 'assetTypeId' => $assetTypeId ]);
         $mData = [
-            Account::ATTR_ID             => $ACCOUNT_ID,
-            Account::ATTR_CUST_ID        => $CUST_ID,
+            Account::ATTR_ID => $ACCOUNT_ID,
+            Account::ATTR_CUST_ID => $CUST_ID,
             Account::ATTR_ASSET_TYPE__ID => $ASSET_TYPE_ID
         ];
         $mConn->expects($this->once())
-              ->method('fetchRow')
-              ->will($this->returnValue($mData));
+            ->method('fetchRow')
+            ->will($this->returnValue($mData));
 
         /** === Call and asserts  === */
         $req = new Request\Get();
@@ -375,7 +384,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $this->assertTrue($resp->isSucceed());
     }
 
-    public function test_get_createNewAccountIfMissed() {
+    public function test_get_createNewAccountIfMissed()
+    {
         /** === Test Data === */
         $CUST_ID = '21';
         $ASSET_TYPE_ID = '12';
@@ -413,15 +423,15 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
             ->with($this->equalTo($TABLE));
         // $data = $this->_conn->fetchRow($query, [ 'customerId' => $customerId, 'assetTypeId' => $assetTypeId ]);
         $mConn->expects($this->once())
-              ->method('fetchRow')
-              ->will($this->returnValue(false));
+            ->method('fetchRow')
+            ->will($this->returnValue(false));
         // $this->_conn->insert($tbl, $data);
         $mConn->expects($this->once())
-              ->method('insert');
+            ->method('insert');
         // $accId = $this->_conn->lastInsertId($tbl);
         $mConn->expects($this->once())
-              ->method('lastInsertId')
-              ->will($this->returnValue($ACCOUNT_ID));
+            ->method('lastInsertId')
+            ->will($this->returnValue($ACCOUNT_ID));
 
         /** === Call and asserts  === */
         $req = new Request\Get();
@@ -432,7 +442,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $this->assertTrue($resp->isSucceed());
     }
 
-    public function test_updateBalance_negative() {
+    public function test_updateBalance_negative()
+    {
         /** === Test Data === */
         $ACCOUNT_ID = '34';
         $CHANGE_VALUE = -21;
@@ -481,7 +492,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $this->assertTrue($resp->isSucceed());
     }
 
-    public function test_updateBalance_positive() {
+    public function test_updateBalance_positive()
+    {
         /** === Test Data === */
         $ACCOUNT_ID = '34';
         $CHANGE_VALUE = 21;

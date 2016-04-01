@@ -8,7 +8,7 @@ use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Lib\Entity\Account;
 use Praxigento\Accounting\Lib\Entity\Balance;
 use Praxigento\Accounting\Lib\Entity\Transaction;
-use Praxigento\Core\Lib\Entity\Type\Base as TypeBase;
+use Praxigento\Core\Data\Entity\Type\Base as TypeBase;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 

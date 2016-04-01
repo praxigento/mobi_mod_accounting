@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Type\Operation;
 
-use Praxigento\Accounting\Lib\Entity\Type\Operation as TypeOperation;
+use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
 
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 

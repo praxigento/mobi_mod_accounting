@@ -13,7 +13,7 @@ class Call extends \Praxigento\Core\Lib\Service\Type\Base\Call implements \Praxi
     }
 
     protected function _getEntityName() {
-        return \Praxigento\Accounting\Lib\Entity\Type\Asset::ENTITY_NAME;
+        return \Praxigento\Accounting\Data\Entity\Type\Asset::ENTITY_NAME;
     }
 
 }

@@ -9,11 +9,11 @@ use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Lib\Entity\Account;
 use Praxigento\Accounting\Lib\Entity\Balance;
 use Praxigento\Accounting\Lib\Entity\Transaction;
-use Praxigento\Accounting\Lib\Entity\Type\Asset as TypeAsset;
-use Praxigento\Accounting\Lib\Entity\Type\Operation as TypeOperation;
+use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
+use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
 use Praxigento\Accounting\Lib\Repo\IModule;
-use Praxigento\Core\Lib\Entity\Type\Base as TypeBase;
-use Praxigento\Core\Lib\Repo\Def\Base;
+use Praxigento\Core\Data\Entity\Type\Base as TypeBase;
+use Praxigento\Core\Repo\Def\Base;
 
 class Module extends Base implements IModule
 {

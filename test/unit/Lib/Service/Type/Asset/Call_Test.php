@@ -4,13 +4,27 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Type\Asset;
 
-use Praxigento\Accounting\Lib\Entity\Type\Asset as TypeAsset;
+use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 
-class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
+class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
+{
 
-    public function test_getByCode() {
+    /** @var  \Mockery\MockInterface */
+    private $mLogger;
+    /** @var  Call */
+    private $call;
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->mLogger = $this->_mockLogger();
+        $this->call = new Call($this->mLogger);
+    }
+
+    public function test_getByCode()
+    {
         /** === Test Data === */
         $ASSET_TYPE_ID = '21';
         $ASSET_CODE = 'CODE';
@@ -40,7 +54,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
             ->with($this->equalTo($TABLE));
         // $data = $this->_conn->fetchRow($query, [ 'code' => $assetCode ]);
         $mData = [
-            TypeAsset::ATTR_ID   => $ASSET_TYPE_ID,
+            TypeAsset::ATTR_ID => $ASSET_TYPE_ID,
             TypeAsset::ATTR_CODE => $ASSET_CODE,
             TypeAsset::ATTR_NOTE => $ASSET_NOTE
         ];

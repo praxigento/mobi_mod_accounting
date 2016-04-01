@@ -8,8 +8,8 @@ use Praxigento\Accounting\Lib\Entity\Account as Account;
 use Praxigento\Accounting\Lib\Entity\Balance as Balance;
 use Praxigento\Accounting\Lib\Entity\Operation as Operation;
 use Praxigento\Accounting\Lib\Entity\Transaction as Transaction;
-use Praxigento\Accounting\Lib\Entity\Type\Asset as TypeAsset;
-use Praxigento\Accounting\Lib\Entity\Type\Operation as TypeOperation;
+use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
+use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 

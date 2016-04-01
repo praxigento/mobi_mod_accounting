@@ -6,6 +6,7 @@
  */
 namespace Praxigento\Accounting;
 
-class Config extends \Praxigento\Core\Config {
+class Config extends \Praxigento\Core\Config
+{
     const MODULE = 'Praxigento_Accounting';
 }

@@ -3,6 +3,10 @@
         xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
 
     <!-- Repos -->
+    <preference for="Praxigento\Accounting\Repo\Type\IAsset"
+                type="Praxigento\Accounting\Repo\Type\Def\Asset"/>
+    <preference for="Praxigento\Accounting\Repo\Type\IOperation"
+                type="Praxigento\Accounting\Repo\Type\Def\Operation"/>
     <preference for="Praxigento\Accounting\Lib\Repo\IModule"
                 type="Praxigento\Accounting\Lib\Repo\Def\Module"/>
 
@@ -15,10 +19,6 @@
                 type="Praxigento\Accounting\Lib\Service\Operation\Call"/>
     <preference for="Praxigento\Accounting\Lib\Service\ITransaction"
                 type="Praxigento\Accounting\Lib\Service\Transaction\Call"/>
-    <preference for="Praxigento\Accounting\Lib\Service\ITypeAsset"
-                type="Praxigento\Accounting\Lib\Service\Type\Asset\Call"/>
-    <preference for="Praxigento\Accounting\Lib\Service\ITypeOperation"
-                type="Praxigento\Accounting\Lib\Service\Type\Operation\Call"/>
 
     <!-- API Services -->
     <preference for="Praxigento\Accounting\Api\AccountInterface"
