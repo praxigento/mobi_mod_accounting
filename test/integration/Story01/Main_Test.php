@@ -25,6 +25,8 @@ class Main_IntegrationTest extends BaseIntegrationTest
     const DATA_DATE_BALANCE_CHECK = '20151111';
     const DATA_DATE_BALANCE_UP_TO = '20151112';
     const DATA_DATE_PERFORMED = '2015-11-10 18:43:57';
+    const DATA_TYPE_ASSET_CODE = 'test_asset';
+    const DATA_TYPE_OPER_CODE = 'test_oper';
     const ENTITY_CUSTOMER = 'customer_entity';
     /**
      * Total amount of the transactions in operation (to check accounts balances).
@@ -37,15 +39,14 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private $_callBalance;
     /** @var  \Praxigento\Accounting\Lib\Service\Operation\Call */
     private $_callOperation;
-    /** @var  \Praxigento\Core\Lib\Service\IRepo */
-    private $_callRepo;
-
+    /** @var \Praxigento\Core\Repo\IBasic */
+    private $_repoBasic;
     private $acc1 = [];
     private $acc2 = [];
     private $cust1 = [];
     private $cust2 = [];
-    private $typeAsset = [];
-    private $typeOperation = [];
+    private $typeAssetId;
+    private $typeOperId;
 
     /**
      * Main_FunctionalTest constructor.
@@ -56,13 +57,13 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $this->_callAccount = $this->_manObj->get(\Praxigento\Accounting\Lib\Service\IAccount::class);
         $this->_callBalance = $this->_manObj->get(\Praxigento\Accounting\Lib\Service\Balance\Call::class);
         $this->_callOperation = $this->_manObj->get(\Praxigento\Accounting\Lib\Service\Operation\Call::class);
-        $this->_callRepo = $this->_manObj->get(\Praxigento\Core\Lib\Service\IRepo::class);
+        $this->_repoBasic = $this->_manObj->get(\Praxigento\Core\Repo\IBasic::class);
     }
 
     private function _calculateBalances()
     {
         $req = new BalanceCalcRequest();
-        $req->setData(BalanceCalcRequest::ASSET_TYPE_ID, $this->typeAsset[TypeAsset::ATTR_ID]);
+        $req->setData(BalanceCalcRequest::ASSET_TYPE_ID, $this->typeAssetId);
         $req->setData(BalanceCalcRequest::DATE_TO, self::DATA_DATE_BALANCE_UP_TO);
         $resp = $this->_callBalance->calc($req);
         $this->assertTrue($resp->isSucceed());
@@ -86,31 +87,23 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private function _checkBalancesHistory()
     {
         /* check first account balance*/
-        $req = new \Praxigento\Core\Lib\Service\Repo\Request\GetEntityByPk(
+        $data = $this->_repoBasic->getEntityByPk(
             Balance::ENTITY_NAME,
             [
                 Balance::ATTR_ACCOUNT_ID => $this->acc1[Account::ATTR_ID],
                 Balance::ATTR_DATE => self::DATA_DATE_BALANCE_CHECK
-            ]
-        );
-        $resp = $this->_callRepo->getEntityByPk($req);
-        $this->assertTrue($resp->isSucceed());
-        $data = $resp->getData();
+            ]);
         $this->assertEquals(0, $data[Balance::ATTR_BALANCE_OPEN]);
         $this->assertEquals(30, $data[Balance::ATTR_TOTAL_DEBIT]);
         $this->assertEquals(0, $data[Balance::ATTR_TOTAL_CREDIT]);
         $this->assertEquals(-30, $data[Balance::ATTR_BALANCE_CLOSE]);
         /* check second account balance*/
-        $req = new \Praxigento\Core\Lib\Service\Repo\Request\GetEntityByPk(
+        $data = $this->_repoBasic->getEntityByPk(
             Balance::ENTITY_NAME,
             [
                 Balance::ATTR_ACCOUNT_ID => $this->acc2[Account::ATTR_ID],
                 Balance::ATTR_DATE => self::DATA_DATE_BALANCE_CHECK
-            ]
-        );
-        $resp = $this->_callRepo->getEntityByPk($req);
-        $this->assertTrue($resp->isSucceed());
-        $data = $resp->getData();
+            ]);
         $this->assertEquals(0, $data[Balance::ATTR_BALANCE_OPEN]);
         $this->assertEquals(0, $data[Balance::ATTR_TOTAL_DEBIT]);
         $this->assertEquals(30, $data[Balance::ATTR_TOTAL_CREDIT]);
@@ -120,16 +113,18 @@ class Main_IntegrationTest extends BaseIntegrationTest
 
     private function _createAccounts()
     {
-        /* create account for Customer 1*/
+        /* create account for Customer 1 */
+        $custId = $this->_mapCustomerMageIdByIndex[1];
         $req = new AccountGetRequest();
-        $req->setData(AccountGetRequest::CUSTOMER_ID, $this->cust1[self::ATTR_CUST_ID]);
-        $req->setData(AccountGetRequest::ASSET_TYPE_ID, $this->typeAsset[TypeAsset::ATTR_ID]);
+        $req->setData(AccountGetRequest::CUSTOMER_ID, $custId);
+        $req->setData(AccountGetRequest::ASSET_TYPE_ID, $this->typeAssetId);
         $req->setData(AccountGetRequest::CREATE_NEW_ACCOUNT_IF_MISSED, true);
         $resp = $this->_callAccount->get($req);
         $this->assertTrue($resp->isSucceed());
         $this->acc1 = $resp->getData();
-        /* create account for Customer 1*/
-        $req->setData(AccountGetRequest::CUSTOMER_ID, $this->cust2[self::ATTR_CUST_ID]);
+        /* create account for Customer 2 */
+        $custId = $this->_mapCustomerMageIdByIndex[2];
+        $req->setData(AccountGetRequest::CUSTOMER_ID, $custId);
         $resp = $this->_callAccount->get($req);
         $this->assertTrue($resp->isSucceed());
         $this->acc2 = $resp->getData();
@@ -163,7 +158,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private function _createOperation()
     {
         $req = new OperationAddRequest();
-        $req->setOperationTypeId($this->typeOperation[TypeOperation::ATTR_ID]);
+        $req->setOperationTypeId($this->typeOperId);
         $req->setDatePerformed(self::DATA_DATE_PERFORMED);
         $req->setTransactions([
             [
@@ -191,29 +186,25 @@ class Main_IntegrationTest extends BaseIntegrationTest
 
     private function _createTypeAsset()
     {
-        $tbl = $this->_resource->getTableName(TypeAsset::ENTITY_NAME);
-        /* create one asset type */
-        $this->_conn->insert(
-            $tbl,
-            [TypeAsset::ATTR_CODE => 'code', TypeAsset::ATTR_NOTE => 'note']
-        );
-        $id = $this->_conn->lastInsertId($tbl);
+        $bind = [
+            TypeAsset::ATTR_CODE => self::DATA_TYPE_ASSET_CODE,
+            TypeAsset::ATTR_NOTE => 'Asset for integration tests.'
+        ];
+        $id = $this->_repoBasic->addEntity(TypeAsset::ENTITY_NAME, $bind);
         $this->assertTrue($id > 0);
-        $this->typeAsset[TypeAsset::ATTR_ID] = $id;
+        $this->typeAssetId = $id;
         $this->_logger->debug("Asset type is created (#$id).");
     }
 
     private function _createTypeOperation()
     {
-        $tbl = $this->_resource->getTableName(TypeOperation::ENTITY_NAME);
-        /* create one asset type */
-        $this->_conn->insert(
-            $tbl,
-            [TypeOperation::ATTR_CODE => 'code', TypeOperation::ATTR_NOTE => 'note']
-        );
-        $id = $this->_conn->lastInsertId($tbl);
+        $bind = [
+            TypeOperation::ATTR_CODE => self::DATA_TYPE_OPER_CODE,
+            TypeOperation::ATTR_NOTE => 'Operation for integration tests.'
+        ];
+        $id = $this->_repoBasic->addEntity(TypeOperation::ENTITY_NAME, $bind);
         $this->assertTrue($id > 0);
-        $this->typeOperation[TypeOperation::ATTR_ID] = $id;
+        $this->typeOperId = $id;
         $this->_logger->debug("Operation type is created (#$id).");
     }
 
@@ -223,7 +214,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $this->_conn->beginTransaction();
         try {
             /** create 2 customers */
-            $this->_createCustomers();
+            $this->_createMageCustomers(2);
             /** create 1 type of the assets */
             $this->_createTypeAsset();
             /** create 1 type of the operations */
@@ -239,8 +230,8 @@ class Main_IntegrationTest extends BaseIntegrationTest
             /** validate history of the account balances */
             $this->_checkBalancesHistory();
         } finally {
-            // $this->_conn->commit();
-            $this->_conn->rollBack();
+             $this->_conn->commit();
+//            $this->_conn->rollBack();
         }
         $this->_logger->debug('Story01 in Accounting Integration test is completed, all transactions are rolled back.');
     }
