@@ -2,21 +2,21 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Accounting\Repo\Def;
+namespace Praxigento\Accounting\Repo\Entity\Def;
 
 use Magento\Framework\App\ObjectManager;
 
-include_once(__DIR__ . '/../../phpunit_bootstrap.php');
+include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Account_ManualTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
 {
-    /** @var  \Praxigento\Accounting\Repo\Def\Account */
+    /** @var  \Praxigento\Accounting\Repo\Entity\Def\Account */
     private $_obj;
 
     public function setUp()
     {
         parent::setUp();
-        $this->_obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Repo\Def\Account::class);
+        $this->_obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Repo\Entity\Def\Account::class);
     }
 
     public function test_getByCustomerId()

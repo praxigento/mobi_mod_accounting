@@ -10,13 +10,13 @@ include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Asset_ManualTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
 {
-    /** @var  \Praxigento\Accounting\Repo\Type\Def\Asset */
+    /** @var  \Praxigento\Accounting\Repo\Entity\Type\Def\Asset */
     private $_obj;
 
     public function setUp()
     {
         parent::setUp();
-        $this->_obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Repo\Type\Def\Asset::class);
+        $this->_obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Repo\Entity\Type\Def\Asset::class);
     }
 
     public function test_getIdByCode()

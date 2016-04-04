@@ -3,10 +3,10 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Repo\Def;
+namespace Praxigento\Accounting\Repo\Entity\Def;
 
 use Praxigento\Accounting\Data\Entity\Transaction as EntityTransaction;
-use Praxigento\Accounting\Repo\ITransaction;
+use Praxigento\Accounting\Repo\Entity\ITransaction;
 use Praxigento\Core\Repo\Def\Base;
 
 class Transaction extends Base implements ITransaction

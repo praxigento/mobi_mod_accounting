@@ -11,9 +11,9 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements \Praxigento
 {
     /** @var Sub\Add */
     protected $_subAdd;
-    /** @var  \Praxigento\Accounting\Repo\IOperation */
+    /** @var  \Praxigento\Accounting\Repo\Entity\IOperation */
     protected $_repoOper;
-    /** @var  \Praxigento\Accounting\Repo\Type\IOperation */
+    /** @var  \Praxigento\Accounting\Repo\Entity\Type\IOperation */
     protected $_repoTypeOper;
     /** @var  \Praxigento\Core\Lib\Context\ITransactionManager */
     protected $_manTrans;
@@ -21,8 +21,8 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements \Praxigento
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\Lib\Context\ITransactionManager $manTrans,
-        \Praxigento\Accounting\Repo\IOperation $repoOper,
-        \Praxigento\Accounting\Repo\Type\IOperation $repoTypeOper,
+        \Praxigento\Accounting\Repo\Entity\IOperation $repoOper,
+        \Praxigento\Accounting\Repo\Entity\Type\IOperation $repoTypeOper,
         Sub\Add $subAdd
     ) {
         parent::__construct($logger);

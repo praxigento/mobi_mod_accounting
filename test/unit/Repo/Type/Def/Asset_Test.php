@@ -11,7 +11,7 @@ include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Asset_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
 {
-    /** @var  \Praxigento\Accounting\Repo\Type\Def\Asset */
+    /** @var  \Praxigento\Accounting\Repo\Entity\Type\Def\Asset */
     private $obj;
     /** @var  \Mockery\MockInterface */
     private $mDba;
@@ -23,7 +23,7 @@ class Asset_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
         parent::setUp();
         $this->mDba = $this->_mockDba();
         $this->mRsrcConn = $this->_mockResourceConnection($this->mDba);
-        $this->obj = new \Praxigento\Accounting\Repo\Type\Def\Asset($this->mRsrcConn);
+        $this->obj = new \Praxigento\Accounting\Repo\Entity\Type\Def\Asset($this->mRsrcConn);
     }
 
     public function test_install()

@@ -3,10 +3,10 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Repo\Type\Def;
+namespace Praxigento\Accounting\Repo\Entity\Type\Def;
 
 use Praxigento\Accounting\Data\Entity\Type\Asset as EntityAsset;
-use Praxigento\Accounting\Repo\Type\IAsset;
+use Praxigento\Accounting\Repo\Entity\Type\IAsset;
 use Praxigento\Core\Repo\Def\Type as BaseType;
 
 class Asset extends BaseType implements IAsset

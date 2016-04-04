@@ -7,7 +7,7 @@ namespace Praxigento\Accounting\Lib\Repo\Def;
 use Magento\Framework\App\ObjectManager;
 use Praxigento\Core\Lib\Context;
 
-include_once(__DIR__ . '/../../phpunit_bootstrap.php');
+include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Module_ManualTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
 {

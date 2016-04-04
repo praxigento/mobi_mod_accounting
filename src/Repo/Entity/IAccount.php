@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Repo;
+namespace Praxigento\Accounting\Repo\Entity;
 
 
 interface IAccount

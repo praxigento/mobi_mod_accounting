@@ -12,13 +12,13 @@ use Praxigento\Core\Lib\Service\Repo\Request\GetEntities as GetEntitiesRequest;
 
 class Call extends BaseCall implements IAccount
 {
-    /** @var \Praxigento\Accounting\Repo\Type\IAsset */
+    /** @var \Praxigento\Accounting\Repo\Entity\Type\IAsset */
     protected $_repoTypeAsset;
     /** @var \Praxigento\Accounting\Lib\Repo\IModule */
     protected $_repoMod;
     /** @var array save accounts data for representative customer. */
     protected $_cachedRepresentativeAccs = [];
-    /** @var  \Praxigento\Accounting\Repo\IAccount */
+    /** @var  \Praxigento\Accounting\Repo\Entity\IAccount */
     protected $_repoAccount;
 
     /**
@@ -26,8 +26,8 @@ class Call extends BaseCall implements IAccount
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Accounting\Repo\IAccount $repoAccount,
-        \Praxigento\Accounting\Repo\Type\IAsset $repoTypeAsset,
+        \Praxigento\Accounting\Repo\Entity\IAccount $repoAccount,
+        \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset,
         \Praxigento\Accounting\Lib\Repo\IModule $repoMod
     ) {
         parent::__construct($logger);

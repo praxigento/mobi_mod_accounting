@@ -3,10 +3,10 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Repo\Def;
+namespace Praxigento\Accounting\Repo\Entity\Def;
 
 use Praxigento\Accounting\Data\Entity\Operation as EntityOperation;
-use Praxigento\Accounting\Repo\IOperation;
+use Praxigento\Accounting\Repo\Entity\IOperation;
 use Praxigento\Core\Repo\Def\Base;
 
 class Operation extends Base implements IOperation
