@@ -6,9 +6,7 @@ namespace Praxigento\Accounting\Lib\Service\Account;
 
 use Praxigento\Accounting\Data\Entity\Account as Account;
 use Praxigento\Accounting\Lib\Service\IAccount;
-use Praxigento\Accounting\Lib\Service\Type\Asset\Request\GetByCode as TypeAssetRequestGetByCode;
 use Praxigento\Core\Lib\Service\Base\Call as BaseCall;
-use Praxigento\Core\Lib\Service\Repo\Request\GetEntities as GetEntitiesRequest;
 
 class Call extends BaseCall implements IAccount
 {
@@ -20,17 +18,21 @@ class Call extends BaseCall implements IAccount
     protected $_cachedRepresentativeAccs = [];
     /** @var  \Praxigento\Accounting\Repo\Entity\IAccount */
     protected $_repoAccount;
+    /** @var \Praxigento\Core\Repo\IBasic */
+    protected $_repoBasic;
 
     /**
      * Call constructor.
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
+        \Praxigento\Core\Repo\IBasic $repoBasic,
         \Praxigento\Accounting\Repo\Entity\IAccount $repoAccount,
         \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset,
         \Praxigento\Accounting\Lib\Repo\IModule $repoMod
     ) {
         parent::__construct($logger);
+        $this->_repoBasic = $repoBasic;
         $this->_repoAccount = $repoAccount;
         $this->_repoTypeAsset = $repoTypeAsset;
         $this->_repoMod = $repoMod;
@@ -105,9 +107,7 @@ class Call extends BaseCall implements IAccount
         $typeCode = $request->getAssetTypeCode();
         $this->_logger->info("'Get representative account' operation is called.");
         if (is_null($typeId)) {
-            $reqCode = new TypeAssetRequestGetByCode($typeCode);
-            $respCode = $this->_repoTypeAsset->getByCode($reqCode);
-            $typeId = $respCode->getId();
+            $typeId = $this->_repoTypeAsset->getIdByCode($typeCode);
         }
         if (!is_null($typeId)) {
             if (isset($this->_cachedRepresentativeAccs[$typeId])) {
@@ -118,12 +118,11 @@ class Call extends BaseCall implements IAccount
                 /* get representative customer ID */
                 $customerId = $this->_repoMod->getRepresentativeCustomerId();
                 /* get all accounts for the representative customer */
-                $where = Account::ATTR_CUST_ID . '=' . $customerId;
-                $req = new GetEntitiesRequest(Account::ENTITY_NAME, $where);
-                $resp = $this->_callRepo->getEntities($req);
-                if ($resp->isSucceed()) {
+                $where = Account::ATTR_CUST_ID . '=' . (int)$customerId;
+                $data = $this->_repoBasic->getEntities(Account::ENTITY_NAME, null, $where);
+                if ($data) {
                     $mapped = [];
-                    foreach ($resp->getData() as $one) {
+                    foreach ($data as $one) {
                         $mapped[$one[Account::ATTR_ASSET_TYPE_ID]] = $one;
                     }
                     $this->_cachedRepresentativeAccs = $mapped;
