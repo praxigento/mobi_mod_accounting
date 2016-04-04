@@ -15,12 +15,12 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements \Praxigento
     protected $_repoOper;
     /** @var  \Praxigento\Accounting\Repo\Entity\Type\IOperation */
     protected $_repoTypeOper;
-    /** @var  \Praxigento\Core\Lib\Context\ITransactionManager */
+    /** @var  \Praxigento\Core\Repo\ITransactionManager */
     protected $_manTrans;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Lib\Context\ITransactionManager $manTrans,
+        \Praxigento\Core\Repo\ITransactionManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\IOperation $repoOper,
         \Praxigento\Accounting\Repo\Entity\Type\IOperation $repoTypeOper,
         Sub\Add $subAdd

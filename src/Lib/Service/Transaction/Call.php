@@ -15,7 +15,7 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ITransactio
      * @var \Praxigento\Accounting\Lib\Service\Account\Call
      */
     protected $_callAccount;
-    /** @var  \Praxigento\Core\Lib\Context\ITransactionManager */
+    /** @var  \Praxigento\Core\Repo\ITransactionManager */
     protected $_manTrans;
     /** @var  \Praxigento\Accounting\Repo\Entity\IAccount */
     protected $_repoAcc;
@@ -27,7 +27,7 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ITransactio
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Lib\Context\ITransactionManager $manTrans,
+        \Praxigento\Core\Repo\ITransactionManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\IAccount $repoAcc,
         \Praxigento\Accounting\Repo\Entity\ITransaction $repoTrans,
         \Praxigento\Accounting\Lib\Service\Account\Call $callAccount
