@@ -18,10 +18,10 @@ class Operation extends Base implements IOperation
      * Account constructor.
      */
     public function __construct(
-        \Magento\Framework\App\ResourceConnection $rsrcConn,
+        \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IBasic $repoBasic
     ) {
-        parent::__construct($rsrcConn);
+        parent::__construct($resource);
         $this->_repoBasic = $repoBasic;
     }
 
