@@ -61,7 +61,7 @@ class Account extends Base implements IAccount
 
     public function updateBalance($accountId, $delta)
     {
-        $tbl = $this->_dba->getTableName(EntityAccount::ENTITY_NAME);
+        $tbl = $this->_conn->getTableName(EntityAccount::ENTITY_NAME);
         /* wrap expression into \Zend_Db_Expr */
         if ($delta < 0) {
             $exp = new \Zend_Db_Expr(EntityAccount::ATTR_BALANCE . '-' . abs($delta));
@@ -70,7 +70,7 @@ class Account extends Base implements IAccount
         }
         $bind = [EntityAccount::ATTR_BALANCE => $exp];
         $where = EntityAccount::ATTR_ID . '=' . $accountId;
-        $rowsUpdated = $this->_dba->update($tbl, $bind, $where);
+        $rowsUpdated = $this->_conn->update($tbl, $bind, $where);
         return $rowsUpdated;
     }
 }

@@ -230,8 +230,8 @@ class Main_IntegrationTest extends BaseIntegrationTest
             /** validate history of the account balances */
             $this->_checkBalancesHistory();
         } finally {
-             $this->_conn->commit();
-//            $this->_conn->rollBack();
+            // $this->_conn->commit();
+            $this->_conn->rollBack();
         }
         $this->_logger->debug('Story01 in Accounting Integration test is completed, all transactions are rolled back.');
     }
