@@ -6,8 +6,6 @@
  */
 namespace Praxigento\Accounting\Setup;
 
-use Magento\Framework\Setup\ModuleContextInterface;
-use Magento\Framework\Setup\SchemaSetupInterface;
 use Praxigento\Accounting\Data\Entity\Account as Account;
 use Praxigento\Accounting\Data\Entity\Balance as Balance;
 use Praxigento\Accounting\Data\Entity\Operation as Operation;
@@ -19,7 +17,7 @@ use Praxigento\Core\Lib\Setup\Db as Db;
 class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
 {
 
-    protected function _setup(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    protected function _setup()
     {
         /** Read and parse JSON schema. */
         $pathToFile = __DIR__ . '/../etc/dem.json';
