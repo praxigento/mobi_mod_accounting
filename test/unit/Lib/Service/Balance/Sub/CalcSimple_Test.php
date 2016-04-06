@@ -45,7 +45,7 @@ class CalcSimple_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
             ]
         ];
         /** === Mocks === */
-        $mToolPeriod = $this->_mockFor('Praxigento\Core\Lib\Tool\Period');
+        $mToolPeriod = $this->_mockFor('Praxigento\Core\Tool\IPeriod');
 
         // $date = $this->_toolPeriod->getPeriodCurrent($timestamp, Period::TYPE_DAY);
         $mToolPeriod

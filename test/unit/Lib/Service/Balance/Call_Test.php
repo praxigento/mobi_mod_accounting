@@ -19,7 +19,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $mLogger = $this->_mockLogger();
         $mConn = $this->_mockConnection();
         $mDba = $this->_mockDbAdapter(null, $mConn);
-        $mToolPeriod = $this->_mockFor('Praxigento\Core\Lib\Tool\Period');
+        $mToolPeriod = $this->_mockFor('Praxigento\Core\Tool\IPeriod');
         $mToolbox = $this->_mockToolbox(null, null, null, $mToolPeriod);
         $mCallRepo = $this->_mockCallRepo();
         $mRepoMod = $this->_mockFor('\Praxigento\Accounting\Lib\Repo\IModule');
@@ -50,7 +50,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
          * @var $mDba \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Context\IDbAdapter
          * @var $mConn \PHPUnit_Framework_MockObject_MockObject for \Zend_Db_Adapter_Pdo_Abstract
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
-         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Tool\Period
+         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
          * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple
@@ -83,7 +83,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
          * @var $mDba \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Context\IDbAdapter
          * @var $mConn \PHPUnit_Framework_MockObject_MockObject for \Zend_Db_Adapter_Pdo_Abstract
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
-         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Tool\Period
+         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
          * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple
@@ -120,7 +120,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
          * @var $mDba \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Context\IDbAdapter
          * @var $mConn \PHPUnit_Framework_MockObject_MockObject for \Zend_Db_Adapter_Pdo_Abstract
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
-         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Tool\Period
+         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
          * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple
@@ -158,7 +158,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
          * @var $mDba \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Context\IDbAdapter
          * @var $mConn \PHPUnit_Framework_MockObject_MockObject for \Zend_Db_Adapter_Pdo_Abstract
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
-         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Tool\Period
+         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
          * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple
@@ -202,7 +202,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
          * @var $mDba \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Context\IDbAdapter
          * @var $mConn \PHPUnit_Framework_MockObject_MockObject for \Zend_Db_Adapter_Pdo_Abstract
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
-         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Tool\Period
+         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
          * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple
@@ -253,7 +253,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
          * @var $mDba \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Context\IDbAdapter
          * @var $mConn \PHPUnit_Framework_MockObject_MockObject for \Zend_Db_Adapter_Pdo_Abstract
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
-         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Tool\Period
+         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
          * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple
@@ -304,7 +304,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
          * @var $mDba \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Context\IDbAdapter
          * @var $mConn \PHPUnit_Framework_MockObject_MockObject for \Zend_Db_Adapter_Pdo_Abstract
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
-         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Tool\Period
+         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
          * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple

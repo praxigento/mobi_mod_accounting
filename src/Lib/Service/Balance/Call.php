@@ -7,7 +7,7 @@ namespace Praxigento\Accounting\Lib\Service\Balance;
 
 use Praxigento\Accounting\Data\Entity\Balance;
 use Praxigento\Accounting\Lib\Service\IBalance;
-use Praxigento\Core\Lib\Tool\Period;
+use Praxigento\Core\Tool\IPeriod;
 
 class Call extends \Praxigento\Core\Lib\Service\Base\Call implements IBalance
 {
@@ -17,12 +17,12 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements IBalance
     protected $_repoMod;
     /** @var Sub\CalcSimple Simple balance calculator. */
     protected $_subCalcSimple;
-    /** @var  \Praxigento\Core\Lib\Tool\Period */
+    /** @var  \Praxigento\Core\Tool\IPeriod */
     protected $_toolPeriod;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Lib\Tool\Period $toolPeriod,
+        \Praxigento\Core\Tool\IPeriod $toolPeriod,
         \Praxigento\Accounting\Lib\Repo\IModule $repoMod,
         Sub\CalcSimple $subCalcSimple
     ) {
@@ -51,8 +51,8 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements IBalance
         $lastDate = $respLastDate->getLastDate();
         $balances = $this->_repoMod->getBalancesOnDate($assetTypeId, $lastDate);
         /* get transactions for period */
-        $dtFrom = $this->_toolPeriod->getTimestampFrom($lastDate, Period::TYPE_DAY);
-        $dtTo = $this->_toolPeriod->getTimestampTo($dateTo, Period::TYPE_DAY);
+        $dtFrom = $this->_toolPeriod->getTimestampFrom($lastDate, IPeriod::TYPE_DAY);
+        $dtTo = $this->_toolPeriod->getTimestampTo($dateTo, IPeriod::TYPE_DAY);
         $trans = $this->_repoMod->getTransactionsForPeriod($assetTypeId, $dtFrom, $dtTo);
         $updates = $this->_subCalcSimple->calcBalances($balances, $trans);
         $this->_repoMod->updateBalances($updates);
@@ -99,7 +99,7 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements IBalance
         $balanceMaxDate = $this->_repoMod->getBalanceMaxDate($assetTypeId);
         if ($balanceMaxDate) {
             /* there is balance data */
-            $dayBefore = $this->_toolPeriod->getPeriodPrev($balanceMaxDate, Period::TYPE_DAY);
+            $dayBefore = $this->_toolPeriod->getPeriodPrev($balanceMaxDate, IPeriod::TYPE_DAY);
             $result->setData([Response\GetLastDate::LAST_DATE => $dayBefore]);
             $result->setAsSucceed();
         } else {
@@ -107,7 +107,7 @@ class Call extends \Praxigento\Core\Lib\Service\Base\Call implements IBalance
             $transactionMinDate = $this->_repoMod->getTransactionMinDateApplied($assetTypeId);
             if ($transactionMinDate) {
                 $period = $this->_toolPeriod->getPeriodCurrent($transactionMinDate);
-                $dayBefore = $this->_toolPeriod->getPeriodPrev($period, Period::TYPE_DAY);
+                $dayBefore = $this->_toolPeriod->getPeriodPrev($period, IPeriod::TYPE_DAY);
                 $result->setData([Response\GetLastDate::LAST_DATE => $dayBefore]);
                 $result->setAsSucceed();
             }
