@@ -13,7 +13,7 @@ use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
-class Schema_UnitTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
+class Schema_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
 
     public function test_install() {
         /** === Test Data === */
