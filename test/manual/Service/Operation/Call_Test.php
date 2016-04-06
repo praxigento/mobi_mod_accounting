@@ -12,7 +12,7 @@ include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
 
     public function test_add() {
-        $obm = Context::instance()->getObjectManager();
+        $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call \Praxigento\Accounting\Lib\Service\Operation\Call */
         $call = $obm->get('Praxigento\Accounting\Lib\Service\Operation\Call');
         $req = new Request\Add();

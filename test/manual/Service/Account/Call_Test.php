@@ -5,14 +5,16 @@
 namespace Praxigento\Accounting\Lib\Service\Account;
 
 use Praxigento\Accounting\Lib\Service\Account\Request\GetRepresentative as GetRepresentativeRequest;
-use Praxigento\Core\Lib\Context;
+
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
-class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
+class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase
+{
 
-    public function test_get() {
-        $obm = Context::instance()->getObjectManager();
+    public function test_get()
+    {
+        $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call \Praxigento\Accounting\Lib\Service\Account\Call */
         $call = $obm->get('Praxigento\Accounting\Lib\Service\Account\Call');
         $request = new Request\Get();
@@ -23,8 +25,9 @@ class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $this->assertTrue($response->isSucceed());
     }
 
-    public function test_getRepresentative() {
-        $obm = Context::instance()->getObjectManager();
+    public function test_getRepresentative()
+    {
+        $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call \Praxigento\Accounting\Lib\Service\Account\Call */
         $call = $obm->get('Praxigento\Accounting\Lib\Service\Account\Call');
         $request = new Request\GetRepresentative();
@@ -33,8 +36,9 @@ class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
         $this->assertTrue($response->isSucceed());
     }
 
-    public function test_updateBalance() {
-        $obm = Context::instance()->getObjectManager();
+    public function test_updateBalance()
+    {
+        $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call \Praxigento\Accounting\Lib\Service\Account\Call */
         $call = $obm->get('Praxigento\Accounting\Lib\Service\Account\Call');
         $request = new Request\UpdateBalance();

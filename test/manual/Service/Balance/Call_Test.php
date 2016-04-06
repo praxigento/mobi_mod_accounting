@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Balance;
 
-use Praxigento\Core\Lib\Context;
+
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
@@ -12,7 +12,7 @@ class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
     const ASSET_TYPE_ID = 1;
 
     public function test_getLastDate() {
-        $obm = Context::instance()->getObjectManager();
+        $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call \Praxigento\Accounting\Lib\Service\Balance\Call */
         $call = $obm->get('Praxigento\Accounting\Lib\Service\Balance\Call');
         $req = new Request\GetLastDate();
@@ -25,7 +25,7 @@ class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
     }
 
     public function test_getBalancesOnDate() {
-        $obm = Context::instance()->getObjectManager();
+        $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call \Praxigento\Accounting\Lib\Service\Balance\Call */
         $call = $obm->get('Praxigento\Accounting\Lib\Service\Balance\Call');
         $req = new Request\GetBalancesOnDate();
@@ -39,7 +39,7 @@ class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
     }
 
     public function test_calc() {
-        $obm = Context::instance()->getObjectManager();
+        $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call \Praxigento\Accounting\Lib\Service\Balance\Call */
         $call = $obm->get('Praxigento\Accounting\Lib\Service\Balance\Call');
         $req = new Request\Calc();
@@ -51,7 +51,7 @@ class Call_ManualTest extends \Praxigento\Core\Lib\Test\BaseTestCase {
     }
 
     public function test_reset() {
-        $obm = Context::instance()->getObjectManager();
+        $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call \Praxigento\Accounting\Lib\Service\Balance\Call */
         $call = $obm->get('Praxigento\Accounting\Lib\Service\Balance\Call');
         $req = new Request\Reset();

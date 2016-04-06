@@ -13,7 +13,6 @@ use Praxigento\Accounting\Lib\Service\Account\Request\Get as AccountGetRequest;
 use Praxigento\Accounting\Lib\Service\Balance\Request\Calc as BalanceCalcRequest;
 use Praxigento\Accounting\Lib\Service\Operation\Request\Add as OperationAddRequest;
 use Praxigento\Accounting\Lib\Service\Operation\Response\Add as OperationAddResponse;
-use Praxigento\Core\Lib\Context;
 use Praxigento\Core\Lib\Test\BaseIntegrationTest;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');

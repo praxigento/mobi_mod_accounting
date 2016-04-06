@@ -11,7 +11,7 @@ use Praxigento\Accounting\Data\Entity\Operation as Operation;
 use Praxigento\Accounting\Data\Entity\Transaction as Transaction;
 use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
-use Praxigento\Core\Lib\Context;
+
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
