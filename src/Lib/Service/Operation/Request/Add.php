@@ -16,5 +16,5 @@ namespace Praxigento\Accounting\Lib\Service\Operation\Request;
  * @method string getAsTransRef() name of the field in Transactions data to bind new transaction ID to the field's value (bind transaction id with sale id or customer id)
  * @method void setAsTransRef(string $data)
  */
-class Add extends \Praxigento\Core\Lib\Service\Base\Request {
+class Add extends \Praxigento\Core\Service\Base\Request {
 }

@@ -8,6 +8,6 @@ namespace Praxigento\Accounting\Lib\Service\Transaction\Response;
  * @method int getTransactionId()
  * @method void setTransactionId(int $data)
  */
-class Add extends \Praxigento\Core\Lib\Service\Base\Response {
+class Add extends \Praxigento\Core\Service\Base\Response {
 
 }

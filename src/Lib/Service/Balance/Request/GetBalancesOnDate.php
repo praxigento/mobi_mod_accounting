@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Balance\Request;
 
-class GetBalancesOnDate extends \Praxigento\Core\Lib\Service\Base\Request {
+class GetBalancesOnDate extends \Praxigento\Core\Service\Base\Request {
     /**
      * Date as datestamp (YYYYMMDD).
      *

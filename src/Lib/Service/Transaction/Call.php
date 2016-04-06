@@ -9,7 +9,7 @@ use Praxigento\Accounting\Data\Entity\Account as Account;
 use Praxigento\Accounting\Data\Entity\Transaction as Transaction;
 use Praxigento\Accounting\Lib\Service\ITransaction;
 
-class Call extends \Praxigento\Core\Lib\Service\Base\Call implements ITransaction
+class Call extends \Praxigento\Core\Service\Base\Call implements ITransaction
 {
     /**
      * @var \Praxigento\Accounting\Lib\Service\Account\Call

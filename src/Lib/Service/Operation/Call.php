@@ -7,7 +7,7 @@ namespace Praxigento\Accounting\Lib\Service\Operation;
 
 use Praxigento\Accounting\Data\Entity\Operation as EntityOperation;
 
-class Call extends \Praxigento\Core\Lib\Service\Base\Call implements \Praxigento\Accounting\Lib\Service\IOperation
+class Call extends \Praxigento\Core\Service\Base\Call implements \Praxigento\Accounting\Lib\Service\IOperation
 {
     /** @var Sub\Add */
     protected $_subAdd;

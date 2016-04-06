@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Account\Request;
 
-class Get extends \Praxigento\Core\Lib\Service\Base\Request {
+class Get extends \Praxigento\Core\Service\Base\Request {
     /**
      * ID of the account. $accountId has the highest priority for identity.
      * @var int

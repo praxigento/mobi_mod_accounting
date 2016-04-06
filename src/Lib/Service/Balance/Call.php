@@ -9,7 +9,7 @@ use Praxigento\Accounting\Data\Entity\Balance;
 use Praxigento\Accounting\Lib\Service\IBalance;
 use Praxigento\Core\Tool\IPeriod;
 
-class Call extends \Praxigento\Core\Lib\Service\Base\Call implements IBalance
+class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
 {
     /**
      * @var \Praxigento\Accounting\Lib\Repo\IModule

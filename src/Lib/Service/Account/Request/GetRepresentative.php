@@ -13,5 +13,5 @@ namespace Praxigento\Accounting\Lib\Service\Account\Request;
  * @method int getAssetTypeId() ID of the account's asset type.
  * @method void setAssetTypeId(int $data)
  */
-class GetRepresentative extends \Praxigento\Core\Lib\Service\Base\Request {
+class GetRepresentative extends \Praxigento\Core\Service\Base\Request {
 }

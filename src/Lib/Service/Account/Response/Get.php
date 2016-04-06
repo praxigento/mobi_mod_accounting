@@ -4,6 +4,6 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Account\Response;
 
-class Get extends \Praxigento\Core\Lib\Service\Base\Response {
+class Get extends \Praxigento\Core\Service\Base\Response {
 
 }

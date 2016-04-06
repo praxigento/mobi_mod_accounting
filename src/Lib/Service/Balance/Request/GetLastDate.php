@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Balance\Request;
 
-class GetLastDate extends \Praxigento\Core\Lib\Service\Base\Request {
+class GetLastDate extends \Praxigento\Core\Service\Base\Request {
     /**
      * ID of the account's asset type. Use $accountTypeId or $assetTypeCode to set asset type. $assetTypeId is more
      * preferable then $assetTypeCode (if both are set).

@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Balance\Request;
 
-class Reset extends \Praxigento\Core\Lib\Service\Base\Request {
+class Reset extends \Praxigento\Core\Service\Base\Request {
     /**
      * Reset balance starting from this date (including).
      *

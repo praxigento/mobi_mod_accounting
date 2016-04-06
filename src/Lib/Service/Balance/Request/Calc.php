@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Balance\Request;
 
-class Calc extends \Praxigento\Core\Lib\Service\Base\Request {
+class Calc extends \Praxigento\Core\Service\Base\Request {
     /**
      * ID of the account's asset type.
      * @var int

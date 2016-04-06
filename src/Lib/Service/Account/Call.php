@@ -6,7 +6,7 @@ namespace Praxigento\Accounting\Lib\Service\Account;
 
 use Praxigento\Accounting\Data\Entity\Account as Account;
 use Praxigento\Accounting\Lib\Service\IAccount;
-use Praxigento\Core\Lib\Service\Base\Call as BaseCall;
+use Praxigento\Core\Service\Base\Call as BaseCall;
 
 class Call extends BaseCall implements IAccount
 {

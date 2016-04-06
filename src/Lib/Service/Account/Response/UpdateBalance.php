@@ -4,6 +4,6 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Account\Response;
 
-class UpdateBalance extends \Praxigento\Core\Lib\Service\Base\Response {
+class UpdateBalance extends \Praxigento\Core\Service\Base\Response {
 
 }

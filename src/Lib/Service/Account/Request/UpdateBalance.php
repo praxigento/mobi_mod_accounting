@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Account\Request;
 
-class UpdateBalance extends \Praxigento\Core\Lib\Service\Base\Request {
+class UpdateBalance extends \Praxigento\Core\Service\Base\Request {
     const ACCOUNT_ID = 'account_id';
     const CHANGE_VALUE = 'change_value';
 

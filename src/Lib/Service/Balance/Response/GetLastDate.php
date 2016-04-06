@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Lib\Service\Balance\Response;
 
-class GetLastDate extends \Praxigento\Core\Lib\Service\Base\Response {
+class GetLastDate extends \Praxigento\Core\Service\Base\Response {
     const LAST_DATE = 'last_date';
 
     public function getLastDate() {
