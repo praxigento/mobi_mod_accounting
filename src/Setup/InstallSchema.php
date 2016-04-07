@@ -12,7 +12,6 @@ use Praxigento\Accounting\Data\Entity\Operation as Operation;
 use Praxigento\Accounting\Data\Entity\Transaction as Transaction;
 use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
-use Praxigento\Core\Lib\Setup\Db as Db;
 
 class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
 {
