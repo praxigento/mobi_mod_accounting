@@ -17,22 +17,28 @@ include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
 class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
 {
-    /** @var  \Praxigento\Accounting\Setup\InstallSchema */
-    private $obj;
     /** @var  \Mockery\MockInterface */
-    private $mDem;
+    private $mConn;
+    /** @var  \Mockery\MockInterface */
+    private $mContext;
     /** @var  \Mockery\MockInterface */
     private $mSetup;
     /** @var  \Mockery\MockInterface */
-    private $mContext;
+    private $mToolDem;
+    /** @var  InstallSchema */
+    private $obj;
 
     public function setUp()
     {
         parent::setUp();
+        /* create mocks */
+        $this->mConn = $this->_mockConn();
+        $this->mToolDem = $this->_mock(\Praxigento\Core\Setup\Dem\Tool::class);
         $this->mSetup = $this->_mock(\Magento\Framework\Setup\SchemaSetupInterface::class);
         $this->mContext = $this->_mock(\Magento\Framework\Setup\ModuleContextInterface::class);
-        $this->mDem = $this->_mock(\Praxigento\Core\Setup\Dem\Tool::class);
-        $this->obj = new \Praxigento\Accounting\Setup\InstallSchema($this->mDem);
+        /* create object */
+        $mResource = $this->_mockResourceConnection($this->mConn);
+        $this->obj = new InstallSchema($mResource, $this->mToolDem);
     }
 
     public function test_install()
@@ -44,7 +50,7 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
             ->shouldReceive('startSetup')->once();
         // $demPackage = $this->_toolDem->readDemPackage($pathToFile, $pathToNode);
         $mDemPackage = $this->_mock(DataObject::class);
-        $this->mDem
+        $this->mToolDem
             ->shouldReceive('readDemPackage')->once()
             ->withArgs([anything(), '/dBEAR/package/Praxigento/package/Accounting'])
             ->andReturn($mDemPackage);
@@ -53,12 +59,12 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
         //
         // $this->_toolDem->createEntity($entityAlias, $demEntity);
         //
-        $this->mDem->shouldReceive('createEntity')->withArgs([TypeAsset::ENTITY_NAME, anything()]);
-        $this->mDem->shouldReceive('createEntity')->withArgs([TypeOperation::ENTITY_NAME, anything()]);
-        $this->mDem->shouldReceive('createEntity')->withArgs([Account::ENTITY_NAME, anything()]);
-        $this->mDem->shouldReceive('createEntity')->withArgs([Operation::ENTITY_NAME, anything()]);
-        $this->mDem->shouldReceive('createEntity')->withArgs([Transaction::ENTITY_NAME, anything()]);
-        $this->mDem->shouldReceive('createEntity')->withArgs([Balance::ENTITY_NAME, anything()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([TypeAsset::ENTITY_NAME, anything()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([TypeOperation::ENTITY_NAME, anything()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([Account::ENTITY_NAME, anything()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([Operation::ENTITY_NAME, anything()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([Transaction::ENTITY_NAME, anything()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([Balance::ENTITY_NAME, anything()]);
         // $setup->endSetup();
         $this->mSetup
             ->shouldReceive('endSetup')->once();
