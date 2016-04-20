@@ -8,7 +8,7 @@ use Magento\Framework\App\ObjectManager;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
-class Account_ManualTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
+class Account_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
     /** @var  \Praxigento\Accounting\Repo\Entity\Def\Account */
     private $_obj;
