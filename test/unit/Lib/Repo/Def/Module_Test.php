@@ -17,7 +17,7 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
     /** @var  \Mockery\MockInterface */
     private $mDba;
     /** @var  \Mockery\MockInterface */
-    private $mRepoBasic;
+    private $mRepoGeneric;
     /** @var  Module */
     private $repo;
 
@@ -26,8 +26,8 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
         parent::setUp();
         $this->mDba = $this->_mockDba();
         $mRsrcConn = $this->_mockResourceConnection($this->mDba);
-        $this->mRepoBasic = $this->_mockRepoBasic();
-        $this->repo = new Module($mRsrcConn, $this->mRepoBasic);
+        $this->mRepoGeneric = $this->_mockRepoGeneric();
+        $this->repo = new Module($mRsrcConn, $this->mRepoGeneric);
     }
 
 
@@ -140,7 +140,7 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
             ->with($EMAIL)
             ->andReturn("'$EMAIL'");
         // $data = $this->_repoBasic->getEntities(Cfg::ENTITY_MAGE_CUSTOMER, Cfg::E_CUSTOMER_A_ENTITY_ID, $where);
-        $this->mRepoBasic
+        $this->mRepoGeneric
             ->shouldReceive('getEntities')
             ->andReturn([[Cfg::E_CUSTOMER_A_ENTITY_ID => $CUST_ID]]);
 
@@ -163,11 +163,11 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
             ->with($EMAIL)
             ->andReturn("'$EMAIL'");
         // $data = $this->_repoCore->getEntities(Cfg::ENTITY_MAGE_CUSTOMER, Cfg::E_CUSTOMER_A_ENTITY_ID, $where);
-        $this->mRepoBasic
+        $this->mRepoGeneric
             ->shouldReceive('getEntities')
             ->andReturn([]);
         // $id = $this->_repoCore->addEntity(Cfg::ENTITY_MAGE_CUSTOMER, $bind);
-        $this->mRepoBasic
+        $this->mRepoGeneric
             ->shouldReceive('addEntity')
             ->andReturn($CUST_ID);
 

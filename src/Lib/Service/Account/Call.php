@@ -18,7 +18,7 @@ class Call extends BaseCall implements IAccount
     protected $_cachedRepresentativeAccs = [];
     /** @var  \Praxigento\Accounting\Repo\Entity\IAccount */
     protected $_repoAccount;
-    /** @var \Praxigento\Core\Repo\IBasic */
+    /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoBasic;
 
     /**
@@ -26,7 +26,7 @@ class Call extends BaseCall implements IAccount
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Repo\IBasic $repoBasic,
+        \Praxigento\Core\Repo\IGeneric $repoBasic,
         \Praxigento\Accounting\Repo\Entity\IAccount $repoAccount,
         \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset,
         \Praxigento\Accounting\Lib\Repo\IModule $repoMod
