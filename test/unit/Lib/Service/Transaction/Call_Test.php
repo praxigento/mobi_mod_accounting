@@ -8,9 +8,16 @@ use Praxigento\Accounting\Data\Entity\Account;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
-class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
+class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
+{
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->markTestSkipped('Test is deprecated after M1 & M2 merge is done.');
+    }
 
-    public function test_add_commit() {
+    public function test_add_commit()
+    {
         /** === Test Data === */
         $ASSET_TYPE_ID = 3;
         $ACC_ID_DEBIT = 12;
@@ -85,7 +92,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
     /**
      * @expectedException \Exception
      */
-    public function test_add_rollback() {
+    public function test_add_rollback()
+    {
         /** === Test Data === */
         $ASSET_TYPE_ID_DEBIT = 3;
         $ASSET_TYPE_ID_CREDIT = 4;

@@ -10,9 +10,16 @@ use Praxigento\Accounting\Lib\Service\Balance\Sub;
 
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 
-class CalcSimple_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
+class CalcSimple_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
+{
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->markTestSkipped('Test is deprecated after M1 & M2 merge is done.');
+    }
 
-    public function test_calcBalances() {
+    public function test_calcBalances()
+    {
         /** === Test Data === */
         $ACC_FROM = 12;
         $ACC_TO = 21;
@@ -22,30 +29,32 @@ class CalcSimple_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
             $ACC_FROM => [
                 Balance::ATTR_BALANCE_CLOSE => 10
             ],
-            $ACC_TO   => [
+            $ACC_TO => [
                 Balance::ATTR_BALANCE_CLOSE => 20
             ]
         ];
         $TRANS = [
             [
-                Transaction::ATTR_DEBIT_ACC_ID  => $ACC_FROM,
+                Transaction::ATTR_DEBIT_ACC_ID => $ACC_FROM,
                 Transaction::ATTR_CREDIT_ACC_ID => $ACC_TO,
-                Transaction::ATTR_DATE_APPLIED  => '2015-11-23 18:19:20',
-                Transaction::ATTR_VALUE         => '10.00',
-            ], [
-                Transaction::ATTR_DEBIT_ACC_ID  => $ACC_FROM,
+                Transaction::ATTR_DATE_APPLIED => '2015-11-23 18:19:20',
+                Transaction::ATTR_VALUE => '10.00',
+            ],
+            [
+                Transaction::ATTR_DEBIT_ACC_ID => $ACC_FROM,
                 Transaction::ATTR_CREDIT_ACC_ID => $ACC_TO,
-                Transaction::ATTR_DATE_APPLIED  => '2015-11-23 18:19:22',
-                Transaction::ATTR_VALUE         => '20.00',
-            ], [
-                Transaction::ATTR_DEBIT_ACC_ID  => $ACC_FROM,
+                Transaction::ATTR_DATE_APPLIED => '2015-11-23 18:19:22',
+                Transaction::ATTR_VALUE => '20.00',
+            ],
+            [
+                Transaction::ATTR_DEBIT_ACC_ID => $ACC_FROM,
                 Transaction::ATTR_CREDIT_ACC_ID => $ACC_TO,
-                Transaction::ATTR_DATE_APPLIED  => '2015-11-24 18:20:24',
-                Transaction::ATTR_VALUE         => '30.00',
+                Transaction::ATTR_DATE_APPLIED => '2015-11-24 18:20:24',
+                Transaction::ATTR_VALUE => '30.00',
             ]
         ];
         /** === Mocks === */
-        $mToolPeriod = $this->_mockFor('Praxigento\Core\Tool\IPeriod');
+        $mToolPeriod = $this->_mock(\Praxigento\Core\Tool\IPeriod::class);
 
         // $date = $this->_toolPeriod->getPeriodCurrent($timestamp, Period::TYPE_DAY);
         $mToolPeriod

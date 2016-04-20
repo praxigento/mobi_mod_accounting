@@ -8,14 +8,15 @@ use Praxigento\Accounting\Data\Entity\Balance;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
-class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
-
+class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
+{
     /**
      * Prepare mocks and object to test.
      *
      * @return array
      */
-    private function _prepareMocks() {
+    private function _prepareMocks()
+    {
         $mLogger = $this->_mockLogger();
         $mConn = $this->_mockConnection();
         $mDba = $this->_mockDbAdapter(null, $mConn);
@@ -26,20 +27,27 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $mSubCalcSimple = $this->_mockFor('Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple');
         $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mRepoMod, $mSubCalcSimple);
         $result = [
-            'mLogger'        => $mLogger,
-            'mDba'           => $mDba,
-            'mConn'          => $mConn,
-            'mToolbox'       => $mToolbox,
-            'mToolPeriod'    => $mToolPeriod,
-            'mCallRepo'      => $mCallRepo,
-            'mRepoMod'       => $mRepoMod,
+            'mLogger' => $mLogger,
+            'mDba' => $mDba,
+            'mConn' => $mConn,
+            'mToolbox' => $mToolbox,
+            'mToolPeriod' => $mToolPeriod,
+            'mCallRepo' => $mCallRepo,
+            'mRepoMod' => $mRepoMod,
             'mSubCalcSimple' => $mSubCalcSimple,
-            'call'           => $call
+            'call' => $call
         ];
         return $result;
     }
 
-    public function test_calc() {
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->markTestSkipped('Test is deprecated after M1 & M2 merge is done.');
+    }
+
+    public function test_calc()
+    {
         /** === Test Data === */
         $ASSET_TYPE_ID = 21;
         $DATESTAMP_TO = '20151123';
@@ -72,7 +80,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertTrue($resp->isSucceed());
     }
 
-    public function test_getBalancesOnDate_fail() {
+    public function test_getBalancesOnDate_fail()
+    {
         /** === Test Data === */
         $ASSET_TYPE_ID = 21;
         $DATESTAMP = '20151123';
@@ -96,7 +105,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $mRepoMod
             ->expects($this->once())
             ->method('getBalancesOnDate')
-            ->will($this->returnValue([ ]));
+            ->will($this->returnValue([]));
         /**
          * Prepare request and perform call.
          */
@@ -109,7 +118,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertFalse($resp->isSucceed());
     }
 
-    public function test_getBalancesOnDate_success() {
+    public function test_getBalancesOnDate_success()
+    {
         /** === Test Data === */
         $ASSET_TYPE_ID = 21;
         $DATESTAMP = '20151123';
@@ -146,7 +156,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertTrue($resp->isSucceed());
     }
 
-    public function test_getLastDate_withBalanceMaxDate() {
+    public function test_getLastDate_withBalanceMaxDate()
+    {
         /** === Test Data === */
         $ASSET_TYPE_ID = 21;
         $DATESTAMP_MAX = '20151123';
@@ -189,7 +200,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertEquals($DATESTAMP_LAST, $resp->getLastDate());
     }
 
-    public function test_getLastDate_withTransactionMinDate() {
+    public function test_getLastDate_withTransactionMinDate()
+    {
         /** === Test Data === */
         $ASSET_TYPE_ID = 21;
         $TIMESTAMP_TRN_MIN = '2015-11-22 13:34:45';
@@ -243,7 +255,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertEquals($DATESTAMP_LAST, $resp->getLastDate());
     }
 
-    public function test_reset_fail() {
+    public function test_reset_fail()
+    {
         /** === Test Data === */
         $DATESTAMP_FROM = '20151123';
 
@@ -294,7 +307,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertFalse($resp->isSucceed());
     }
 
-    public function test_reset_success() {
+    public function test_reset_success()
+    {
         /** === Test Data === */
         $DATESTAMP_FROM = '20151123';
 

@@ -41,6 +41,12 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
         return $result;
     }
 
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->markTestSkipped('Test is deprecated after M1 & M2 merge is done.');
+    }
+
     public function test_cacheReset()
     {
         /** === Test Data === */

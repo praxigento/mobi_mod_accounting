@@ -20,21 +20,24 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
     /** @var  \Mockery\MockInterface */
     private $mLogger;
     /** @var  \Mockery\MockInterface */
+    private $mManTrans;
+    /** @var  \Mockery\MockInterface */
     private $mRepoMod;
     /** @var  \Mockery\MockInterface */
     private $mSubAdd;
 
-
     protected function setUp()
     {
         parent::setUp();
+        $this->markTestSkipped('Test is deprecated after M1 & M2 merge is done.');
         $this->mLogger = $this->_mock(\Psr\Log\LoggerInterface::class);
-
+        $this->mManTrans = $this->_mockTransactionManager();
         $this->mCallTypeOperation = $this->_mock(\Praxigento\Accounting\Lib\Service\Type\Operation\Call::class);
         $this->mRepoMod = $this->_mock(\Praxigento\Accounting\Lib\Repo\IModule ::class);
         $this->mSubAdd = $this->_mock(\Praxigento\Accounting\Lib\Service\Operation\Sub\Add::class);
         $this->call = new Call(
             $this->mLogger,
+            $this->mManTrans,
             $this->mCallTypeOperation,
             $this->mRepoMod,
             $this->mSubAdd
