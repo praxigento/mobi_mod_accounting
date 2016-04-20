@@ -75,7 +75,7 @@ class Call extends BaseCall implements IAccount
         /* analyze found data */
         if (is_array($data)) {
             $result->setData($data);
-            $result->setAsSucceed();
+            $result->markSucceed();
         } else {
             if ($createNewAccountIfMissed) {
                 /* not found - add new account */
@@ -87,7 +87,7 @@ class Call extends BaseCall implements IAccount
                 $created = $this->_repoAccount->create($data);
                 $accId = $created[Account::ATTR_ID];
                 $result->setData($created);
-                $result->setAsSucceed();
+                $result->markSucceed();
                 $this->_logger->info("There is no account for customer #{$customerId} and asset type #$assetTypeId. New account #$accId is created.");
             }
         }
@@ -112,7 +112,7 @@ class Call extends BaseCall implements IAccount
         if (!is_null($typeId)) {
             if (isset($this->_cachedRepresentativeAccs[$typeId])) {
                 $result->setData($this->_cachedRepresentativeAccs[$typeId]);
-                $result->setAsSucceed();
+                $result->markSucceed();
             } else {
                 /* there is no cached data yet */
                 /* get representative customer ID */
@@ -130,7 +130,7 @@ class Call extends BaseCall implements IAccount
                 /* check selected accounts */
                 if (isset($this->_cachedRepresentativeAccs[$typeId])) {
                     $result->setData($this->_cachedRepresentativeAccs[$typeId]);
-                    $result->setAsSucceed();
+                    $result->markSucceed();
                 } else {
                     /* there is no accounts yet */
                     $req = new Request\Get();
@@ -141,7 +141,7 @@ class Call extends BaseCall implements IAccount
                     $accData = $resp->getData();
                     $this->_cachedRepresentativeAccs[$accData[Account::ATTR_ASSET_TYPE_ID]] = $accData;
                     $result->setData($accData);
-                    $result->setAsSucceed();
+                    $result->markSucceed();
                 }
             }
         } else {
@@ -170,7 +170,7 @@ class Call extends BaseCall implements IAccount
         $rowsUpdated = $this->_repoAccount->updateBalance($accountId, $changeValue);
         if ($rowsUpdated) {
             $result->setData(['rows_updated' => $rowsUpdated]);
-            $result->setAsSucceed();
+            $result->markSucceed();
         }
         return $result;
     }

@@ -75,7 +75,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
         $rows = $this->_repoMod->getBalancesOnDate($assetTypeId, $dateOn);
         if (count($rows) > 0) {
             $result->setData($rows);
-            $result->setAsSucceed();
+            $result->markSucceed();
         }
         return $result;
     }
@@ -101,7 +101,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
             /* there is balance data */
             $dayBefore = $this->_toolPeriod->getPeriodPrev($balanceMaxDate, IPeriod::TYPE_DAY);
             $result->setData([Response\GetLastDate::LAST_DATE => $dayBefore]);
-            $result->setAsSucceed();
+            $result->markSucceed();
         } else {
             /* there is no balance data yet, get transaction with minimal date */
             $transactionMinDate = $this->_repoMod->getTransactionMinDateApplied($assetTypeId);
@@ -109,7 +109,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
                 $period = $this->_toolPeriod->getPeriodCurrent($transactionMinDate);
                 $dayBefore = $this->_toolPeriod->getPeriodPrev($period, IPeriod::TYPE_DAY);
                 $result->setData([Response\GetLastDate::LAST_DATE => $dayBefore]);
-                $result->setAsSucceed();
+                $result->markSucceed();
             }
         }
         return $result;
@@ -132,7 +132,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
         $rows = $this->_getConn()->delete($tbl, $where);
         if ($rows !== false) {
             $result->setData([Response\Reset::ROWS_DELETED => $rows]);
-            $result->setAsSucceed();
+            $result->markSucceed();
         }
         return $result;
     }

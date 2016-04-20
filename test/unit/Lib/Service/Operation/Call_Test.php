@@ -66,7 +66,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
             ->shouldReceive('addEntity')
             ->andReturn($mAddEntityResp);
         // if($respAdd->isSucceed()) {
-        $mAddEntityResp->setAsSucceed();
+        $mAddEntityResp->markSucceed();
         $mAddEntityResp->setData(RepoAddEntityResponse::ID_INSERTED, $OPERATION_ID);
         // $transIds = $this->_subAdd->transactions($operId, $transactions, $datePerformed, $asRef);
         $this->mSubAdd

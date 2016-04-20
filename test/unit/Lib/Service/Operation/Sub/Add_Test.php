@@ -46,7 +46,7 @@ class Add_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
             ->shouldReceive('add')
             ->andReturn($mResp);
         // if(!$resp->isSucceed()) {
-        $mResp->setAsSucceed();
+        $mResp->markSucceed();
         // $tranId = $resp->getTransactionId();
         $mResp->setTransactionId($TRAN_ID);
 
@@ -77,7 +77,7 @@ class Add_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
             ->shouldReceive('add')
             ->andReturn($mResp);
         // if(!$resp->isSucceed()) {
-        $mResp->setAsSucceed();
+        $mResp->markSucceed();
         // $tranId = $resp->getTransactionId();
         $mResp->setTransactionId($TRAN_ID);
 

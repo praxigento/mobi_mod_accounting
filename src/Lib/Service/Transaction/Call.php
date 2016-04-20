@@ -89,7 +89,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransaction
                     . "asset type (#$creditAssetTypeId) for credit account $creditAccId.");
             }
             $this->_manTrans->transactionCommit($trans);
-            $result->setAsSucceed();
+            $result->markSucceed();
         } finally {
             $this->_manTrans->transactionClose($trans);
 

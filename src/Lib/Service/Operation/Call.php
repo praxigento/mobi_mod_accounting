@@ -64,7 +64,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements \Praxigento\Acc
                 $result->setOperationId($operId);
                 $result->setTransactionsIds($transIds);
                 $this->_manTrans->transactionCommit($trans);
-                $result->setAsSucceed();
+                $result->markSucceed();
             }
         } finally {
             $this->_manTrans->transactionClose($trans);

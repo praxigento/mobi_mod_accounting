@@ -86,7 +86,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
 
         // $respCode = $this->_callTypeAsset->getByCode($reqCode);
         $mRespCode = new \Praxigento\Accounting\Lib\Service\Type\Asset\Response\GetByCode();
-        $mRespCode->setAsSucceed();
+        $mRespCode->markSucceed();
         $mRespCode->setData([TypeAsset::ATTR_ID => $ASSET_TYPE_ID]);
         $mCallTypeAsset
             ->expects($this->once())
@@ -113,7 +113,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
             ->getMock();
         // $resp = $this->get($req);
         $mRespGet = new Response\Get();
-        $mRespGet->setAsSucceed();
+        $mRespGet->markSucceed();
         $mRespGet->setData(
             [Account::ATTR_ASSET_TYPE_ID => $ASSET_TYPE_ID, Account::ATTR_CUST_ID => $CUST_ID]
         );
@@ -189,7 +189,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
             ->willReturn($CUST_ID);
         // $resp = $this->_callRepo->getEntities($req);
         $mResp = new GetEntitiesResponse();
-        $mResp->setAsSucceed();
+        $mResp->markSucceed();
         $mResp->setData([
             [
                 Account::ATTR_ID => $ACCOUNT_ID,
