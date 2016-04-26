@@ -30,10 +30,10 @@ class Module extends Base implements IModule
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\Repo\IGeneric $repoBasic
+        \Praxigento\Core\Repo\IGeneric $repoGeneric
     ) {
         parent::__construct($resource);
-        $this->_repoBasic = $repoBasic;
+        $this->_repoBasic = $repoGeneric;
     }
 
     /**
