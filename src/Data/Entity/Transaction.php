@@ -45,14 +45,6 @@ class Transaction extends EntityBase
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getEntityName()
-    {
-        return self::ENTITY_NAME;
-    }
-
-    /**
      * @return int
      */
     public function getId()
@@ -70,9 +62,7 @@ class Transaction extends EntityBase
         return $result;
     }
 
-    /**
-     * @inheritdoc
-     */
+    /** @inheritdoc */
     public function getPrimaryKeyAttrs()
     {
         return [self::ATTR_ID];

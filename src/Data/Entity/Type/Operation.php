@@ -11,12 +11,4 @@ use Praxigento\Core\Data\Entity\Type\Base as TypeBase;
 class Operation extends TypeBase
 {
     const ENTITY_NAME = 'prxgt_acc_type_operation';
-
-    /**
-     * @inheritdoc
-     */
-    public function getEntityName()
-    {
-        return self::ENTITY_NAME;
-    }
 }

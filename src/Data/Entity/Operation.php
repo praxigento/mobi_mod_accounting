@@ -23,13 +23,6 @@ class Operation extends EntityBase
         return $result;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getEntityName()
-    {
-        return self::ENTITY_NAME;
-    }
 
     /**
      * @return int
@@ -40,9 +33,7 @@ class Operation extends EntityBase
         return $result;
     }
 
-    /**
-     * @inheritdoc
-     */
+    /** @inheritdoc */
     public function getPrimaryKeyAttrs()
     {
         return [self::ATTR_ID];

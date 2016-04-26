@@ -52,17 +52,7 @@ class Balance extends EntityBase
         return $result;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getEntityName()
-    {
-        return self::ENTITY_NAME;
-    }
-
-    /**
-     * @inheritdoc
-     */
+    /** @inheritdoc */
     public function getPrimaryKeyAttrs()
     {
         return [self::ATTR_ACCOUNT_ID, self::ATTR_DATE];
@@ -91,7 +81,7 @@ class Balance extends EntityBase
      */
     public function setAccountId($data)
     {
-        parent::getData(self::ATTR_ACCOUNT_ID, $data);
+        parent::setData(self::ATTR_ACCOUNT_ID, $data);
     }
 
     /**
@@ -99,7 +89,7 @@ class Balance extends EntityBase
      */
     public function setBalanceClose($data)
     {
-        parent::getData(self::ATTR_BALANCE_CLOSE, $data);
+        parent::setData(self::ATTR_BALANCE_CLOSE, $data);
     }
 
     /**
@@ -107,7 +97,7 @@ class Balance extends EntityBase
      */
     public function setBalanceOpen($data)
     {
-        parent::getData(self::ATTR_BALANCE_OPEN, $data);
+        parent::setData(self::ATTR_BALANCE_OPEN, $data);
     }
 
     /**
@@ -115,7 +105,7 @@ class Balance extends EntityBase
      */
     public function setDate($data)
     {
-        parent::getData(self::ATTR_DATE, $data);
+        parent::setData(self::ATTR_DATE, $data);
     }
 
     /**
@@ -123,7 +113,7 @@ class Balance extends EntityBase
      */
     public function setTotalCredit($data)
     {
-        parent::getData(self::ATTR_TOTAL_CREDIT, $data);
+        parent::setData(self::ATTR_TOTAL_CREDIT, $data);
     }
 
     /**
@@ -131,6 +121,6 @@ class Balance extends EntityBase
      */
     public function setTotalDebit($data)
     {
-        parent::getData(self::ATTR_TOTAL_DEBIT, $data);
+        parent::setData(self::ATTR_TOTAL_DEBIT, $data);
     }
 }
