@@ -5,22 +5,27 @@
 
 namespace Praxigento\Accounting\Repo\Entity;
 
-use Flancer32\Lib\DataObject;
+use Praxigento\Accounting\Data\Entity\Account as EntityData;
 use Praxigento\Core\Repo\IBaseRepo;
 
 interface IAccount extends IBaseRepo
 {
     /**
-     * @param array|DataObject $data
-     * @return array
+     * @param array|EntityData $data
+     * @return int
      */
     public function create($data);
 
+    /**
+     * @param $customerId
+     * @param $assetTypeId
+     * @return null|EntityData
+     */
     public function getByCustomerId($customerId, $assetTypeId);
 
     /**
      * @param int $id
-     * @return array
+     * @return EntityData|bool
      */
     public function getById($id);
 

@@ -16,12 +16,20 @@ class Account_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase
     public function setUp()
     {
         parent::setUp();
-        $this->_obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Repo\Entity\Def\Account::class);
+        $this->_obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Repo\Entity\IAccount::class);
+    }
+
+    public function test_create()
+    {
+        $bind = [];
+        $res = $this->_obj->create();
+        $this->assertTrue(is_int($res));
+        $this->assertTrue($res > 0);
     }
 
     public function test_getByCustomerId()
     {
-        $data = $this->_obj->getByCustomerId(252, 1);
+        $data = $this->_obj->getByCustomerId(1, 1);
         $this->assertTrue($data > 0);
     }
 
