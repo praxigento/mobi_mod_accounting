@@ -58,10 +58,10 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransaction
         try {
             /* get account type for debit account */
             $debitAcc = $this->_repoAcc->getById($debitAccId);
-            $debitAssetTypeId = $debitAcc[Account::ATTR_ASSET_TYPE_ID];
+            $debitAssetTypeId = $debitAcc->getAssetTypeId();
             /* get account type for credit account */
             $creditAcc = $this->_repoAcc->getById($creditAccId);
-            $creditAssetTypeId = $creditAcc[Account::ATTR_ASSET_TYPE_ID];
+            $creditAssetTypeId = $creditAcc->getAssetTypeId();
             /* asset types should be equals */
             if (
                 !is_null($debitAssetTypeId) &&

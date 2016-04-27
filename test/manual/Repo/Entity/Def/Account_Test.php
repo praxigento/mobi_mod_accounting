@@ -5,11 +5,14 @@
 namespace Praxigento\Accounting\Repo\Entity\Def;
 
 use Magento\Framework\App\ObjectManager;
+use Praxigento\Accounting\Data\Entity\Account as Entity;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Account_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
+    const DEF_ASSET_TYPE_ID = 1;
+    const DEF_CUSTOMER_ID = 504;
     /** @var  \Praxigento\Accounting\Repo\Entity\Def\Account */
     private $_obj;
 
@@ -21,16 +24,18 @@ class Account_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_create()
     {
-        $bind = [];
-        $res = $this->_obj->create();
-        $this->assertTrue(is_int($res));
+        $bind = [
+            Entity::ATTR_CUST_ID => static::DEF_CUSTOMER_ID,
+            Entity::ATTR_ASSET_TYPE_ID => static::DEF_ASSET_TYPE_ID
+        ];
+        $res = $this->_obj->create($bind);
         $this->assertTrue($res > 0);
     }
 
     public function test_getByCustomerId()
     {
-        $data = $this->_obj->getByCustomerId(1, 1);
-        $this->assertTrue($data > 0);
+        $res = $this->_obj->getByCustomerId(static::DEF_CUSTOMER_ID, static::DEF_ASSET_TYPE_ID);
+        $this->assertInstanceOf(Entity::class, $res);
     }
 
     public function test_getIdByCode()

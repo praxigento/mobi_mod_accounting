@@ -72,11 +72,11 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private function _checkBalancesCurrent()
     {
         $req = new AccountGetRequest();
-        $req->setData(AccountGetRequest::ACCOUNT_ID, $this->acc1[Account::ATTR_ID]);
+        $req->setAccountId($this->acc1[Account::ATTR_ID]);
         $resp = $this->_callAccount->get($req);
         $this->assertTrue($resp->isSucceed());
         $this->assertEquals(0 - $this->_amount, $resp->getData(Account::ATTR_BALANCE));
-        $req->setData(AccountGetRequest::ACCOUNT_ID, $this->acc2[Account::ATTR_ID]);
+        $req->setAccountId($this->acc2[Account::ATTR_ID]);
         $resp = $this->_callAccount->get($req);
         $this->assertTrue($resp->isSucceed());
         $this->assertEquals(0 + $this->_amount, $resp->getData(Account::ATTR_BALANCE));

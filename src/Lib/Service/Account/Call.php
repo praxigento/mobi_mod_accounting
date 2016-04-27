@@ -73,7 +73,7 @@ class Call extends BaseCall implements IAccount
             $data = $this->_repoAccount->getByCustomerId($customerId, $assetTypeId);
         }
         /* analyze found data */
-        if (is_array($data)) {
+        if ($data) {
             $result->setData($data);
             $result->markSucceed();
         } else {

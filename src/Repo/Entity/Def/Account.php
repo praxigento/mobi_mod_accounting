@@ -22,14 +22,13 @@ class Account extends BaseEntityRepo implements IAccount
     /** @inheritdoc */
     public function getByCustomerId($customerId, $assetTypeId)
     {
-        $result = null;
-        $entity = Entity::ENTITY_NAME;
         $whereCust = Entity::ATTR_CUST_ID . '=' . (int)$customerId;
         $whereAsset = Entity::ATTR_ASSET_TYPE_ID . '=' . (int)$assetTypeId;
         $where = "$whereCust AND $whereAsset";
-        $found = $this->_repoGeneric->getEntities($entity, null, $where);
-        if ($found && is_array($found)) {
-            $result = reset($found);
+        $result = $this->get($where);
+        if ($result) {
+            $data = reset($result);
+            $result = $this->_createEntityInstance($data);
         }
         return $result;
     }
