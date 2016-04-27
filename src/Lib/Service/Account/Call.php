@@ -10,16 +10,16 @@ use Praxigento\Core\Service\Base\Call as BaseCall;
 
 class Call extends BaseCall implements IAccount
 {
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\IAsset */
-    protected $_repoTypeAsset;
-    /** @var \Praxigento\Accounting\Lib\Repo\IModule */
-    protected $_repoMod;
     /** @var array save accounts data for representative customer. */
     protected $_cachedRepresentativeAccs = [];
     /** @var  \Praxigento\Accounting\Repo\Entity\IAccount */
     protected $_repoAccount;
     /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoBasic;
+    /** @var \Praxigento\Accounting\Lib\Repo\IModule */
+    protected $_repoMod;
+    /** @var \Praxigento\Accounting\Repo\Entity\Type\IAsset */
+    protected $_repoTypeAsset;
 
     /**
      * Call constructor.
@@ -84,9 +84,9 @@ class Call extends BaseCall implements IAccount
                     Account::ATTR_ASSET_TYPE_ID => $assetTypeId,
                     Account::ATTR_BALANCE => 0
                 ];
-                $created = $this->_repoAccount->create($data);
-                $accId = $created[Account::ATTR_ID];
-                $result->setData($created);
+                $accId = $this->_repoAccount->create($data);
+                $data[Account::ATTR_ID] = $accId;
+                $result->setData($data);
                 $result->markSucceed();
                 $this->_logger->info("There is no account for customer #{$customerId} and asset type #$assetTypeId. New account #$accId is created.");
             }
