@@ -35,15 +35,6 @@ class Account extends BaseEntityRepo implements IAccount
     }
 
     /** @inheritdoc */
-    public function getById($id)
-    {
-        $entity = Entity::ENTITY_NAME;
-        $pk = [Entity::ATTR_ID => $id];
-        $result = $this->_repoGeneric->getEntityByPk($entity, $pk);
-        return $result;
-    }
-
-    /** @inheritdoc */
     public function updateBalance($accountId, $delta)
     {
         $tbl = $this->_conn->getTableName(Entity::ENTITY_NAME);
