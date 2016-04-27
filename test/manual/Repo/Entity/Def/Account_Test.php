@@ -11,6 +11,7 @@ include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Account_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
+    const DEF_ACCOUNT_ID = 283;
     const DEF_ASSET_TYPE_ID = 1;
     const DEF_CUSTOMER_ID = 504;
     /** @var  \Praxigento\Accounting\Repo\Entity\Def\Account */
@@ -42,6 +43,13 @@ class Account_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase
     {
         $data = $this->_obj->getById(147);
         $this->assertTrue($data > 0);
+    }
+
+    public function test_updateBalance()
+    {
+        $DELTA = 2;
+        $res = $this->_obj->updateBalance(static::DEF_ACCOUNT_ID, $DELTA);
+        $this->assertEquals(1, $res);
     }
 
 }

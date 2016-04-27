@@ -8,6 +8,7 @@ namespace Praxigento\Accounting\Repo\Entity\Def;
 use Praxigento\Accounting\Data\Entity\Account as Entity;
 use Praxigento\Accounting\Repo\Entity\IAccount;
 use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
+use Praxigento\Core\Repo\Query\Expression;
 
 class Account extends BaseEntityRepo implements IAccount
 {
@@ -36,16 +37,14 @@ class Account extends BaseEntityRepo implements IAccount
     /** @inheritdoc */
     public function updateBalance($accountId, $delta)
     {
-        $tbl = $this->_conn->getTableName(Entity::ENTITY_NAME);
-        /* wrap expression into \Zend_Db_Expr */
         if ($delta < 0) {
-            $exp = new \Zend_Db_Expr(Entity::ATTR_BALANCE . '-' . abs($delta));
+            $exp = '(`' . Entity::ATTR_BALANCE . '`-' . abs($delta) . ')';
         } else {
-            $exp = new \Zend_Db_Expr(Entity::ATTR_BALANCE . '+' . abs($delta));
+            $exp = '(`' . Entity::ATTR_BALANCE . '`+' . abs($delta) . ')';
         }
+        $exp = new Expression($exp);
         $bind = [Entity::ATTR_BALANCE => $exp];
-        $where = Entity::ATTR_ID . '=' . $accountId;
-        $rowsUpdated = $this->_conn->update($tbl, $bind, $where);
+        $rowsUpdated = $this->updateById($accountId, $bind);
         return $rowsUpdated;
     }
 }
