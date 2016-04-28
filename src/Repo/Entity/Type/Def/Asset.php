@@ -5,15 +5,17 @@
 
 namespace Praxigento\Accounting\Repo\Entity\Type\Def;
 
-use Praxigento\Accounting\Data\Entity\Type\Asset as EntityAsset;
+use Praxigento\Accounting\Data\Entity\Type\Asset as Entity;
 use Praxigento\Accounting\Repo\Entity\Type\IAsset;
 use Praxigento\Core\Repo\Def\Type as BaseType;
 
 class Asset extends BaseType implements IAsset
 {
 
-    protected function _getEntityName()
-    {
-        return EntityAsset::ENTITY_NAME;
+    public function __construct(
+        \Magento\Framework\App\ResourceConnection $resource,
+        \Praxigento\Core\Repo\IGeneric $repoGeneric
+    ) {
+        parent::__construct($resource, $repoGeneric, Entity::class);
     }
 }

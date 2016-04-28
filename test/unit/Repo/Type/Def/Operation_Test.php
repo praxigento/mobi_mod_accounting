@@ -2,48 +2,40 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Accounting\Repo\Type\Def;
+namespace Praxigento\Accounting\Repo\Entity\Type\Def;
 
-use Praxigento\Accounting\Data\Entity\Type\Operation;
+use Praxigento\Accounting\Data\Entity\Type\Operation as Entity;
+use Praxigento\Accounting\Repo\Entity\Type\IOperation;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Operation_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
-    /** @var  \Praxigento\Accounting\Repo\Entity\Type\Def\Asset */
+    /** @var  \Mockery\MockInterface */
+    private $mConn;
+    /** @var  \Mockery\MockInterface */
+    private $mRepoGeneric;
+    /** @var  Operation */
     private $obj;
-    /** @var  \Mockery\MockInterface */
-    private $mDba;
-    /** @var  \Mockery\MockInterface */
-    private $mRsrcConn;
 
     public function setUp()
     {
         parent::setUp();
-        $this->mDba = $this->_mockDba();
-        $this->mRsrcConn = $this->_mockResourceConnection($this->mDba);
-        $this->obj = new \Praxigento\Accounting\Repo\Entity\Type\Def\Operation($this->mRsrcConn);
+        /* create mocks */
+        $this->mConn = $this->_mockConn();
+        $this->mRepoGeneric = $this->_mockRepoGeneric();
+        /* create object */
+        $mResource = $this->_mockResourceConnection($this->mConn);
+        $this->obj = new Operation(
+            $mResource,
+            $this->mRepoGeneric,
+            Entity::class
+        );
     }
 
-    public function test_install()
+    public function test_constructor()
     {
-        /* === Test Data === */
-        /* === Setup Mocks === */
-        // $tbl = $this->_dba->getTableName($entity);
-        $this->mDba
-            ->shouldReceive('getTableName')
-            ->with(Operation::ENTITY_NAME);
-        // $query = $this->_dba->select();
-        $mQuery = $this->_mockDbSelect();
-        $this->mDba
-            ->shouldReceive('select')
-            ->andReturn($mQuery);
-        //  $query->from($tbl);
-        // $query->where(EntityTypeBase::ATTR_CODE . '=:code');
-        $mQuery->shouldReceive('from', 'where');
-        // $data = $this->_dba->fetchRow($query, ['code' => $code]);
-        $this->mDba->shouldReceive('fetchRow');
         /* === Call and asserts  === */
-        $this->obj->getIdByCode('code');
+        $this->assertInstanceOf(IOperation::class, $this->obj);
     }
 }
