@@ -17,13 +17,13 @@
                 type="Praxigento\Accounting\Repo\Def\Module"/>
 
     <!-- Services -->
-    <preference for="Praxigento\Accounting\Lib\Service\IAccount"
-                type="Praxigento\Accounting\Lib\Service\Account\Call"/>
-    <preference for="Praxigento\Accounting\Lib\Service\IBalance"
-                type="Praxigento\Accounting\Lib\Service\Balance\Call"/>
-    <preference for="Praxigento\Accounting\Lib\Service\IOperation"
-                type="Praxigento\Accounting\Lib\Service\Operation\Call"/>
-    <preference for="Praxigento\Accounting\Lib\Service\ITransaction"
-                type="Praxigento\Accounting\Lib\Service\Transaction\Call"/>
+    <preference for="Praxigento\Accounting\Service\IAccount"
+                type="Praxigento\Accounting\Service\Account\Call"/>
+    <preference for="Praxigento\Accounting\Service\IBalance"
+                type="Praxigento\Accounting\Service\Balance\Call"/>
+    <preference for="Praxigento\Accounting\Service\IOperation"
+                type="Praxigento\Accounting\Service\Operation\Call"/>
+    <preference for="Praxigento\Accounting\Service\ITransaction"
+                type="Praxigento\Accounting\Service\Transaction\Call"/>
 
 </config>

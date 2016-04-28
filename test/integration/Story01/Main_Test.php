@@ -9,10 +9,10 @@ use Praxigento\Accounting\Data\Entity\Balance;
 use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
-use Praxigento\Accounting\Lib\Service\Account\Request\Get as AccountGetRequest;
-use Praxigento\Accounting\Lib\Service\Balance\Request\Calc as BalanceCalcRequest;
-use Praxigento\Accounting\Lib\Service\Operation\Request\Add as OperationAddRequest;
-use Praxigento\Accounting\Lib\Service\Operation\Response\Add as OperationAddResponse;
+use Praxigento\Accounting\Service\Account\Request\Get as AccountGetRequest;
+use Praxigento\Accounting\Service\Balance\Request\Calc as BalanceCalcRequest;
+use Praxigento\Accounting\Service\Operation\Request\Add as OperationAddRequest;
+use Praxigento\Accounting\Service\Operation\Response\Add as OperationAddResponse;
 use Praxigento\Core\Test\BaseIntegrationTest;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
@@ -32,11 +32,11 @@ class Main_IntegrationTest extends BaseIntegrationTest
      * @var decimal
      */
     private $_amount = 0;
-    /** @var  \Praxigento\Accounting\Lib\Service\Account\Call */
+    /** @var  \Praxigento\Accounting\Service\Account\Call */
     private $_callAccount;
-    /** @var  \Praxigento\Accounting\Lib\Service\Balance\Call */
+    /** @var  \Praxigento\Accounting\Service\Balance\Call */
     private $_callBalance;
-    /** @var  \Praxigento\Accounting\Lib\Service\Operation\Call */
+    /** @var  \Praxigento\Accounting\Service\Operation\Call */
     private $_callOperation;
     /** @var \Praxigento\Core\Repo\IGeneric */
     private $_repoBasic;
@@ -53,9 +53,9 @@ class Main_IntegrationTest extends BaseIntegrationTest
     public function __construct()
     {
         parent::__construct();
-        $this->_callAccount = $this->_manObj->get(\Praxigento\Accounting\Lib\Service\IAccount::class);
-        $this->_callBalance = $this->_manObj->get(\Praxigento\Accounting\Lib\Service\Balance\Call::class);
-        $this->_callOperation = $this->_manObj->get(\Praxigento\Accounting\Lib\Service\Operation\Call::class);
+        $this->_callAccount = $this->_manObj->get(\Praxigento\Accounting\Service\IAccount::class);
+        $this->_callBalance = $this->_manObj->get(\Praxigento\Accounting\Service\Balance\Call::class);
+        $this->_callOperation = $this->_manObj->get(\Praxigento\Accounting\Service\Operation\Call::class);
         $this->_repoBasic = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
     }
 
