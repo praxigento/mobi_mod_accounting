@@ -36,15 +36,4 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->assertTrue($response->isSucceed());
     }
 
-    public function test_updateBalance()
-    {
-        $obm = \Magento\Framework\App\ObjectManager::getInstance();
-        /** @var  $call \Praxigento\Accounting\Service\Account\Call */
-        $call = $obm->get('Praxigento\Accounting\Service\Account\Call');
-        $request = new Request\UpdateBalance();
-        $request->accountId = 1;
-        $request->changeValue = -12.21;
-        $response = $call->updateBalance($request);
-        $this->assertTrue($response->isSucceed());
-    }
 }

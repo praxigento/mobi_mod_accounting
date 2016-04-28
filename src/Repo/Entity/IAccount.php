@@ -17,11 +17,12 @@ interface IAccount extends IBaseRepo
     public function create($data);
 
     /**
+     * Get account for the $customerId by $assetTypeId or all accounts for the customer (if $assetTypeId is null).
      * @param int $customerId
      * @param int $assetTypeId
-     * @return false|EntityData
+     * @return false|EntityData|EntityData[]
      */
-    public function getByCustomerId($customerId, $assetTypeId);
+    public function getByCustomerId($customerId, $assetTypeId = null);
 
     /**
      * @param int $id

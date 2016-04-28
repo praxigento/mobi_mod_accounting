@@ -8,7 +8,7 @@ use Praxigento\Accounting\Data\Entity\Balance;
 use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Accounting\Service\Balance\Sub;
 
-include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
+include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class CalcSimple_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {

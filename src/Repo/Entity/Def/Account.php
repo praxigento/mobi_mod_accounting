@@ -23,15 +23,27 @@ class Account extends BaseEntityRepo implements IEntityRepo
     }
 
     /** @inheritdoc */
-    public function getByCustomerId($customerId, $assetTypeId)
+    public function getByCustomerId($customerId, $assetTypeId = null)
     {
-        $whereCust = Entity::ATTR_CUST_ID . '=' . (int)$customerId;
-        $whereAsset = Entity::ATTR_ASSET_TYPE_ID . '=' . (int)$assetTypeId;
-        $where = "$whereCust AND $whereAsset";
+        $where = '(' . Entity::ATTR_CUST_ID . '=' . (int)$customerId . ')';
+        if ($assetTypeId) {
+            $where = "$where AND (" . Entity::ATTR_ASSET_TYPE_ID . '=' . (int)$assetTypeId . ')';
+        }
         $result = $this->get($where);
         if ($result) {
-            $data = reset($result);
-            $result = $this->_createEntityInstance($data);
+            if (is_null($assetTypeId)) {
+                /* return all entries */
+                $dataObjects = [];
+                foreach ($result as $item) {
+                    $obj = $this->_createEntityInstance($item);
+                    $dataObjects[] = $obj;
+                }
+                $result = $dataObjects;
+            } else {
+                /* return one only entry */
+                $data = reset($result);
+                $result = $this->_createEntityInstance($data);
+            }
         }
         return $result;
     }

@@ -7,7 +7,13 @@ namespace Praxigento\Accounting\Service;
 use Praxigento\Accounting\Service\Account\Request;
 use Praxigento\Accounting\Service\Account\Response;
 
-interface IAccount {
+interface IAccount
+{
+    /**
+     * Reset cached data.
+     */
+    public function cacheReset();
+
     /**
      * @param Request\Get $request
      *
@@ -21,16 +27,4 @@ interface IAccount {
      * @return Response\GetRepresentative
      */
     public function getRepresentative(Request\GetRepresentative $request);
-
-    /**
-     * @param Request\UpdateBalance $request
-     *
-     * @return Response\UpdateBalance
-     */
-    public function updateBalance(Request\UpdateBalance $request);
-
-    /**
-     * Reset cached data.
-     */
-    public function cacheReset();
 }

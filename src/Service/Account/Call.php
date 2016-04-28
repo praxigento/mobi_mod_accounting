@@ -14,8 +14,6 @@ class Call extends BaseCall implements IAccount
     protected $_cachedRepresentativeAccs = [];
     /** @var  \Praxigento\Accounting\Repo\Entity\IAccount */
     protected $_repoAccount;
-    /** @var \Praxigento\Core\Repo\IGeneric */
-    protected $_repoBasic;
     /** @var \Praxigento\Accounting\Repo\IModule */
     protected $_repoMod;
     /** @var \Praxigento\Accounting\Repo\Entity\Type\IAsset */
@@ -26,13 +24,11 @@ class Call extends BaseCall implements IAccount
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Repo\IGeneric $repoBasic,
         \Praxigento\Accounting\Repo\Entity\IAccount $repoAccount,
         \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset,
         \Praxigento\Accounting\Repo\IModule $repoMod
     ) {
         parent::__construct($logger);
-        $this->_repoBasic = $repoBasic;
         $this->_repoAccount = $repoAccount;
         $this->_repoTypeAsset = $repoTypeAsset;
         $this->_repoMod = $repoMod;
@@ -118,12 +114,11 @@ class Call extends BaseCall implements IAccount
                 /* get representative customer ID */
                 $customerId = $this->_repoMod->getRepresentativeCustomerId();
                 /* get all accounts for the representative customer */
-                $where = Account::ATTR_CUST_ID . '=' . (int)$customerId;
-                $data = $this->_repoBasic->getEntities(Account::ENTITY_NAME, null, $where);
-                if ($data) {
+                $accounts = $this->_repoAccount->getByCustomerId($customerId);
+                if ($accounts) {
                     $mapped = [];
-                    foreach ($data as $one) {
-                        $mapped[$one[Account::ATTR_ASSET_TYPE_ID]] = $one;
+                    foreach ($accounts as $one) {
+                        $mapped[$one->getAssetTypeId()] = $one;
                     }
                     $this->_cachedRepresentativeAccs = $mapped;
                 }
@@ -139,7 +134,7 @@ class Call extends BaseCall implements IAccount
                     $req->setCreateNewAccountIfMissed();
                     $resp = $this->get($req);
                     $accData = $resp->getData();
-                    $this->_cachedRepresentativeAccs[$accData[Account::ATTR_ASSET_TYPE_ID]] = $accData;
+                    $this->_cachedRepresentativeAccs[$accData[Account::ATTR_ASSET_TYPE_ID]] = new Account($accData);
                     $result->setData($accData);
                     $result->markSucceed();
                 }
@@ -155,23 +150,4 @@ class Call extends BaseCall implements IAccount
         return $result;
     }
 
-    /**
-     * @param Request\UpdateBalance $request
-     *
-     * @return Response\UpdateBalance
-     * @deprecated This operation is used inside Accounting module only (use Account repo inside module).
-     */
-    public function updateBalance(Request\UpdateBalance $request)
-    {
-        $result = new Response\UpdateBalance();
-        $accountId = $request->getAccountId();
-        $changeValue = $request->getChangeValue();
-
-        $rowsUpdated = $this->_repoAccount->updateBalance($accountId, $changeValue);
-        if ($rowsUpdated) {
-            $result->setData(['rows_updated' => $rowsUpdated]);
-            $result->markSucceed();
-        }
-        return $result;
-    }
 }
