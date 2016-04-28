@@ -2,7 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Accounting\Lib\Repo\Def;
+namespace Praxigento\Accounting\Repo\Def;
 
 use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Data\Entity\Account;
@@ -10,7 +10,7 @@ use Praxigento\Accounting\Data\Entity\Balance;
 use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Core\Data\Entity\Type\Base as TypeBase;
 
-include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
+include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
 class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {

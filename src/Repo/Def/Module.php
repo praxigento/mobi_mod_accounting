@@ -3,7 +3,7 @@
  * Facade for current module for dependent modules repos.
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Accounting\Lib\Repo\Def;
+namespace Praxigento\Accounting\Repo\Def;
 
 use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Data\Entity\Account;
@@ -11,7 +11,7 @@ use Praxigento\Accounting\Data\Entity\Balance;
 use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
-use Praxigento\Accounting\Lib\Repo\IModule;
+use Praxigento\Accounting\Repo\IModule;
 use Praxigento\Core\Data\Entity\Type\Base as TypeBase;
 use Praxigento\Core\Repo\Def\Base;
 

@@ -26,7 +26,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $mToolbox = $this->_mockToolbox();
         $mCallRepo = $this->_mockCallRepo();
         $mCallTypeAsset = $this->_mockFor('Praxigento\Accounting\Lib\Service\ITypeAsset');
-        $mRepoMod = $this->_mockFor('\Praxigento\Accounting\Lib\Repo\IModule');
+        $mRepoMod = $this->_mockFor('\Praxigento\Accounting\Repo\IModule');
         $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mCallTypeAsset, $mRepoMod);
         $result = [
             'mLogger' => $mLogger,
@@ -59,7 +59,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mCallTypeAsset \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\ITypeAsset
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $call Call
          */
         extract($this->_prepareMocks());
@@ -85,7 +85,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mCallTypeAsset \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\ITypeAsset
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $call Call
          */
         extract($this->_prepareMocks());
@@ -147,7 +147,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mCallTypeAsset \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\ITypeAsset
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $call Call
          */
         extract($this->_prepareMocks());
@@ -182,7 +182,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mCallTypeAsset \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\ITypeAsset
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $call Call
          */
         extract($this->_prepareMocks());
@@ -235,7 +235,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mCallTypeAsset \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\ITypeAsset
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $call Call
          */
         extract($this->_prepareMocks());
@@ -288,7 +288,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mCallTypeAsset \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\ITypeAsset
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $call Call
          */
         extract($this->_prepareMocks());
@@ -352,7 +352,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mCallTypeAsset \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\ITypeAsset
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $call Call
          */
         extract($this->_prepareMocks());
@@ -406,7 +406,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mCallTypeAsset \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\ITypeAsset
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $call Call
          */
         extract($this->_prepareMocks());
@@ -463,7 +463,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mCallTypeAsset \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\ITypeAsset
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $call Call
          */
         extract($this->_prepareMocks());
@@ -513,7 +513,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
          * @var $mCallTypeAsset \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\ITypeAsset
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $call Call
          */
         extract($this->_prepareMocks());

@@ -23,7 +23,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $mToolPeriod = $this->_mockFor('Praxigento\Core\Tool\IPeriod');
         $mToolbox = $this->_mockToolbox(null, null, null, $mToolPeriod);
         $mCallRepo = $this->_mockCallRepo();
-        $mRepoMod = $this->_mockFor('\Praxigento\Accounting\Lib\Repo\IModule');
+        $mRepoMod = $this->_mockFor('\Praxigento\Accounting\Repo\IModule');
         $mSubCalcSimple = $this->_mockFor('Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple');
         $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mRepoMod, $mSubCalcSimple);
         $result = [
@@ -60,7 +60,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple
          * @var $call Call
          */
@@ -94,7 +94,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple
          * @var $call Call
          */
@@ -132,7 +132,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple
          * @var $call Call
          */
@@ -171,7 +171,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple
          * @var $call Call
          */
@@ -216,7 +216,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple
          * @var $call Call
          */
@@ -268,7 +268,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple
          * @var $call Call
          */
@@ -320,7 +320,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
          * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
          * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
          * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Repo\IModule
+         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
          * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Lib\Service\Balance\Sub\CalcSimple
          * @var $call Call
          */

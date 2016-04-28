@@ -16,7 +16,7 @@ class Call extends BaseCall implements IAccount
     protected $_repoAccount;
     /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoBasic;
-    /** @var \Praxigento\Accounting\Lib\Repo\IModule */
+    /** @var \Praxigento\Accounting\Repo\IModule */
     protected $_repoMod;
     /** @var \Praxigento\Accounting\Repo\Entity\Type\IAsset */
     protected $_repoTypeAsset;
@@ -29,7 +29,7 @@ class Call extends BaseCall implements IAccount
         \Praxigento\Core\Repo\IGeneric $repoBasic,
         \Praxigento\Accounting\Repo\Entity\IAccount $repoAccount,
         \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset,
-        \Praxigento\Accounting\Lib\Repo\IModule $repoMod
+        \Praxigento\Accounting\Repo\IModule $repoMod
     ) {
         parent::__construct($logger);
         $this->_repoBasic = $repoBasic;

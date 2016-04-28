@@ -12,7 +12,7 @@ use Praxigento\Core\Tool\IPeriod;
 class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
 {
     /**
-     * @var \Praxigento\Accounting\Lib\Repo\IModule
+     * @var \Praxigento\Accounting\Repo\IModule
      */
     protected $_repoMod;
     /** @var Sub\CalcSimple Simple balance calculator. */
@@ -23,7 +23,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\Tool\IPeriod $toolPeriod,
-        \Praxigento\Accounting\Lib\Repo\IModule $repoMod,
+        \Praxigento\Accounting\Repo\IModule $repoMod,
         Sub\CalcSimple $subCalcSimple
     ) {
         parent::__construct($logger);

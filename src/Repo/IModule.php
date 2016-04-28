@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Lib\Repo;
+namespace Praxigento\Accounting\Repo;
 
 interface IModule
 {

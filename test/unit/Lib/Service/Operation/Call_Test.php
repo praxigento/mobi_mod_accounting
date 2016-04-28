@@ -33,7 +33,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mLogger = $this->_mock(\Psr\Log\LoggerInterface::class);
         $this->mManTrans = $this->_mockTransactionManager();
         $this->mCallTypeOperation = $this->_mock(\Praxigento\Accounting\Lib\Service\Type\Operation\Call::class);
-        $this->mRepoMod = $this->_mock(\Praxigento\Accounting\Lib\Repo\IModule ::class);
+        $this->mRepoMod = $this->_mock(\Praxigento\Accounting\Repo\IModule ::class);
         $this->mSubAdd = $this->_mock(\Praxigento\Accounting\Lib\Service\Operation\Sub\Add::class);
         $this->call = new Call(
             $this->mLogger,

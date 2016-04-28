@@ -13,8 +13,8 @@
                 type="Praxigento\Accounting\Repo\Entity\Type\Def\Asset"/>
     <preference for="Praxigento\Accounting\Repo\Entity\Type\IOperation"
                 type="Praxigento\Accounting\Repo\Entity\Type\Def\Operation"/>
-    <preference for="Praxigento\Accounting\Lib\Repo\IModule"
-                type="Praxigento\Accounting\Lib\Repo\Def\Module"/>
+    <preference for="Praxigento\Accounting\Repo\IModule"
+                type="Praxigento\Accounting\Repo\Def\Module"/>
 
     <!-- Services -->
     <preference for="Praxigento\Accounting\Lib\Service\IAccount"
@@ -25,9 +25,5 @@
                 type="Praxigento\Accounting\Lib\Service\Operation\Call"/>
     <preference for="Praxigento\Accounting\Lib\Service\ITransaction"
                 type="Praxigento\Accounting\Lib\Service\Transaction\Call"/>
-
-    <!-- API Services -->
-    <preference for="Praxigento\Accounting\Api\AccountInterface"
-                type="Praxigento\Accounting\Api\Def\Account"/>
 
 </config>
