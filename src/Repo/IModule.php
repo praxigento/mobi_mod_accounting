@@ -5,12 +5,10 @@
 
 namespace Praxigento\Accounting\Repo;
 
-interface IModule
+use Praxigento\Core\ICached;
+
+interface IModule extends ICached
 {
-    /**
-     * Reset cached data.
-     */
-    public function cacheReset();
 
     /**
      * Get maximal datestamp for existing balance by asset type id or null if no data is found.

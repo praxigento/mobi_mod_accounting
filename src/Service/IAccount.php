@@ -6,14 +6,11 @@ namespace Praxigento\Accounting\Service;
 
 use Praxigento\Accounting\Service\Account\Request;
 use Praxigento\Accounting\Service\Account\Response;
+use Praxigento\Core\ICached;
 
-interface IAccount
+interface IAccount extends ICached
 {
-    /**
-     * Reset cached data.
-     */
-    public function cacheReset();
-
+    
     /**
      * @param Request\Get $request
      *
