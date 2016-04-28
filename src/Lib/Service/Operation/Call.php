@@ -9,14 +9,14 @@ use Praxigento\Accounting\Data\Entity\Operation as EntityOperation;
 
 class Call extends \Praxigento\Core\Service\Base\Call implements \Praxigento\Accounting\Lib\Service\IOperation
 {
-    /** @var Sub\Add */
-    protected $_subAdd;
+    /** @var  \Praxigento\Core\Repo\ITransactionManager */
+    protected $_manTrans;
     /** @var  \Praxigento\Accounting\Repo\Entity\IOperation */
     protected $_repoOper;
     /** @var  \Praxigento\Accounting\Repo\Entity\Type\IOperation */
     protected $_repoTypeOper;
-    /** @var  \Praxigento\Core\Repo\ITransactionManager */
-    protected $_manTrans;
+    /** @var Sub\Add */
+    protected $_subAdd;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
@@ -57,11 +57,10 @@ class Call extends \Praxigento\Core\Service\Base\Call implements \Praxigento\Acc
                 EntityOperation::ATTR_TYPE_ID => $operationTypeId,
                 EntityOperation::ATTR_DATE_PREFORMED => $datePerformed
             ];
-            $created = $this->_repoOper->create($bindToAdd);
-            if ($created && isset($created[EntityOperation::ATTR_ID])) {
-                $operId = $created[EntityOperation::ATTR_ID];
-                $transIds = $this->_subAdd->transactions($operId, $transactions, $datePerformed, $asRef);
-                $result->setOperationId($operId);
+            $idCreated = $this->_repoOper->create($bindToAdd);
+            if ($idCreated) {
+                $transIds = $this->_subAdd->transactions($idCreated, $transactions, $datePerformed, $asRef);
+                $result->setOperationId($idCreated);
                 $result->setTransactionsIds($transIds);
                 $this->_manTrans->transactionCommit($trans);
                 $result->markSucceed();

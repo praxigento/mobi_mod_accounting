@@ -5,8 +5,14 @@
 
 namespace Praxigento\Accounting\Repo\Entity;
 
+use Praxigento\Accounting\Data\Entity\Operation as EntityData;
+use Praxigento\Core\Repo\IBaseRepo;
 
-interface IOperation
+interface IOperation extends IBaseRepo
 {
+    /**
+     * @param array|EntityData $data
+     * @return int
+     */
     public function create($data);
 }

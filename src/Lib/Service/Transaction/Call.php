@@ -5,7 +5,6 @@
 
 namespace Praxigento\Accounting\Lib\Service\Transaction;
 
-use Praxigento\Accounting\Data\Entity\Account as Account;
 use Praxigento\Accounting\Data\Entity\Transaction as Transaction;
 use Praxigento\Accounting\Lib\Service\ITransaction;
 
@@ -75,14 +74,13 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransaction
                     Transaction::ATTR_VALUE => $value,
                     Transaction::ATTR_DATE_APPLIED => $dateApplied
                 ];
-                $created = $this->_repoTrans->create($toAdd);
-                if ($created && isset($created[Transaction::ATTR_ID])) {
+                $idCreated = $this->_repoTrans->create($toAdd);
+                if ($idCreated) {
                     /* update debit balance */
                     $this->_repoAcc->updateBalance($debitAccId, 0 - $value);
                     /* update credit balance */
                     $this->_repoAcc->updateBalance($creditAccId, 0 + $value);
-                    $tranId = $created[Transaction::ATTR_ID];
-                    $result->setTransactionId($tranId);
+                    $result->setTransactionId($idCreated);
                 }
             } else {
                 throw new \Exception("Asset type (#$debitAssetTypeId) for debit account #$debitAccId is not equal to "
