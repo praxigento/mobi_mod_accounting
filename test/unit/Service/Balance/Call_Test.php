@@ -4,46 +4,41 @@
  */
 namespace Praxigento\Accounting\Service\Balance;
 
-use Praxigento\Accounting\Data\Entity\Balance;
-
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
 class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
-    /**
-     * Prepare mocks and object to test.
-     *
-     * @return array
-     */
-    private function _prepareMocks()
-    {
-        $mLogger = $this->_mockLogger();
-        $mConn = $this->_mockConnection();
-        $mDba = $this->_mockDbAdapter(null, $mConn);
-        $mToolPeriod = $this->_mockFor('Praxigento\Core\Tool\IPeriod');
-        $mToolbox = $this->_mockToolbox(null, null, null, $mToolPeriod);
-        $mCallRepo = $this->_mockCallRepo();
-        $mRepoMod = $this->_mockFor('\Praxigento\Accounting\Repo\IModule');
-        $mSubCalcSimple = $this->_mockFor('Praxigento\Accounting\Service\Balance\Sub\CalcSimple');
-        $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mRepoMod, $mSubCalcSimple);
-        $result = [
-            'mLogger' => $mLogger,
-            'mDba' => $mDba,
-            'mConn' => $mConn,
-            'mToolbox' => $mToolbox,
-            'mToolPeriod' => $mToolPeriod,
-            'mCallRepo' => $mCallRepo,
-            'mRepoMod' => $mRepoMod,
-            'mSubCalcSimple' => $mSubCalcSimple,
-            'call' => $call
-        ];
-        return $result;
-    }
+    /** @var  \Mockery\MockInterface */
+    private $mLogger;
+    /** @var  \Mockery\MockInterface */
+    private $mRepoBalance;
+    /** @var  \Mockery\MockInterface */
+    private $mRepoMod;
+    /** @var  \Mockery\MockInterface */
+    private $mSubCalcSimple;
+    /** @var  \Mockery\MockInterface */
+    private $mToolPeriod;
+    /** @var  Call */
+    private $obj;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->markTestSkipped('Test is deprecated after M1 & M2 merge is done.');
+        /** create mocks */
+        $this->mLogger = $this->_mockLogger();
+        $this->mToolPeriod = $this->_mock(\Praxigento\Core\Tool\IPeriod::class);
+        $this->mRepoMod = $this->_mock(\Praxigento\Accounting\Repo\IModule::class);
+        $this->mRepoBalance = $this->_mock(\Praxigento\Accounting\Repo\Entity\IBalance::class);
+        $this->mSubCalcSimple = $this->_mock(Sub\CalcSimple::class);
+        /** setup mocks for constructor */
+        /** create object to test */
+        $this->obj = new Call (
+            $this->mLogger,
+            $this->mToolPeriod,
+            $this->mRepoMod,
+            $this->mRepoBalance,
+            $this->mSubCalcSimple
+        );
     }
 
     public function test_calc()
@@ -51,151 +46,102 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Test Data === */
         $ASSET_TYPE_ID = 21;
         $DATESTAMP_TO = '20151123';
-
-        /** === Extract mocks === */
-        /**
-         * @var $mLogger \PHPUnit_Framework_MockObject_MockObject for \Psr\Log\LoggerInterface
-         * @var $mDba \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Context\IDbAdapter
-         * @var $mConn \PHPUnit_Framework_MockObject_MockObject for \Zend_Db_Adapter_Pdo_Abstract
-         * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
-         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
-         * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
-         * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Service\Balance\Sub\CalcSimple
-         * @var $call Call
-         */
-        extract($this->_prepareMocks());
-
+        $DS = 'datestamp';
+        $DS_FROM = 'datestamp from';
+        $DS_TO = 'datestamp to';
+        $TRANS = 'transactions';
+        $UPDATES = 'updates';
+        $BALANCES = ['some balances data'];
         /** === Setup Mocks === */
-
-        /**
-         * Prepare request and perform call.
-         */
-        /** @var  $call Call */
-        $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mRepoMod, $mSubCalcSimple);
+        /** create partially mocked object to test */
+        $this->obj = \Mockery::mock(
+            Call::class . '[getLastDate]',
+            [
+                $this->mLogger,
+                $this->mToolPeriod,
+                $this->mRepoMod,
+                $this->mRepoBalance,
+                $this->mSubCalcSimple
+            ]
+        );
+        // $respLastDate = $this->getLastDate($reqLastDate);
+        $this->obj
+            ->shouldReceive('getLastDate')->once()
+            ->andReturn(new Response\GetLastDate([Response\GetLastDate::LAST_DATE => $DS]));
+        // $balances = $this->_repoMod->getBalancesOnDate($assetTypeId, $lastDate);
+        $this->mRepoMod
+            ->shouldReceive('getBalancesOnDate')->once()
+            ->andReturn($BALANCES);
+        // $dtFrom = $this->_toolPeriod->getTimestampFrom($lastDate, IPeriod::TYPE_DAY);
+        $this->mToolPeriod
+            ->shouldReceive('getTimestampFrom')->once()
+            ->andReturn($DS_FROM);
+        // $dtTo = $this->_toolPeriod->getTimestampTo($dateTo, IPeriod::TYPE_DAY);
+        $this->mToolPeriod
+            ->shouldReceive('getTimestampTo')->once()
+            ->andReturn($DS_TO);
+        // $trans = $this->_repoMod->getTransactionsForPeriod($assetTypeId, $dtFrom, $dtTo);
+        $this->mRepoMod
+            ->shouldReceive('getTransactionsForPeriod')->once()
+            ->andReturn($TRANS);
+        // $updates = $this->_subCalcSimple->calcBalances($balances, $trans);
+        $this->mSubCalcSimple
+            ->shouldReceive('calcBalances')->once()
+            ->andReturn($UPDATES);
+        // $this->_repoMod->updateBalances($updates);
+        $this->mRepoMod
+            ->shouldReceive('updateBalances')->once();
+        /** === Call and asserts  === */
         $req = new Request\Calc();
-        $req->assetTypeId = $ASSET_TYPE_ID;
-        $req->dateTo = $DATESTAMP_TO;
-        $resp = $call->calc($req);
+        $req->setAssetTypeId($ASSET_TYPE_ID);
+        $req->setDateTo($DATESTAMP_TO);
+        $resp = $this->obj->calc($req);
         $this->assertTrue($resp->isSucceed());
     }
 
-    public function test_getBalancesOnDate_fail()
+    public function test_getBalancesOnDate()
     {
         /** === Test Data === */
         $ASSET_TYPE_ID = 21;
         $DATESTAMP = '20151123';
-
-        /** === Extract mocks === */
-        /**
-         * @var $mLogger \PHPUnit_Framework_MockObject_MockObject for \Psr\Log\LoggerInterface
-         * @var $mDba \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Context\IDbAdapter
-         * @var $mConn \PHPUnit_Framework_MockObject_MockObject for \Zend_Db_Adapter_Pdo_Abstract
-         * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
-         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
-         * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
-         * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Service\Balance\Sub\CalcSimple
-         * @var $call Call
-         */
-        extract($this->_prepareMocks());
-
+        $ROWS = ['data'];
         /** === Setup Mocks === */
-        // $rows = $this->_subDb->getBalancesOnDate($assetTypeId, $dateOn);
-        $mRepoMod
-            ->expects($this->once())
-            ->method('getBalancesOnDate')
-            ->will($this->returnValue([]));
-        /**
-         * Prepare request and perform call.
-         */
-        /** @var  $call Call */
-        $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mRepoMod, $mSubCalcSimple);
+        // $rows = $this->_repoMod->getBalancesOnDate($assetTypeId, $dateOn);
+        $this->mRepoMod->
+        shouldReceive('getBalancesOnDate')->once()
+            ->andReturn($ROWS);
+        /** === Call and asserts  === */
         $req = new Request\GetBalancesOnDate();
         $req->setData(Request\GetBalancesOnDate::ASSET_TYPE_ID, $ASSET_TYPE_ID);
         $req->setData(Request\GetBalancesOnDate::DATE, $DATESTAMP);
-        $resp = $call->getBalancesOnDate($req);
-        $this->assertFalse($resp->isSucceed());
-    }
-
-    public function test_getBalancesOnDate_success()
-    {
-        /** === Test Data === */
-        $ASSET_TYPE_ID = 21;
-        $DATESTAMP = '20151123';
-
-        /** === Extract mocks === */
-        /**
-         * @var $mLogger \PHPUnit_Framework_MockObject_MockObject for \Psr\Log\LoggerInterface
-         * @var $mDba \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Context\IDbAdapter
-         * @var $mConn \PHPUnit_Framework_MockObject_MockObject for \Zend_Db_Adapter_Pdo_Abstract
-         * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
-         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
-         * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
-         * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Service\Balance\Sub\CalcSimple
-         * @var $call Call
-         */
-        extract($this->_prepareMocks());
-
-        /** === Setup Mocks === */
-        // $rows = $this->_subDb->getBalancesOnDate($assetTypeId, $dateOn);
-        $mRepoMod
-            ->expects($this->once())
-            ->method('getBalancesOnDate')
-            ->will($this->returnValue(10));
-        /**
-         * Prepare request and perform call.
-         */
-        /** @var  $call Call */
-        $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mRepoMod, $mSubCalcSimple);
-        $req = new Request\GetBalancesOnDate();
-        $req->setData(Request\GetBalancesOnDate::ASSET_TYPE_ID, $ASSET_TYPE_ID);
-        $req->setData(Request\GetBalancesOnDate::DATE, $DATESTAMP);
-        $resp = $call->getBalancesOnDate($req);
+        $resp = $this->obj->getBalancesOnDate($req);
         $this->assertTrue($resp->isSucceed());
     }
 
     public function test_getLastDate_withBalanceMaxDate()
     {
         /** === Test Data === */
+        $ASSET_TYPE_CODE = 'code';
         $ASSET_TYPE_ID = 21;
         $DATESTAMP_MAX = '20151123';
         $DATESTAMP_LAST = '20151122';
-
-        /** === Extract mocks === */
-        /**
-         * @var $mLogger \PHPUnit_Framework_MockObject_MockObject for \Psr\Log\LoggerInterface
-         * @var $mDba \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Context\IDbAdapter
-         * @var $mConn \PHPUnit_Framework_MockObject_MockObject for \Zend_Db_Adapter_Pdo_Abstract
-         * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
-         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
-         * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
-         * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Service\Balance\Sub\CalcSimple
-         * @var $call Call
-         */
-        extract($this->_prepareMocks());
-
         /** === Setup Mocks === */
-        //  $balanceMaxDate = $this->_subDb->getBalanceMaxDate(...)
-        $mRepoMod
-            ->expects($this->once())
-            ->method('getBalanceMaxDate')
-            ->will($this->returnValue($DATESTAMP_MAX));
-        // $dayBefore = $this->_toolPeriod->getPeriodPrev($balanceMaxDate, Period::TYPE_DAY);
-        $mToolPeriod
-            ->expects($this->once())
-            ->method('getPeriodPrev')
-            ->will($this->returnValue($DATESTAMP_LAST));
-        /**
-         * Prepare request and perform call.
-         */
-        /** @var  $call Call */
-        $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mRepoMod, $mSubCalcSimple);
+        // $assetTypeId = $this->_repoMod->getTypeAssetIdByCode($assetTypeCode);
+        $this->mRepoMod
+            ->shouldReceive('getTypeAssetIdByCode')->once()
+            ->andReturn($ASSET_TYPE_ID);
+        // $balanceMaxDate = $this->_repoMod->getBalanceMaxDate($assetTypeId);
+        $this->mRepoMod
+            ->shouldReceive('getBalanceMaxDate')->once()
+            ->andReturn($DATESTAMP_MAX);
+        // $dayBefore = $this->_toolPeriod->getPeriodPrev($balanceMaxDate, IPeriod::TYPE_DAY);
+        $this->mToolPeriod
+            ->shouldReceive('getPeriodPrev')->once()
+            ->andReturn($DATESTAMP_LAST);
+        /** === Call and asserts  === */
         $req = new Request\GetLastDate();
-        $req->assetTypeId = $ASSET_TYPE_ID;
-        $resp = $call->getLastDate($req);
+        $req->setAssetTypeCode($ASSET_TYPE_CODE);
+        $resp = $this->obj->getLastDate($req);
         $this->assertTrue($resp->isSucceed());
         $this->assertEquals($DATESTAMP_LAST, $resp->getLastDate());
     }
@@ -204,156 +150,49 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     {
         /** === Test Data === */
         $ASSET_TYPE_ID = 21;
-        $TIMESTAMP_TRN_MIN = '2015-11-22 13:34:45';
-        $DATESTAMP_TRN_MIN = '20151122';
-        $DATESTAMP_LAST = '20151121';
-
-        /** === Extract mocks === */
-        /**
-         * @var $mLogger \PHPUnit_Framework_MockObject_MockObject for \Psr\Log\LoggerInterface
-         * @var $mDba \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Context\IDbAdapter
-         * @var $mConn \PHPUnit_Framework_MockObject_MockObject for \Zend_Db_Adapter_Pdo_Abstract
-         * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
-         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
-         * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
-         * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Service\Balance\Sub\CalcSimple
-         * @var $call Call
-         */
-        extract($this->_prepareMocks());
-
+        $DS_MIN_DATE = '20151123';
+        $PERIOD = 'period';
+        $DATESTAMP_LAST = '20151122';
         /** === Setup Mocks === */
-        //  $balanceMaxDate = $this->_subDb->getBalanceMaxDate(...)
-        $mRepoMod
-            ->expects($this->once())
-            ->method('getBalanceMaxDate')
-            ->will($this->returnValue(false));
-        // $transactionMinDate = $this->_subDb->getTransactionMinDateApplied(...)
-        $mRepoMod
-            ->expects($this->once())
-            ->method('getTransactionMinDateApplied')
-            ->will($this->returnValue($TIMESTAMP_TRN_MIN));
+        // $balanceMaxDate = $this->_repoMod->getBalanceMaxDate($assetTypeId);
+        $this->mRepoMod
+            ->shouldReceive('getBalanceMaxDate')->once()
+            ->andReturn(null);
+        // $transactionMinDate = $this->_repoMod->getTransactionMinDateApplied($assetTypeId);
+        $this->mRepoMod
+            ->shouldReceive('getTransactionMinDateApplied')->once()
+            ->andReturn($DS_MIN_DATE);
         // $period = $this->_toolPeriod->getPeriodCurrent($transactionMinDate);
-        $mToolPeriod
-            ->expects($this->once())
-            ->method('getPeriodCurrent')
-            ->will($this->returnValue($DATESTAMP_TRN_MIN));
-        // $dayBefore = $this->_toolPeriod->getPeriodPrev($period, Period::TYPE_DAY);
-        $mToolPeriod
-            ->expects($this->once())
-            ->method('getPeriodPrev')
-            ->will($this->returnValue($DATESTAMP_LAST));
-        /**
-         * Prepare request and perform call.
-         */
-        /** @var  $call Call */
-        $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mRepoMod, $mSubCalcSimple);
+        $this->mToolPeriod
+            ->shouldReceive('getPeriodCurrent')->once()
+            ->andReturn($PERIOD);
+        // $dayBefore = $this->_toolPeriod->getPeriodPrev($period, IPeriod::TYPE_DAY);
+        $this->mToolPeriod
+            ->shouldReceive('getPeriodPrev')->once()
+            ->andReturn($DATESTAMP_LAST);
+        /** === Call and asserts  === */
         $req = new Request\GetLastDate();
-        $req->assetTypeId = $ASSET_TYPE_ID;
-        $resp = $call->getLastDate($req);
+        $req->setAssetTypeId($ASSET_TYPE_ID);
+        $resp = $this->obj->getLastDate($req);
         $this->assertTrue($resp->isSucceed());
         $this->assertEquals($DATESTAMP_LAST, $resp->getLastDate());
     }
 
-    public function test_reset_fail()
+    public function test_reset()
     {
         /** === Test Data === */
         $DATESTAMP_FROM = '20151123';
-
-        /** === Extract mocks === */
-        /**
-         * @var $mLogger \PHPUnit_Framework_MockObject_MockObject for \Psr\Log\LoggerInterface
-         * @var $mDba \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Context\IDbAdapter
-         * @var $mConn \PHPUnit_Framework_MockObject_MockObject for \Zend_Db_Adapter_Pdo_Abstract
-         * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
-         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
-         * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
-         * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Service\Balance\Sub\CalcSimple
-         * @var $call Call
-         */
-        extract($this->_prepareMocks());
-
+        $ROWS_DELETED = 5;
         /** === Setup Mocks === */
-
-        // $tbl = $this->_getTableName(Balance::ENTITY_NAME);
-        $mDba
-            ->expects($this->once())
-            ->method('getTableName')
-            ->willReturn('BALANCE');
-        // $where = Balance::ATTR_DATE . '>=' . $this->_conn->quote($request->dateFrom);
-        $mConn
-            ->expects($this->once())
-            ->method('quote')
-            ->with($this->equalTo($DATESTAMP_FROM))
-            ->will($this->returnValue('WHERE'));
-        // $rows = $this->_conn->delete($tbl, $where);
-        $mConn
-            ->expects($this->once())
-            ->method('delete')
-            ->with(
-                $this->equalTo('BALANCE'),
-                $this->equalTo(Balance::ATTR_DATE . '>=WHERE')
-            )
-            ->will($this->returnValue(false));
-        /**
-         * Prepare request and perform call.
-         */
-        /** @var  $call Call */
-        $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mRepoMod, $mSubCalcSimple);
-        $req = new Request\Reset();
-        $req->setData(Request\Reset::DATE_FROM, $DATESTAMP_FROM);
-        $resp = $call->reset($req);
-        $this->assertFalse($resp->isSucceed());
-    }
-
-    public function test_reset_success()
-    {
-        /** === Test Data === */
-        $DATESTAMP_FROM = '20151123';
-
-        /** === Extract mocks === */
-        /**
-         * @var $mLogger \PHPUnit_Framework_MockObject_MockObject for \Psr\Log\LoggerInterface
-         * @var $mDba \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Context\IDbAdapter
-         * @var $mConn \PHPUnit_Framework_MockObject_MockObject for \Zend_Db_Adapter_Pdo_Abstract
-         * @var $mToolbox \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\IToolbox
-         * @var $mToolPeriod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Tool\IPeriod
-         * @var $mCallRepo \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Core\Lib\Service\IRepo
-         * @var $mRepoMod \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Repo\IModule
-         * @var $mSubCalcSimple \PHPUnit_Framework_MockObject_MockObject for \Praxigento\Accounting\Service\Balance\Sub\CalcSimple
-         * @var $call Call
-         */
-        extract($this->_prepareMocks());
-
-        /** === Setup Mocks === */
-
-        // $tbl = $this->_resource->getTableName(Balance::ENTITY_NAME);
-        $mDba
-            ->expects($this->once())
-            ->method('getTableName')
-            ->will($this->returnValue('BALANCE'));
-        // $where = Balance::ATTR_DATE . '>=' . $this->_conn->quote($request->dateFrom);
-        $mConn
-            ->expects($this->once())
-            ->method('quote')
-            ->with($this->equalTo($DATESTAMP_FROM))
-            ->will($this->returnValue('WHERE'));
-        // $rows = $this->_getConn()->delete($tbl, $where);
-        $mConn
-            ->expects($this->once())
-            ->method('delete')
-            ->with(
-                $this->equalTo('BALANCE'),
-                $this->equalTo(Balance::ATTR_DATE . '>=WHERE')
-            )
-            ->will($this->returnValue(10));
-
+        // $rows = $this->_repoBalance->delete($where);
+        $this->mRepoBalance
+            ->shouldReceive('delete')->once()
+            ->andReturn($ROWS_DELETED);
         /** === Call and asserts  === */
         $req = new Request\Reset();
-        $req->setData(Request\Reset::DATE_FROM, $DATESTAMP_FROM);
-        $resp = $call->reset($req);
+        $req->setDateFrom($DATESTAMP_FROM);
+        $resp = $this->obj->reset($req);
         $this->assertTrue($resp->isSucceed());
-        $this->assertTrue($resp->getRowsDeleted() > 0);
     }
+
 }

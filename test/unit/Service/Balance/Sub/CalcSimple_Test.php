@@ -12,10 +12,21 @@ include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class CalcSimple_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
+    /** @var  \Mockery\MockInterface */
+    private $mToolPeriod;
+    /** @var  CalcSimple */
+    private $obj;
+
     protected function setUp()
     {
         parent::setUp();
-        $this->markTestSkipped('Test is deprecated after M1 & M2 merge is done.');
+        /** create mocks */
+        $this->mToolPeriod = $this->_mock(\Praxigento\Core\Tool\IPeriod::class);
+        /** setup mocks for constructor */
+        /** create object to test */
+        $this->obj = new CalcSimple(
+            $this->mToolPeriod
+        );
     }
 
     public function test_calcBalances()
@@ -53,28 +64,19 @@ class CalcSimple_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
                 Transaction::ATTR_VALUE => '30.00',
             ]
         ];
-        /** === Mocks === */
-        $mToolPeriod = $this->_mock(\Praxigento\Core\Tool\IPeriod::class);
 
-        // $date = $this->_toolPeriod->getPeriodCurrent($timestamp, Period::TYPE_DAY);
-        $mToolPeriod
-            ->expects($this->at(0))
-            ->method('getPeriodCurrent')
-            ->will($this->returnValue($DATESTAMP_1));
-        $mToolPeriod
-            ->expects($this->at(1))
-            ->method('getPeriodCurrent')
-            ->will($this->returnValue($DATESTAMP_1));
-        $mToolPeriod
-            ->expects($this->at(2))
-            ->method('getPeriodCurrent')
-            ->will($this->returnValue($DATESTAMP_2));
-        /**
-         * Prepare request and perform call.
-         */
-        /** @var  $sub CalcSimple */
-        $sub = new CalcSimple($mToolPeriod);
-        $updates = $sub->calcBalances($CURRENT_BALANCES, $TRANS);
+        /** === Setup Mocks === */
+        $this->mToolPeriod
+            ->shouldReceive('getPeriodCurrent')->once()
+            ->andReturn($DATESTAMP_1);
+        $this->mToolPeriod
+            ->shouldReceive('getPeriodCurrent')->once()
+            ->andReturn($DATESTAMP_1);
+        $this->mToolPeriod
+            ->shouldReceive('getPeriodCurrent')->once()
+            ->andReturn($DATESTAMP_2);
+        /** === Call and asserts  === */
+        $updates = $this->obj->calcBalances($CURRENT_BALANCES, $TRANS);
         $this->assertTrue(is_array($updates));
         $from = $updates[$ACC_FROM];
         $this->assertTrue(is_array($from));

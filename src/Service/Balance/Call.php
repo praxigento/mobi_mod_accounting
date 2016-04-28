@@ -12,6 +12,10 @@ use Praxigento\Core\Tool\IPeriod;
 class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
 {
     /**
+     * @var \Praxigento\Accounting\Repo\Entity\IBalance
+     */
+    protected $_repoBalance;
+    /**
      * @var \Praxigento\Accounting\Repo\IModule
      */
     protected $_repoMod;
@@ -24,11 +28,13 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\Tool\IPeriod $toolPeriod,
         \Praxigento\Accounting\Repo\IModule $repoMod,
+        \Praxigento\Accounting\Repo\Entity\IBalance $repoBalance,
         Sub\CalcSimple $subCalcSimple
     ) {
         parent::__construct($logger);
         $this->_toolPeriod = $toolPeriod;
         $this->_repoMod = $repoMod;
+        $this->_repoBalance = $repoBalance;
         $this->_subCalcSimple = $subCalcSimple;
     }
 
@@ -56,7 +62,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
         $trans = $this->_repoMod->getTransactionsForPeriod($assetTypeId, $dtFrom, $dtTo);
         $updates = $this->_subCalcSimple->calcBalances($balances, $trans);
         $this->_repoMod->updateBalances($updates);
-        $result->setErrorCode(Response\Calc::ERR_NO_ERROR);
+        $result->markSucceed();
         return $result;
     }
 
@@ -125,13 +131,12 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
     public function reset(Request\Reset $request)
     {
         $result = new Response\Reset();
-        $dateFrom = $request->getData(Request\Reset::DATE_FROM);
-        /* get balance record with MAX date */
-        $tbl = $this->_getTableName(Balance::ENTITY_NAME);
-        $where = Balance::ATTR_DATE . '>=' . $this->_getConn()->quote($dateFrom);
-        $rows = $this->_getConn()->delete($tbl, $where);
+        $dateFrom = $request->getDateFrom();
+        /* TODO: quote $dateFrom to prevent SQL injects */
+        $where = Balance::ATTR_DATE . '>=' . $dateFrom;
+        $rows = $this->_repoBalance->delete($where);
         if ($rows !== false) {
-            $result->setData([Response\Reset::ROWS_DELETED => $rows]);
+            $result->setRowsDeleted($rows);
             $result->markSucceed();
         }
         return $result;

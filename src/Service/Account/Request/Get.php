@@ -4,7 +4,8 @@
  */
 namespace Praxigento\Accounting\Service\Account\Request;
 
-class Get extends \Praxigento\Core\Service\Base\Request {
+class Get extends \Praxigento\Core\Service\Base\Request
+{
     /**
      * ID of the account. $accountId has the highest priority for identity.
      * @var int
@@ -33,48 +34,58 @@ class Get extends \Praxigento\Core\Service\Base\Request {
      */
     const CUSTOMER_ID = 'customer_id';
 
-    public function setAccountId($data) {
-        $this->setData(self::ACCOUNT_ID, $data);
-    }
-
-    public function setAssetTypeCode($data) {
-        $this->setData(self::ASSET_TYPE_CODE, $data);
-    }
-
-    public function setAssetTypeId($data) {
-        $this->setData(self::ASSET_TYPE_ID, $data);
-    }
-
-    public function setCreateNewAccountIfMissed($data = true) {
-        $this->setData(self::CREATE_NEW_ACCOUNT_IF_MISSED, $data);
-    }
-
-    public function setCustomerId($data) {
-        $this->setData(self::CUSTOMER_ID, $data);
-    }
-
-    public function getAccountId() {
-        $result = $this->getData(self::ACCOUNT_ID);
+    public function getAccountId()
+    {
+        $result = $this->getData(static::ACCOUNT_ID);
         return $result;
     }
 
-    public function getAssetTypeCode() {
-        $result = $this->getData(self::ASSET_TYPE_CODE);
+    public function getAssetTypeCode()
+    {
+        $result = $this->getData(static::ASSET_TYPE_CODE);
         return $result;
     }
 
-    public function getAssetTypeId() {
-        $result = $this->getData(self::ASSET_TYPE_ID);
+    public function getAssetTypeId()
+    {
+        $result = $this->getData(static::ASSET_TYPE_ID);
         return $result;
     }
 
-    public function getCreateNewAccountIfMissed() {
-        $result = $this->getData(self::CREATE_NEW_ACCOUNT_IF_MISSED);
+    public function getCreateNewAccountIfMissed()
+    {
+        $result = $this->getData(static::CREATE_NEW_ACCOUNT_IF_MISSED);
         return $result;
     }
 
-    public function getCustomerId() {
-        $result = $this->getData(self::CUSTOMER_ID);
+    public function getCustomerId()
+    {
+        $result = $this->getData(static::CUSTOMER_ID);
         return $result;
+    }
+
+    public function setAccountId($data)
+    {
+        $this->setData(static::ACCOUNT_ID, $data);
+    }
+
+    public function setAssetTypeCode($data)
+    {
+        $this->setData(static::ASSET_TYPE_CODE, $data);
+    }
+
+    public function setAssetTypeId($data)
+    {
+        $this->setData(static::ASSET_TYPE_ID, $data);
+    }
+
+    public function setCreateNewAccountIfMissed($data = true)
+    {
+        $this->setData(static::CREATE_NEW_ACCOUNT_IF_MISSED, $data);
+    }
+
+    public function setCustomerId($data)
+    {
+        $this->setData(static::CUSTOMER_ID, $data);
     }
 }
