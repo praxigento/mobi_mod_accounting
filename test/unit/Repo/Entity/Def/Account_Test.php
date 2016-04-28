@@ -4,11 +4,11 @@
  */
 namespace Praxigento\Accounting\Repo\Entity\Def;
 
-use Praxigento\Accounting\Data\Entity\Account as EntityData;
+use Praxigento\Accounting\Data\Entity\Account as Entity;
 use Praxigento\Accounting\Repo\Entity\IAccount;
 
 
-include_once(__DIR__ . '/../../phpunit_bootstrap.php');
+include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Account_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
@@ -29,7 +29,7 @@ class Account_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->obj = new Account(
             $this->mRsrcConn,
             $this->mRepoGeneric,
-            EntityData::class
+            Entity::class
         );
     }
 

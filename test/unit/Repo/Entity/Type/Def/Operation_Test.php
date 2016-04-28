@@ -7,7 +7,7 @@ namespace Praxigento\Accounting\Repo\Entity\Type\Def;
 use Praxigento\Accounting\Data\Entity\Type\Operation as Entity;
 use Praxigento\Accounting\Repo\Entity\Type\IOperation;
 
-include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
+include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 
 class Operation_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
