@@ -5,17 +5,19 @@
 
 namespace Praxigento\Accounting\Repo\Entity\Def;
 
+use Magento\Framework\App\ResourceConnection;
 use Praxigento\Accounting\Data\Entity\Account as Entity;
-use Praxigento\Accounting\Repo\Entity\IAccount;
+use Praxigento\Accounting\Repo\Entity\IAccount as IEntityRepo;
 use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
+use Praxigento\Core\Repo\IGeneric as IRepoGeneric;
 use Praxigento\Core\Repo\Query\Expression;
 
-class Account extends BaseEntityRepo implements IAccount
+class Account extends BaseEntityRepo implements IEntityRepo
 {
 
     public function __construct(
-        \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\Repo\IGeneric $repoGeneric
+        ResourceConnection $resource,
+        IRepoGeneric $repoGeneric
     ) {
         parent::__construct($resource, $repoGeneric, Entity::class);
     }
