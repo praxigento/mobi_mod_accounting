@@ -48,8 +48,8 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
     public function calc(Request\Calc $request)
     {
         $result = new Response\Calc();
-        $assetTypeId = $request->getData(Request\Calc::ASSET_TYPE_ID);
-        $dateTo = $request->getData(Request\Calc::DATE_TO);
+        $assetTypeId = $request->getAssetTypeId();
+        $dateTo = $request->getDateTo();
         /* get the last balance date */
         $reqLastDate = new Request\GetLastDate();
         $reqLastDate->setData(Request\GetLastDate::ASSET_TYPE_ID, $assetTypeId);
@@ -76,8 +76,8 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
     public function getBalancesOnDate(Request\GetBalancesOnDate $request)
     {
         $result = new Response\GetBalancesOnDate();
-        $dateOn = $request->getData(Request\GetBalancesOnDate::DATE);
-        $assetTypeId = $request->getData(Request\GetBalancesOnDate::ASSET_TYPE_ID);
+        $dateOn = $request->getDate();
+        $assetTypeId = $request->getAssetTypeId();
         $rows = $this->_repoMod->getBalancesOnDate($assetTypeId, $dateOn);
         if (count($rows) > 0) {
             $result->setData($rows);
@@ -96,8 +96,8 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
     public function getLastDate(Request\GetLastDate $request)
     {
         $result = new Response\GetLastDate();
-        $assetTypeId = $request->getData(Request\GetLastDate::ASSET_TYPE_ID);
-        $assetTypeCode = $request->getData(Request\GetLastDate::ASSET_TYPE_CODE);
+        $assetTypeId = $request->getAssetTypeId();
+        $assetTypeCode = $request->getAssetTypeCode();
         if (is_null($assetTypeId)) {
             $assetTypeId = $this->_repoMod->getTypeAssetIdByCode($assetTypeCode);
         }

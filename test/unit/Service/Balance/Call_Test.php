@@ -95,8 +95,8 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $req = new Request\Calc();
         $req->setAssetTypeId($ASSET_TYPE_ID);
         $req->setDateTo($DATESTAMP_TO);
-        $resp = $this->obj->calc($req);
-        $this->assertTrue($resp->isSucceed());
+        $res = $this->obj->calc($req);
+        $this->assertTrue($res->isSucceed());
     }
 
     public function test_getBalancesOnDate()
@@ -112,10 +112,10 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             ->andReturn($ROWS);
         /** === Call and asserts  === */
         $req = new Request\GetBalancesOnDate();
-        $req->setData(Request\GetBalancesOnDate::ASSET_TYPE_ID, $ASSET_TYPE_ID);
-        $req->setData(Request\GetBalancesOnDate::DATE, $DATESTAMP);
-        $resp = $this->obj->getBalancesOnDate($req);
-        $this->assertTrue($resp->isSucceed());
+        $req->setAssetTypeId($ASSET_TYPE_ID);
+        $req->setDate($DATESTAMP);
+        $res = $this->obj->getBalancesOnDate($req);
+        $this->assertTrue($res->isSucceed());
     }
 
     public function test_getLastDate_withBalanceMaxDate()
@@ -141,9 +141,9 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Call and asserts  === */
         $req = new Request\GetLastDate();
         $req->setAssetTypeCode($ASSET_TYPE_CODE);
-        $resp = $this->obj->getLastDate($req);
-        $this->assertTrue($resp->isSucceed());
-        $this->assertEquals($DATESTAMP_LAST, $resp->getLastDate());
+        $res = $this->obj->getLastDate($req);
+        $this->assertTrue($res->isSucceed());
+        $this->assertEquals($DATESTAMP_LAST, $res->getLastDate());
     }
 
     public function test_getLastDate_withTransactionMinDate()
@@ -173,9 +173,9 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Call and asserts  === */
         $req = new Request\GetLastDate();
         $req->setAssetTypeId($ASSET_TYPE_ID);
-        $resp = $this->obj->getLastDate($req);
-        $this->assertTrue($resp->isSucceed());
-        $this->assertEquals($DATESTAMP_LAST, $resp->getLastDate());
+        $res = $this->obj->getLastDate($req);
+        $this->assertTrue($res->isSucceed());
+        $this->assertEquals($DATESTAMP_LAST, $res->getLastDate());
     }
 
     public function test_reset()
@@ -191,8 +191,9 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Call and asserts  === */
         $req = new Request\Reset();
         $req->setDateFrom($DATESTAMP_FROM);
-        $resp = $this->obj->reset($req);
-        $this->assertTrue($resp->isSucceed());
+        $res = $this->obj->reset($req);
+        $this->assertTrue($res->isSucceed());
+        $this->assertEquals($ROWS_DELETED, $res->getRowsDeleted());
     }
 
 }
