@@ -5,16 +5,13 @@
 namespace Praxigento\Accounting\Service\Operation;
 
 use Praxigento\Accounting\Data\Entity\Transaction;
-use Praxigento\Core\Lib\Service\Repo\Response\AddEntity as RepoAddEntityResponse;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
 class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
     /** @var  Call */
-    private $call;
-    /** @var  \Mockery\MockInterface */
-    private $mCallTypeOperation;
+    private $obj;
     /** @var  \Mockery\MockInterface */
     private $mConn;
     /** @var  \Mockery\MockInterface */
@@ -22,24 +19,25 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     /** @var  \Mockery\MockInterface */
     private $mManTrans;
     /** @var  \Mockery\MockInterface */
-    private $mRepoMod;
+    private $mRepoOper;
+    /** @var  \Mockery\MockInterface */
+    private $mRepoTypeOper;
     /** @var  \Mockery\MockInterface */
     private $mSubAdd;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->markTestSkipped('Test is deprecated after M1 & M2 merge is done.');
-        $this->mLogger = $this->_mock(\Psr\Log\LoggerInterface::class);
+        $this->mLogger = $this->_mockLogger();
         $this->mManTrans = $this->_mockTransactionManager();
-        $this->mCallTypeOperation = $this->_mock(\Praxigento\Accounting\Service\Type\Operation\Call::class);
-        $this->mRepoMod = $this->_mock(\Praxigento\Accounting\Repo\IModule ::class);
-        $this->mSubAdd = $this->_mock(\Praxigento\Accounting\Service\Operation\Sub\Add::class);
-        $this->call = new Call(
+        $this->mRepoOper = $this->_mock(\Praxigento\Accounting\Repo\Entity\IOperation::class);
+        $this->mRepoTypeOper = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\IOperation::class);
+        $this->mSubAdd = $this->_mock(Sub\Add::class);
+        $this->obj = new Call(
             $this->mLogger,
             $this->mManTrans,
-            $this->mCallTypeOperation,
-            $this->mRepoMod,
+            $this->mRepoOper,
+            $this->mRepoTypeOper,
             $this->mSubAdd
         );
     }
@@ -57,34 +55,32 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             ]
         ];
         $OPERATION_ID = 42;
-
         /** === Setup Mocks === */
-
-        // $conn->beginTransaction();
-        $this->mConn
-            ->shouldReceive('beginTransaction');
-        // $respAdd = $this->_callRepo->addEntity($reqAdd);
-        $mAddEntityResp = new RepoAddEntityResponse();
-        $this->mCallRepo
-            ->shouldReceive('addEntity')
-            ->andReturn($mAddEntityResp);
-        // if($respAdd->isSucceed()) {
-        $mAddEntityResp->markSucceed();
-        $mAddEntityResp->setData(RepoAddEntityResponse::ID_INSERTED, $OPERATION_ID);
-        // $transIds = $this->_subAdd->transactions($operId, $transactions, $datePerformed, $asRef);
+        // $trans = $this->_manTrans->transactionBegin();
+        $mTrans = $this->_mockTransactionDefinition();
+        $this->mManTrans
+            ->shouldReceive('transactionBegin')->once()
+            ->andReturn($mTrans);
+        // $idCreated = $this->_repoOper->create($bindToAdd);
+        $this->mRepoOper
+            ->shouldReceive('create')->once()
+            ->andReturn($OPERATION_ID);
+        // $transIds = $this->_subAdd->transactions($idCreated, $transactions, $datePerformed, $asRef);
         $this->mSubAdd
-            ->shouldReceive('transactions')
+            ->shouldReceive('transactions')->once()
             ->andReturn([]);
-        // $conn->commit();
-        $this->mConn
-            ->shouldReceive('commit');
-
+        // $this->_manTrans->transactionCommit($trans);
+        $this->mManTrans
+            ->shouldReceive('transactionCommit')->once();
+        // $this->_manTrans->transactionClose($trans);
+        $this->mManTrans
+            ->shouldReceive('transactionClose')->once();
         /** === Call and asserts  === */
         $req = new Request\Add();
         $req->setDatePerformed($DATE_PERFORMED);
         $req->setOperationTypeId($OPER_TYPE_ID);
         $req->setTransactions($TRANSACTIONS);
-        $resp = $this->call->add($req);
+        $resp = $this->obj->add($req);
         $this->assertTrue($resp->isSucceed());
         $this->assertEquals($OPERATION_ID, $resp->getOperationId());
     }
@@ -96,39 +92,28 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     {
         /** === Test Data === */
         $DATE_PERFORMED = '2015-11-23 12:23:34';
-        $OPER_TYPE_ID = 4;
         $OPER_TYPE_CODE = 'code';
-        $TRANSACTIONS = [
-            [
-                Transaction::ATTR_DEBIT_ACC_ID => '12',
-                Transaction::ATTR_CREDIT_ACC_ID => '23',
-                Transaction::ATTR_VALUE => 12.32,
-            ]
-        ];
+        $TRANSACTIONS = [];
 
         /** === Setup Mocks === */
-
-        // $conn->beginTransaction();
-        $this->mConn
-            ->shouldReceive('beginTransaction');
-        // $operationTypeId = $this->_repoMod->getTypeOperationIdByCode($operationTypeCode);
-        $this->mRepoMod
-            ->shouldReceive('getTypeOperationIdByCode')
-            ->andReturn($OPER_TYPE_ID);
-        // $respAdd = $this->_callRepo->addEntity($reqAdd);
-        $this->mCallRepo
-            ->shouldReceive('addEntity')
-            ->andThrow(new \Exception('From Mockery FW'));
-        // $conn->rollback();
-        $this->mConn
-            ->shouldReceive('rollBack');
-
+        // $trans = $this->_manTrans->transactionBegin();
+        $mTrans = $this->_mockTransactionDefinition();
+        $this->mManTrans
+            ->shouldReceive('transactionBegin')->once()
+            ->andReturn($mTrans);
+        // $operationTypeId = $this->_repoTypeOper->getIdByCode($operationTypeCode);
+        $this->mRepoTypeOper
+            ->shouldReceive('getIdByCode')->once()
+            ->andThrow(\Exception::class);
+        // $this->_manTrans->transactionClose($trans);
+        $this->mManTrans
+            ->shouldReceive('transactionClose')->once();
         /** === Call and asserts  === */
         $req = new Request\Add();
         $req->setDatePerformed($DATE_PERFORMED);
         $req->setOperationTypeCode($OPER_TYPE_CODE);
         $req->setTransactions($TRANSACTIONS);
-        $resp = $this->call->add($req);
+        $resp = $this->obj->add($req);
         $this->assertFalse($resp->isSucceed());
     }
 

@@ -39,7 +39,7 @@ class Account_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->assertInstanceOf(IAccount::class, $this->obj);
     }
 
-    public function test_getByCustomerId()
+    public function test_getByCustomerId_withAssetType()
     {
         /* === Test Data === */
         $CUST_ID = 32;
@@ -53,6 +53,22 @@ class Account_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             ->andReturn($DATA);
         /* === Call and asserts  === */
         $res = $this->obj->getByCustomerId($CUST_ID, $ASSET_TYPE_ID);
+        $this->assertInstanceOf(IAccount::class, $this->obj);
+    }
+
+    public function test_getByCustomerId_woAssetType()
+    {
+        /* === Test Data === */
+        $CUST_ID = 32;
+        $DATA = [['some data' => 'here']];
+        /* === Setup Mocks === */
+        // $result = $this->get($where);
+        // $result = $this->_repoGeneric->getEntities($this->_entityName, null, $where, $order, $limit, $offset);
+        $this->mRepoGeneric
+            ->shouldReceive('getEntities')
+            ->andReturn($DATA);
+        /* === Call and asserts  === */
+        $res = $this->obj->getByCustomerId($CUST_ID);
         $this->assertInstanceOf(IAccount::class, $this->obj);
     }
 

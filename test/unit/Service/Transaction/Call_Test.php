@@ -10,10 +10,34 @@ include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
 class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
+    /** @var  \Mockery\MockInterface */
+    private $mCallAcc;
+    /** @var  \Mockery\MockInterface */
+    private $mConn;
+    /** @var  \Mockery\MockInterface */
+    private $mLogger;
+    /** @var  \Mockery\MockInterface */
+    private $mManTrans;
+    /** @var  \Mockery\MockInterface */
+    private $mRepoAcc;
+    /** @var  \Mockery\MockInterface */
+    private $mRepoTrans;
+    /** @var  Call */
+    private $obj;
+
     protected function setUp()
     {
         parent::setUp();
-        $this->markTestSkipped('Test is deprecated after M1 & M2 merge is done.');
+        $this->mLogger = $this->_mockLogger();
+        $this->mManTrans = $this->_mockTransactionManager();
+        $this->mRepoAcc = $this->_mock(\Praxigento\Accounting\Repo\Entity\IAccount::class);
+        $this->mRepoTrans = $this->_mock(\Praxigento\Accounting\Repo\Entity\ITransaction::class);
+        $this->obj = new Call(
+            $this->mLogger,
+            $this->mManTrans,
+            $this->mRepoAcc,
+            $this->mRepoTrans
+        );
     }
 
     public function test_add_commit()
@@ -22,70 +46,48 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $ASSET_TYPE_ID = 3;
         $ACC_ID_DEBIT = 12;
         $ACC_ID_CREDIT = 23;
-        /** === Mocks === */
-        $mLogger = $this->_mockLogger();
-        $mConn = $this->_mockConnection();
-        $mDba = $this->_mockDbAdapter(null, $mConn);
-        $mToolbox = $this->_mockToolbox();
-        $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\Account\Call');
-
-        // $this->_conn->beginTransaction();
-        $mConn
-            ->expects($this->once())
-            ->method('beginTransaction');
-        // $respByPk = $this->_callRepo->getEntityByPk($reqByPk);
-        $mRespByPk = $this->_mockFor('Praxigento\Core\Lib\Service\Repo\Response\GetEntityByPk');
-        $mCallRepo
-            ->expects($this->any())
-            ->method('getEntityByPk')
-            ->will($this->returnValue($mRespByPk));
-        // $debitAccId = $respByPk->getData(Account::ATTR_ID);
-        $mRespByPk
-            ->expects($this->at(0))
-            ->method('getData')
-            ->with($this->equalTo(Account::ATTR_ID))
-            ->will($this->returnValue($ACC_ID_DEBIT));
-        // $debitAssetTypeId = $respByPk->getData(Account::ATTR_ASSET_TYPE_ID);
-        $mRespByPk
-            ->expects($this->at(1))
-            ->method('getData')
-            ->with($this->equalTo(Account::ATTR_ASSET_TYPE_ID))
-            ->will($this->returnValue($ASSET_TYPE_ID));
-        // $creditAccId = $respByPk->getData(Account::ATTR_ID);
-        $mRespByPk
-            ->expects($this->at(2))
-            ->method('getData')
-            ->with($this->equalTo(Account::ATTR_ID))
-            ->will($this->returnValue($ACC_ID_CREDIT));
-        // $creditAssetTypeId = $respByPk->getData(Account::ATTR_ASSET_TYPE_ID);
-        $mRespByPk
-            ->expects($this->at(3))
-            ->method('getData')
-            ->with($this->equalTo(Account::ATTR_ASSET_TYPE_ID))
-            ->will($this->returnValue($ASSET_TYPE_ID));
-        // $respAdd = $this->_callRepo->addEntity($reqAdd);
-        $mRespAdd = $this->_mockFor('\Praxigento\Core\Lib\Service\Repo\Response\AddEntity');
-        $mCallRepo
-            ->expects($this->once())
-            ->method('addEntity')
-            ->will($this->returnValue($mRespAdd));
-        // if($respAdd->isSucceed()) {
-        $mRespAdd
-            ->expects($this->once())
-            ->method('isSucceed')
-            ->will($this->returnValue(true));
-        // $this->_conn->commit();
-        $mConn
-            ->expects($this->once())
-            ->method('commit');
-        /**
-         * Prepare request and perform call.
-         */
-        /** @var  $call Call */
-        $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mCallAccount);
+        $OPERATION_ID = 543;
+        $VALUE = 32.54;
+        $DATE = 'date applied';
+        $TRANS_ID = 654;
+        /** === Setup Mocks === */
+        // $trans = $this->_manTrans->transactionBegin();
+        $mTrans = $this->_mockTransactionDefinition();
+        $this->mManTrans
+            ->shouldReceive('transactionBegin')->once()
+            ->andReturn($mTrans);
+        // $debitAcc = $this->_repoAcc->getById($debitAccId);
+        $this->mRepoAcc
+            ->shouldReceive('getById')->once()
+            ->andReturn(new Account([Account::ATTR_ASSET_TYPE_ID => $ASSET_TYPE_ID]));
+        // $creditAcc = $this->_repoAcc->getById($creditAccId);
+        $this->mRepoAcc
+            ->shouldReceive('getById')->once()
+            ->andReturn(new Account([Account::ATTR_ASSET_TYPE_ID => $ASSET_TYPE_ID]));
+        // $idCreated = $this->_repoTrans->create($toAdd);
+        $this->mRepoTrans
+            ->shouldReceive('create')->once()
+            ->andReturn($TRANS_ID);
+        // $this->_repoAcc->updateBalance($debitAccId, 0 - $value);
+        $this->mRepoAcc
+            ->shouldReceive('updateBalance')->once();
+        // $this->_repoAcc->updateBalance($creditAccId, 0 + $value);
+        $this->mRepoAcc
+            ->shouldReceive('updateBalance')->once();
+        // $this->_manTrans->transactionCommit($trans);
+        $this->mManTrans
+            ->shouldReceive('transactionCommit')->once();
+        // $this->_manTrans->transactionClose($trans);
+        $this->mManTrans
+            ->shouldReceive('transactionClose')->once();
+        /** === Call and asserts  === */
         $req = new Request\Add();
-        $resp = $call->add($req);
+        $req->setDebitAccId($ACC_ID_DEBIT);
+        $req->setCreditAccId($ACC_ID_CREDIT);
+        $req->setOperationId($OPERATION_ID);
+        $req->setDateApplied($DATE);
+        $req->setValue($VALUE);
+        $resp = $this->obj->add($req);
         $this->assertTrue($resp->isSucceed());
     }
 
@@ -99,59 +101,31 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $ASSET_TYPE_ID_CREDIT = 4;
         $ACC_ID_DEBIT = 12;
         $ACC_ID_CREDIT = 23;
+        $OPERATION_ID = 543;
+        $VALUE = 32.54;
+        $DATE = 'date applied';
+        $TRANS_ID = 654;
         /** === Mocks === */
-        $mLogger = $this->_mockLogger();
-        $mConn = $this->_mockConnection();
-        $mDba = $this->_mockDbAdapter(null, $mConn);
-        $mToolbox = $this->_mockToolbox();
-        $mCallRepo = $this->_mockCallRepo();
-        $mCallAccount = $this->_mockFor('Praxigento\Accounting\Service\Account\Call');
-
-        // $this->_conn->beginTransaction();
-        $mConn
-            ->expects($this->once())
-            ->method('beginTransaction');
-        // $respByPk = $this->_callRepo->getEntityByPk($reqByPk);
-        $mRespByPk = $this->_mockFor('Praxigento\Core\Lib\Service\Repo\Response\GetEntityByPk');
-        $mCallRepo
-            ->expects($this->any())
-            ->method('getEntityByPk')
-            ->will($this->returnValue($mRespByPk));
-        // $debitAccId = $respByPk->getData(Account::ATTR_ID);
-        $mRespByPk
-            ->expects($this->at(0))
-            ->method('getData')
-            ->with($this->equalTo(Account::ATTR_ID))
-            ->will($this->returnValue($ACC_ID_DEBIT));
-        // $debitAssetTypeId = $respByPk->getData(Account::ATTR_ASSET_TYPE_ID);
-        $mRespByPk
-            ->expects($this->at(1))
-            ->method('getData')
-            ->with($this->equalTo(Account::ATTR_ASSET_TYPE_ID))
-            ->will($this->returnValue($ASSET_TYPE_ID_DEBIT));
-        // $creditAccId = $respByPk->getData(Account::ATTR_ID);
-        $mRespByPk
-            ->expects($this->at(2))
-            ->method('getData')
-            ->with($this->equalTo(Account::ATTR_ID))
-            ->will($this->returnValue($ACC_ID_CREDIT));
-        // $creditAssetTypeId = $respByPk->getData(Account::ATTR_ASSET_TYPE_ID);
-        $mRespByPk
-            ->expects($this->at(3))
-            ->method('getData')
-            ->with($this->equalTo(Account::ATTR_ASSET_TYPE_ID))
-            ->will($this->returnValue($ASSET_TYPE_ID_CREDIT));
-        // $this->_conn->rollBack();
-        $mConn
-            ->expects($this->once())
-            ->method('rollBack');
-        /**
-         * Prepare request and perform call.
-         */
-        /** @var  $call Call */
-        $call = new Call($mLogger, $mDba, $mToolbox, $mCallRepo, $mCallAccount);
+        // $trans = $this->_manTrans->transactionBegin();
+        $mTrans = $this->_mockTransactionDefinition();
+        $this->mManTrans
+            ->shouldReceive('transactionBegin')->once()
+            ->andReturn($mTrans);
+        // $debitAcc = $this->_repoAcc->getById($debitAccId);
+        $this->mRepoAcc
+            ->shouldReceive('getById')->once()
+            ->andReturn(new Account([Account::ATTR_ASSET_TYPE_ID => $ASSET_TYPE_ID_DEBIT]));
+        // $creditAcc = $this->_repoAcc->getById($creditAccId);
+        $this->mRepoAcc
+            ->shouldReceive('getById')->once()
+            ->andReturn(new Account([Account::ATTR_ASSET_TYPE_ID => $ASSET_TYPE_ID_CREDIT]));
+        /** === Call and asserts  === */
         $req = new Request\Add();
-        $resp = $call->add($req);
-        $this->assertFalse($resp->isSucceed());
+        $req->setDebitAccId($ACC_ID_DEBIT);
+        $req->setCreditAccId($ACC_ID_CREDIT);
+        $req->setOperationId($OPERATION_ID);
+        $req->setDateApplied($DATE);
+        $req->setValue($VALUE);
+        $resp = $this->obj->add($req);
     }
 }

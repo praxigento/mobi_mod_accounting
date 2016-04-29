@@ -10,10 +10,6 @@ use Praxigento\Accounting\Service\ITransaction;
 
 class Call extends \Praxigento\Core\Service\Base\Call implements ITransaction
 {
-    /**
-     * @var \Praxigento\Accounting\Service\Account\Call
-     */
-    protected $_callAccount;
     /** @var  \Praxigento\Core\Repo\ITransactionManager */
     protected $_manTrans;
     /** @var  \Praxigento\Accounting\Repo\Entity\IAccount */
@@ -28,14 +24,12 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransaction
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\Repo\ITransactionManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\IAccount $repoAcc,
-        \Praxigento\Accounting\Repo\Entity\ITransaction $repoTrans,
-        \Praxigento\Accounting\Service\Account\Call $callAccount
+        \Praxigento\Accounting\Repo\Entity\ITransaction $repoTrans
     ) {
         parent::__construct($logger);
         $this->_manTrans = $manTrans;
         $this->_repoAcc = $repoAcc;
         $this->_repoTrans = $repoTrans;
-        $this->_callAccount = $callAccount;
     }
 
     /**
