@@ -15,6 +15,8 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     /** @var  \Mockery\MockInterface */
     private $mRepoMod;
     /** @var  \Mockery\MockInterface */
+    private $mRepoTypeAsset;
+    /** @var  \Mockery\MockInterface */
     private $mSubCalcSimple;
     /** @var  \Mockery\MockInterface */
     private $mToolPeriod;
@@ -29,6 +31,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mToolPeriod = $this->_mock(\Praxigento\Core\Tool\IPeriod::class);
         $this->mRepoMod = $this->_mock(\Praxigento\Accounting\Repo\IModule::class);
         $this->mRepoBalance = $this->_mock(\Praxigento\Accounting\Repo\Entity\IBalance::class);
+        $this->mRepoTypeAsset = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\IAsset::class);
         $this->mSubCalcSimple = $this->_mock(Sub\CalcSimple::class);
         /** setup mocks for constructor */
         /** create object to test */
@@ -37,6 +40,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             $this->mToolPeriod,
             $this->mRepoMod,
             $this->mRepoBalance,
+            $this->mRepoTypeAsset,
             $this->mSubCalcSimple
         );
     }
@@ -61,6 +65,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
                 $this->mToolPeriod,
                 $this->mRepoMod,
                 $this->mRepoBalance,
+                $this->mRepoTypeAsset,
                 $this->mSubCalcSimple
             ]
         );
@@ -126,9 +131,9 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $DATESTAMP_MAX = '20151123';
         $DATESTAMP_LAST = '20151122';
         /** === Setup Mocks === */
-        // $assetTypeId = $this->_repoMod->getTypeAssetIdByCode($assetTypeCode);
-        $this->mRepoMod
-            ->shouldReceive('getTypeAssetIdByCode')->once()
+        // $assetTypeId = $this->_repoTypeAsset->getIdByCode($assetTypeCode);
+        $this->mRepoTypeAsset
+            ->shouldReceive('getIdByCode')->once()
             ->andReturn($ASSET_TYPE_ID);
         // $balanceMaxDate = $this->_repoMod->getBalanceMaxDate($assetTypeId);
         $this->mRepoMod

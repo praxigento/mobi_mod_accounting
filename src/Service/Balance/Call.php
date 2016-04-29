@@ -19,6 +19,10 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
      * @var \Praxigento\Accounting\Repo\IModule
      */
     protected $_repoMod;
+    /**
+     * @var \Praxigento\Accounting\Repo\Entity\Type\IAsset
+     */
+    protected $_repoTypeAsset;
     /** @var Sub\CalcSimple Simple balance calculator. */
     protected $_subCalcSimple;
     /** @var  \Praxigento\Core\Tool\IPeriod */
@@ -29,12 +33,14 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
         \Praxigento\Core\Tool\IPeriod $toolPeriod,
         \Praxigento\Accounting\Repo\IModule $repoMod,
         \Praxigento\Accounting\Repo\Entity\IBalance $repoBalance,
+        \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset,
         Sub\CalcSimple $subCalcSimple
     ) {
         parent::__construct($logger);
         $this->_toolPeriod = $toolPeriod;
         $this->_repoMod = $repoMod;
         $this->_repoBalance = $repoBalance;
+        $this->_repoTypeAsset = $repoTypeAsset;
         $this->_subCalcSimple = $subCalcSimple;
     }
 
@@ -99,7 +105,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
         $assetTypeId = $request->getAssetTypeId();
         $assetTypeCode = $request->getAssetTypeCode();
         if (is_null($assetTypeId)) {
-            $assetTypeId = $this->_repoMod->getTypeAssetIdByCode($assetTypeCode);
+            $assetTypeId = $this->_repoTypeAsset->getIdByCode($assetTypeCode);
         }
         /* get the maximal date for balance */
         $balanceMaxDate = $this->_repoMod->getBalanceMaxDate($assetTypeId);

@@ -56,6 +56,8 @@ interface IModule extends ICached
      * @param string $code
      *
      * @return int
+     *
+     * @deprecated use \Praxigento\Accounting\Repo\Entity\Type\IAsset
      */
     public function getTypeAssetIdByCode($code);
 
