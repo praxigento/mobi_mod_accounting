@@ -143,7 +143,7 @@ class Call extends BaseCall implements IAccount
             $this->_logger->error("Asset type is not defined (asset code: $typeCode).");
         }
         if ($result->isSucceed()) {
-            $repAccId = $result->getData(Account::ATTR_ID);
+            $repAccId = $result->getId();
             $this->_logger->info("Representative account #$repAccId is found.");
         }
         $this->_logger->info("'Get representative account' operation is completed.");

@@ -54,17 +54,20 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Test Data === */
         $CUST_ID = 32;
         $ASSET_TYPE_CODE = 'code';
-        $ACCOUNT_ID_3 = 39;
-        $ASSET_TYPE_ID_3 = 98;
+        $ACCOUNT_ID = 39;
+        $ASSET_TYPE_ID = 98;
+        $BALANCE = 54.65;
         $DATA = new Account([
-            Account::ATTR_ID => $ACCOUNT_ID_3,
-            Account::ATTR_ASSET_TYPE_ID => $ASSET_TYPE_ID_3
+            Account::ATTR_ASSET_TYPE_ID => $ASSET_TYPE_ID,
+            Account::ATTR_BALANCE => $BALANCE,
+            Account::ATTR_CUST_ID => $CUST_ID,
+            Account::ATTR_ID => $ACCOUNT_ID
         ]);
         /** === Setup Mocks === */
         // $typeId = $this->_repoTypeAsset->getIdByCode($typeCode);
         $this->mRepoTypeAsset
             ->shouldReceive('getIdByCode')->once()
-            ->andReturn($ASSET_TYPE_ID_3);
+            ->andReturn($ASSET_TYPE_ID);
         // $customerId = $this->_repoMod->getRepresentativeCustomerId();
         $this->mRepoMod
             ->shouldReceive('getRepresentativeCustomerId')->once()
@@ -83,6 +86,10 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $req->setAssetTypeCode($ASSET_TYPE_CODE);
         $resp = $this->obj->getRepresentative($req);
         $this->assertTrue($resp->isSucceed());
+        $this->assertEquals($ASSET_TYPE_ID, $resp->getAssetTypeId());
+        $this->assertEquals($BALANCE, $resp->getBalance());
+        $this->assertEquals($CUST_ID, $resp->getCustomerId());
+        $this->assertEquals($ACCOUNT_ID, $resp->getId());
     }
 
     public function test_getRepresentative_byAssetCode_idNotFound()

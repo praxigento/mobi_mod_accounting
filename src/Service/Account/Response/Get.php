@@ -44,35 +44,4 @@ class Get extends \Praxigento\Core\Service\Base\Response
         return $result;
     }
 
-    /**
-     * @param int $data
-     */
-    public function setAssetTypeId($data)
-    {
-        parent::setData(Account::ATTR_ASSET_TYPE_ID, $data);
-    }
-
-    /**
-     * @param double $data
-     */
-    public function setBalance($data)
-    {
-        parent::setData(Account::ATTR_BALANCE, $data);
-    }
-
-    /**
-     * @param int $data
-     */
-    public function setCustomerId($data)
-    {
-        parent::setData(Account::ATTR_CUST_ID, $data);
-    }
-
-    /**
-     * @param int $data
-     */
-    public function setId($data)
-    {
-        parent::setData(Account::ATTR_ID, $data);
-    }
 }
