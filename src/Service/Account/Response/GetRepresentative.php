@@ -4,6 +4,7 @@
  */
 namespace Praxigento\Accounting\Service\Account\Response;
 
-class GetRepresentative extends \Praxigento\Core\Service\Base\Response {
+class GetRepresentative extends Get
+{
 
 }
