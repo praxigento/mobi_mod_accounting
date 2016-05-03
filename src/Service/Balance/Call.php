@@ -33,14 +33,14 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
         \Praxigento\Core\Tool\IPeriod $toolPeriod,
         \Praxigento\Accounting\Repo\IModule $repoMod,
         \Praxigento\Accounting\Repo\Entity\IBalance $repoBalance,
-        \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset,
+        \Praxigento\Accounting\Repo\Entity\Type\IAsset $callTypeAsset,
         Sub\CalcSimple $subCalcSimple
     ) {
         parent::__construct($logger);
         $this->_toolPeriod = $toolPeriod;
         $this->_repoMod = $repoMod;
         $this->_repoBalance = $repoBalance;
-        $this->_repoTypeAsset = $repoTypeAsset;
+        $this->_repoTypeAsset = $callTypeAsset;
         $this->_subCalcSimple = $subCalcSimple;
     }
 
