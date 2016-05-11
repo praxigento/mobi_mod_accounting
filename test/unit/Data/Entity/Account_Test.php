@@ -21,12 +21,12 @@ class Account_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_accessors()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $ASSET_TYPE_ID = 'asset_type_id';
         $BALANCE = 'balance';
         $CUSTOMER_REF = 'customer_id';
         $ID = 'id';
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->obj->setAssetTypeId($ASSET_TYPE_ID);
         $this->obj->setBalance($BALANCE);
         $this->obj->setCustomerId($CUSTOMER_REF);
@@ -39,7 +39,7 @@ class Account_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_pk()
     {
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $pk = $this->obj->getPrimaryKeyAttrs();
         $this->assertEquals([DataEntity::ATTR_ID], $pk);
     }

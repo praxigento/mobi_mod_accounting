@@ -21,14 +21,14 @@ class Balance_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_accessors()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $ACC_ID = 'account_id';
         $CLOSE = 'close';
         $OPEN = 'open';
         $DATE = 'date';
         $CREDIT = 'credit';
         $DEBIT = 'debit';
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->obj->setAccountId($ACC_ID);
         $this->obj->setBalanceClose($CLOSE);
         $this->obj->setBalanceOpen($OPEN);
@@ -45,7 +45,7 @@ class Balance_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_pk()
     {
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $pk = $this->obj->getPrimaryKeyAttrs();
         $this->assertEquals([DataEntity::ATTR_ACCOUNT_ID, DataEntity::ATTR_DATE], $pk);
     }

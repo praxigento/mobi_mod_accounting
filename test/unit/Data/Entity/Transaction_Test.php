@@ -21,14 +21,14 @@ class Transaction_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_accessors()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $CREDIT_ACC_ID = 'credit_acc_id';
         $DATE_APPLIED = 'date_applied';
         $DEBIT_ACC_ID = 'debit_acc_id';
         $ID = 'id';
         $OPERATION_ID = 'operation_id';
         $VALUE = 'value';
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->obj->setCreditAccId($CREDIT_ACC_ID);
         $this->obj->setDateApplied($DATE_APPLIED);
         $this->obj->setDebitAccId($DEBIT_ACC_ID);
@@ -45,7 +45,7 @@ class Transaction_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_pk()
     {
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $pk = $this->obj->getPrimaryKeyAttrs();
         $this->assertEquals([DataEntity::ATTR_ID], $pk);
     }

@@ -35,73 +35,73 @@ class Account_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_constructor()
     {
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->assertInstanceOf(IAccount::class, $this->obj);
     }
 
     public function test_getByCustomerId_withAssetType()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $CUST_ID = 32;
         $ASSET_TYPE_ID = 45;
         $DATA = [['some data' => 'here']];
-        /* === Setup Mocks === */
+        /** === Setup Mocks === */
         // $result = $this->get($where);
         // $result = $this->_repoGeneric->getEntities($this->_entityName, null, $where, $order, $limit, $offset);
         $this->mRepoGeneric
             ->shouldReceive('getEntities')
             ->andReturn($DATA);
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $res = $this->obj->getByCustomerId($CUST_ID, $ASSET_TYPE_ID);
         $this->assertInstanceOf(IAccount::class, $this->obj);
     }
 
     public function test_getByCustomerId_woAssetType()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $CUST_ID = 32;
         $DATA = [['some data' => 'here']];
-        /* === Setup Mocks === */
+        /** === Setup Mocks === */
         // $result = $this->get($where);
         // $result = $this->_repoGeneric->getEntities($this->_entityName, null, $where, $order, $limit, $offset);
         $this->mRepoGeneric
             ->shouldReceive('getEntities')
             ->andReturn($DATA);
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $res = $this->obj->getByCustomerId($CUST_ID);
         $this->assertInstanceOf(IAccount::class, $this->obj);
     }
 
     public function test_updateBalance_negative()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $ACC_ID = 32;
         $DELTA = -45;
         $ROWS_UPDATED = 1;
-        /* === Setup Mocks === */
+        /** === Setup Mocks === */
         // $rowsUpdated = $this->updateById($accountId, $bind);
         // $result = $this->_repoGeneric->updateEntity($this->_entityName, $data, $where);
         $this->mRepoGeneric
             ->shouldReceive('updateEntity')
             ->andReturn($ROWS_UPDATED);
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $res = $this->obj->updateBalance($ACC_ID, $DELTA);
         $this->assertInstanceOf(IAccount::class, $this->obj);
     }
 
     public function test_updateBalance_positive()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $ACC_ID = 32;
         $DELTA = 45;
         $ROWS_UPDATED = 1;
-        /* === Setup Mocks === */
+        /** === Setup Mocks === */
         // $rowsUpdated = $this->updateById($accountId, $bind);
         // $result = $this->_repoGeneric->updateEntity($this->_entityName, $data, $where);
         $this->mRepoGeneric
             ->shouldReceive('updateEntity')
             ->andReturn($ROWS_UPDATED);
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $res = $this->obj->updateBalance($ACC_ID, $DELTA);
         $this->assertInstanceOf(IAccount::class, $this->obj);
     }

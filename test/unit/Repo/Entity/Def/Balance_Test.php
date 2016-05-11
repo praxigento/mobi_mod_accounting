@@ -35,7 +35,7 @@ class Balance_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_constructor()
     {
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->assertInstanceOf(IBalance::class, $this->obj);
     }
 

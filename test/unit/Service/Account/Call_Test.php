@@ -24,13 +24,13 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     protected function setUp()
     {
         parent::setUp();
-        /* create mocks */
+        /** create mocks */
         $this->mLogger = $this->_mockLogger();
         $this->mRepoAccount = $this->_mock(\Praxigento\Accounting\Repo\Entity\IAccount::class);
         $this->mRepoTypeAsset = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\IAsset::class);
         $this->mRepoMod = $this->_mock(\Praxigento\Accounting\Repo\IModule::class);
-        /* setup mocks for constructor */
-        /* create object to test */
+        /** setup mocks for constructor */
+        /** create object to test */
         $this->obj = new Call(
             $this->mLogger,
             $this->mRepoAccount,
@@ -41,11 +41,11 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_cacheReset()
     {
-        /* === Setup Mocks === */
+        /** === Setup Mocks === */
         // $this->_repoMod->cacheReset();
         $this->mRepoMod
             ->shouldReceive('cacheReset')->once();
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->obj->cacheReset();
     }
 

@@ -21,11 +21,11 @@ class Operation_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_accessors()
     {
-        /* === Test Data === */
+        /** === Test Data === */
         $DATE_PERFORMED = 'date_performed';
         $ID = 'id';
         $TYPE_ID = 'type_id';
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $this->obj->setDatePerformed($DATE_PERFORMED);
         $this->obj->setId($ID);
         $this->obj->setTypeId($TYPE_ID);
@@ -36,7 +36,7 @@ class Operation_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
     public function test_pk()
     {
-        /* === Call and asserts  === */
+        /** === Call and asserts  === */
         $pk = $this->obj->getPrimaryKeyAttrs();
         $this->assertEquals([DataEntity::ATTR_ID], $pk);
     }
