@@ -5,7 +5,7 @@
 
 namespace Praxigento\Accounting\Repo\Entity\Type;
 
-use Praxigento\Core\Repo\IType;
+use Praxigento\Core\Repo\Entity\IType;
 
 interface IAsset extends IType
 {
