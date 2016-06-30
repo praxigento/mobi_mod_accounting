@@ -9,7 +9,7 @@ use Praxigento\Accounting\Data\Entity\Operation as EntityOperation;
 
 class Call extends \Praxigento\Core\Service\Base\Call implements \Praxigento\Accounting\Service\IOperation
 {
-    /** @var  \Praxigento\Core\Repo\ITransactionManager */
+    /** @var  \Praxigento\Core\Repo\Transaction\IManager */
     protected $_manTrans;
     /** @var  \Praxigento\Accounting\Repo\Entity\IOperation */
     protected $_repoOper;
@@ -20,7 +20,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements \Praxigento\Acc
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Repo\ITransactionManager $manTrans,
+        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\IOperation $repoOper,
         \Praxigento\Accounting\Repo\Entity\Type\IOperation $repoTypeOper,
         Sub\Add $subAdd

@@ -10,7 +10,7 @@ use Praxigento\Accounting\Service\ITransaction;
 
 class Call extends \Praxigento\Core\Service\Base\Call implements ITransaction
 {
-    /** @var  \Praxigento\Core\Repo\ITransactionManager */
+    /** @var  \Praxigento\Core\Repo\Transaction\IManager */
     protected $_manTrans;
     /** @var  \Praxigento\Accounting\Repo\Entity\IAccount */
     protected $_repoAcc;
@@ -22,7 +22,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransaction
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Repo\ITransactionManager $manTrans,
+        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\IAccount $repoAcc,
         \Praxigento\Accounting\Repo\Entity\ITransaction $repoTrans
     ) {
