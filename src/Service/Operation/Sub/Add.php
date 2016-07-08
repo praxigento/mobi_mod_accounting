@@ -9,7 +9,8 @@ use Praxigento\Accounting\Data\Entity\Transaction;
 use Praxigento\Accounting\Service\Transaction\Request\Add as AddTransactionRequest;
 use Praxigento\Accounting\Service\Transaction\Response\Add as AddTransactionResponse;
 
-class Add {
+class Add
+{
     /**
      * @var \Praxigento\Accounting\Service\ITransaction
      */
@@ -32,9 +33,10 @@ class Add {
      * @return array
      * @throws \Exception
      */
-    public function transactions($operId, $trans, $datePerformed, $asRef = null) {
-        $result = [ ];
-        foreach($trans as $one) {
+    public function transactions($operId, $trans, $datePerformed, $asRef = null)
+    {
+        $result = [];
+        foreach ($trans as $one) {
             $dateApplied = isset($one[Transaction::ATTR_DATE_APPLIED]) ? $one[Transaction::ATTR_DATE_APPLIED] : $datePerformed;
             $req = new AddTransactionRequest();
             $req->setOperationId($operId);
@@ -44,11 +46,11 @@ class Add {
             $req->setDateApplied($dateApplied);
             /** @var  $resp AddTransactionResponse */
             $resp = $this->_callTransaction->add($req);
-            if(!$resp->isSucceed()) {
-                throw new \Exception("Transaction (debit acc. #{$req->debitAccId}, credit acc. #{$req->creditAccId}) cannot be inserted . ");
+            if (!$resp->isSucceed()) {
+                throw new \Exception("Transaction (debit acc. #{$req->getDebitAccId()}, credit acc. #{$req->getCreditAccId()}) cannot be inserted . ");
             }
             $tranId = $resp->getTransactionId();
-            if(
+            if (
                 !is_null($asRef) &&
                 isset($one[$asRef])
             ) {
