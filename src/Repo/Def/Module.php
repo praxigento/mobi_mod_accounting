@@ -61,8 +61,8 @@ class Module extends Base implements IModule
     {
         $asAccount = 'a';
         $asBalance = 'b';
-        $tblAccount = $this->_conn->getTableName(Account::ENTITY_NAME);
-        $tblBalance = $this->_conn->getTableName(Balance::ENTITY_NAME);
+        $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
+        $tblBalance = $this->_resource->getTableName(Balance::ENTITY_NAME);
         /* select from account */
         $query = $this->_conn->select();
         $query->from([$asAccount => $tblAccount], []);
@@ -118,8 +118,8 @@ class Module extends Base implements IModule
         $asBal4Max = 'bal4Max';
         $asMax = 'balMax';
         $asBal = 'bal';
-        $tblAccount = $this->_conn->getTableName(Account::ENTITY_NAME);
-        $tblBalance = $this->_conn->getTableName(Balance::ENTITY_NAME);
+        $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
+        $tblBalance = $this->_resource->getTableName(Balance::ENTITY_NAME);
         /* select MAX(date) from prxgt_acc_balance (internal select) */
         $q4Max = $conn->select();
         $colDateMax = 'date_max';
@@ -203,8 +203,8 @@ class Module extends Base implements IModule
     {
         $asAccount = 'a';
         $asTrans = 'trn';
-        $tblAccount = $this->_conn->getTableName(Account::ENTITY_NAME);
-        $tblTrans = $this->_conn->getTableName(Transaction::ENTITY_NAME);
+        $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
+        $tblTrans = $this->_resource->getTableName(Transaction::ENTITY_NAME);
         /* select from account */
         $query = $this->_conn->select();
         $query->from([$asAccount => $tblAccount], []);
@@ -246,8 +246,8 @@ class Module extends Base implements IModule
         $paramAssetType = $this->_conn->quote($assetTypeId, \Zend_Db::INT_TYPE);
         $asAccount = 'acc';
         $asTrans = 'trn';
-        $tblAccount = $this->_conn->getTableName(Account::ENTITY_NAME);
-        $tblTrans = $this->_conn->getTableName(Transaction::ENTITY_NAME);
+        $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
+        $tblTrans = $this->_resource->getTableName(Transaction::ENTITY_NAME);
         /* select from prxgt_acc_account  */
         $query = $this->_conn->select();
         $query->from([$asAccount => $tblAccount], []);
@@ -273,7 +273,7 @@ class Module extends Base implements IModule
 
     public function getTypeAssetIdByCode($code)
     {
-        $tbl = $this->_conn->getTableName(TypeAsset::ENTITY_NAME);
+        $tbl = $this->_resource->getTableName(TypeAsset::ENTITY_NAME);
         /** @var  $query \Zend_Db_Select */
         $query = $this->_conn->select();
         $query->from($tbl);
@@ -286,7 +286,7 @@ class Module extends Base implements IModule
 
     public function getTypeOperationIdByCode($code)
     {
-        $tbl = $this->_conn->getTableName(TypeOperation::ENTITY_NAME);
+        $tbl = $this->_resource->getTableName(TypeOperation::ENTITY_NAME);
         /** @var  $query \Zend_Db_Select */
         $query = $this->_conn->select();
         $query->from($tbl);
@@ -300,7 +300,7 @@ class Module extends Base implements IModule
     public function updateBalances($updateData)
     {
         $this->_conn->beginTransaction();
-        $tbl = $this->_conn->getTableName(Balance::ENTITY_NAME);
+        $tbl = $this->_resource->getTableName(Balance::ENTITY_NAME);
         foreach ($updateData as $accountId => $byDate) {
             foreach ($byDate as $date => $data) {
                 $this->_conn->insert($tbl, $data);
