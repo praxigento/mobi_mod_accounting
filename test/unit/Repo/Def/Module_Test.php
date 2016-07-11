@@ -15,7 +15,7 @@ include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 {
     /** @var  \Mockery\MockInterface */
-    private $mDba;
+    private $mConn;
     /** @var  \Mockery\MockInterface */
     private $mRepoGeneric;
     /** @var  Module */
@@ -24,8 +24,8 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     protected function setUp()
     {
         parent::setUp();
-        $this->mDba = $this->_mockConn();
-        $mRsrcConn = $this->_mockResourceConnection($this->mDba);
+        $this->mConn = $this->_mockConn();
+        $mRsrcConn = $this->_mockResourceConnection($this->mConn);
         $this->mRepoGeneric = $this->_mockRepoGeneric();
         $this->repo = new Module($mRsrcConn, $this->mRepoGeneric);
     }
@@ -49,11 +49,11 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
         /** === Setup Mocks === */
         // $tbl = $this->_resource->getTableName(Asset::ENTITY_NAME);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('getTableName');
         // $query = $this->_conn->select();
         $mQuery = $this->_mockDbSelect();
-        $this->mDba
+        $this->mConn
             ->shouldReceive('select')
             ->andReturn($mQuery);
         $mQuery
@@ -65,7 +65,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $mQuery
             ->shouldReceive('order');
         // $row = $this->_conn->fetchOne($query, $bind);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('fetchOne')
             ->andReturn($DATE_FOUND);
 
@@ -84,16 +84,16 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
 
         /** === Setup Mocks === */
         // $tblAccount = $this->_getTableName(Account::ENTITY_NAME);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('getTableName')
             ->andReturn('ACCOUNT');
         // $tblBalance = $this->_getTableName(Balance::ENTITY_NAME);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('getTableName')
             ->andReturn('BALANCE');
         // $q4Max = $conn->select();
         $mQ4Max = $this->_mockDbSelect();
-        $this->mDba
+        $this->mConn
             ->shouldReceive('select')
             ->once()
             ->andReturn($mQ4Max);
@@ -105,7 +105,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $mQ4Max->shouldReceive('where');
         // $query = $conn->select();
         $mQuery = $this->_mockDbSelect();
-        $this->mDba
+        $this->mConn
             ->shouldReceive('select')
             ->once()
             ->andReturn($mQuery);
@@ -117,7 +117,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         // $query->where("$whereByAssetType AND $whereByDate");
         $mQuery->shouldReceive('where');
         // $rows = $conn->fetchAll($query, $bind);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('fetchAll')
             ->andReturn([Account::ATTR_ID => 1024]);
 
@@ -135,7 +135,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Setup Mocks === */
 
         // $where = Cfg::E_CUSTOMER_A_EMAIL . '=' . $conn->quote(self::CUSTOMER_REPRESENTATIVE_EMAIL);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('quote')
             ->with($EMAIL)
             ->andReturn("'$EMAIL'");
@@ -158,7 +158,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Setup Mocks === */
 
         // $where = self::ATTR_CUST_EMAIL . '=' . $this->_conn->quote(self::CUSTOMER_REPRESENTATIVE_EMAIL);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('quote')
             ->with($EMAIL)
             ->andReturn("'$EMAIL'");
@@ -185,11 +185,11 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Setup Mocks === */
 
         // $tbl = $this->_resource->getTableName(Asset::ENTITY_NAME);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('getTableName');
         // $query = $this->_conn->select();
         $mQuery = $this->_mockDbSelect();
-        $this->mDba
+        $this->mConn
             ->shouldReceive('select')
             ->andReturn($mQuery);
         $mQuery
@@ -201,7 +201,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $mQuery
             ->shouldReceive('order');
         // $row = $this->_conn->fetchOne($query, $bind);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('fetchOne')
             ->andReturn($DATE_FOUND);
         /** === Call and asserts  === */
@@ -219,20 +219,20 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Setup Mocks === */
 
         // $paramAssetType = $this->_conn->quote($assetTypeId, \Zend_Db::INT_TYPE);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('quote')
             ->andReturn((int)$ASSET_TYPE_ID);
         // $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('getTableName')
             ->andReturn('ACCOUNT');
         // $tblTrans = $this->_resource->getTableName(Transaction::ENTITY_NAME);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('getTableName')
             ->andReturn('TRANSACTION');
         // $query = $this->_conn->select();
         $mQuery = $this->_mockDbSelect();
-        $this->mDba
+        $this->mConn
             ->shouldReceive('select')
             ->andReturn($mQuery);
         //  $query->from([ $asAccount => $tblAccount ], [ ]);
@@ -251,7 +251,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $mQuery
             ->shouldReceive('order');
         // $result = $this->_conn->fetchAll($query, $bind);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('fetchAll')
             ->andReturn([Transaction::ATTR_ID => 1024]);
 
@@ -269,12 +269,12 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Setup Mocks === */
 
         // $tbl = $this->_getTableName(TypeAsset::ENTITY_NAME);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('getTableName')
             ->andReturn('ACCOUNT');
         // $query = $this->_getConn()->select();
         $mQuery = $this->_mockDbSelect();
-        $this->mDba
+        $this->mConn
             ->shouldReceive('select')
             ->andReturn($mQuery);
         // $query->from($tbl);
@@ -282,7 +282,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         // $query->where(TypeBase::ATTR_CODE . '=:code');
         $mQuery->shouldReceive('where');
         //  $data = $this->_getConn()->fetchRow($query, [ 'code' => $assetTypeCode ]);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('fetchRow')
             ->andReturn([TypeBase::ATTR_ID => $ASSET_TYPE_ID]);
 
@@ -300,12 +300,12 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Setup Mocks === */
 
         // $tbl = $this->_getTableName(TypeAsset::ENTITY_NAME);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('getTableName')
             ->andReturn('TABLE');
         // $query = $this->_getConn()->select();
         $mQuery = $this->_mockDbSelect();
-        $this->mDba
+        $this->mConn
             ->shouldReceive('select')
             ->andReturn($mQuery);
         // $query->from($tbl);
@@ -313,7 +313,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         // $query->where(TypeBase::ATTR_CODE . '=:code');
         $mQuery->shouldReceive('where');
         //  $data = $this->_getConn()->fetchRow($query, [ 'code' => $assetTypeCode ]);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('fetchRow')
             ->andReturn([TypeBase::ATTR_ID => $OPER_TYPE_ID]);
 
@@ -329,17 +329,17 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Setup Mocks === */
 
         // $this->_conn->beginTransaction();
-        $this->mDba
+        $this->mConn
             ->shouldReceive('beginTransaction');
         // $tbl = $this->_resource->getTableName(Balance::ENTITY_NAME);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('getTableName')
             ->andReturn('BALANCE');
         // $this->_conn->insert($tbl, $data);
-        $this->mDba
+        $this->mConn
             ->shouldReceive('insert');
         // $this->_conn->commit();
-        $this->mDba
+        $this->mConn
             ->shouldReceive('commit');
 
         /** === Call and asserts  === */
