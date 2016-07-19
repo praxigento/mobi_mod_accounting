@@ -51,11 +51,11 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $DATE = 'date applied';
         $TRANS_ID = 654;
         /** === Setup Mocks === */
-        // $trans = $this->_manTrans->transactionBegin();
-        $mTrans = $this->_mockTransactionDefinition();
+        // $def = $this->_manTrans->begin();
+        $mDef = $this->_mockTransactionDefinition();
         $this->mManTrans
-            ->shouldReceive('transactionBegin')->once()
-            ->andReturn($mTrans);
+            ->shouldReceive('begin')->once()
+            ->andReturn($mDef);
         // $debitAcc = $this->_repoAcc->getById($debitAccId);
         $this->mRepoAcc
             ->shouldReceive('getById')->once()
@@ -74,12 +74,12 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         // $this->_repoAcc->updateBalance($creditAccId, 0 + $value);
         $this->mRepoAcc
             ->shouldReceive('updateBalance')->once();
-        // $this->_manTrans->transactionCommit($trans);
+        // $this->_manTrans->commit($def);
         $this->mManTrans
-            ->shouldReceive('transactionCommit')->once();
-        // $this->_manTrans->transactionClose($trans);
+            ->shouldReceive('commit')->once();
+        // $this->_manTrans->end($def);
         $this->mManTrans
-            ->shouldReceive('transactionClose')->once();
+            ->shouldReceive('end')->once();
         /** === Call and asserts  === */
         $req = new Request\Add();
         $req->setDebitAccId($ACC_ID_DEBIT);
@@ -106,11 +106,11 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $DATE = 'date applied';
         $TRANS_ID = 654;
         /** === Mocks === */
-        // $trans = $this->_manTrans->transactionBegin();
-        $mTrans = $this->_mockTransactionDefinition();
+        // $def = $this->_manTrans->begin();
+        $mDef = $this->_mockTransactionDefinition();
         $this->mManTrans
-            ->shouldReceive('transactionBegin')->once()
-            ->andReturn($mTrans);
+            ->shouldReceive('begin')->once()
+            ->andReturn($mDef);
         // $debitAcc = $this->_repoAcc->getById($debitAccId);
         $this->mRepoAcc
             ->shouldReceive('getById')->once()

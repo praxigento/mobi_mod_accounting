@@ -56,11 +56,11 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         ];
         $OPERATION_ID = 42;
         /** === Setup Mocks === */
-        // $trans = $this->_manTrans->transactionBegin();
-        $mTrans = $this->_mockTransactionDefinition();
+        // $def = $this->_manTrans->begin();
+        $mDef = $this->_mockTransactionDefinition();
         $this->mManTrans
-            ->shouldReceive('transactionBegin')->once()
-            ->andReturn($mTrans);
+            ->shouldReceive('begin')->once()
+            ->andReturn($mDef);
         // $idCreated = $this->_repoOper->create($bindToAdd);
         $this->mRepoOper
             ->shouldReceive('create')->once()
@@ -69,12 +69,12 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mSubAdd
             ->shouldReceive('transactions')->once()
             ->andReturn([]);
-        // $this->_manTrans->transactionCommit($trans);
+        // $this->_manTrans->commit($def);
         $this->mManTrans
-            ->shouldReceive('transactionCommit')->once();
-        // $this->_manTrans->transactionClose($trans);
+            ->shouldReceive('commit')->once();
+        // $this->_manTrans->end($def);
         $this->mManTrans
-            ->shouldReceive('transactionClose')->once();
+            ->shouldReceive('end')->once();
         /** === Call and asserts  === */
         $req = new Request\Add();
         $req->setDatePerformed($DATE_PERFORMED);
@@ -96,18 +96,18 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $TRANSACTIONS = [];
 
         /** === Setup Mocks === */
-        // $trans = $this->_manTrans->transactionBegin();
-        $mTrans = $this->_mockTransactionDefinition();
+        // $def = $this->_manTrans->begin();
+        $mDef = $this->_mockTransactionDefinition();
         $this->mManTrans
-            ->shouldReceive('transactionBegin')->once()
-            ->andReturn($mTrans);
+            ->shouldReceive('begin')->once()
+            ->andReturn($mDef);
         // $operationTypeId = $this->_repoTypeOper->getIdByCode($operationTypeCode);
         $this->mRepoTypeOper
             ->shouldReceive('getIdByCode')->once()
             ->andThrow(\Exception::class);
-        // $this->_manTrans->transactionClose($trans);
+        // $this->_manTrans->end($def);
         $this->mManTrans
-            ->shouldReceive('transactionClose')->once();
+            ->shouldReceive('end')->once();
         /** === Call and asserts  === */
         $req = new Request\Add();
         $req->setDatePerformed($DATE_PERFORMED);

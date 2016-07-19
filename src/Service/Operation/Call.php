@@ -9,7 +9,7 @@ use Praxigento\Accounting\Data\Entity\Operation as EntityOperation;
 
 class Call extends \Praxigento\Core\Service\Base\Call implements \Praxigento\Accounting\Service\IOperation
 {
-    /** @var  \Praxigento\Core\Repo\Transaction\IManager */
+    /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
     /** @var  \Praxigento\Accounting\Repo\Entity\IOperation */
     protected $_repoOper;
@@ -20,7 +20,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements \Praxigento\Acc
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
+        \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\IOperation $repoOper,
         \Praxigento\Accounting\Repo\Entity\Type\IOperation $repoTypeOper,
         Sub\Add $subAdd
@@ -47,7 +47,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements \Praxigento\Acc
         $datePerformed = $req->getDatePerformed();
         $transactions = $req->getTransactions();
         $asRef = $req->getAsTransRef();
-        $trans = $this->_manTrans->transactionBegin();
+        $def = $this->_manTrans->begin();
         try {
             /* add operation itself */
             if (!$operationTypeId) {
@@ -62,11 +62,11 @@ class Call extends \Praxigento\Core\Service\Base\Call implements \Praxigento\Acc
                 $transIds = $this->_subAdd->transactions($idCreated, $transactions, $datePerformed, $asRef);
                 $result->setOperationId($idCreated);
                 $result->setTransactionsIds($transIds);
-                $this->_manTrans->transactionCommit($trans);
+                $this->_manTrans->commit($def);
                 $result->markSucceed();
             }
         } finally {
-            $this->_manTrans->transactionClose($trans);
+            $this->_manTrans->end($def);
         }
         return $result;
     }

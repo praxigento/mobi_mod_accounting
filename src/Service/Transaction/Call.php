@@ -10,7 +10,7 @@ use Praxigento\Accounting\Service\ITransaction;
 
 class Call extends \Praxigento\Core\Service\Base\Call implements ITransaction
 {
-    /** @var  \Praxigento\Core\Repo\Transaction\IManager */
+    /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
     /** @var  \Praxigento\Accounting\Repo\Entity\IAccount */
     protected $_repoAcc;
@@ -22,7 +22,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransaction
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
+        \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\IAccount $repoAcc,
         \Praxigento\Accounting\Repo\Entity\ITransaction $repoTrans
     ) {
@@ -47,7 +47,7 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransaction
         $operationId = $request->getOperationId();
         $dateApplied = $request->getDateApplied();
         $value = $request->getValue();
-        $trans = $this->_manTrans->transactionBegin();
+        $def = $this->_manTrans->begin();
         try {
             /* get account type for debit account */
             $debitAcc = $this->_repoAcc->getById($debitAccId);
@@ -80,10 +80,10 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransaction
                 throw new \Exception("Asset type (#$debitAssetTypeId) for debit account #$debitAccId is not equal to "
                     . "asset type (#$creditAssetTypeId) for credit account $creditAccId.");
             }
-            $this->_manTrans->transactionCommit($trans);
+            $this->_manTrans->commit($def);
             $result->markSucceed();
         } finally {
-            $this->_manTrans->transactionClose($trans);
+            $this->_manTrans->end($def);
 
         }
         return $result;
