@@ -21,7 +21,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
 {
     const ATTR_CUST_EMAIL = 'email';
     const ATTR_CUST_ID = 'entity_id';
-    const DATA_DATE_BALANCE_CHECK = '20151111';
+    const DATA_DATE_BALANCE_CHECK = '20151110';
     const DATA_DATE_BALANCE_UP_TO = '20151112';
     const DATA_DATE_PERFORMED = '2015-11-10 18:43:57';
     const DATA_TYPE_ASSET_CODE = 'test_asset';
@@ -39,7 +39,9 @@ class Main_IntegrationTest extends BaseIntegrationTest
     /** @var  \Praxigento\Accounting\Service\Operation\Call */
     private $_callOperation;
     /** @var \Praxigento\Core\Repo\IGeneric */
-    private $_repoBasic;
+    private $_repoGeneric;
+    /** @var  \Praxigento\Accounting\Repo\Entity\IBalance */
+    private $_repoBalance;
     private $acc1 = [];
     private $acc2 = [];
     private $cust1 = [];
@@ -56,7 +58,8 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $this->_callAccount = $this->_manObj->get(\Praxigento\Accounting\Service\IAccount::class);
         $this->_callBalance = $this->_manObj->get(\Praxigento\Accounting\Service\Balance\Call::class);
         $this->_callOperation = $this->_manObj->get(\Praxigento\Accounting\Service\Operation\Call::class);
-        $this->_repoBasic = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
+        $this->_repoGeneric = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
+        $this->_repoBalance = $this->_manObj->get(\Praxigento\Accounting\Repo\Entity\IBalance::class);
     }
 
     private function _calculateBalances()
@@ -86,27 +89,23 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private function _checkBalancesHistory()
     {
         /* check first account balance*/
-        $data = $this->_repoBasic->getEntityByPk(
-            Balance::ENTITY_NAME,
-            [
-                Balance::ATTR_ACCOUNT_ID => $this->acc1[Account::ATTR_ID],
-                Balance::ATTR_DATE => self::DATA_DATE_BALANCE_CHECK
-            ]);
-        $this->assertEquals(0, $data[Balance::ATTR_BALANCE_OPEN]);
-        $this->assertEquals(30, $data[Balance::ATTR_TOTAL_DEBIT]);
-        $this->assertEquals(0, $data[Balance::ATTR_TOTAL_CREDIT]);
-        $this->assertEquals(-30, $data[Balance::ATTR_BALANCE_CLOSE]);
+        $data = $this->_repoBalance->getById([
+            Balance::ATTR_ACCOUNT_ID => $this->acc1[Account::ATTR_ID],
+            Balance::ATTR_DATE => self::DATA_DATE_BALANCE_CHECK
+        ]);
+        $this->assertEquals(0, $data->getBalanceOpen());
+        $this->assertEquals(30, $data->getTotalDebit());
+        $this->assertEquals(0, $data->getTotalCredit());
+        $this->assertEquals(-30, $data->getBalanceClose());
         /* check second account balance*/
-        $data = $this->_repoBasic->getEntityByPk(
-            Balance::ENTITY_NAME,
-            [
-                Balance::ATTR_ACCOUNT_ID => $this->acc2[Account::ATTR_ID],
-                Balance::ATTR_DATE => self::DATA_DATE_BALANCE_CHECK
-            ]);
-        $this->assertEquals(0, $data[Balance::ATTR_BALANCE_OPEN]);
-        $this->assertEquals(0, $data[Balance::ATTR_TOTAL_DEBIT]);
-        $this->assertEquals(30, $data[Balance::ATTR_TOTAL_CREDIT]);
-        $this->assertEquals(30, $data[Balance::ATTR_BALANCE_CLOSE]);
+        $data = $this->_repoBalance->getById([
+            Balance::ATTR_ACCOUNT_ID => $this->acc2[Account::ATTR_ID],
+            Balance::ATTR_DATE => self::DATA_DATE_BALANCE_CHECK
+        ]);
+        $this->assertEquals(0, $data->getBalanceOpen());
+        $this->assertEquals(0, $data->getTotalDebit());
+        $this->assertEquals(30, $data->getTotalCredit());
+        $this->assertEquals(30, $data->getBalanceClose());
         $this->_logger->debug("Balance history (in 'balance' table) is checked.");
     }
 
@@ -189,7 +188,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
             TypeAsset::ATTR_CODE => self::DATA_TYPE_ASSET_CODE,
             TypeAsset::ATTR_NOTE => 'Asset for integration tests.'
         ];
-        $id = $this->_repoBasic->addEntity(TypeAsset::ENTITY_NAME, $bind);
+        $id = $this->_repoGeneric->addEntity(TypeAsset::ENTITY_NAME, $bind);
         $this->assertTrue($id > 0);
         $this->typeAssetId = $id;
         $this->_logger->debug("Asset type is created (#$id).");
@@ -201,7 +200,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
             TypeOperation::ATTR_CODE => self::DATA_TYPE_OPER_CODE,
             TypeOperation::ATTR_NOTE => 'Operation for integration tests.'
         ];
-        $id = $this->_repoBasic->addEntity(TypeOperation::ENTITY_NAME, $bind);
+        $id = $this->_repoGeneric->addEntity(TypeOperation::ENTITY_NAME, $bind);
         $this->assertTrue($id > 0);
         $this->typeOperId = $id;
         $this->_logger->debug("Operation type is created (#$id).");
