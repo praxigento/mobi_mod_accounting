@@ -13,9 +13,9 @@ use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
 use Praxigento\Accounting\Repo\IModule;
 use Praxigento\Core\Data\Entity\Type\Base as TypeBase;
-use Praxigento\Core\Repo\Def\Base;
+use Praxigento\Core\Repo\Def\Db;
 
-class Module extends Base implements IModule
+class Module extends Db implements IModule
 {
 
     const ADMIN_WEBSITE_ID = 0;

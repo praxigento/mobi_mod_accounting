@@ -6,10 +6,10 @@
 namespace Praxigento\Accounting\Repo\Entity;
 
 use Praxigento\Accounting\Data\Entity\Transaction as EntityData;
-use Praxigento\Core\Repo\IBaseCrud;
+use Praxigento\Core\Repo\ICrud;
 
 
-interface ITransaction extends IBaseCrud
+interface ITransaction extends ICrud
 {
     /**
      * @param array|EntityData $data

@@ -6,9 +6,9 @@
 namespace Praxigento\Accounting\Repo\Entity;
 
 use Praxigento\Accounting\Data\Entity\Account as EntityData;
-use Praxigento\Core\Repo\IBaseCrud;
+use Praxigento\Core\Repo\ICrud;
 
-interface IAccount extends IBaseCrud
+interface IAccount extends ICrud
 {
     /**
      * @param array|EntityData $data
