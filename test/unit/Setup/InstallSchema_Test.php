@@ -52,19 +52,19 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $mDemPackage = $this->_mock(DataObject::class);
         $this->mToolDem
             ->shouldReceive('readDemPackage')->once()
-            ->withArgs([anything(), '/dBEAR/package/Praxigento/package/Accounting'])
+            ->withArgs([\Mockery::any(), '/dBEAR/package/Praxigento/package/Accounting'])
             ->andReturn($mDemPackage);
         // $demEntity = $demPackage->getData('package/Type/entity/Asset');
         $mDemPackage->shouldReceive('getData');
         //
         // $this->_toolDem->createEntity($entityAlias, $demEntity);
         //
-        $this->mToolDem->shouldReceive('createEntity')->withArgs([TypeAsset::ENTITY_NAME, anything()]);
-        $this->mToolDem->shouldReceive('createEntity')->withArgs([TypeOperation::ENTITY_NAME, anything()]);
-        $this->mToolDem->shouldReceive('createEntity')->withArgs([Account::ENTITY_NAME, anything()]);
-        $this->mToolDem->shouldReceive('createEntity')->withArgs([Operation::ENTITY_NAME, anything()]);
-        $this->mToolDem->shouldReceive('createEntity')->withArgs([Transaction::ENTITY_NAME, anything()]);
-        $this->mToolDem->shouldReceive('createEntity')->withArgs([Balance::ENTITY_NAME, anything()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([TypeAsset::ENTITY_NAME, \Mockery::any()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([TypeOperation::ENTITY_NAME, \Mockery::any()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([Account::ENTITY_NAME, \Mockery::any()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([Operation::ENTITY_NAME, \Mockery::any()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([Transaction::ENTITY_NAME, \Mockery::any()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([Balance::ENTITY_NAME, \Mockery::any()]);
         // $setup->endSetup();
         $this->mSetup
             ->shouldReceive('endSetup')->once();
