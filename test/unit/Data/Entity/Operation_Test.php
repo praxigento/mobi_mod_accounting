@@ -8,7 +8,7 @@ namespace Praxigento\Accounting\Data\Entity;
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 use Praxigento\Accounting\Data\Entity\Operation as DataEntity;
 
-class Operation_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
+class Operation_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  DataEntity */
     private $obj;

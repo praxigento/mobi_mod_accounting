@@ -9,7 +9,7 @@ use Praxigento\Accounting\Service\Transaction\Response\Add as AddResponse;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
-class Add_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase {
+class Add_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery {
     /** @var  Add */
     private $obj;
     /** @var  \Mockery\MockInterface */

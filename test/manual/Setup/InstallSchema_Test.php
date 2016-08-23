@@ -10,7 +10,7 @@ use Praxigento\Accounting\Lib\Context;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
-class InstallSchema_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase
+class InstallSchema_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
 {
 
     public function test_install()

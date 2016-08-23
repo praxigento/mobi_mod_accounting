@@ -9,7 +9,7 @@ use Praxigento\Accounting\Data\Entity\Account as Entity;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
-class Account_ManualTest extends \Praxigento\Core\Test\BaseMockeryCase
+class Account_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     const DEF_ACCOUNT_ID = 283;
     const DEF_ASSET_TYPE_ID = 1;
