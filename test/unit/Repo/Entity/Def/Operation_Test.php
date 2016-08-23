@@ -10,7 +10,7 @@ use Praxigento\Accounting\Repo\Entity\IOperation;
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Operation_UnitTest
-    extends \Praxigento\Core\Test\BaseRepoEntityCase
+    extends \Praxigento\Core\Test\BaseCase\Repo\Entity
 {
     /** @var  Operation */
     private $obj;

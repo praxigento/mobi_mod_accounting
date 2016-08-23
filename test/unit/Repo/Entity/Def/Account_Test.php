@@ -10,7 +10,7 @@ use Praxigento\Accounting\Repo\Entity\IAccount;
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Account_UnitTest
-    extends \Praxigento\Core\Test\BaseRepoEntityCase
+    extends \Praxigento\Core\Test\BaseCase\Repo\Entity
 {
     /** @var  Account */
     private $obj;

@@ -11,7 +11,7 @@ use Praxigento\Accounting\Repo\Entity\ITransaction;
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Transaction_UnitTest
-    extends \Praxigento\Core\Test\BaseRepoEntityCase
+    extends \Praxigento\Core\Test\BaseCase\Repo\Entity
 {
     /** @var  Transaction */
     private $obj;

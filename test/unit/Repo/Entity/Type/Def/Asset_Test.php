@@ -10,7 +10,7 @@ use Praxigento\Accounting\Repo\Entity\Type\IAsset;
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 
 class Asset_UnitTest
-    extends \Praxigento\Core\Test\BaseRepoEntityCase
+    extends \Praxigento\Core\Test\BaseCase\Repo\Entity
 {
     /** @var  Asset */
     private $obj;

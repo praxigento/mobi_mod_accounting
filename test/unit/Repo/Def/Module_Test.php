@@ -12,7 +12,7 @@ use Praxigento\Accounting\Data\Entity\Transaction;
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
 class Module_UnitTest
-    extends \Praxigento\Core\Test\BaseRepoCase
+    extends \Praxigento\Core\Test\BaseCase\Repo
 {
     /** @var  \Mockery\MockInterface */
     private $mRepoGeneric;
