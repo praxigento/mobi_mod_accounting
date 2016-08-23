@@ -9,10 +9,7 @@ use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Data\Entity\Account;
 use Praxigento\Accounting\Data\Entity\Balance;
 use Praxigento\Accounting\Data\Entity\Transaction;
-use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
-use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
 use Praxigento\Accounting\Repo\IModule;
-use Praxigento\Core\Data\Entity\Type\Base as TypeBase;
 use Praxigento\Core\Repo\Def\Db;
 
 class Module extends Db implements IModule
@@ -268,32 +265,6 @@ class Module extends Db implements IModule
         $query->order($asTrans . '.' . Transaction::ATTR_DATE_APPLIED . ' ASC');
         // $sql = (string)$query;
         $result = $this->_conn->fetchAll($query, $bind);
-        return $result;
-    }
-
-    public function getTypeAssetIdByCode($code)
-    {
-        $tbl = $this->_resource->getTableName(TypeAsset::ENTITY_NAME);
-        /** @var  $query \Zend_Db_Select */
-        $query = $this->_conn->select();
-        $query->from($tbl);
-        $query->where(TypeBase::ATTR_CODE . '=:code');
-        // $sql = (string)$query;
-        $data = $this->_conn->fetchRow($query, ['code' => $code]);
-        $result = isset($data[TypeBase::ATTR_ID]) ? $data[TypeBase::ATTR_ID] : null;
-        return $result;
-    }
-
-    public function getTypeOperationIdByCode($code)
-    {
-        $tbl = $this->_resource->getTableName(TypeOperation::ENTITY_NAME);
-        /** @var  $query \Zend_Db_Select */
-        $query = $this->_conn->select();
-        $query->from($tbl);
-        $query->where(TypeBase::ATTR_CODE . '=:code');
-        // $sql = (string)$query;
-        $data = $this->_conn->fetchRow($query, ['code' => $code]);
-        $result = isset($data[TypeBase::ATTR_ID]) ? $data[TypeBase::ATTR_ID] : null;
         return $result;
     }
 

@@ -7,27 +7,19 @@ namespace Praxigento\Accounting\Repo\Entity\Def;
 use Praxigento\Accounting\Data\Entity\Account as Entity;
 use Praxigento\Accounting\Repo\Entity\IAccount;
 
-
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
-class Account_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
+class Account_UnitTest
+    extends \Praxigento\Core\Test\BaseRepoEntityCase
 {
-    /** @var  \Mockery\MockInterface */
-    private $mDba;
-    /** @var  \Mockery\MockInterface */
-    private $mRepoGeneric;
-    /** @var  \Mockery\MockInterface */
-    private $mRsrcConn;
     /** @var  Account */
     private $obj;
 
     public function setUp()
     {
         parent::setUp();
-        $this->mRsrcConn = $this->_mockResourceConnection($this->mDba);
-        $this->mRepoGeneric = $this->_mockRepoGeneric();
         $this->obj = new Account(
-            $this->mRsrcConn,
+            $this->mResource,
             $this->mRepoGeneric,
             Entity::class
         );
@@ -44,32 +36,32 @@ class Account_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Test Data === */
         $CUST_ID = 32;
         $ASSET_TYPE_ID = 45;
-        $DATA = [['some data' => 'here']];
+        $RESULT = [['some data' => 'here']];
         /** === Setup Mocks === */
         // $result = $this->get($where);
         // $result = $this->_repoGeneric->getEntities($this->_entityName, null, $where, $order, $limit, $offset);
         $this->mRepoGeneric
             ->shouldReceive('getEntities')
-            ->andReturn($DATA);
+            ->andReturn($RESULT);
         /** === Call and asserts  === */
         $res = $this->obj->getByCustomerId($CUST_ID, $ASSET_TYPE_ID);
-        $this->assertInstanceOf(IAccount::class, $this->obj);
+        $this->assertInstanceOf(\Praxigento\Accounting\Data\Entity\Account::class, $res);
     }
 
     public function test_getByCustomerId_woAssetType()
     {
         /** === Test Data === */
         $CUST_ID = 32;
-        $DATA = [['some data' => 'here']];
+        $RESULT = [['some data' => 'here']];
         /** === Setup Mocks === */
         // $result = $this->get($where);
         // $result = $this->_repoGeneric->getEntities($this->_entityName, null, $where, $order, $limit, $offset);
         $this->mRepoGeneric
             ->shouldReceive('getEntities')
-            ->andReturn($DATA);
+            ->andReturn($RESULT);
         /** === Call and asserts  === */
         $res = $this->obj->getByCustomerId($CUST_ID);
-        $this->assertInstanceOf(IAccount::class, $this->obj);
+        $this->assertTrue(is_array($res));
     }
 
     public function test_updateBalance_negative()
@@ -86,7 +78,7 @@ class Account_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             ->andReturn($ROWS_UPDATED);
         /** === Call and asserts  === */
         $res = $this->obj->updateBalance($ACC_ID, $DELTA);
-        $this->assertInstanceOf(IAccount::class, $this->obj);
+        $this->assertEquals($ROWS_UPDATED, $res);
     }
 
     public function test_updateBalance_positive()
@@ -103,6 +95,6 @@ class Account_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             ->andReturn($ROWS_UPDATED);
         /** === Call and asserts  === */
         $res = $this->obj->updateBalance($ACC_ID, $DELTA);
-        $this->assertInstanceOf(IAccount::class, $this->obj);
+        $this->assertEquals($ROWS_UPDATED, $res);
     }
 }

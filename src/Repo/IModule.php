@@ -53,22 +53,6 @@ interface IModule extends ICached
     public function getTransactionsForPeriod($assetTypeId, $timestampFrom, $timestampTo);
 
     /**
-     * @param string $code
-     *
-     * @return int
-     *
-     * @deprecated use \Praxigento\Accounting\Repo\Entity\Type\IAsset
-     */
-    public function getTypeAssetIdByCode($code);
-
-    /**
-     * @param $code
-     *
-     * @return int
-     */
-    public function getTypeOperationIdByCode($code);
-
-    /**
      * @param $updateData
      * @return mixed
      */

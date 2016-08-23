@@ -112,7 +112,6 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     {
         /** === Test Data === */
         $CUST_ID = 32;
-        $ASSET_TYPE_CODE = 'code';
         $ACCOUNT_ID_1 = 34;
         $ACCOUNT_ID_2 = 43;
         $ASSET_TYPE_ID_1 = 45;
@@ -128,10 +127,6 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             ])
         ];
         /** === Setup Mocks === */
-        // $typeId = $this->_repoTypeAsset->getIdByCode($typeCode);
-        $this->mRepoTypeAsset
-            ->shouldReceive('getIdByCode')->once()
-            ->andReturn($ASSET_TYPE_ID_1);
         // $customerId = $this->_repoMod->getRepresentativeCustomerId();
         $this->mRepoMod
             ->shouldReceive('getRepresentativeCustomerId')->once()

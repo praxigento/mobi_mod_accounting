@@ -8,14 +8,12 @@ use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Data\Entity\Account;
 use Praxigento\Accounting\Data\Entity\Balance;
 use Praxigento\Accounting\Data\Entity\Transaction;
-use Praxigento\Core\Data\Entity\Type\Base as TypeBase;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
-class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
+class Module_UnitTest
+    extends \Praxigento\Core\Test\BaseRepoCase
 {
-    /** @var  \Mockery\MockInterface */
-    private $mConn;
     /** @var  \Mockery\MockInterface */
     private $mRepoGeneric;
     /** @var  Module */
@@ -24,10 +22,11 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     protected function setUp()
     {
         parent::setUp();
-        $this->mConn = $this->_mockConn();
-        $mRsrcConn = $this->_mockResourceConnection($this->mConn);
         $this->mRepoGeneric = $this->_mockRepoGeneric();
-        $this->repo = new Module($mRsrcConn, $this->mRepoGeneric);
+        $this->repo = new Module(
+            $this->mResource,
+            $this->mRepoGeneric
+        );
     }
 
 
@@ -46,11 +45,19 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Test Data === */
         $ASSET_TYPE_ID = '12';
         $DATE_FOUND = '20150810';
-
+        $TBL_ACC = 'account table';
+        $TBL_BALANCE = 'balance table';
         /** === Setup Mocks === */
         // $tbl = $this->_resource->getTableName(Asset::ENTITY_NAME);
-        $this->mConn
-            ->shouldReceive('getTableName');
+        $this->mResource
+            ->shouldReceive('getTableName')->once()
+            ->with(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME)
+            ->andReturn($TBL_ACC);
+        // $tblBalance = $this->_resource->getTableName(Balance::ENTITY_NAME);
+        $this->mResource
+            ->shouldReceive('getTableName')->once()
+            ->with(\Praxigento\Accounting\Data\Entity\Balance::ENTITY_NAME)
+            ->andReturn($TBL_BALANCE);
         // $query = $this->_conn->select();
         $mQuery = $this->_mockDbSelect();
         $this->mConn
@@ -79,18 +86,21 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Test Data === */
         $ASSET_TYPE_ID = '21';
         $DATE = '20150810';
-
+        $TBL_ACC = 'account table';
+        $TBL_BALANCE = 'balance table';
         /** === Extract mocks === */
 
         /** === Setup Mocks === */
-        // $tblAccount = $this->_getTableName(Account::ENTITY_NAME);
-        $this->mConn
+        // $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
+        $this->mResource
             ->shouldReceive('getTableName')
-            ->andReturn('ACCOUNT');
-        // $tblBalance = $this->_getTableName(Balance::ENTITY_NAME);
-        $this->mConn
+            ->with(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME)
+            ->andReturn($TBL_ACC);
+        // $tblBalance = $this->_resource->getTableName(Balance::ENTITY_NAME);
+        $this->mResource
             ->shouldReceive('getTableName')
-            ->andReturn('BALANCE');
+            ->with(\Praxigento\Accounting\Data\Entity\Balance::ENTITY_NAME)
+            ->andReturn($TBL_BALANCE);
         // $q4Max = $conn->select();
         $mQ4Max = $this->_mockDbSelect();
         $this->mConn
@@ -181,12 +191,19 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         /** === Test Data === */
         $ASSET_TYPE_ID = '12';
         $DATE_FOUND = '20150810';
-
+        $TBL_ACC = 'account table';
+        $TBL_TRANS = 'transaction table';
         /** === Setup Mocks === */
-
-        // $tbl = $this->_resource->getTableName(Asset::ENTITY_NAME);
-        $this->mConn
-            ->shouldReceive('getTableName');
+        // $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
+        $this->mResource
+            ->shouldReceive('getTableName')
+            ->with(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME)
+            ->andReturn($TBL_ACC);
+        // $tblTrans = $this->_resource->getTableName(Transaction::ENTITY_NAME);
+        $this->mResource
+            ->shouldReceive('getTableName')
+            ->with(\Praxigento\Accounting\Data\Entity\Transaction::ENTITY_NAME)
+            ->andReturn($TBL_TRANS);
         // $query = $this->_conn->select();
         $mQuery = $this->_mockDbSelect();
         $this->mConn
@@ -215,21 +232,24 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $ASSET_TYPE_ID = '21';
         $DATE_FROM = '20150810';
         $DATE_TO = '20150815';
+        $TBL_ACC = 'account table';
+        $TBL_TRANS = 'transaction table';
 
         /** === Setup Mocks === */
-
         // $paramAssetType = $this->_conn->quote($assetTypeId, \Zend_Db::INT_TYPE);
         $this->mConn
             ->shouldReceive('quote')
             ->andReturn((int)$ASSET_TYPE_ID);
         // $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
-        $this->mConn
-            ->shouldReceive('getTableName')
-            ->andReturn('ACCOUNT');
+        $this->mResource
+            ->shouldReceive('getTableName')->once()
+            ->with(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME)
+            ->andReturn($TBL_ACC);
         // $tblTrans = $this->_resource->getTableName(Transaction::ENTITY_NAME);
-        $this->mConn
-            ->shouldReceive('getTableName')
-            ->andReturn('TRANSACTION');
+        $this->mResource
+            ->shouldReceive('getTableName')->once()
+            ->with(\Praxigento\Accounting\Data\Entity\Transaction::ENTITY_NAME)
+            ->andReturn($TBL_TRANS);
         // $query = $this->_conn->select();
         $mQuery = $this->_mockDbSelect();
         $this->mConn
@@ -260,81 +280,20 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->assertTrue(is_array($resp));
     }
 
-    public function test_getTypeAssetIdByCode()
-    {
-        /** === Test Data === */
-        $ASSET_TYPE_CODE = 'code';
-        $ASSET_TYPE_ID = 2;
-
-        /** === Setup Mocks === */
-
-        // $tbl = $this->_getTableName(TypeAsset::ENTITY_NAME);
-        $this->mConn
-            ->shouldReceive('getTableName')
-            ->andReturn('ACCOUNT');
-        // $query = $this->_getConn()->select();
-        $mQuery = $this->_mockDbSelect();
-        $this->mConn
-            ->shouldReceive('select')
-            ->andReturn($mQuery);
-        // $query->from($tbl);
-        $mQuery->shouldReceive('from');
-        // $query->where(TypeBase::ATTR_CODE . '=:code');
-        $mQuery->shouldReceive('where');
-        //  $data = $this->_getConn()->fetchRow($query, [ 'code' => $assetTypeCode ]);
-        $this->mConn
-            ->shouldReceive('fetchRow')
-            ->andReturn([TypeBase::ATTR_ID => $ASSET_TYPE_ID]);
-
-        /** === Call and asserts  === */
-        $resp = $this->repo->getTypeAssetIdByCode($ASSET_TYPE_CODE);
-        $this->assertEquals($ASSET_TYPE_ID, $resp);
-    }
-
-    public function test_getTypeOperationIdByCode()
-    {
-        /** === Test Data === */
-        $OPER_TYPE_CODE = 'code';
-        $OPER_TYPE_ID = 2;
-
-        /** === Setup Mocks === */
-
-        // $tbl = $this->_getTableName(TypeAsset::ENTITY_NAME);
-        $this->mConn
-            ->shouldReceive('getTableName')
-            ->andReturn('TABLE');
-        // $query = $this->_getConn()->select();
-        $mQuery = $this->_mockDbSelect();
-        $this->mConn
-            ->shouldReceive('select')
-            ->andReturn($mQuery);
-        // $query->from($tbl);
-        $mQuery->shouldReceive('from');
-        // $query->where(TypeBase::ATTR_CODE . '=:code');
-        $mQuery->shouldReceive('where');
-        //  $data = $this->_getConn()->fetchRow($query, [ 'code' => $assetTypeCode ]);
-        $this->mConn
-            ->shouldReceive('fetchRow')
-            ->andReturn([TypeBase::ATTR_ID => $OPER_TYPE_ID]);
-
-        /** === Call and asserts  === */
-        $resp = $this->repo->getTypeOperationIdByCode($OPER_TYPE_CODE);
-        $this->assertEquals($OPER_TYPE_ID, $resp);
-    }
-
     public function test_updateBalances()
     {
         /** === Test Data === */
-
+        $TBL_BALANCE = 'balance table';
         /** === Setup Mocks === */
 
         // $this->_conn->beginTransaction();
         $this->mConn
             ->shouldReceive('beginTransaction');
         // $tbl = $this->_resource->getTableName(Balance::ENTITY_NAME);
-        $this->mConn
-            ->shouldReceive('getTableName')
-            ->andReturn('BALANCE');
+        $this->mResource
+            ->shouldReceive('getTableName')->once()
+            ->with(\Praxigento\Accounting\Data\Entity\Balance::ENTITY_NAME)
+            ->andReturn($TBL_BALANCE);
         // $this->_conn->insert($tbl, $data);
         $this->mConn
             ->shouldReceive('insert');
