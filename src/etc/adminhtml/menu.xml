@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Praxigento_Accounting::accounts" title="Accounting" translate="title" module="Praxigento_Accounting" sortOrder="30" resource="Praxigento_Accounting::admin_accounts"/>
+        <add id="Praxigento_Accounting::accounts_accounts" title="Accounts" module="Praxigento_Accounting" sortOrder="70" parent="Praxigento_Accounting::accounts" action="accounts/accounts" resource="Praxigento_Accounting::admin_accounts_accounts"/>
+    </menu>
+</config>
