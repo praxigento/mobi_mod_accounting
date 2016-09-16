@@ -1,7 +1,60 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Praxigento_Accounting::accounts" title="Accounting" translate="title" module="Praxigento_Accounting" sortOrder="30" resource="Praxigento_Accounting::admin_accounts"/>
-        <add id="Praxigento_Accounting::accounts_accounts" title="Accounts" module="Praxigento_Accounting" sortOrder="70" parent="Praxigento_Accounting::accounts" action="accounts/accounts" resource="Praxigento_Accounting::admin_accounts_accounts"/>
+        <add id="Praxigento_Accounting::accounts"
+                title="Accounting"
+                translate="title"
+                module="Praxigento_Accounting"
+                sortOrder="30"
+                resource="Praxigento_Accounting::admin_accounts"/>
+        <add id="Praxigento_Accounting::accounts_accounts"
+                title="Accounts"
+                translate="title"
+                module="Praxigento_Accounting"
+                sortOrder="100"
+                parent="Praxigento_Accounting::accounts"
+                action="accounts/accounts"
+                resource="Praxigento_Accounting::admin_accounts_accounts"/>
+        <add id="Praxigento_Accounting::accounts_operations"
+                title="Operations"
+                translate="title"
+                module="Praxigento_Accounting"
+                sortOrder="200"
+                parent="Praxigento_Accounting::accounts"
+                action="accounts/operations"
+                resource="Praxigento_Accounting::admin_accounts_operations"/>
+        <add id="Praxigento_Accounting::accounts_transactions"
+                title="Transactions"
+                translate="title"
+                module="Praxigento_Accounting"
+                sortOrder="300"
+                parent="Praxigento_Accounting::accounts"
+                action="accounts/transactions"
+                resource="Praxigento_Accounting::admin_accounts_transactions"/>
+
+        <add id="Praxigento_Accounting::accounts_codifiers"
+                title="Codifiers"
+                translate="title"
+                module="Praxigento_Accounting"
+                sortOrder="1000"
+                parent="Praxigento_Accounting::accounts"
+                resource="Praxigento_Accounting::admin_accounts"/>
+
+        <add id="Praxigento_Accounting::accounts_types_asset"
+                title="Asset Types"
+                translate="title"
+                module="Praxigento_Accounting"
+                sortOrder="1100"
+                parent="Praxigento_Accounting::accounts"
+                action="accounts/types_asset"
+                resource="Praxigento_Accounting::admin_accounts_types_asset"/>
+        <add id="Praxigento_Accounting::accounts_types_oper"
+                title="Operation Types"
+                translate="title"
+                module="Praxigento_Accounting"
+                sortOrder="1100"
+                parent="Praxigento_Accounting::accounts"
+                action="accounts/types_oper"
+                resource="Praxigento_Accounting::admin_accounts_types_oper"/>
     </menu>
 </config>

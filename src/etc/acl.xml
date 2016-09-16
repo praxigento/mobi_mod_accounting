@@ -6,7 +6,16 @@
                 <resource id="Praxigento_Core::mobi">
                     <resource id="Praxigento_Core::admin">
                         <resource id="Praxigento_Accounting::admin_accounts" title="Accounting" sortOrder="100">
-                            <resource id="Praxigento_Accounting::admin_accounts_accounts" title="Accounts" sortOrder="100"/>
+                            <resource id="Praxigento_Accounting::admin_accounts_accounts"
+                                    title="Accounts" sortOrder="100"/>
+                            <resource id="Praxigento_Accounting::admin_accounts_operations"
+                                    title="Operations" sortOrder="200"/>
+                            <resource id="Praxigento_Accounting::admin_accounts_transactions"
+                                    title="Transactions" sortOrder="300"/>
+                            <resource id="Praxigento_Accounting::admin_accounts_types_asset"
+                                    title="Asset Types" sortOrder="400"/>
+                            <resource id="Praxigento_Accounting::admin_accounts_types_oper"
+                                    title="Operation Types" sortOrder="500"/>
                         </resource>
                     </resource>
                 </resource>
