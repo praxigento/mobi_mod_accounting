@@ -9,7 +9,6 @@ use Praxigento\Accounting\Data\Agg\Account as AggEntity;
 use Praxigento\Accounting\Data\Entity\Account as EntityAccount;
 use Praxigento\Accounting\Data\Entity\Type\Asset as EntityTypeAsset;
 use Praxigento\Accounting\Repo\Agg\IAccount as AggRepo;
-use Praxigento\Core\Repo\Query\Expression;
 
 class SelectFactory
     implements \Praxigento\Core\Repo\Query\IHasSelect
@@ -32,12 +31,24 @@ class SelectFactory
         $result = $this->_conn->select();
         /* aliases and tables */
         $asAcc = AggRepo::AS_ACCOUNT;
+        $asCust = AggRepo::AS_CUSTOMER;
+        $asAsset = AggRepo::AS_TYPE_ASSET;
         //
         $tblAcc = [$asAcc => $this->_resource->getTableName(EntityAccount::ENTITY_NAME)];
+        $tblCust = [$asCust => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CUSTOMER)];
+        $tblAsset = [$asAsset => $this->_resource->getTableName(EntityTypeAsset::ENTITY_NAME)];
         /* SELECT FROM prxgt_acc_account */
-        $expValue = 'COUNT(' . EntityAccount::ATTR_ID . ')';
-        $cols = new Expression($expValue);
+        $expValue = 'COUNT(' . $asAcc . '.' . EntityAccount::ATTR_ID . ')';
+        $cols = new \Praxigento\Core\Repo\Query\Expression($expValue);
         $result->from($tblAcc, $cols);
+        /* LEFT JOIN prxgt_acc_type_asset */
+        $on = $asAsset . '.' . EntityTypeAsset::ATTR_ID . '=' . $asAcc . '.' . EntityAccount::ATTR_ASSET_TYPE_ID;
+        $cols = [];
+        $result->joinLeft($tblAsset, $on, $cols);
+        /* LEFT JOIN customer_entity */
+        $on = $asCust . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAcc . '.' . EntityAccount::ATTR_CUST_ID;
+        $cols = [];
+        $result->joinLeft($tblCust, $on, $cols);
         return $result;
     }
 
@@ -68,7 +79,7 @@ class SelectFactory
         /* LEFT JOIN customer_entity */
         $on = $asCust . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAcc . '.' . EntityAccount::ATTR_CUST_ID;
         $expValue = 'CONCAT(' . Cfg::E_CUSTOMER_A_FIRSTNAME . ", ' ', " . Cfg::E_CUSTOMER_A_LASTNAME . ')';
-        $exp = new Expression($expValue);
+        $exp = new \Praxigento\Core\Repo\Query\Expression($expValue);
         $cols = [
             AggEntity::AS_CUST_NAME => $exp,
             AggEntity::AS_CUST_EMAIL => Cfg::E_CUSTOMER_A_EMAIL
