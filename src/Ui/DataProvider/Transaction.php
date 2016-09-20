@@ -14,7 +14,8 @@ class Transaction
     public function __construct(
         \Magento\Framework\UrlInterface $url,
         \Praxigento\Core\Repo\Query\Criteria\IAdapter $criteriaAdapter,
-        \Praxigento\Accounting\Repo\Entity\ITransaction $repo,
+        \Praxigento\Accounting\Repo\Agg\Def\Transaction\Mapper $mapperApi2Sql,
+        \Praxigento\Accounting\Repo\Agg\ITransaction $repo,
         \Magento\Framework\View\Element\UiComponent\DataProvider\Reporting $reporting,
         \Magento\Framework\Api\Search\SearchCriteriaBuilder $searchCriteriaBuilder,
         \Magento\Framework\App\RequestInterface $request,
@@ -26,7 +27,7 @@ class Transaction
         parent::__construct(
             $url,
             $criteriaAdapter,
-            null,
+            $mapperApi2Sql,
             $repo,
             $reporting,
             $searchCriteriaBuilder,

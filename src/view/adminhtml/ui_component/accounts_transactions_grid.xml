@@ -102,27 +102,26 @@
             </item>
         </argument>
 
-        <column name="id">
+        <column name="TransId">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">number</item>
-                    <item name="filter" xsi:type="string">text</item>
+                    <item name="filter" xsi:type="string">textRange</item>
                     <item name="sorting" xsi:type="string">asc</item>
                     <item name="label" xsi:type="string" translate="true">Transaction ID</item>
                 </item>
             </argument>
         </column>
-        <column name="operation_id">
+        <column name="OperId">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">number</item>
-                    <item name="filter" xsi:type="string">text</item>
-                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="filter" xsi:type="string">textRange</item>
                     <item name="label" xsi:type="string" translate="true">Operation ID</item>
                 </item>
             </argument>
         </column>
-        <column name="date_applied">
+        <column name="DateApplied">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
@@ -131,25 +130,25 @@
                 </item>
             </argument>
         </column>
-        <column name="debit_acc_id">
+        <column name="Debit">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">number</item>
                     <item name="filter" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Debit Acc. ID</item>
+                    <item name="label" xsi:type="string" translate="true">Debit</item>
                 </item>
             </argument>
         </column>
-        <column name="credit_acc_id">
+        <column name="Credit">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">number</item>
                     <item name="filter" xsi:type="string">text</item>
-                    <item name="label" xsi:type="string" translate="true">Credit Acc. ID</item>
+                    <item name="label" xsi:type="string" translate="true">Credit</item>
                 </item>
             </argument>
         </column>
-        <column name="value">
+        <column name="Value">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">price</item>
@@ -158,7 +157,16 @@
                 </item>
             </argument>
         </column>
-        <column name="note">
+        <column name="Asset">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Asset</item>
+                </item>
+            </argument>
+        </column>
+        <column name="Note">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
