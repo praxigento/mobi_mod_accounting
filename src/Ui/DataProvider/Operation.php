@@ -14,7 +14,8 @@ class Operation
     public function __construct(
         \Magento\Framework\UrlInterface $url,
         \Praxigento\Core\Repo\Query\Criteria\IAdapter $criteriaAdapter,
-        \Praxigento\Accounting\Repo\Entity\IOperation $repo,
+        \Praxigento\Accounting\Repo\Agg\Def\Operation\Mapper $mapperApi2Sql,
+        \Praxigento\Accounting\Repo\Agg\IOperation $repo,
         \Magento\Framework\View\Element\UiComponent\DataProvider\Reporting $reporting,
         \Magento\Framework\Api\Search\SearchCriteriaBuilder $searchCriteriaBuilder,
         \Magento\Framework\App\RequestInterface $request,
@@ -26,7 +27,7 @@ class Operation
         parent::__construct(
             $url,
             $criteriaAdapter,
-            null,
+            $mapperApi2Sql,
             $repo,
             $reporting,
             $searchCriteriaBuilder,

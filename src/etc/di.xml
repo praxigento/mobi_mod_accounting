@@ -5,6 +5,8 @@
     <!-- Repos -->
     <preference for="\Praxigento\Accounting\Repo\Agg\IAccount"
             type="\Praxigento\Accounting\Repo\Agg\Def\Account"/>
+    <preference for="\Praxigento\Accounting\Repo\Agg\IOperation"
+            type="\Praxigento\Accounting\Repo\Agg\Def\Operation"/>
     <preference for="Praxigento\Accounting\Repo\Entity\IAccount"
             type="Praxigento\Accounting\Repo\Entity\Def\Account"/>
     <preference for="Praxigento\Accounting\Repo\Entity\IBalance"

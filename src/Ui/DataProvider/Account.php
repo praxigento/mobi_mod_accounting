@@ -14,7 +14,7 @@ class Account
     public function __construct(
         \Magento\Framework\UrlInterface $url,
         \Praxigento\Core\Repo\Query\Criteria\IAdapter $criteriaAdapter,
-        \Praxigento\Accounting\Repo\Agg\Def\Account\Mapper $api2sqlMapper,
+        \Praxigento\Accounting\Repo\Agg\Def\Account\Mapper $mapperApi2Sql,
         \Praxigento\Accounting\Repo\Agg\IAccount $repo,
         \Magento\Framework\View\Element\UiComponent\DataProvider\Reporting $reporting,
         \Magento\Framework\Api\Search\SearchCriteriaBuilder $searchCriteriaBuilder,
@@ -27,7 +27,7 @@ class Account
         parent::__construct(
             $url,
             $criteriaAdapter,
-            $api2sqlMapper,
+            $mapperApi2Sql,
             $repo,
             $reporting,
             $searchCriteriaBuilder,

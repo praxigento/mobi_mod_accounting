@@ -102,7 +102,7 @@
             </item>
         </argument>
 
-        <column name="id">
+        <column name="Id">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">number</item>
@@ -112,7 +112,7 @@
                 </item>
             </argument>
         </column>
-        <column name="type_id">
+        <column name="Type">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">number</item>
@@ -121,7 +121,7 @@
                 </item>
             </argument>
         </column>
-        <column name="date_performed">
+        <column name="DatePerformed">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
@@ -130,7 +130,7 @@
                 </item>
             </argument>
         </column>
-        <column name="note">
+        <column name="Note">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>

@@ -12,10 +12,8 @@ use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Repo\Agg\IAccount as Repo;
 
 class Mapper
-    implements \Praxigento\Core\Repo\Query\Criteria\IMapper
+    extends \Praxigento\Core\Repo\Query\Criteria\Def\Mapper
 {
-    /** @var array */
-    protected $_map = [];
 
     public function __construct()
     {
@@ -32,9 +30,4 @@ class Mapper
         ];
     }
 
-    public function get($key)
-    {
-        $result = $this->_map[$key]??$key;
-        return $result;
-    }
 }
