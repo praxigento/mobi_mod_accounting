@@ -16,7 +16,7 @@ class Module extends Db implements IModule
 {
 
     const ADMIN_WEBSITE_ID = 0;
-    const CUSTOMER_REPRESENTATIVE_EMAIL = 'MOBI_REPRESENTATIVE';
+    const CUSTOMER_REPRESENTATIVE_EMAIL = Cfg::CUSTOMER_REPRESENTATIVE_EMAIL;
     /**
      * Cache for ID of the representative customer.
      * @var int
