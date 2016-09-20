@@ -4,11 +4,12 @@
  */
 namespace Praxigento\Accounting\Repo\Agg\Def\Account;
 
-use Magento\Framework\App\ResourceConnection;
 use Praxigento\Accounting\Config as Cfg;
-use Praxigento\Accounting\Data\Agg\Warehouse as AggWarehouse;
-use Praxigento\Accounting\Data\Entity\Warehouse as EntityWarehouse;
-use Praxigento\Accounting\Repo\Agg\IWarehouse as IRepoWarehouse;
+use Praxigento\Accounting\Data\Agg\Account as AggEntity;
+use Praxigento\Accounting\Data\Entity\Account as EntityAccount;
+use Praxigento\Accounting\Data\Entity\Type\Asset as EntityTypeAsset;
+use Praxigento\Accounting\Repo\Agg\IAccount as AggRepo;
+use Praxigento\Core\Repo\Query\Expression;
 
 class SelectFactory
     implements \Praxigento\Core\Repo\Query\IHasSelect
@@ -19,7 +20,7 @@ class SelectFactory
     protected $_resource;
 
     public function __construct(
-        ResourceConnection $resource
+        \Magento\Framework\App\ResourceConnection $resource
     ) {
         $this->_resource = $resource;
         $this->_conn = $resource->getConnection();
@@ -30,17 +31,13 @@ class SelectFactory
     {
         $result = $this->_conn->select();
         /* aliases and tables */
-        $asStock = IRepoWarehouse::AS_STOCK;
-        $asWrhs = IRepoWarehouse::AS_WRHS;
-        $tblStock = [$asStock => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
-        $tblWrhs = [$asWrhs => $this->_resource->getTableName(EntityWarehouse::ENTITY_NAME)];
-        /* SELECT FROM cataloginventory_stock */
-        $cols = "COUNT(" . Cfg::E_CATINV_STOCK_A_STOCK_ID . ")";
-        $result->from($tblStock, $cols);
-        /* LEFT JOIN prxgt_wrhs_wrhs */
-        $on = $asWrhs . '.' . EntityWarehouse::ATTR_STOCK_REF . '=' . $asStock . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID;
-        $cols = [];
-        $result->joinLeft($tblWrhs, $on, $cols);
+        $asAcc = AggRepo::AS_ACCOUNT;
+        //
+        $tblAcc = [$asAcc => $this->_resource->getTableName(EntityAccount::ENTITY_NAME)];
+        /* SELECT FROM prxgt_acc_account */
+        $expValue = 'COUNT(' . EntityAccount::ATTR_ID . ')';
+        $cols = new Expression($expValue);
+        $result->from($tblAcc, $cols);
         return $result;
     }
 
@@ -49,25 +46,34 @@ class SelectFactory
     {
         $result = $this->_conn->select();
         /* aliases and tables */
-        $asStock = IRepoWarehouse::AS_STOCK;
-        $asWrhs = IRepoWarehouse::AS_WRHS;
-        $tblStock = [$asStock => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CATALOGINVENTORY_STOCK)];
-        $tblWrhs = [$asWrhs => $this->_resource->getTableName(EntityWarehouse::ENTITY_NAME)];
-        /* SELECT FROM cataloginventory_stock */
+        $asAcc = AggRepo::AS_ACCOUNT;
+        $asCust = AggRepo::AS_CUSTOMER;
+        $asAsset = AggRepo::AS_TYPE_ASSET;
+        //
+        $tblAcc = [$asAcc => $this->_resource->getTableName(EntityAccount::ENTITY_NAME)];
+        $tblCust = [$asCust => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CUSTOMER)];
+        $tblAsset = [$asAsset => $this->_resource->getTableName(EntityTypeAsset::ENTITY_NAME)];
+        /* SELECT FROM prxgt_acc_account */
         $cols = [
-            AggWarehouse::AS_ID => Cfg::E_CATINV_STOCK_A_STOCK_ID,
-            AggWarehouse::AS_CODE => Cfg::E_CATINV_STOCK_A_STOCK_NAME,
-            AggWarehouse::AS_WEBSITE_ID => Cfg::E_CATINV_STOCK_A_WEBSITE_ID
+            AggEntity::AS_ID => EntityAccount::ATTR_ID,
+            AggEntity::AS_BALANCE => EntityAccount::ATTR_BALANCE
         ];
-        $result->from($tblStock, $cols);
-        /* LEFT JOIN prxgt_wrhs_wrhs */
-        $on = $asWrhs . '.' . EntityWarehouse::ATTR_STOCK_REF . '=' . $asStock . '.' . Cfg::E_CATINV_STOCK_A_STOCK_ID;
+        $result->from($tblAcc, $cols);
+        /* LEFT JOIN prxgt_acc_type_asset */
+        $on = $asAsset . '.' . EntityTypeAsset::ATTR_ID . '=' . $asAcc . '.' . EntityAccount::ATTR_ASSET_TYPE_ID;
         $cols = [
-            AggWarehouse::AS_CURRENCY => EntityWarehouse::ATTR_CURRENCY,
-            AggWarehouse::AS_COUNTRY_CODE => EntityWarehouse::ATTR_COUNTRY_CODE,
-            AggWarehouse::AS_NOTE => EntityWarehouse::ATTR_NOTE
+            AggEntity::AS_ASSET => EntityTypeAsset::ATTR_CODE
         ];
-        $result->joinLeft($tblWrhs, $on, $cols);
+        $result->joinLeft($tblAsset, $on, $cols);
+        /* LEFT JOIN customer_entity */
+        $on = $asCust . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAcc . '.' . EntityAccount::ATTR_CUST_ID;
+        $expValue = 'CONCAT(' . Cfg::E_CUSTOMER_A_FIRSTNAME . ", ' ', " . Cfg::E_CUSTOMER_A_LASTNAME . ')';
+        $exp = new Expression($expValue);
+        $cols = [
+            AggEntity::AS_CUST_NAME => $exp,
+            AggEntity::AS_CUST_EMAIL => Cfg::E_CUSTOMER_A_EMAIL
+        ];
+        $result->joinLeft($tblCust, $on, $cols);
         return $result;
     }
 }

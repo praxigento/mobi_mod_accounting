@@ -4,25 +4,24 @@
  */
 namespace Praxigento\Accounting\Repo\Agg;
 
-use Praxigento\Accounting\Data\Agg\Account as AggAccount;
+use Praxigento\Accounting\Data\Agg\Account as Agg;
 
 interface IAccount
     extends \Praxigento\Core\Repo\ICrud
 {
     const AS_ACCOUNT = 'paa';
     const AS_TYPE_ASSET = 'pata';
-    const AS_ATTR_NAME_FIRST = 'anf';
-    const AS_ATTR_NAME_LAST = 'anl';
+    const AS_CUSTOMER = 'ce';
 
     /**
-     * @param array|AggAccount $data
-     * @return AggAccount
+     * @param array|Agg $data
+     * @return Agg
      */
     public function create($data);
 
     /**
      * @param int $id
-     * @return AggAccount|null
+     * @return Agg|null
      */
     public function getById($id);
 }

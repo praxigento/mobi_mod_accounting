@@ -15,9 +15,9 @@ class Account
      */
     const AS_ASSET = 'Asset';
     const AS_BALANCE = 'Balance';
-    const AS_CUSTOMER = 'Customer';
+    const AS_CUST_EMAIL = 'CustEmail';
+    const AS_CUST_NAME = 'CustName';
     const AS_ID = 'Id';
-    const AS_REF = 'Reference';
     /**#@- */
 
     /** @return string */
@@ -35,9 +35,16 @@ class Account
     }
 
     /** @return string */
-    public function getCustomer()
+    public function getCustomerEmail()
     {
-        $result = parent::getData(self::AS_CUSTOMER);
+        $result = parent::getData(self::AS_CUST_EMAIL);
+        return $result;
+    }
+
+    /** @return string */
+    public function getCustomerName()
+    {
+        $result = parent::getData(self::AS_CUST_NAME);
         return $result;
     }
 
@@ -45,13 +52,6 @@ class Account
     public function getId()
     {
         $result = parent::getData(self::AS_ID);
-        return $result;
-    }
-
-    /** @return string */
-    public function getReference()
-    {
-        $result = parent::getData(self::AS_REF);
         return $result;
     }
 
@@ -65,9 +65,14 @@ class Account
         parent::setData(self::AS_BALANCE, $data);
     }
 
-    public function setCustomer($data)
+    public function setCustomerEmail($data)
     {
-        parent::setData(self::AS_CUSTOMER, $data);
+        parent::setData(self::AS_CUST_EMAIL, $data);
+    }
+
+    public function setCustomerName($data)
+    {
+        parent::setData(self::AS_CUST_NAME, $data);
     }
 
     public function setId($data)
