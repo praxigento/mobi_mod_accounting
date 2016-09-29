@@ -10,8 +10,7 @@ class Index
     extends \Praxigento\Accounting\Controller\Adminhtml\Base
 {
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        \Magento\Backend\App\Action\Context $context
     ) {
         $aclResource = Cfg::MODULE . '::' . Cfg::ACL_ACCOUNTS_TYPES_ASSET;
         $activeMenu = Cfg::MODULE . '::' . Cfg::MENU_ACCOUNTS_TYPES_ASSET;
@@ -20,7 +19,6 @@ class Index
         $pageTitle = 'Asset Types';
         parent::__construct(
             $context,
-            $resultPageFactory,
             $aclResource,
             $activeMenu,
             $breadcrumbLabel,
