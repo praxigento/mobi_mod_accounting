@@ -10,14 +10,16 @@ namespace Praxigento\Accounting\Ui\DataProvider;
 class Operation
     extends \Praxigento\Core\Ui\DataProvider\Base
 {
-
+    /**
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     */
     public function __construct(
         \Magento\Framework\UrlInterface $url,
-        \Praxigento\Core\Repo\Query\Criteria\IAdapter $criteriaAdapter,
+        \Praxigento\Core\Repo\Query\Criteria\IAdapter $critAdapter,
         \Praxigento\Accounting\Repo\Agg\Def\Operation\Mapper $mapperApi2Sql,
         \Praxigento\Accounting\Repo\Agg\IOperation $repo,
         \Magento\Framework\View\Element\UiComponent\DataProvider\Reporting $reporting,
-        \Magento\Framework\Api\Search\SearchCriteriaBuilder $searchCriteriaBuilder,
+        \Magento\Framework\Api\Search\SearchCriteriaBuilder $searchCritBuilder,
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Framework\Api\FilterBuilder $filterBuilder,
         $name,
@@ -26,11 +28,11 @@ class Operation
     ) {
         parent::__construct(
             $url,
-            $criteriaAdapter,
+            $critAdapter,
             $mapperApi2Sql,
             $repo,
             $reporting,
-            $searchCriteriaBuilder,
+            $searchCritBuilder,
             $request,
             $filterBuilder,
             $name,
