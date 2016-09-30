@@ -14,7 +14,7 @@ use Praxigento\Accounting\Data\Agg\Account as Agg;
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  */
 class Mapper_UnitTest
-    extends \Praxigento\Core\Test\BaseCase\Repo
+    extends \Praxigento\Core\Test\BaseCase\Repo\Agg\Mapper
 {
     /** @var  Mapper */
     private $obj;

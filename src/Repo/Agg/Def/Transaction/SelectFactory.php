@@ -6,11 +6,14 @@ namespace Praxigento\Accounting\Repo\Agg\Def\Transaction;
 
 use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Data\Agg\Transaction as AggEntity;
-use Praxigento\Accounting\Data\Entity\Account as EntityAccount;
-use Praxigento\Accounting\Data\Entity\Transaction as EntityTrans;
-use Praxigento\Accounting\Data\Entity\Type\Asset as EntityTypeAsset;
+use Praxigento\Accounting\Data\Entity\Account as EAccount;
+use Praxigento\Accounting\Data\Entity\Transaction as ETransaction;
+use Praxigento\Accounting\Data\Entity\Type\Asset as ETypeAsset;
 use Praxigento\Accounting\Repo\Agg\Def\Transaction as Repo;
 
+/**
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ */
 class SelectFactory
     implements \Praxigento\Core\Repo\Query\IHasSelect
 {
@@ -38,31 +41,31 @@ class SelectFactory
 
         $asTrans = Repo::AS_TRANS;
         //
-        $tblAsset = [$asAsset => $this->_resource->getTableName(EntityTypeAsset::ENTITY_NAME)];
-        $tblAccCredit = [$asAccCredit => $this->_resource->getTableName(EntityAccount::ENTITY_NAME)];
-        $tblAccDebit = [$asAccDebit => $this->_resource->getTableName(EntityAccount::ENTITY_NAME)];
+        $tblAsset = [$asAsset => $this->_resource->getTableName(ETypeAsset::ENTITY_NAME)];
+        $tblAccCredit = [$asAccCredit => $this->_resource->getTableName(EAccount::ENTITY_NAME)];
+        $tblAccDebit = [$asAccDebit => $this->_resource->getTableName(EAccount::ENTITY_NAME)];
         $tblCustCredit = [$asCustCredit => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CUSTOMER)];
         $tblCustDebit = [$asCustDebit => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CUSTOMER)];
-        $tblTrans = [$asTrans => $this->_resource->getTableName(EntityTrans::ENTITY_NAME)];
+        $tblTrans = [$asTrans => $this->_resource->getTableName(ETransaction::ENTITY_NAME)];
         /* SELECT FROM prxgt_acc_transaction */
-        $expValue = 'COUNT(' . $asTrans . '.' . EntityTrans::ATTR_ID . ')';
+        $expValue = 'COUNT(' . $asTrans . '.' . ETransaction::ATTR_ID . ')';
         $cols = new \Praxigento\Core\Repo\Query\Expression($expValue);
         $result->from($tblTrans, $cols);
         /* LEFT JOIN prxgt_acc_account DEBIT */
-        $on = $asAccDebit . '.' . EntityAccount::ATTR_ID . '=' . $asTrans . '.' . EntityTrans::ATTR_DEBIT_ACC_ID;
+        $on = $asAccDebit . '.' . EAccount::ATTR_ID . '=' . $asTrans . '.' . ETransaction::ATTR_DEBIT_ACC_ID;
         $cols = [];
         $result->joinLeft($tblAccDebit, $on, $cols);
         /* LEFT JOIN customer_entity */
-        $on = $asCustDebit . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAccDebit . '.' . EntityAccount::ATTR_CUST_ID;
+        $on = $asCustDebit . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAccDebit . '.' . EAccount::ATTR_CUST_ID;
         $result->joinLeft($tblCustDebit, $on, $cols);
         /* LEFT JOIN prxgt_acc_account CREDIT */
-        $on = $asAccCredit . '.' . EntityAccount::ATTR_ID . '=' . $asTrans . '.' . EntityTrans::ATTR_CREDIT_ACC_ID;
+        $on = $asAccCredit . '.' . EAccount::ATTR_ID . '=' . $asTrans . '.' . ETransaction::ATTR_CREDIT_ACC_ID;
         $result->joinLeft($tblAccCredit, $on, $cols);
         /* LEFT JOIN customer_entity */
-        $on = $asCustCredit . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAccCredit . '.' . EntityAccount::ATTR_CUST_ID;
+        $on = $asCustCredit . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAccCredit . '.' . EAccount::ATTR_CUST_ID;
         $result->joinLeft($tblCustCredit, $on, $cols);
         /* LEFT JOIN prxgt_acc_type_asset */
-        $on = $asAsset . '.' . EntityTypeAsset::ATTR_ID . '=' . $asAccDebit . '.' . EntityAccount::ATTR_ASSET_TYPE_ID;
+        $on = $asAsset . '.' . ETypeAsset::ATTR_ID . '=' . $asAccDebit . '.' . EAccount::ATTR_ASSET_TYPE_ID;
         $result->joinLeft($tblAsset, $on, $cols);
         return $result;
     }
@@ -79,45 +82,45 @@ class SelectFactory
 
         $asTrans = Repo::AS_TRANS;
         //
-        $tblAsset = [$asAsset => $this->_resource->getTableName(EntityTypeAsset::ENTITY_NAME)];
-        $tblAccCredit = [$asAccCredit => $this->_resource->getTableName(EntityAccount::ENTITY_NAME)];
-        $tblAccDebit = [$asAccDebit => $this->_resource->getTableName(EntityAccount::ENTITY_NAME)];
+        $tblAsset = [$asAsset => $this->_resource->getTableName(ETypeAsset::ENTITY_NAME)];
+        $tblAccCredit = [$asAccCredit => $this->_resource->getTableName(EAccount::ENTITY_NAME)];
+        $tblAccDebit = [$asAccDebit => $this->_resource->getTableName(EAccount::ENTITY_NAME)];
         $tblCustCredit = [$asCustCredit => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CUSTOMER)];
         $tblCustDebit = [$asCustDebit => $this->_resource->getTableName(Cfg::ENTITY_MAGE_CUSTOMER)];
-        $tblTrans = [$asTrans => $this->_resource->getTableName(EntityTrans::ENTITY_NAME)];
+        $tblTrans = [$asTrans => $this->_resource->getTableName(ETransaction::ENTITY_NAME)];
         /* SELECT FROM prxgt_acc_transaction */
         $cols = [
-            AggEntity::AS_ID_TRANS => EntityTrans::ATTR_ID,
-            AggEntity::AS_ID_OPER => EntityTrans::ATTR_OPERATION_ID,
-            AggEntity::AS_DATE_APPLIED => EntityTrans::ATTR_DATE_APPLIED,
-            AggEntity::AS_VALUE => EntityTrans::ATTR_VALUE,
-            AggEntity::AS_NOTE => EntityTrans::ATTR_NOTE
+            AggEntity::AS_ID_TRANS => ETransaction::ATTR_ID,
+            AggEntity::AS_ID_OPER => ETransaction::ATTR_OPERATION_ID,
+            AggEntity::AS_DATE_APPLIED => ETransaction::ATTR_DATE_APPLIED,
+            AggEntity::AS_VALUE => ETransaction::ATTR_VALUE,
+            AggEntity::AS_NOTE => ETransaction::ATTR_NOTE
         ];
         $result->from($tblTrans, $cols);
         /* LEFT JOIN prxgt_acc_account DEBIT */
-        $on = $asAccDebit . '.' . EntityAccount::ATTR_ID . '=' . $asTrans . '.' . EntityTrans::ATTR_DEBIT_ACC_ID;
+        $on = $asAccDebit . '.' . EAccount::ATTR_ID . '=' . $asTrans . '.' . ETransaction::ATTR_DEBIT_ACC_ID;
         $cols = [];
         $result->joinLeft($tblAccDebit, $on, $cols);
         /* LEFT JOIN customer_entity */
-        $on = $asCustDebit . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAccDebit . '.' . EntityAccount::ATTR_CUST_ID;
+        $on = $asCustDebit . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAccDebit . '.' . EAccount::ATTR_CUST_ID;
         $cols = [
             AggEntity::AS_DEBIT => Cfg::E_CUSTOMER_A_EMAIL
         ];
         $result->joinLeft($tblCustDebit, $on, $cols);
         /* LEFT JOIN prxgt_acc_account CREDIT */
-        $on = $asAccCredit . '.' . EntityAccount::ATTR_ID . '=' . $asTrans . '.' . EntityTrans::ATTR_CREDIT_ACC_ID;
+        $on = $asAccCredit . '.' . EAccount::ATTR_ID . '=' . $asTrans . '.' . ETransaction::ATTR_CREDIT_ACC_ID;
         $cols = [];
         $result->joinLeft($tblAccCredit, $on, $cols);
         /* LEFT JOIN customer_entity */
-        $on = $asCustCredit . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAccCredit . '.' . EntityAccount::ATTR_CUST_ID;
+        $on = $asCustCredit . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAccCredit . '.' . EAccount::ATTR_CUST_ID;
         $cols = [
             AggEntity::AS_CREDIT => Cfg::E_CUSTOMER_A_EMAIL
         ];
         $result->joinLeft($tblCustCredit, $on, $cols);
         /* LEFT JOIN prxgt_acc_type_asset */
-        $on = $asAsset . '.' . EntityTypeAsset::ATTR_ID . '=' . $asAccDebit . '.' . EntityAccount::ATTR_ASSET_TYPE_ID;
+        $on = $asAsset . '.' . ETypeAsset::ATTR_ID . '=' . $asAccDebit . '.' . EAccount::ATTR_ASSET_TYPE_ID;
         $cols = [
-            AggEntity::AS_ASSET => EntityTypeAsset::ATTR_CODE
+            AggEntity::AS_ASSET => ETypeAsset::ATTR_CODE
         ];
         $result->joinLeft($tblAsset, $on, $cols);
         return $result;
