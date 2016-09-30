@@ -25,7 +25,7 @@ class Mapper
             Agg::AS_ASSET => Repo::AS_TYPE_ASSET . '.' . TypeAsset::ATTR_CODE,
             Agg::AS_CUST_NAME => $exp,
             Agg::AS_CUST_EMAIL => Repo::AS_CUSTOMER . '.' . Cfg::E_CUSTOMER_A_EMAIL,
-            Agg::AS_BALANCE => Repo::AS_ACCOUNT . '.' . Account::ATTR_ID,
+            Agg::AS_BALANCE => Repo::AS_ACCOUNT . '.' . Account::ATTR_BALANCE,
             Agg::AS_ID => Repo::AS_ACCOUNT . '.' . Account::ATTR_ID
         ];
     }
