@@ -10,8 +10,8 @@ interface IAccount
     extends \Praxigento\Core\Repo\ICrud
 {
     const AS_ACCOUNT = 'paa';
-    const AS_TYPE_ASSET = 'pata';
     const AS_CUSTOMER = 'ce';
+    const AS_TYPE_ASSET = 'pata';
 
     /**
      * @param array|Agg $data

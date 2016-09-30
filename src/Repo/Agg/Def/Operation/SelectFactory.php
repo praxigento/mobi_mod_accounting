@@ -27,27 +27,6 @@ class SelectFactory
         $this->_conn = $resource->getConnection();
     }
 
-    /** @inheritdoc */
-    public function getQueryToSelectCount()
-    {
-        $result = $this->_conn->select();
-        /* aliases and tables */
-        $asOper = AggRepo::AS_OPER;
-        $asType = AggRepo::AS_TYPE;
-        //
-        $tblOper = [$asOper => $this->_resource->getTableName(EOperation::ENTITY_NAME)];
-        $tblType = [$asType => $this->_resource->getTableName(ETypeOper::ENTITY_NAME)];
-        /* SELECT FROM prxgt_acc_account */
-        $expValue = 'COUNT(' . $asOper . '.' . EOperation::ATTR_ID . ')';
-        $cols = new \Praxigento\Core\Repo\Query\Expression($expValue);
-        $result->from($tblOper, $cols);
-        /* LEFT JOIN prxgt_acc_type_operation */
-        $cond = $asType . '.' . ETypeOper::ATTR_ID . '=' . $asOper . '.' . EOperation::ATTR_TYPE_ID;
-        $cols = [];
-        $result->joinLeft($tblType, $cond, $cols);
-        return $result;
-    }
-
     public function getQueryToSelect()
     {
         $result = $this->_conn->select();
@@ -69,6 +48,27 @@ class SelectFactory
         $cols = [
             AggEntity::AS_TYPE => ETypeOper::ATTR_CODE
         ];
+        $result->joinLeft($tblType, $cond, $cols);
+        return $result;
+    }
+
+    /** @inheritdoc */
+    public function getQueryToSelectCount()
+    {
+        $result = $this->_conn->select();
+        /* aliases and tables */
+        $asOper = AggRepo::AS_OPER;
+        $asType = AggRepo::AS_TYPE;
+        //
+        $tblOper = [$asOper => $this->_resource->getTableName(EOperation::ENTITY_NAME)];
+        $tblType = [$asType => $this->_resource->getTableName(ETypeOper::ENTITY_NAME)];
+        /* SELECT FROM prxgt_acc_account */
+        $expValue = 'COUNT(' . $asOper . '.' . EOperation::ATTR_ID . ')';
+        $cols = new \Praxigento\Core\Repo\Query\Expression($expValue);
+        $result->from($tblOper, $cols);
+        /* LEFT JOIN prxgt_acc_type_operation */
+        $cond = $asType . '.' . ETypeOper::ATTR_ID . '=' . $asOper . '.' . EOperation::ATTR_TYPE_ID;
+        $cols = [];
         $result->joinLeft($tblType, $cond, $cols);
         return $result;
     }
