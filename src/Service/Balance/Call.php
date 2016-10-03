@@ -6,10 +6,15 @@
 namespace Praxigento\Accounting\Service\Balance;
 
 use Praxigento\Accounting\Data\Entity\Balance;
-use Praxigento\Accounting\Service\IBalance;
 use Praxigento\Core\Tool\IPeriod;
 
-class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
+/**
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
+class Call
+    extends \Praxigento\Core\Service\Base\Call
+    implements \Praxigento\Accounting\Service\IBalance
 {
     /**
      * @var \Praxigento\Accounting\Repo\Entity\IBalance
@@ -30,13 +35,14 @@ class Call extends \Praxigento\Core\Service\Base\Call implements IBalance
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
+        \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Tool\IPeriod $toolPeriod,
         \Praxigento\Accounting\Repo\IModule $repoMod,
         \Praxigento\Accounting\Repo\Entity\IBalance $repoBalance,
         \Praxigento\Accounting\Repo\Entity\Type\IAsset $callTypeAsset,
         Sub\CalcSimple $subCalcSimple
     ) {
-        parent::__construct($logger);
+        parent::__construct($logger, $manObj);
         $this->_toolPeriod = $toolPeriod;
         $this->_repoMod = $repoMod;
         $this->_repoBalance = $repoBalance;

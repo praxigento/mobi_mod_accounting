@@ -7,7 +7,12 @@ namespace Praxigento\Accounting\Service\Operation;
 
 use Praxigento\Accounting\Data\Entity\Operation as EntityOperation;
 
-class Call extends \Praxigento\Core\Service\Base\Call implements \Praxigento\Accounting\Service\IOperation
+/**
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ */
+class Call
+    extends \Praxigento\Core\Service\Base\Call
+    implements \Praxigento\Accounting\Service\IOperation
 {
     /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
@@ -20,12 +25,13 @@ class Call extends \Praxigento\Core\Service\Base\Call implements \Praxigento\Acc
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
+        \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\IOperation $repoOper,
         \Praxigento\Accounting\Repo\Entity\Type\IOperation $repoTypeOper,
         Sub\Add $subAdd
     ) {
-        parent::__construct($logger);
+        parent::__construct($logger, $manObj);
         $this->_manTrans = $manTrans;
         $this->_repoTypeOper = $repoTypeOper;
         $this->_repoOper = $repoOper;

@@ -6,10 +6,9 @@ namespace Praxigento\Accounting\Service\Balance;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
-class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
+class Call_UnitTest
+    extends \Praxigento\Core\Test\BaseCase\Service\Call
 {
-    /** @var  \Mockery\MockInterface */
-    private $mLogger;
     /** @var  \Mockery\MockInterface */
     private $mRepoBalance;
     /** @var  \Mockery\MockInterface */
@@ -22,21 +21,32 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
     private $mToolPeriod;
     /** @var  Call */
     private $obj;
+    /** @var array Constructor arguments for object mocking */
+    private $objArgs = [];
 
     protected function setUp()
     {
         parent::setUp();
         /** create mocks */
-        $this->mLogger = $this->_mockLogger();
         $this->mToolPeriod = $this->_mock(\Praxigento\Core\Tool\IPeriod::class);
         $this->mRepoMod = $this->_mock(\Praxigento\Accounting\Repo\IModule::class);
         $this->mRepoBalance = $this->_mock(\Praxigento\Accounting\Repo\Entity\IBalance::class);
         $this->mRepoTypeAsset = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\IAsset::class);
         $this->mSubCalcSimple = $this->_mock(Sub\CalcSimple::class);
-        /** setup mocks for constructor */
+        /** reset args. to create mock of the tested object */
+        $this->objArgs = [
+            $this->mLogger,
+            $this->mManObj,
+            $this->mToolPeriod,
+            $this->mRepoMod,
+            $this->mRepoBalance,
+            $this->mRepoTypeAsset,
+            $this->mSubCalcSimple
+        ];
         /** create object to test */
         $this->obj = new Call (
             $this->mLogger,
+            $this->mManObj,
             $this->mToolPeriod,
             $this->mRepoMod,
             $this->mRepoBalance,
@@ -56,19 +66,9 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $TRANS = 'transactions';
         $UPDATES = 'updates';
         $BALANCES = ['some balances data'];
+        /** === Mock object itself === */
+        $this->obj = \Mockery::mock(Call::class . '[getLastDate]', $this->objArgs);
         /** === Setup Mocks === */
-        /** create partially mocked object to test */
-        $this->obj = \Mockery::mock(
-            Call::class . '[getLastDate]',
-            [
-                $this->mLogger,
-                $this->mToolPeriod,
-                $this->mRepoMod,
-                $this->mRepoBalance,
-                $this->mRepoTypeAsset,
-                $this->mSubCalcSimple
-            ]
-        );
         // $respLastDate = $this->getLastDate($reqLastDate);
         $this->obj
             ->shouldReceive('getLastDate')->once()

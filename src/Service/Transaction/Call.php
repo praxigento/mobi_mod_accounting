@@ -6,9 +6,13 @@
 namespace Praxigento\Accounting\Service\Transaction;
 
 use Praxigento\Accounting\Data\Entity\Transaction as Transaction;
-use Praxigento\Accounting\Service\ITransaction;
 
-class Call extends \Praxigento\Core\Service\Base\Call implements ITransaction
+/**
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ */
+class Call
+    extends \Praxigento\Core\Service\Base\Call
+    implements \Praxigento\Accounting\Service\ITransaction
 {
     /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
@@ -22,11 +26,12 @@ class Call extends \Praxigento\Core\Service\Base\Call implements ITransaction
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
+        \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\IAccount $repoAcc,
         \Praxigento\Accounting\Repo\Entity\ITransaction $repoTrans
     ) {
-        parent::__construct($logger);
+        parent::__construct($logger, $manObj);
         $this->_manTrans = $manTrans;
         $this->_repoAcc = $repoAcc;
         $this->_repoTrans = $repoTrans;

@@ -5,13 +5,17 @@
 namespace Praxigento\Accounting\Service\Account;
 
 use Praxigento\Accounting\Data\Entity\Account as Account;
-use Praxigento\Accounting\Service\IAccount;
 use Praxigento\Core\Service\Base\Call as BaseCall;
 
-class Call extends BaseCall implements IAccount
+/**
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ */
+class Call
+    extends \Praxigento\Core\Service\Base\Call
+    implements \Praxigento\Accounting\Service\IAccount
 {
     /** @var array save accounts data for representative customer. */
-    protected $_cachedRepresentativeAccs = [];
+    protected $_cachedRepresentAccs = [];
     /** @var  \Praxigento\Accounting\Repo\Entity\IAccount */
     protected $_repoAccount;
     /** @var \Praxigento\Accounting\Repo\IModule */
@@ -24,11 +28,12 @@ class Call extends BaseCall implements IAccount
      */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
+        \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Accounting\Repo\Entity\IAccount $repoAccount,
         \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset,
         \Praxigento\Accounting\Repo\IModule $repoMod
     ) {
-        parent::__construct($logger);
+        parent::__construct($logger, $manObj);
         $this->_repoAccount = $repoAccount;
         $this->_repoTypeAsset = $repoTypeAsset;
         $this->_repoMod = $repoMod;
@@ -36,7 +41,7 @@ class Call extends BaseCall implements IAccount
 
     public function cacheReset()
     {
-        $this->_cachedRepresentativeAccs = [];
+        $this->_cachedRepresentAccs = [];
         $this->_repoMod->cacheReset();
     }
 
@@ -55,7 +60,7 @@ class Call extends BaseCall implements IAccount
         $customerId = $request->getCustomerId();
         $assetTypeId = $request->getAssetTypeId();
         $assetTypeCode = $request->getAssetTypeCode();
-        $createNewAccountIfMissed = $request->getCreateNewAccountIfMissed();
+        $createNewAccIfMissed = $request->getCreateNewAccountIfMissed();
         /* accountId has the highest priority */
         if ($accountId) {
             $data = $this->_repoAccount->getById($accountId);
@@ -73,7 +78,7 @@ class Call extends BaseCall implements IAccount
             $result->setData($data);
             $result->markSucceed();
         } else {
-            if ($createNewAccountIfMissed) {
+            if ($createNewAccIfMissed) {
                 /* not found - add new account */
                 $data = [
                     Account::ATTR_CUST_ID => $customerId,
@@ -106,8 +111,8 @@ class Call extends BaseCall implements IAccount
             $typeId = $this->_repoTypeAsset->getIdByCode($typeCode);
         }
         if (!is_null($typeId)) {
-            if (isset($this->_cachedRepresentativeAccs[$typeId])) {
-                $result->setData($this->_cachedRepresentativeAccs[$typeId]);
+            if (isset($this->_cachedRepresentAccs[$typeId])) {
+                $result->setData($this->_cachedRepresentAccs[$typeId]);
                 $result->markSucceed();
             } else {
                 /* there is no cached data yet */
@@ -120,11 +125,11 @@ class Call extends BaseCall implements IAccount
                     foreach ($accounts as $one) {
                         $mapped[$one->getAssetTypeId()] = $one;
                     }
-                    $this->_cachedRepresentativeAccs = $mapped;
+                    $this->_cachedRepresentAccs = $mapped;
                 }
                 /* check selected accounts */
-                if (isset($this->_cachedRepresentativeAccs[$typeId])) {
-                    $result->setData($this->_cachedRepresentativeAccs[$typeId]);
+                if (isset($this->_cachedRepresentAccs[$typeId])) {
+                    $result->setData($this->_cachedRepresentAccs[$typeId]);
                     $result->markSucceed();
                 } else {
                     /* there is no accounts yet */
@@ -134,7 +139,7 @@ class Call extends BaseCall implements IAccount
                     $req->setCreateNewAccountIfMissed();
                     $resp = $this->get($req);
                     $accData = $resp->getData();
-                    $this->_cachedRepresentativeAccs[$accData[Account::ATTR_ASSET_TYPE_ID]] = new Account($accData);
+                    $this->_cachedRepresentAccs[$accData[Account::ATTR_ASSET_TYPE_ID]] = new Account($accData);
                     $result->setData($accData);
                     $result->markSucceed();
                 }
