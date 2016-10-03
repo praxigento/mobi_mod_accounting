@@ -9,23 +9,9 @@ use Praxigento\Accounting\Data\Entity\Operation as EOperation;
 use Praxigento\Accounting\Data\Entity\Type\Operation as ETypeOper;
 use Praxigento\Accounting\Repo\Agg\IOperation as AggRepo;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- */
 class SelectFactory
-    implements \Praxigento\Core\Repo\Query\IHasSelect
+    extends \Praxigento\Core\Repo\Agg\BaseSelectFactory
 {
-    /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
-    protected $_conn;
-    /** @var \Magento\Framework\App\ResourceConnection */
-    protected $_resource;
-
-    public function __construct(
-        \Magento\Framework\App\ResourceConnection $resource
-    ) {
-        $this->_resource = $resource;
-        $this->_conn = $resource->getConnection();
-    }
 
     public function getQueryToSelect()
     {
@@ -52,7 +38,6 @@ class SelectFactory
         return $result;
     }
 
-    /** @inheritdoc */
     public function getQueryToSelectCount()
     {
         $result = $this->_conn->select();

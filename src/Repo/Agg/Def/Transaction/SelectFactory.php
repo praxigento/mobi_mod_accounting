@@ -11,23 +11,9 @@ use Praxigento\Accounting\Data\Entity\Transaction as ETransaction;
 use Praxigento\Accounting\Data\Entity\Type\Asset as ETypeAsset;
 use Praxigento\Accounting\Repo\Agg\Def\Transaction as Repo;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- */
 class SelectFactory
-    implements \Praxigento\Core\Repo\Query\IHasSelect
+    extends \Praxigento\Core\Repo\Agg\BaseSelectFactory
 {
-    /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
-    protected $_conn;
-    /** @var \Magento\Framework\App\ResourceConnection */
-    protected $_resource;
-
-    public function __construct(
-        \Magento\Framework\App\ResourceConnection $resource
-    ) {
-        $this->_resource = $resource;
-        $this->_conn = $resource->getConnection();
-    }
 
     public function getQueryToSelect()
     {

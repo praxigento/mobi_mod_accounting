@@ -10,25 +10,10 @@ use Praxigento\Accounting\Data\Entity\Account as EAccount;
 use Praxigento\Accounting\Data\Entity\Type\Asset as ETypeAsset;
 use Praxigento\Accounting\Repo\Agg\IAccount as AggRepo;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- */
 class SelectFactory
-    implements \Praxigento\Core\Repo\Query\IHasSelect
+    extends \Praxigento\Core\Repo\Agg\BaseSelectFactory
 {
-    /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
-    protected $_conn;
-    /** @var \Magento\Framework\App\ResourceConnection */
-    protected $_resource;
 
-    public function __construct(
-        \Magento\Framework\App\ResourceConnection $resource
-    ) {
-        $this->_resource = $resource;
-        $this->_conn = $resource->getConnection();
-    }
-
-    /** @inheritdoc */
     public function getQueryToSelect()
     {
         $result = $this->_conn->select();
