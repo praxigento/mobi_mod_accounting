@@ -19,7 +19,7 @@ define([
             var modalHtml = mageTemplate(
                 changeBalanceTemplate,
                 {
-                    formAction: 'submit/to/some/route',
+                    formAction: 'changeBalance',
                     assetCode: row.Asset,
                     balance: row.Balance,
                     customerName: row.CustName,
