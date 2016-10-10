@@ -152,7 +152,8 @@
                 class="\Praxigento\Accounting\Ui\Component\Listing\Column\Actions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="component" xsi:type="string">Praxigento_Accounting/js/grid/columns/change_balance</item>
+                    <item name="component" xsi:type="string">Praxigento_Accounting/js/grid/columns/actions</item>
+                    <!--<item name="component" xsi:type="string">Magento_Ui/js/grid/columns/actions</item>-->
                     <item name="indexField" xsi:type="string">Id</item>
                     <item name="sortable" xsi:type="boolean">false</item>
                     <item name="sortOrder" xsi:type="number">13</item>

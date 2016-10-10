@@ -1,0 +1,32 @@
+<form id="change-balance-form-<%- accountId %>" method="get" enctype="multipart/form-data" action="<%- formAction %>">
+    <div class="modal-content">
+
+        <div class="admin__field">
+            <label class="admin__field-label">Customer:</label>
+            <span><%- customerName %>&lt;<%- customerEmail %>&gt;</span>
+            <span>(<%- customerRef %>)</span>
+        </div>
+        <div class="admin__field">
+            <label class="admin__field-label">Current balance:</label>
+            <span><%- balance %> <%- assetCode %></span>
+        </div>
+        <div class="admin__field">
+            <label class="admin__field-label">Change value:</label>
+            <input type="text" autofocus="true" name="changeValue"/>
+        </div>
+        <div class="admin__field">
+            <label class="admin__field-label" for="change-type-credit">Credit</label>
+            <input type="radio" id="change-type-credit" name="changeType" value="credit" checked="true"/>
+            <label class="admin__field-label" for="change-type-debit">Debit</label>
+            <input type="radio" id="change-type-debit" name="changeType" value="debit"/>
+        </div>
+
+    </div>
+
+    <div class="clear"></div>
+    <div class="modal-footer">
+        <span class="error"></span>
+        <button type="submit" class="btn btn-primary"><span>Submit</span></button>
+        <span class="clear"></span>
+    </div>
+</form>

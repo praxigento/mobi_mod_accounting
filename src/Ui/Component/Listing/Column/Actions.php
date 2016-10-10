@@ -32,12 +32,16 @@ class Actions
         if (isset($dataSource['data']['items'])) {
             $name = $this->getData('name');
             foreach ($dataSource['data']['items'] as & $item) {
-                $item[$name . '_html'] = "<button class='button' translate='yes'><span>Change</span></button>";
-                $item[$name . '_title'] = __('Change account balance');
-                $item[$name . '_submitlabel'] = __('Send');
-                $item[$name . '_cancellabel'] = __('Reset');
-                $item[$name . '_accountid'] = $item['Id'];
-                $item[$name . '_formaction'] = $this->urlBuilder->getUrl('grid/customer/sendmail');
+                $item[$name]['edit'] = [
+                    'label' => __('Edit'),
+                    'id' => $item['Id']
+                ];
+//                $item[$name . '_html'] = "<button class='button' translate='yes'><span>Change</span></button>";
+//                $item[$name . '_title'] = __('Change account balance');
+//                $item[$name . '_submitlabel'] = __('Send');
+//                $item[$name . '_cancellabel'] = __('Reset');
+//                $item[$name . '_accountid'] = $item['Id'];
+//                $item[$name . '_formaction'] = $this->urlBuilder->getUrl('grid/customer/sendmail');
             }
         }
 
