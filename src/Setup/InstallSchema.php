@@ -8,6 +8,8 @@ namespace Praxigento\Accounting\Setup;
 
 use Praxigento\Accounting\Data\Entity\Account as Account;
 use Praxigento\Accounting\Data\Entity\Balance as Balance;
+use Praxigento\Accounting\Data\Entity\Log\Change\Admin as LogChangeAdmin;
+use Praxigento\Accounting\Data\Entity\Log\Change\Customer as LogChangeCustomer;
 use Praxigento\Accounting\Data\Entity\Operation as Operation;
 use Praxigento\Accounting\Data\Entity\Transaction as Transaction;
 use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
@@ -23,12 +25,12 @@ class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
         $pathToNode = '/dBEAR/package/Praxigento/package/Accounting';
         $demPackage = $this->_toolDem->readDemPackage($pathToFile, $pathToNode);
 
-        /* Type Asset */
+        /* Type / Asset */
         $entityAlias = TypeAsset::ENTITY_NAME;
         $demEntity = $demPackage->getData('package/Type/entity/Asset');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
-        /* Type Operation */
+        /* Type / Operation */
         $entityAlias = TypeOperation::ENTITY_NAME;
         $demEntity = $demPackage->getData('package/Type/entity/Operation');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
@@ -52,5 +54,17 @@ class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
         $entityAlias = Balance::ENTITY_NAME;
         $demEntity = $demPackage->getData('entity/Balance');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
+
+        /* Log / Change / Admin  */
+        $entityAlias = LogChangeAdmin::ENTITY_NAME;
+        $demEntity = $demPackage->getData('package/Log/package/Change/entity/Admin');
+        $this->_toolDem->createEntity($entityAlias, $demEntity);
+
+        /* Log / Change / Customer */
+        $entityAlias = LogChangeCustomer::ENTITY_NAME;
+        $demEntity = $demPackage->getData('package/Log/package/Change/entity/Customer');
+        $this->_toolDem->createEntity($entityAlias, $demEntity);
+
+
     }
 }
