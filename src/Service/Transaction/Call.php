@@ -74,13 +74,7 @@ class Call
                     Transaction::ATTR_DATE_APPLIED => $dateApplied
                 ];
                 $idCreated = $this->_repoTrans->create($toAdd);
-                if ($idCreated) {
-                    /* update debit balance */
-                    $this->_repoAcc->updateBalance($debitAccId, 0 - $value);
-                    /* update credit balance */
-                    $this->_repoAcc->updateBalance($creditAccId, 0 + $value);
-                    $result->setTransactionId($idCreated);
-                }
+                $result->setTransactionId($idCreated);
             } else {
                 throw new \Exception("Asset type (#$debitAssetTypeId) for debit account #$debitAccId is not equal to "
                     . "asset type (#$creditAssetTypeId) for credit account $creditAccId.");

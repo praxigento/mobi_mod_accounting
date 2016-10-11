@@ -7,6 +7,7 @@ namespace Praxigento\Accounting\Service\Balance;
 
 use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Data\Entity\Balance;
+use Praxigento\Accounting\Data\Entity\Log\Change\Admin as ELogChangeAdmin;
 use Praxigento\Core\Tool\IPeriod;
 
 /**
@@ -33,6 +34,8 @@ class Call
     protected $_repoTypeAsset;
     /** @var \Praxigento\Accounting\Repo\Entity\Type\IOperation */
     protected $_repoTypeOper;
+    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\IAdmin */
+    protected $_repoLogChangeAdmin;
     /** @var Sub\CalcSimple Simple balance calculator. */
     protected $_subCalcSimple;
     /** @var  \Praxigento\Core\Tool\IPeriod */
@@ -53,6 +56,7 @@ class Call
         \Praxigento\Accounting\Repo\Entity\IBalance $repoBalance,
         \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset,
         \Praxigento\Accounting\Repo\Entity\Type\IOperation $repoTypeOper,
+        \Praxigento\Accounting\Repo\Entity\Log\Change\IAdmin $repoLogChangeAdmin,
         Sub\CalcSimple $subCalcSimple
     ) {
         parent::__construct($logger, $manObj);
@@ -66,6 +70,7 @@ class Call
         $this->_repoBalance = $repoBalance;
         $this->_repoTypeAsset = $repoTypeAsset;
         $this->_repoTypeOper = $repoTypeOper;
+        $this->_repoLogChangeAdmin = $repoLogChangeAdmin;
         $this->_subCalcSimple = $subCalcSimple;
     }
 
@@ -94,7 +99,7 @@ class Call
     {
         $result = new Response\Reset();
         $accCustId = $request->getCustomerAccountId();
-        $opeartorId = $request->getAdminUserId();
+        $adminUserId = $request->getAdminUserId();
         $value = $request->getChangeValue();
         $def = $this->_manTrans->begin();
         try {
@@ -124,7 +129,10 @@ class Call
             $trans->setValue(abs($value));
             $this->_repoTransaction->create($trans);
             /* log details (operator name who performs the operation) */
-
+            $log = new ELogChangeAdmin();
+            $log->setOperationRef($operId);
+            $log->setUserRef($adminUserId);
+            $this->_repoLogChangeAdmin->create($log);
             $this->_manTrans->commit($def);
             $result->markSucceed();
         } finally {
