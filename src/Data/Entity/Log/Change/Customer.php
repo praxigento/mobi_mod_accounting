@@ -28,6 +28,11 @@ class Customer
         return $result;
     }
 
+    public function getPrimaryKeyAttrs()
+    {
+        return [self::ATTR_OPER_REF];
+    }
+
     /** @param int $data */
     public function setCustomerRef($data)
     {

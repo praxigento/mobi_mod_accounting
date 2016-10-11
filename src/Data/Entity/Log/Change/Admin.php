@@ -21,6 +21,11 @@ class Admin
         return $result;
     }
 
+    public function getPrimaryKeyAttrs()
+    {
+        return [self::ATTR_OPER_REF];
+    }
+
     /** @return int */
     public function getUserRef()
     {

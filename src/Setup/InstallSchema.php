@@ -15,7 +15,11 @@ use Praxigento\Accounting\Data\Entity\Transaction as Transaction;
 use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
 
-class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
+/**
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ */
+class InstallSchema
+    extends \Praxigento\Core\Setup\Schema\Base
 {
 
     protected function _setup()
