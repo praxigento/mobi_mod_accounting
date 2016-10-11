@@ -35,6 +35,14 @@ interface IModule extends ICached
     public function getRepresentativeCustomerId();
 
     /**
+     * Return representative account ID for given asset type.
+     *
+     * @param int $assetTypeId
+     * @return int|null
+     */
+    public function getRepresentativeAccountId($assetTypeId);
+
+    /**
      * Get date for first transaction.
      *
      * @param null $assetTypeId

@@ -5,16 +5,17 @@
 namespace Praxigento\Accounting\Service\Balance;
 
 
-
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
-class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
+class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
+{
     const ASSET_TYPE_ID = 1;
 
-    public function test_getLastDate() {
+    public function test_getLastDate()
+    {
         $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call \Praxigento\Accounting\Service\Balance\Call */
-        $call = $obm->get('Praxigento\Accounting\Service\Balance\Call');
+        $call = $obm->get(\Praxigento\Accounting\Service\IBalance::class);
         $req = new Request\GetLastDate();
         $req->assetTypeId = self::ASSET_TYPE_ID;
         /** @var  $resp Response\GetLastDate */
@@ -24,10 +25,11 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         $this->assertNotNull($period);
     }
 
-    public function test_getBalancesOnDate() {
+    public function test_getBalancesOnDate()
+    {
         $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call \Praxigento\Accounting\Service\Balance\Call */
-        $call = $obm->get('Praxigento\Accounting\Service\Balance\Call');
+        $call = $obm->get(\Praxigento\Accounting\Service\IBalance::class);
         $req = new Request\GetBalancesOnDate();
         $req->setData(Request\GetBalancesOnDate::ASSET_TYPE_ID, self::ASSET_TYPE_ID);
         $req->setData(Request\GetBalancesOnDate::DATE, '20151117');
@@ -38,10 +40,11 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         $this->assertNotNull($data);
     }
 
-    public function test_calc() {
+    public function test_calc()
+    {
         $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call \Praxigento\Accounting\Service\Balance\Call */
-        $call = $obm->get('Praxigento\Accounting\Service\Balance\Call');
+        $call = $obm->get(\Praxigento\Accounting\Service\IBalance::class);
         $req = new Request\Calc();
         $req->assetTypeId = self::ASSET_TYPE_ID;
         $req->dateTo = '20161117';
@@ -50,10 +53,25 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         $this->assertTrue($resp->isSucceed());
     }
 
-    public function test_reset() {
+    public function test_change()
+    {
         $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call \Praxigento\Accounting\Service\Balance\Call */
-        $call = $obm->get('Praxigento\Accounting\Service\Balance\Call');
+        $call = $obm->get(\Praxigento\Accounting\Service\IBalance::class);
+        $req = new Request\Change();
+        $req->setCustomerAccountId(8);
+        $req->setAdminUserId(1);
+        $req->setChangeValue(4.32);
+        /** @var  $resp Response\Change */
+        $resp = $call->change($req);
+        $this->assertTrue($resp->isSucceed());
+    }
+
+    public function test_reset()
+    {
+        $obm = \Magento\Framework\App\ObjectManager::getInstance();
+        /** @var  $call \Praxigento\Accounting\Service\Balance\Call */
+        $call = $obm->get(\Praxigento\Accounting\Service\IBalance::class);
         $req = new Request\Reset();
         $req->setData(Request\Reset::DATE_FROM, '20151111');
         /** @var  $resp Response\Reset */

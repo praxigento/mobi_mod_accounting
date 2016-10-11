@@ -21,16 +21,20 @@ class Module extends Db implements IModule
      * Cache for ID of the representative customer.
      * @var int
      */
-    protected $_cachedRepresentativeCustomerId;
+    protected $_cachedRepresCustId;
     /** @var  \Praxigento\Core\Repo\IGeneric */
-    protected $_repoBasic;
+    protected $_repoGeneric;
+    /** @var \Praxigento\Accounting\Repo\Entity\IAccount */
+    protected $_repoAccount;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\Repo\IGeneric $repoGeneric
+        \Praxigento\Core\Repo\IGeneric $repoGeneric,
+        \Praxigento\Accounting\Repo\Entity\IAccount $repoAccount
     ) {
         parent::__construct($resource);
-        $this->_repoBasic = $repoGeneric;
+        $this->_repoGeneric = $repoGeneric;
+        $this->_repoAccount = $repoAccount;
     }
 
     /**
@@ -38,7 +42,7 @@ class Module extends Db implements IModule
      */
     public function cacheReset()
     {
-        $this->_cachedRepresentativeCustomerId = null;
+        $this->_cachedRepresCustId = null;
     }
 
     /**
@@ -157,29 +161,43 @@ class Module extends Db implements IModule
         return $result;
     }
 
+    public function getRepresentativeAccountId($assetTypeId)
+    {
+        /* TODO: add cache for accounts ids */
+        $result = null;
+        $custId = $this->getRepresentativeCustomerId();
+        if ($custId) {
+            $found = $this->_repoAccount->getByCustomerId($custId, $assetTypeId);
+            if ($found) {
+                $result = $found->getId();
+            }
+        }
+        return $result;
+    }
+
     public function getRepresentativeCustomerId()
     {
-        if (is_null($this->_cachedRepresentativeCustomerId)) {
+        if (is_null($this->_cachedRepresCustId)) {
             $conn = $this->_conn;
             /* there is no cached value for the customer ID, select data from DB */
             $where = Cfg::E_CUSTOMER_A_EMAIL . '=' . $conn->quote(self::CUSTOMER_REPRESENTATIVE_EMAIL);
-            $data = $this->_repoBasic->getEntities(Cfg::ENTITY_MAGE_CUSTOMER, Cfg::E_CUSTOMER_A_ENTITY_ID,
+            $data = $this->_repoGeneric->getEntities(Cfg::ENTITY_MAGE_CUSTOMER, Cfg::E_CUSTOMER_A_ENTITY_ID,
                 $where);
             if (count($data) == 0) {
                 $bind = [
                     Cfg::E_CUSTOMER_A_WEBSITE_ID => self::ADMIN_WEBSITE_ID,
                     Cfg::E_CUSTOMER_A_EMAIL => self::CUSTOMER_REPRESENTATIVE_EMAIL
                 ];
-                $id = $this->_repoBasic->addEntity(Cfg::ENTITY_MAGE_CUSTOMER, $bind);
+                $id = $this->_repoGeneric->addEntity(Cfg::ENTITY_MAGE_CUSTOMER, $bind);
                 if ($id > 0) {
-                    $this->_cachedRepresentativeCustomerId = $id;
+                    $this->_cachedRepresCustId = $id;
                 }
             } else {
                 $first = reset($data);
-                $this->_cachedRepresentativeCustomerId = $first[Cfg::E_CUSTOMER_A_ENTITY_ID];
+                $this->_cachedRepresCustId = $first[Cfg::E_CUSTOMER_A_ENTITY_ID];
             }
         }
-        return $this->_cachedRepresentativeCustomerId;
+        return $this->_cachedRepresCustId;
     }
 
     /**

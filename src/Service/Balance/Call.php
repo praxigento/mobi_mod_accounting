@@ -5,6 +5,7 @@
 
 namespace Praxigento\Accounting\Service\Balance;
 
+use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Data\Entity\Balance;
 use Praxigento\Core\Tool\IPeriod;
 
@@ -16,47 +17,58 @@ class Call
     extends \Praxigento\Core\Service\Base\Call
     implements \Praxigento\Accounting\Service\IBalance
 {
-    /**
-     * @var \Praxigento\Accounting\Repo\Entity\IBalance
-     */
+    /** @var \Praxigento\Core\Transaction\Database\IManager */
+    protected $_manTrans;
+    /** @var \Praxigento\Accounting\Repo\Entity\IAccount */
+    protected $_repoAccount;
+    /** @var \Praxigento\Accounting\Repo\Entity\IBalance */
     protected $_repoBalance;
-    /**
-     * @var \Praxigento\Accounting\Repo\IModule
-     */
+    /** @var \Praxigento\Accounting\Repo\IModule */
     protected $_repoMod;
-    /**
-     * @var \Praxigento\Accounting\Repo\Entity\Type\IAsset
-     */
+    /** @var \Praxigento\Accounting\Repo\Entity\IOperation */
+    protected $_repoOperation;
+    /** @var \Praxigento\Accounting\Repo\Entity\ITransaction */
+    protected $_repoTransaction;
+    /** @var \Praxigento\Accounting\Repo\Entity\Type\IAsset */
     protected $_repoTypeAsset;
+    /** @var \Praxigento\Accounting\Repo\Entity\Type\IOperation */
+    protected $_repoTypeOper;
     /** @var Sub\CalcSimple Simple balance calculator. */
     protected $_subCalcSimple;
     /** @var  \Praxigento\Core\Tool\IPeriod */
     protected $_toolPeriod;
+    /** @var \Praxigento\Core\Tool\IDate */
+    protected $_toolDate;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
+        \Praxigento\Core\Transaction\Database\IManager $manTrans,
+        \Praxigento\Core\Tool\IDate $toolDate,
         \Praxigento\Core\Tool\IPeriod $toolPeriod,
         \Praxigento\Accounting\Repo\IModule $repoMod,
+        \Praxigento\Accounting\Repo\Entity\IAccount $repoAccount,
+        \Praxigento\Accounting\Repo\Entity\IOperation $repoOperation,
+        \Praxigento\Accounting\Repo\Entity\ITransaction $repoTransaction,
         \Praxigento\Accounting\Repo\Entity\IBalance $repoBalance,
-        \Praxigento\Accounting\Repo\Entity\Type\IAsset $callTypeAsset,
+        \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset,
+        \Praxigento\Accounting\Repo\Entity\Type\IOperation $repoTypeOper,
         Sub\CalcSimple $subCalcSimple
     ) {
         parent::__construct($logger, $manObj);
+        $this->_manTrans = $manTrans;
+        $this->_toolDate = $toolDate;
         $this->_toolPeriod = $toolPeriod;
         $this->_repoMod = $repoMod;
+        $this->_repoAccount = $repoAccount;
+        $this->_repoOperation = $repoOperation;
+        $this->_repoTransaction = $repoTransaction;
         $this->_repoBalance = $repoBalance;
-        $this->_repoTypeAsset = $callTypeAsset;
+        $this->_repoTypeAsset = $repoTypeAsset;
+        $this->_repoTypeOper = $repoTypeOper;
         $this->_subCalcSimple = $subCalcSimple;
     }
 
-    /**
-     * Calculate asset balances up to given date (including).
-     *
-     * @param Request\Calc $request
-     *
-     * @return Response\Calc
-     */
     public function calc(Request\Calc $request)
     {
         $result = new Response\Calc();
@@ -78,13 +90,49 @@ class Call
         return $result;
     }
 
-    /**
-     * Get asset balances on the requested date.
-     *
-     * @param Request\GetBalancesOnDate $request
-     *
-     * @return Response\GetBalancesOnDate
-     */
+    public function change(Request\Change $request)
+    {
+        $result = new Response\Reset();
+        $accCustId = $request->getCustomerAccountId();
+        $opeartorId = $request->getAdminUserId();
+        $value = $request->getChangeValue();
+        $def = $this->_manTrans->begin();
+        try {
+            /* get account's asset type by ID */
+            $assetTypeId = $this->_repoAccount->getAssetTypeId($accCustId);
+            /* get representative account id for given asset type */
+            $accRepresId = $this->_repoMod->getRepresentativeAccountId($assetTypeId);
+            /* get operation type by code and date performed */
+            $operTypeId = $this->_repoTypeOper->getIdByCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
+            $dateNow = $this->_toolDate->getUtcNowForDb();
+            /* create operation */
+            $operation = new \Praxigento\Accounting\Data\Entity\Operation();
+            $operation->setTypeId($operTypeId);
+            $operation->setDatePerformed($dateNow);
+            $operId = $this->_repoOperation->create($operation);
+            /* create transaction */
+            $trans = new \Praxigento\Accounting\Data\Entity\Transaction();
+            $trans->setOperationId($operId);
+            $trans->setDateApplied($dateNow);
+            if ($value > 0) {
+                $trans->setDebitAccId($accRepresId);
+                $trans->setCreditAccId($accCustId);
+            } else {
+                $trans->setDebitAccId($accCustId);
+                $trans->setCreditAccId($accRepresId);
+            }
+            $trans->setValue(abs($value));
+            $this->_repoTransaction->create($trans);
+            /* log details (operator name who performs the operation) */
+
+            $this->_manTrans->commit($def);
+            $result->markSucceed();
+        } finally {
+            $this->_manTrans->end($def);
+        }
+        return $result;
+    }
+
     public function getBalancesOnDate(Request\GetBalancesOnDate $request)
     {
         $result = new Response\GetBalancesOnDate();
@@ -98,13 +146,6 @@ class Call
         return $result;
     }
 
-    /**
-     * Calculate the last date for the balance of the asset.
-     *
-     * @param Request\GetLastDate $request
-     *
-     * @return Response\GetLastDate
-     */
     public function getLastDate(Request\GetLastDate $request)
     {
         $result = new Response\GetLastDate();
@@ -133,13 +174,6 @@ class Call
         return $result;
     }
 
-    /**
-     * Reset balance history for all accounts on dates after requested.
-     *
-     * @param Request\Reset $request
-     *
-     * @return Response\Reset
-     */
     public function reset(Request\Reset $request)
     {
         $result = new Response\Reset();
@@ -153,5 +187,4 @@ class Call
         }
         return $result;
     }
-
 }

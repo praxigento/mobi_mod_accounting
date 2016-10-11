@@ -2,17 +2,15 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-
 namespace Praxigento\Accounting\Repo\Entity;
 
-use Praxigento\Accounting\Data\Entity\Transaction as EntityData;
-use Praxigento\Core\Repo\ICrud;
-
-
-interface ITransaction extends ICrud
+interface ITransaction
+    extends \Praxigento\Core\Repo\ICrud
 {
     /**
-     * @param array|EntityData $data
+     * Create transaction and update balances in account table.
+     *
+     * @param Praxigento\Accounting\Data\Entity\Transaction|array $data
      * @return int
      */
     public function create($data);

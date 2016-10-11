@@ -3,12 +3,102 @@
     "package": {
       "Praxigento": {
         "alias": "prxgt",
-        "comment": "Root namespace for Praxigento modules",
+        "comment": "Root namespace for Praxigento modules.",
         "package": {
           "Accounting": {
             "alias": "acc",
-            "comment": "Top level package for Praxigento_Accounting module",
+            "comment": "Top level package for Praxigento_Accounting module.",
             "package": {
+              "Log": {
+                "alias": "log",
+                "comment": "Log data for Praxigento_Accounting",
+                "package": {
+                  "Change": {
+                    "alias": "change",
+                    "comment": "Change balance logs.",
+                    "entity": {
+                      "Admin": {
+                        "alias": "admin",
+                        "comment": "Logs for balance changes performed by admin users.",
+                        "attribute": {
+                          "OperationRef": {
+                            "alias": "operation_ref",
+                            "comment": "Operation reference.",
+                            "nullable": false,
+                            "type": {"integer": {"unsigned": true}}
+                          },
+                          "UserRef": {
+                            "alias": "user_ref",
+                            "comment": "Admin user reference.",
+                            "nullable": false,
+                            "type": {"integer": {"unsigned": true}}
+                          }
+                        },
+                        "index": {
+                          "primary": {"type": "primary", "aliases": ["operation_ref"]}
+                        },
+                        "relation": {
+                          "toOperation": {
+                            "own": {"aliases": ["operation_ref"]},
+                            "reference": {
+                              "entity": {"completeAlias": "prxgt_acc_operation"},
+                              "aliases": ["id"]
+                            },
+                            "action": {"delete": "restrict", "update": "restrict"}
+                          },
+                          "toMageAdminUser": {
+                            "own": {"aliases": ["user_ref"]},
+                            "reference": {
+                              "entity": {"completeAlias": "admin_user"},
+                              "aliases": ["user_id"]
+                            },
+                            "action": {"delete": "restrict", "update": "restrict"}
+                          }
+                        }
+                      },
+                      "Customer": {
+                        "alias": "customer",
+                        "comment": "Logs for balance changes performed by customers.",
+                        "attribute": {
+                          "OperationRef": {
+                            "alias": "operation_ref",
+                            "comment": "Operation reference.",
+                            "nullable": false,
+                            "type": {"integer": {"unsigned": true}}
+                          },
+                          "CustomerRef": {
+                            "alias": "customer_ref",
+                            "comment": "Customer reference.",
+                            "nullable": false,
+                            "type": {"integer": {"unsigned": true}}
+                          }
+                        },
+                        "index": {
+                          "primary": {"type": "primary", "aliases": ["operation_ref"]}
+                        },
+                        "relation": {
+                          "toOperation": {
+                            "own": {"aliases": ["operation_ref"]},
+                            "reference": {
+                              "entity": {"completeAlias": "prxgt_acc_operation"},
+                              "aliases": ["id"]
+                            },
+                            "action": {"delete": "restrict", "update": "restrict"}
+                          },
+                          "toMageCustomer": {
+                            "own": {"aliases": ["customer_ref"]},
+                            "reference": {
+                              "entity": {"completeAlias": "customer_entity"},
+                              "aliases": ["entity_id"]
+                            },
+                            "action": {"delete": "restrict", "update": "restrict"}
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
               "Type": {
                 "alias": "type",
                 "comment": "Types codifiers in Praxigento_Accounting",
