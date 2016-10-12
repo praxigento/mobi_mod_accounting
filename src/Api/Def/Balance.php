@@ -12,11 +12,27 @@ namespace Praxigento\Accounting\Api\Def;
 class Balance
     implements \Praxigento\Accounting\Api\BalanceInterface
 {
-    public function change($changeValue, $form_key)
+    /** @var \Praxigento\Accounting\Service\IBalance */
+    protected $_callBalance;
+    /** @var \Magento\Backend\Model\Auth\Session */
+    protected $_authSession;
+
+    public function __construct(
+        \Magento\Backend\Model\Auth\Session $authSession,
+        \Praxigento\Accounting\Service\IBalance $callBalance
+    ) {
+        $this->_callBalance = $callBalance;
+        $this->_authSession = $authSession;
+    }
+
+    public function change($changeValue, $accountId, $form_key)
     {
-        $args = func_get_args();
-        $result = new \Praxigento\Core\Service\Base\Response();
-        $result->markSucceed();
+        $req = new \Praxigento\Accounting\Service\Balance\Request\Change();
+        $req->setCustomerAccountId($accountId);
+        $req->setChangeValue($changeValue);
+        $userId = $this->_authSession->getUser()->getId();
+        $req->setAdminUserId($userId);
+        $result = $this->_callBalance->change($req);
         return $result;
     }
 

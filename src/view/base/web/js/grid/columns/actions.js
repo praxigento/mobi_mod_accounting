@@ -14,33 +14,13 @@ define([
     /* save FROM_KEY */
     var formKey = FORM_KEY;
 
-    var fnSend = function () {
-        debugger;
-        $('#prxgt-spinner').show();
-        var input = $('#prxgt-change-balance-value');
-        var value = input.val();
-        var url = baseUrl + '/rest//V1/prxgt/acc/balance/change/';
-        var data = JSON.stringify({changeValue: value});
-        var opts = {
-            data: data,
-            contentType: 'application/json',
-            type: 'post'
-        };
-        $.ajax(url, opts);
-
-        var fnSuccess = function (data, status, xhr) {
-            debugger;
-            $('#prxgt-spinner').hide();
-        }
-    }
-
     return Actions.extend({
 
         applyAction: function (actionIndex, rowIndex) {
-            // debugger;
             /* get action & row data*/
             var action = this.getAction(rowIndex, actionIndex);
             var row = this.rows[rowIndex];
+            var accountId = row['Id'];
             /* create modal dialog for current row */
             var modalHtml = mageTemplate(
                 innerHtml,
@@ -56,6 +36,29 @@ define([
                 }
             );
 
+            var fnSend = function () {
+                var msg = $('#prxgt-msg');
+                var input = $('#prxgt-change-balance-value');
+                msg.text('Loading...');
+                var value = input.val();
+                var url = baseUrl + '/rest/V1/prxgt/acc/balance/change/';
+                var data = JSON.stringify({changeValue: value, accountId: accountId});
+                var fnSuccess = function (data, status, xhr) {
+                    if (data.error_code == 'no_error') {
+                        msg.text('Done');
+                    } else {
+                        msg.text('Error: ' + data.error_message);
+                    }
+                }
+                var opts = {
+                    data: data,
+                    contentType: 'application/json',
+                    type: 'post',
+                    success: fnSuccess
+                };
+                $.ajax(url, opts);
+            }
+
             /* display modal dialog */
             var previewPopup = $('<div/>').html(modalHtml);
             previewPopup.modal({
@@ -66,17 +69,9 @@ define([
                     {
                         text: "OK",
                         click: fnSend
-                    },
-                    {
-                        text: "Cancel",
-                        click: function () {
-                            $('#prxgt-spinner').hide();
-                        }
                     }
                 ]
             }).trigger('openModal');
-
-            $('#prxgt-spinner').hide();
             return this;
         }
 
