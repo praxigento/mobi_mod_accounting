@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <route url="/V1/prxgt/acc/balance/change/" method="POST">
+        <!-- Change account balance  -->
+        <service class="Praxigento\Accounting\Api\BalanceInterface" method="change"/>
+        <resources>
+            <!--<resource ref="Praxigento_Odoo::replicate"/>-->
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+</routes>

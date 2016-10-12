@@ -1,3 +1,4 @@
+<div id="mage-loader"></div>
 <form id="change-balance-form-<%- accountId %>" method="post" enctype="multipart/form-data" action="<%- formAction %>">
     <div class="modal-content">
 
@@ -12,13 +13,7 @@
         </div>
         <div class="admin__field">
             <label class="admin__field-label">Change value:</label>
-            <input type="text" autofocus="true" name="changeValue"/>
-        </div>
-        <div class="admin__field">
-            <label class="admin__field-label" for="change-type-credit">Credit</label>
-            <input type="radio" id="change-type-credit" name="changeType" value="credit" checked="true"/>
-            <label class="admin__field-label" for="change-type-debit">Debit</label>
-            <input type="radio" id="change-type-debit" name="changeType" value="debit"/>
+            <input type="text" id="prxgt-change-balance-value" />
         </div>
 
     </div>
@@ -26,7 +21,8 @@
     <div class="clear"></div>
     <div class="modal-footer">
         <span class="error"></span>
-        <button type="submit" class="btn btn-primary"><span>Submit</span></button>
+        <span id="prxgt-spinner">spinner is here...</span>
+        <!--<button type="button" class="btn btn-primary" onclick=""><span>Change</span></button>-->
         <span class="clear"></span>
     </div>
 </form>
