@@ -7,11 +7,8 @@ define([
 ], function ($, Actions, mageTemplate, innerHtml) {
     'use strict';
 
-    /* get base URL: http://host.com/admin/accounts/ => http://host.com */
-    var parts = BASE_URL.split('/');
-    var removed = parts.splice(-3, 3);
-    var baseUrl = parts.join('/');
-    /* save FROM_KEY */
+    /* save globals FROM_KEY into local context */
+    var baseUrl = BASE_URL;
     var formKey = FORM_KEY;
 
     return Actions.extend({
@@ -31,28 +28,28 @@ define([
                     customerName: row.CustName,
                     customerEmail: row.CustEmail,
                     customerRef: row.Ref,
-                    accountId: row.Id,
-                    // linkText: $.mage.__('Go to Details Page')
+                    accountId: row.Id
                 }
             );
-
+            /* define function to send AJAX request to server */
             var fnSend = function () {
                 var msg = $('#prxgt-msg');
                 var input = $('#prxgt-change-balance-value');
                 msg.text('Loading...');
                 var value = input.val();
-                var url = baseUrl + '/rest/V1/prxgt/acc/balance/change/';
-                var data = JSON.stringify({changeValue: value, accountId: accountId});
+                var url = baseUrl + 'accounts/changeBalance/';
+                var data = {changeValue: value, accountId: accountId};
+                /* define function to process response from server */
                 var fnSuccess = function (data, status, xhr) {
-                    if (data.error_code == 'no_error') {
-                        msg.text('Done');
+                    if (data.error) {
+                        msg.text('Error: ' + data.message);
                     } else {
-                        msg.text('Error: ' + data.error_message);
+                        msg.text('Done. Please, close the dialog.');
                     }
                 }
                 var opts = {
                     data: data,
-                    contentType: 'application/json',
+                    // contentType: 'application/json',
                     type: 'post',
                     success: fnSuccess
                 };
