@@ -14,6 +14,14 @@ interface IAccount
     public function create($data);
 
     /**
+     * Get all customer accounts.
+     *
+     * @param int $customerId
+     * @return \Praxigento\Accounting\Data\Entity\Account[]|null
+     */
+    public function getAllByCustomerId($customerId);
+
+    /**
      * Get asset type ID for the given account.
      *
      * @param int $accountId
@@ -22,12 +30,13 @@ interface IAccount
     public function getAssetTypeId($accountId);
 
     /**
-     * Get account for the $customerId by $assetTypeId or all accounts for the customer (if $assetTypeId is null).
+     * Get account for the $customerId by $assetTypeId.
+     *
      * @param int $customerId
      * @param int $assetTypeId
-     * @return false|\Praxigento\Accounting\Data\Entity\Account|\Praxigento\Accounting\Data\Entity\Account[]
+     * @return \Praxigento\Accounting\Data\Entity\Account|null
      */
-    public function getByCustomerId($customerId, $assetTypeId = null);
+    public function getByCustomerId($customerId, $assetTypeId);
 
     /**
      * @param int $id

@@ -119,7 +119,7 @@ class Call
                 /* get representative customer ID */
                 $customerId = $this->_repoMod->getRepresentativeCustomerId();
                 /* get all accounts for the representative customer */
-                $accounts = $this->_repoAccount->getByCustomerId($customerId);
+                $accounts = $this->_repoAccount->getAllByCustomerId($customerId);
                 if ($accounts) {
                     $mapped = [];
                     foreach ($accounts as $one) {

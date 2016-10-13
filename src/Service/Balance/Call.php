@@ -51,9 +51,9 @@ class Call
         \Praxigento\Core\Tool\IPeriod $toolPeriod,
         \Praxigento\Accounting\Repo\IModule $repoMod,
         \Praxigento\Accounting\Repo\Entity\IAccount $repoAccount,
+        \Praxigento\Accounting\Repo\Entity\IBalance $repoBalance,
         \Praxigento\Accounting\Repo\Entity\IOperation $repoOperation,
         \Praxigento\Accounting\Repo\Entity\ITransaction $repoTransaction,
-        \Praxigento\Accounting\Repo\Entity\IBalance $repoBalance,
         \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset,
         \Praxigento\Accounting\Repo\Entity\Type\IOperation $repoTypeOper,
         \Praxigento\Accounting\Repo\Entity\Log\Change\IAdmin $repoLogChangeAdmin,
@@ -65,9 +65,9 @@ class Call
         $this->_toolPeriod = $toolPeriod;
         $this->_repoMod = $repoMod;
         $this->_repoAccount = $repoAccount;
+        $this->_repoBalance = $repoBalance;
         $this->_repoOperation = $repoOperation;
         $this->_repoTransaction = $repoTransaction;
-        $this->_repoBalance = $repoBalance;
         $this->_repoTypeAsset = $repoTypeAsset;
         $this->_repoTypeOper = $repoTypeOper;
         $this->_repoLogChangeAdmin = $repoLogChangeAdmin;

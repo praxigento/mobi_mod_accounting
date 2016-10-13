@@ -17,6 +17,23 @@ class Account
         parent::__construct($resource, $repoGeneric, Entity::class);
     }
 
+    public function getAllByCustomerId($customerId)
+    {
+        $result = null;
+        $where = '(' . Entity::ATTR_CUST_ID . '=' . (int)$customerId . ')';
+        $found = $this->get($where);
+        if ($found) {
+            /* return all entries */
+            $entries = [];
+            foreach ($found as $item) {
+                $entry = $this->_createEntityInstance($item);
+                $entries[] = $entry;
+            }
+            $result = $entries;
+        }
+        return $result;
+    }
+
     public function getAssetTypeId($accountId)
     {
         $result = null;
@@ -28,27 +45,15 @@ class Account
         return $result;
     }
 
-    public function getByCustomerId($customerId, $assetTypeId = null)
+    public function getByCustomerId($customerId, $assetTypeId)
     {
+        $result = null;
         $where = '(' . Entity::ATTR_CUST_ID . '=' . (int)$customerId . ')';
-        if ($assetTypeId) {
-            $where = "$where AND (" . Entity::ATTR_ASSET_TYPE_ID . '=' . (int)$assetTypeId . ')';
-        }
-        $result = $this->get($where);
-        if ($result) {
-            if (is_null($assetTypeId)) {
-                /* return all entries */
-                $dataObjects = [];
-                foreach ($result as $item) {
-                    $obj = $this->_createEntityInstance($item);
-                    $dataObjects[] = $obj;
-                }
-                $result = $dataObjects;
-            } else {
-                /* return one only entry */
-                $data = reset($result);
-                $result = $this->_createEntityInstance($data);
-            }
+        $where = "$where AND (" . Entity::ATTR_ASSET_TYPE_ID . '=' . (int)$assetTypeId . ')';
+        $found = $this->get($where);
+        if ($found && count($found)) {
+            $data = reset($found);
+            $result = $this->_createEntityInstance($data);
         }
         return $result;
     }

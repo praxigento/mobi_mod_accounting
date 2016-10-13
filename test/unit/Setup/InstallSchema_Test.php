@@ -7,6 +7,8 @@ namespace Praxigento\Accounting\Setup;
 use Flancer32\Lib\DataObject;
 use Praxigento\Accounting\Data\Entity\Account as Account;
 use Praxigento\Accounting\Data\Entity\Balance as Balance;
+use Praxigento\Accounting\Data\Entity\Log\Change\Admin as LogChangeAdmin;
+use Praxigento\Accounting\Data\Entity\Log\Change\Customer as LogChangeCustomer;
 use Praxigento\Accounting\Data\Entity\Operation as Operation;
 use Praxigento\Accounting\Data\Entity\Transaction as Transaction;
 use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
@@ -55,6 +57,8 @@ class InstallSchema_UnitTest
         $this->mToolDem->shouldReceive('createEntity')->withArgs([Operation::ENTITY_NAME, \Mockery::any()]);
         $this->mToolDem->shouldReceive('createEntity')->withArgs([Transaction::ENTITY_NAME, \Mockery::any()]);
         $this->mToolDem->shouldReceive('createEntity')->withArgs([Balance::ENTITY_NAME, \Mockery::any()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([LogChangeAdmin::ENTITY_NAME, \Mockery::any()]);
+        $this->mToolDem->shouldReceive('createEntity')->withArgs([LogChangeCustomer::ENTITY_NAME, \Mockery::any()]);
         // $setup->endSetup();
         $this->mSetup
             ->shouldReceive('endSetup')->once();

@@ -31,6 +31,22 @@ class Account_UnitTest
         $this->assertInstanceOf(IAccount::class, $this->obj);
     }
 
+    public function test_getAllByCustomerId()
+    {
+        /** === Test Data === */
+        $CUST_ID = 32;
+        $RESULT = [['some data' => 'here']];
+        /** === Setup Mocks === */
+        // $result = $this->get($where);
+        // $result = $this->_repoGeneric->getEntities($this->_entityName, null, $where, $order, $limit, $offset);
+        $this->mRepoGeneric
+            ->shouldReceive('getEntities')
+            ->andReturn($RESULT);
+        /** === Call and asserts  === */
+        $res = $this->obj->getAllByCustomerId($CUST_ID);
+        $this->assertTrue(is_array($res));
+    }
+
     public function test_getByCustomerId_withAssetType()
     {
         /** === Test Data === */
@@ -46,22 +62,6 @@ class Account_UnitTest
         /** === Call and asserts  === */
         $res = $this->obj->getByCustomerId($CUST_ID, $ASSET_TYPE_ID);
         $this->assertInstanceOf(\Praxigento\Accounting\Data\Entity\Account::class, $res);
-    }
-
-    public function test_getByCustomerId_woAssetType()
-    {
-        /** === Test Data === */
-        $CUST_ID = 32;
-        $RESULT = [['some data' => 'here']];
-        /** === Setup Mocks === */
-        // $result = $this->get($where);
-        // $result = $this->_repoGeneric->getEntities($this->_entityName, null, $where, $order, $limit, $offset);
-        $this->mRepoGeneric
-            ->shouldReceive('getEntities')
-            ->andReturn($RESULT);
-        /** === Call and asserts  === */
-        $res = $this->obj->getByCustomerId($CUST_ID);
-        $this->assertTrue(is_array($res));
     }
 
     public function test_updateBalance_negative()

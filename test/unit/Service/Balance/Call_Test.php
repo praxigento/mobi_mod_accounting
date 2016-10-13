@@ -10,13 +10,27 @@ class Call_UnitTest
     extends \Praxigento\Core\Test\BaseCase\Service\Call
 {
     /** @var  \Mockery\MockInterface */
+    private $mManTrans;
+    /** @var  \Mockery\MockInterface */
+    private $mRepoAccount;
+    /** @var  \Mockery\MockInterface */
     private $mRepoBalance;
+    /** @var  \Mockery\MockInterface */
+    private $mRepoLogChangeAdmin;
     /** @var  \Mockery\MockInterface */
     private $mRepoMod;
     /** @var  \Mockery\MockInterface */
+    private $mRepoOperation;
+    /** @var  \Mockery\MockInterface */
+    private $mRepoTransaction;
+    /** @var  \Mockery\MockInterface */
     private $mRepoTypeAsset;
     /** @var  \Mockery\MockInterface */
+    private $mRepoTypeOper;
+    /** @var  \Mockery\MockInterface */
     private $mSubCalcSimple;
+    /** @var  \Mockery\MockInterface */
+    private $mToolDate;
     /** @var  \Mockery\MockInterface */
     private $mToolPeriod;
     /** @var  Call */
@@ -28,29 +42,50 @@ class Call_UnitTest
     {
         parent::setUp();
         /** create mocks */
+        $this->mManTrans = $this->_mockTransactionManager();
+        $this->mToolDate = $this->_mock(\Praxigento\Core\Tool\IDate::class);
         $this->mToolPeriod = $this->_mock(\Praxigento\Core\Tool\IPeriod::class);
         $this->mRepoMod = $this->_mock(\Praxigento\Accounting\Repo\IModule::class);
+        $this->mRepoAccount = $this->_mock(\Praxigento\Accounting\Repo\Entity\IAccount::class);
         $this->mRepoBalance = $this->_mock(\Praxigento\Accounting\Repo\Entity\IBalance::class);
+        $this->mRepoOperation = $this->_mock(\Praxigento\Accounting\Repo\Entity\IOperation::class);
+        $this->mRepoTransaction = $this->_mock(\Praxigento\Accounting\Repo\Entity\ITransaction::class);
         $this->mRepoTypeAsset = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\IAsset::class);
+        $this->mRepoTypeOper = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\IOperation::class);
+        $this->mRepoLogChangeAdmin = $this->_mock(\Praxigento\Accounting\Repo\Entity\Log\Change\IAdmin::class);
         $this->mSubCalcSimple = $this->_mock(Sub\CalcSimple::class);
         /** reset args. to create mock of the tested object */
         $this->objArgs = [
             $this->mLogger,
             $this->mManObj,
+            $this->mManTrans,
+            $this->mToolDate,
             $this->mToolPeriod,
             $this->mRepoMod,
+            $this->mRepoAccount,
             $this->mRepoBalance,
+            $this->mRepoOperation,
+            $this->mRepoTransaction,
             $this->mRepoTypeAsset,
+            $this->mRepoTypeOper,
+            $this->mRepoLogChangeAdmin,
             $this->mSubCalcSimple
         ];
         /** create object to test */
         $this->obj = new Call (
             $this->mLogger,
             $this->mManObj,
+            $this->mManTrans,
+            $this->mToolDate,
             $this->mToolPeriod,
             $this->mRepoMod,
+            $this->mRepoAccount,
             $this->mRepoBalance,
+            $this->mRepoOperation,
+            $this->mRepoTransaction,
             $this->mRepoTypeAsset,
+            $this->mRepoTypeOper,
+            $this->mRepoLogChangeAdmin,
             $this->mSubCalcSimple
         );
     }

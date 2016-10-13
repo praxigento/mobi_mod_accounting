@@ -75,10 +75,10 @@ class Call_UnitTest
         $this->mRepoMod
             ->shouldReceive('getRepresentativeCustomerId')->once()
             ->andReturn($custId);
-        // accounts = $this->_repoAccount->getByCustomerId($customerId);
+        // accounts = $this->_repoAccount->getAllByCustomerId($customerId);
         $this->mRepoAccount
-            ->shouldReceive('getByCustomerId')->once()
-            ->andReturn([]);
+            ->shouldReceive('getAllByCustomerId')->once()
+            ->andReturn(null);
         // $resp = $this->get($req);
         // $data = $this->_repoAccount->getByCustomerId($customerId, $assetTypeId);
         $this->mRepoAccount
@@ -134,9 +134,9 @@ class Call_UnitTest
         $this->mRepoMod
             ->shouldReceive('getRepresentativeCustomerId')->once()
             ->andReturn($custId);
-        // accounts = $this->_repoAccount->getByCustomerId($customerId);
+        // accounts = $this->_repoAccount->getAllByCustomerId($customerId);
         $this->mRepoAccount
-            ->shouldReceive('getByCustomerId')->once()
+            ->shouldReceive('getAllByCustomerId')->once()
             ->andReturn($data);
         /** === Call and asserts  === */
         $req = new Request\GetRepresentative();

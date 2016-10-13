@@ -67,12 +67,6 @@ class Call_UnitTest
         $this->mRepoTrans
             ->shouldReceive('create')->once()
             ->andReturn($transId);
-        // $this->_repoAcc->updateBalance($debitAccId, 0 - $value);
-        $this->mRepoAcc
-            ->shouldReceive('updateBalance')->once();
-        // $this->_repoAcc->updateBalance($creditAccId, 0 + $value);
-        $this->mRepoAcc
-            ->shouldReceive('updateBalance')->once();
         // $this->_manTrans->commit($def);
         $this->mManTrans
             ->shouldReceive('commit')->once();
