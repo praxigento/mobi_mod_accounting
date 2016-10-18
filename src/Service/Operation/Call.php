@@ -16,6 +16,10 @@ class Call
 {
     /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
+    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\IAdmin */
+    protected $_repoELogChangeAdmin;
+    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\ICustomer */
+    protected $_repoELogChangeCust;
     /** @var  \Praxigento\Accounting\Repo\Entity\IOperation */
     protected $_repoOper;
     /** @var  \Praxigento\Accounting\Repo\Entity\Type\IOperation */
@@ -29,12 +33,16 @@ class Call
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\IOperation $repoOper,
         \Praxigento\Accounting\Repo\Entity\Type\IOperation $repoTypeOper,
+        \Praxigento\Accounting\Repo\Entity\Log\Change\IAdmin $repoELogChangeAdmin,
+        \Praxigento\Accounting\Repo\Entity\Log\Change\ICustomer $repoELogChangeCust,
         Sub\Add $subAdd
     ) {
         parent::__construct($logger, $manObj);
         $this->_manTrans = $manTrans;
         $this->_repoTypeOper = $repoTypeOper;
         $this->_repoOper = $repoOper;
+        $this->_repoELogChangeAdmin = $repoELogChangeAdmin;
+        $this->_repoELogChangeCust = $repoELogChangeCust;
         $this->_subAdd = $subAdd;
     }
 
@@ -53,6 +61,8 @@ class Call
         $datePerformed = $req->getDatePerformed();
         $transactions = $req->getTransactions();
         $asRef = $req->getAsTransRef();
+        $customerId = $req->getCustomerId();
+        $adminUserId = $req->getAdminUserId();
         $def = $this->_manTrans->begin();
         try {
             /* add operation itself */
@@ -63,11 +73,25 @@ class Call
                 EntityOperation::ATTR_TYPE_ID => $operationTypeId,
                 EntityOperation::ATTR_DATE_PREFORMED => $datePerformed
             ];
-            $idCreated = $this->_repoOper->create($bindToAdd);
-            if ($idCreated) {
-                $transIds = $this->_subAdd->transactions($idCreated, $transactions, $datePerformed, $asRef);
-                $result->setOperationId($idCreated);
+            $operId = $this->_repoOper->create($bindToAdd);
+            if ($operId) {
+                $transIds = $this->_subAdd->transactions($operId, $transactions, $datePerformed, $asRef);
+                $result->setOperationId($operId);
                 $result->setTransactionsIds($transIds);
+                /* log customer link */
+                if ($customerId) {
+                    $log = new \Praxigento\Accounting\Data\Entity\Log\Change\Customer();
+                    $log->setCustomerRef($customerId);
+                    $log->setOperationRef($operId);
+                    $this->_repoELogChangeCust->create($log);
+                }
+                /* log admin link */
+                if ($adminUserId) {
+                    $log = new \Praxigento\Accounting\Data\Entity\Log\Change\Admin();
+                    $log->setUserRef($adminUserId);
+                    $log->setOperationRef($operId);
+                    $this->_repoELogChangeAdmin->create($log);
+                }
                 $this->_manTrans->commit($def);
                 $result->markSucceed();
             }
