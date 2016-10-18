@@ -37,25 +37,30 @@ class Add
     {
         $result = [];
         foreach ($trans as $one) {
-            $dateApplied = isset($one[Transaction::ATTR_DATE_APPLIED]) ? $one[Transaction::ATTR_DATE_APPLIED] : $datePerformed;
+            if (!$one instanceof Transaction) {
+                $one = new Transaction($one);
+            }
+            $dateApplied = $one->getDateApplied();
+            $dateApplied = $dateApplied ? $dateApplied : $datePerformed;
             $req = new AddTransactionRequest();
             $req->setOperationId($operId);
-            $req->setDebitAccId($one[Transaction::ATTR_DEBIT_ACC_ID]);
-            $req->setCreditAccId($one[Transaction::ATTR_CREDIT_ACC_ID]);
-            $req->setValue($one[Transaction::ATTR_VALUE]);
+            $req->setDebitAccId($one->getDebitAccId());
+            $req->setCreditAccId($one->getCreditAccId());
+            $req->setValue($one->getValue());
             $req->setDateApplied($dateApplied);
             /** @var  $resp AddTransactionResponse */
             $resp = $this->_callTransaction->add($req);
             if (!$resp->isSucceed()) {
-                throw new \Exception("Transaction (debit acc. #{$req->getDebitAccId()}, credit acc. #{$req->getCreditAccId()}) cannot be inserted . ");
+                throw new \Exception("Transaction (debit acc. #{$req->getDebitAccId()}, credit acc. "
+                    . "#{$req->getCreditAccId()}) cannot be inserted . ");
             }
             $tranId = $resp->getTransactionId();
+            $ref = $one->getData($asRef);
             if (
                 !is_null($asRef) &&
-                isset($one[$asRef])
+                isset($ref)
             ) {
                 /* bind new transaction ID to the reference from request */
-                $ref = $one[$asRef];
                 $result[$tranId] = $ref;
             } else {
                 /* new transaction ID is bound by 'add transaction' requests order */
