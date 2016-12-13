@@ -27,7 +27,7 @@ class Call
      * Call constructor.
      */
     public function __construct(
-        \Psr\Log\LoggerInterface $logger,
+        \Praxigento\Core\Fw\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Accounting\Repo\Entity\IAccount $repoAccount,
         \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset,
