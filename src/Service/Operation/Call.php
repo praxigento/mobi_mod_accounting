@@ -59,6 +59,7 @@ class Call
         $operationTypeId = $req->getOperationTypeId();
         $operationTypeCode = $req->getOperationTypeCode();
         $datePerformed = $req->getDatePerformed();
+        $note = $req->getOperationNote();
         $transactions = $req->getTransactions();
         $asRef = $req->getAsTransRef();
         $customerId = $req->getCustomerId();
@@ -73,6 +74,9 @@ class Call
                 EntityOperation::ATTR_TYPE_ID => $operationTypeId,
                 EntityOperation::ATTR_DATE_PREFORMED => $datePerformed
             ];
+            if (!is_null($note)) {
+                $bindToAdd[EntityOperation::ATTR_NOTE] = $note;
+            }
             $operId = $this->_repoOper->create($bindToAdd);
             if ($operId) {
                 $transIds = $this->_subAdd->transactions($operId, $transactions, $datePerformed, $asRef);

@@ -7,6 +7,8 @@ namespace Praxigento\Accounting\Service\Operation\Request;
 /**
  * @method string getDatePerformed()
  * @method void setDatePerformed(string $data)
+ * @method string|null getOperationNote()
+ * @method void setOperationNote(string $data)
  * @method string getOperationTypeCode()
  * @method void setOperationTypeCode(string $data)
  * @method int getOperationTypeId()

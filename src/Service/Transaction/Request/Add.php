@@ -11,6 +11,8 @@ namespace Praxigento\Accounting\Service\Transaction\Request;
  * @method void setDateApplied(string $data)
  * @method int getDebitAccId()
  * @method void setDebitAccId(int $data)
+ * @method string|null getNote()
+ * @method void setNote(string $data)
  * @method int getOperationId()
  * @method void setOperationId(int $data)
  * @method number getValue()

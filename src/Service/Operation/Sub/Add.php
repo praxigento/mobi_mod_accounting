@@ -47,6 +47,7 @@ class Add
             $req->setDebitAccId($one->getDebitAccId());
             $req->setCreditAccId($one->getCreditAccId());
             $req->setValue($one->getValue());
+            $req->setNote($one->getNote());
             $req->setDateApplied($dateApplied);
             /** @var  $resp AddTransactionResponse */
             $resp = $this->_callTransaction->add($req);

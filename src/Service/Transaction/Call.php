@@ -52,6 +52,7 @@ class Call
         $operationId = $request->getOperationId();
         $dateApplied = $request->getDateApplied();
         $value = $request->getValue();
+        $note = $request->getNote();
         $def = $this->_manTrans->begin();
         try {
             /* get account type for debit account */
@@ -73,6 +74,9 @@ class Call
                     Transaction::ATTR_VALUE => $value,
                     Transaction::ATTR_DATE_APPLIED => $dateApplied
                 ];
+                if (!is_null($note)) {
+                    $toAdd[Transaction::ATTR_NOTE] = $note;
+                }
                 $idCreated = $this->_repoTrans->create($toAdd);
                 $result->setTransactionId($idCreated);
             } else {
