@@ -29,7 +29,7 @@ class Balance
      *
      * @return string YYYYMMDD
      */
-    public function getBalanceMaxDate($assetTypeId = null)
+    public function getMaxDate($assetTypeId = null)
     {
         $asAccount = 'a';
         $asBalance = 'b';
@@ -158,4 +158,5 @@ class Balance
         }
         $this->_conn->commit();
     }
+
 }
