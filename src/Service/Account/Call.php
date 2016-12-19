@@ -117,7 +117,7 @@ class Call
             } else {
                 /* there is no cached data yet */
                 /* get representative customer ID */
-                $customerId = $this->_repoMod->getRepresentativeCustomerId();
+                $customerId = $this->_repoAccount->getRepresentativeCustomerId();
                 /* get all accounts for the representative customer */
                 $accounts = $this->_repoAccount->getAllByCustomerId($customerId);
                 if ($accounts) {

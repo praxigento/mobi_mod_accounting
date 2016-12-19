@@ -4,17 +4,31 @@
  */
 namespace Praxigento\Accounting\Repo\Entity\Def;
 
+use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Data\Entity\Account as Entity;
 
 class Account
     extends \Praxigento\Core\Repo\Def\Entity
     implements \Praxigento\Accounting\Repo\Entity\IAccount
 {
+    const ADMIN_WEBSITE_ID = Cfg::DEF_WEBSITE_ID_ADMIN;
+    const CUSTOMER_REPRESENTATIVE_EMAIL = Cfg::CUSTOMER_REPRESENTATIVE_EMAIL;
+    /**
+     * Cache for ID of the representative customer.
+     * @var int
+     */
+    protected $cachedRepresCustId;
+
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric
     ) {
         parent::__construct($resource, $repoGeneric, Entity::class);
+    }
+
+    public function cacheReset()
+    {
+        $this->cachedRepresCustId = null;
     }
 
     public function getAllByCustomerId($customerId)
@@ -56,6 +70,45 @@ class Account
             $result = $this->_createEntityInstance($data);
         }
         return $result;
+    }
+
+    public function getRepresentativeAccountId($assetTypeId)
+    {
+        /* TODO: add cache for accounts ids */
+        $result = null;
+        $custId = $this->getRepresentativeCustomerId();
+        if ($custId) {
+            $found = $this->getByCustomerId($custId, $assetTypeId);
+            if ($found) {
+                $result = $found->getId();
+            }
+        }
+        return $result;
+    }
+
+    public function getRepresentativeCustomerId()
+    {
+        if (is_null($this->cachedRepresCustId)) {
+            $conn = $this->_conn;
+            /* there is no cached value for the customer ID, select data from DB */
+            $where = Cfg::E_CUSTOMER_A_EMAIL . '=' . $conn->quote(self::CUSTOMER_REPRESENTATIVE_EMAIL);
+            $data = $this->_repoGeneric->getEntities(Cfg::ENTITY_MAGE_CUSTOMER, Cfg::E_CUSTOMER_A_ENTITY_ID,
+                $where);
+            if (count($data) == 0) {
+                $bind = [
+                    Cfg::E_CUSTOMER_A_WEBSITE_ID => self::ADMIN_WEBSITE_ID,
+                    Cfg::E_CUSTOMER_A_EMAIL => self::CUSTOMER_REPRESENTATIVE_EMAIL
+                ];
+                $id = $this->_repoGeneric->addEntity(Cfg::ENTITY_MAGE_CUSTOMER, $bind);
+                if ($id > 0) {
+                    $this->cachedRepresCustId = $id;
+                }
+            } else {
+                $first = reset($data);
+                $this->cachedRepresCustId = $first[Cfg::E_CUSTOMER_A_ENTITY_ID];
+            }
+        }
+        return $this->cachedRepresCustId;
     }
 
     public function updateBalance($accountId, $delta)

@@ -14,4 +14,22 @@ interface ITransaction
      * @return int
      */
     public function create($data);
+
+    /**
+     * @param $assetTypeId
+     * @param $timestampFrom
+     * @param $timestampTo
+     *
+     * @return mixed
+     */
+    public function getForPeriod($assetTypeId, $timestampFrom, $timestampTo);
+
+    /**
+     * Get date for first transaction.
+     *
+     * @param null $assetTypeId
+     *
+     * @return mixed
+     */
+    public function getMinDateApplied($assetTypeId = null);
 }

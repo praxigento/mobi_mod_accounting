@@ -21,4 +21,30 @@ interface IBalance extends ICrud
      * @return EntityData|bool
      */
     public function getById($id);
+
+    /**
+     * Get maximal datestamp for existing balance by asset type id or null if no data is found.
+     *
+     * @param int $assetTypeId
+     *
+     * @return string YYYYMMDD
+     */
+    public function getMaxDate($assetTypeId = null);
+
+    /**
+     * Get balances on concrete date.
+     *
+     * @param $assetTypeId
+     * @param $yyyymmdd
+     *
+     * @return array
+     */
+    public function getOnDate($assetTypeId, $yyyymmdd);
+
+
+    /**
+     * @param $updateData
+     * @return mixed
+     */
+    public function updateBalances($updateData);
 }

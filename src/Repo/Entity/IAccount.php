@@ -5,7 +5,7 @@
 namespace Praxigento\Accounting\Repo\Entity;
 
 interface IAccount
-    extends \Praxigento\Core\Repo\ICrud
+    extends \Praxigento\Core\Repo\ICrud, \Praxigento\Core\ICached
 {
     /**
      * @param \Praxigento\Accounting\Data\Entity\Account|array $data
@@ -43,6 +43,20 @@ interface IAccount
      * @return \Praxigento\Accounting\Data\Entity\Account|bool
      */
     public function getById($id);
+
+    /**
+     * Return representative account ID for given asset type.
+     *
+     * @param int $assetTypeId
+     * @return int|null
+     */
+    public function getRepresentativeAccountId($assetTypeId);
+
+    /**
+     * Return MageID for customer that represents store in accounting.
+     * @return int
+     */
+    public function getRepresentativeCustomerId();
 
     /**
      * Add/subtract value to/from account current balance.

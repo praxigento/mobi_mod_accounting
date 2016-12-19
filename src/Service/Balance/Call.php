@@ -84,13 +84,13 @@ class Call
         $reqLastDate->setData(Request\GetLastDate::ASSET_TYPE_ID, $assetTypeId);
         $respLastDate = $this->getLastDate($reqLastDate);
         $lastDate = $respLastDate->getLastDate();
-        $balances = $this->_repoMod->getBalancesOnDate($assetTypeId, $lastDate);
+        $balances = $this->_repoBalance->getOnDate($assetTypeId, $lastDate);
         /* get transactions for period */
         $dtFrom = $this->_toolPeriod->getTimestampFrom($lastDate, IPeriod::TYPE_DAY);
         $dtTo = $this->_toolPeriod->getTimestampTo($dateTo, IPeriod::TYPE_DAY);
-        $trans = $this->_repoMod->getTransactionsForPeriod($assetTypeId, $dtFrom, $dtTo);
+        $trans = $this->_repoTransaction->getForPeriod($assetTypeId, $dtFrom, $dtTo);
         $updates = $this->_subCalcSimple->calcBalances($balances, $trans);
-        $this->_repoMod->updateBalances($updates);
+        $this->_repoBalance->updateBalances($updates);
         $result->markSucceed();
         return $result;
     }
@@ -106,7 +106,7 @@ class Call
             /* get account's asset type by ID */
             $assetTypeId = $this->_repoAccount->getAssetTypeId($accCustId);
             /* get representative account id for given asset type */
-            $accRepresId = $this->_repoMod->getRepresentativeAccountId($assetTypeId);
+            $accRepresId = $this->_repoAccount->getRepresentativeAccountId($assetTypeId);
             /* get operation type by code and date performed */
             $operTypeId = $this->_repoTypeOper->getIdByCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
             $dateNow = $this->_toolDate->getUtcNowForDb();
@@ -146,7 +146,7 @@ class Call
         $result = new Response\GetBalancesOnDate();
         $dateOn = $request->getDate();
         $assetTypeId = $request->getAssetTypeId();
-        $rows = $this->_repoMod->getBalancesOnDate($assetTypeId, $dateOn);
+        $rows = $this->_repoBalance->getOnDate($assetTypeId, $dateOn);
         if (count($rows) > 0) {
             $result->setData($rows);
             $result->markSucceed();
@@ -163,7 +163,7 @@ class Call
             $assetTypeId = $this->_repoTypeAsset->getIdByCode($assetTypeCode);
         }
         /* get the maximal date for balance */
-        $balanceMaxDate = $this->_repoMod->getBalanceMaxDate($assetTypeId);
+        $balanceMaxDate = $this->_repoBalance->getMaxDate($assetTypeId);
         if ($balanceMaxDate) {
             /* there is balance data */
             $dayBefore = $this->_toolPeriod->getPeriodPrev($balanceMaxDate, IPeriod::TYPE_DAY);
@@ -171,7 +171,7 @@ class Call
             $result->markSucceed();
         } else {
             /* there is no balance data yet, get transaction with minimal date */
-            $transactionMinDate = $this->_repoMod->getTransactionMinDateApplied($assetTypeId);
+            $transactionMinDate = $this->_repoTransaction->getMinDateApplied($assetTypeId);
             if ($transactionMinDate) {
                 $period = $this->_toolPeriod->getPeriodCurrent($transactionMinDate);
                 $dayBefore = $this->_toolPeriod->getPeriodPrev($period, IPeriod::TYPE_DAY);
