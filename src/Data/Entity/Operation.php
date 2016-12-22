@@ -17,21 +17,21 @@ class Operation extends EntityBase
     /** @return string */
     public function getDatePerformed()
     {
-        $result = parent::getData(self::ATTR_DATE_PREFORMED);
+        $result = parent::get(self::ATTR_DATE_PREFORMED);
         return $result;
     }
 
     /** @return int */
     public function getId()
     {
-        $result = parent::getData(self::ATTR_ID);
+        $result = parent::get(self::ATTR_ID);
         return $result;
     }
 
     /** @return string */
     public function getNote()
     {
-        $result = parent::getData(self::ATTR_NOTE);
+        $result = parent::get(self::ATTR_NOTE);
         return $result;
     }
 
@@ -43,31 +43,31 @@ class Operation extends EntityBase
     /** @return int */
     public function getTypeId()
     {
-        $result = parent::getData(self::ATTR_TYPE_ID);
+        $result = parent::get(self::ATTR_TYPE_ID);
         return $result;
     }
 
     /** @param string $data */
     public function setDatePerformed($data)
     {
-        parent::setData(self::ATTR_DATE_PREFORMED, $data);
+        parent::set(self::ATTR_DATE_PREFORMED, $data);
     }
 
     /** @param int $data */
     public function setId($data)
     {
-        parent::setData(self::ATTR_ID, $data);
+        parent::set(self::ATTR_ID, $data);
     }
 
     /** @param string $data */
     public function setNote($data)
     {
-        parent::setData(self::ATTR_NOTE, $data);
+        parent::set(self::ATTR_NOTE, $data);
     }
 
     /** @param int $data */
     public function setTypeId($data)
     {
-        parent::setData(self::ATTR_TYPE_ID, $data);
+        parent::set(self::ATTR_TYPE_ID, $data);
     }
 }

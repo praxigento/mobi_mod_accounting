@@ -19,7 +19,7 @@ class Account extends EntityBase
      */
     public function getAssetTypeId()
     {
-        $result = parent::getData(self::ATTR_ASSET_TYPE_ID);
+        $result = parent::get(self::ATTR_ASSET_TYPE_ID);
         return $result;
     }
 
@@ -28,7 +28,7 @@ class Account extends EntityBase
      */
     public function getBalance()
     {
-        $result = parent::getData(self::ATTR_BALANCE);
+        $result = parent::get(self::ATTR_BALANCE);
         return $result;
     }
 
@@ -37,7 +37,7 @@ class Account extends EntityBase
      */
     public function getCustomerId()
     {
-        $result = parent::getData(self::ATTR_CUST_ID);
+        $result = parent::get(self::ATTR_CUST_ID);
         return $result;
     }
 
@@ -46,7 +46,7 @@ class Account extends EntityBase
      */
     public function getId()
     {
-        $result = parent::getData(self::ATTR_ID);
+        $result = parent::get(self::ATTR_ID);
         return $result;
     }
 
@@ -63,7 +63,7 @@ class Account extends EntityBase
      */
     public function setAssetTypeId($data)
     {
-        parent::setData(self::ATTR_ASSET_TYPE_ID, $data);
+        parent::set(self::ATTR_ASSET_TYPE_ID, $data);
     }
 
     /**
@@ -71,7 +71,7 @@ class Account extends EntityBase
      */
     public function setBalance($data)
     {
-        parent::setData(self::ATTR_BALANCE, $data);
+        parent::set(self::ATTR_BALANCE, $data);
     }
 
     /**
@@ -79,7 +79,7 @@ class Account extends EntityBase
      */
     public function setCustomerId($data)
     {
-        parent::setData(self::ATTR_CUST_ID, $data);
+        parent::set(self::ATTR_CUST_ID, $data);
     }
 
     /**
@@ -87,7 +87,7 @@ class Account extends EntityBase
      */
     public function setId($data)
     {
-        parent::setData(self::ATTR_ID, $data);
+        parent::set(self::ATTR_ID, $data);
     }
 
 }

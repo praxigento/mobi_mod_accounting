@@ -31,12 +31,12 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
         /** @var  $call \Praxigento\Accounting\Service\Balance\Call */
         $call = $obm->get(\Praxigento\Accounting\Service\IBalance::class);
         $req = new Request\GetBalancesOnDate();
-        $req->setData(Request\GetBalancesOnDate::ASSET_TYPE_ID, self::ASSET_TYPE_ID);
-        $req->setData(Request\GetBalancesOnDate::DATE, '20151117');
+        $req->set(Request\GetBalancesOnDate::ASSET_TYPE_ID, self::ASSET_TYPE_ID);
+        $req->set(Request\GetBalancesOnDate::DATE, '20151117');
         /** @var  $resp Response\GetBalancesOnDate */
         $resp = $call->getBalancesOnDate($req);
         $this->assertTrue($resp->isSucceed());
-        $data = $resp->getData();
+        $data = $resp->get();
         $this->assertNotNull($data);
     }
 
@@ -73,7 +73,7 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
         /** @var  $call \Praxigento\Accounting\Service\Balance\Call */
         $call = $obm->get(\Praxigento\Accounting\Service\IBalance::class);
         $req = new Request\Reset();
-        $req->setData(Request\Reset::DATE_FROM, '20151111');
+        $req->set(Request\Reset::DATE_FROM, '20151111');
         /** @var  $resp Response\Reset */
         $resp = $call->reset($req);
         $this->assertTrue($resp->isSucceed());

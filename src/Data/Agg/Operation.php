@@ -22,49 +22,49 @@ class Operation
     /** @return string */
     public function getDatePerformed()
     {
-        $result = parent::getData(self::AS_DATE_PERFORMED);
+        $result = parent::get(self::AS_DATE_PERFORMED);
         return $result;
     }
 
     /** @return int */
     public function getId()
     {
-        $result = parent::getData(self::AS_ID);
+        $result = parent::get(self::AS_ID);
         return $result;
     }
 
     /** @return string */
     public function getNote()
     {
-        $result = parent::getData(self::AS_NOTE);
+        $result = parent::get(self::AS_NOTE);
         return $result;
     }
 
     /** @return string */
     public function getType()
     {
-        $result = parent::getData(self::AS_TYPE);
+        $result = parent::get(self::AS_TYPE);
         return $result;
     }
 
     public function setDatePerformed($data)
     {
-        parent::setData(self::AS_DATE_PERFORMED, $data);
+        parent::set(self::AS_DATE_PERFORMED, $data);
     }
 
     public function setId($data)
     {
-        parent::setData(self::AS_ID, $data);
+        parent::set(self::AS_ID, $data);
     }
 
     public function setNote($data)
     {
-        parent::setData(self::AS_NOTE, $data);
+        parent::set(self::AS_NOTE, $data);
     }
 
     public function setType($data)
     {
-        parent::setData(self::AS_TYPE, $data);
+        parent::set(self::AS_TYPE, $data);
     }
 
 }

@@ -26,97 +26,97 @@ class Transaction
     /** @return string */
     public function getAsset()
     {
-        $result = parent::getData(self::AS_ASSET);
+        $result = parent::get(self::AS_ASSET);
         return $result;
     }
 
     /** @return string */
     public function getCredit()
     {
-        $result = parent::getData(self::AS_CREDIT);
+        $result = parent::get(self::AS_CREDIT);
         return $result;
     }
 
     /** @return string */
     public function getDateApplied()
     {
-        $result = parent::getData(self::AS_DATE_APPLIED);
+        $result = parent::get(self::AS_DATE_APPLIED);
         return $result;
     }
 
     /** @return string */
     public function getDebit()
     {
-        $result = parent::getData(self::AS_DEBIT);
+        $result = parent::get(self::AS_DEBIT);
         return $result;
     }
 
     /** @return int */
     public function getIdOper()
     {
-        $result = parent::getData(self::AS_ID_OPER);
+        $result = parent::get(self::AS_ID_OPER);
         return $result;
     }
 
     /** @return int */
     public function getIdTrans()
     {
-        $result = parent::getData(self::AS_ID_TRANS);
+        $result = parent::get(self::AS_ID_TRANS);
         return $result;
     }
 
     /** @return string */
     public function getNote()
     {
-        $result = parent::getData(self::AS_NOTE);
+        $result = parent::get(self::AS_NOTE);
         return $result;
     }
 
     /** @return double */
     public function getValue()
     {
-        $result = parent::getData(self::AS_VALUE);
+        $result = parent::get(self::AS_VALUE);
         return $result;
     }
 
     public function setAsset($data)
     {
-        parent::setData(self::AS_ASSET, $data);
+        parent::set(self::AS_ASSET, $data);
     }
 
     public function setCredit($data)
     {
-        parent::setData(self::AS_CREDIT, $data);
+        parent::set(self::AS_CREDIT, $data);
     }
 
     public function setDateApplied($data)
     {
-        parent::setData(self::AS_DATE_APPLIED, $data);
+        parent::set(self::AS_DATE_APPLIED, $data);
     }
 
     public function setDebit($data)
     {
-        parent::setData(self::AS_DEBIT, $data);
+        parent::set(self::AS_DEBIT, $data);
     }
 
     public function setIdOper($data)
     {
-        parent::setData(self::AS_ID_OPER, $data);
+        parent::set(self::AS_ID_OPER, $data);
     }
 
     public function setIdTrans($data)
     {
-        parent::setData(self::AS_ID_TRANS, $data);
+        parent::set(self::AS_ID_TRANS, $data);
     }
 
     public function setNote($data)
     {
-        parent::setData(self::AS_NOTE, $data);
+        parent::set(self::AS_NOTE, $data);
     }
 
     public function setValue($data)
     {
-        parent::setData(self::AS_VALUE, $data);
+        parent::set(self::AS_VALUE, $data);
     }
 
 }

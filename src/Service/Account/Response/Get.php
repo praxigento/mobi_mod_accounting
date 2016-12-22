@@ -13,7 +13,7 @@ class Get extends \Praxigento\Core\Service\Base\Response
      */
     public function getAssetTypeId()
     {
-        $result = parent::getData(Account::ATTR_ASSET_TYPE_ID);
+        $result = parent::get(Account::ATTR_ASSET_TYPE_ID);
         return $result;
     }
 
@@ -22,7 +22,7 @@ class Get extends \Praxigento\Core\Service\Base\Response
      */
     public function getBalance()
     {
-        $result = parent::getData(Account::ATTR_BALANCE);
+        $result = parent::get(Account::ATTR_BALANCE);
         return $result;
     }
 
@@ -31,7 +31,7 @@ class Get extends \Praxigento\Core\Service\Base\Response
      */
     public function getCustomerId()
     {
-        $result = parent::getData(Account::ATTR_CUST_ID);
+        $result = parent::get(Account::ATTR_CUST_ID);
         return $result;
     }
 
@@ -40,7 +40,7 @@ class Get extends \Praxigento\Core\Service\Base\Response
      */
     public function getId()
     {
-        $result = parent::getData(Account::ATTR_ID);
+        $result = parent::get(Account::ATTR_ID);
         return $result;
     }
 

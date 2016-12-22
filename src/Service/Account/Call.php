@@ -75,7 +75,7 @@ class Call
         }
         /* analyze found data */
         if ($data) {
-            $result->setData($data);
+            $result->set($data);
             $result->markSucceed();
         } else {
             if ($createNewAccIfMissed) {
@@ -87,7 +87,7 @@ class Call
                 ];
                 $accId = $this->_repoAccount->create($data);
                 $data[Account::ATTR_ID] = $accId;
-                $result->setData($data);
+                $result->set($data);
                 $result->markSucceed();
                 $this->_logger->info("There is no account for customer #{$customerId} and asset type #$assetTypeId. New account #$accId is created.");
             }
@@ -112,7 +112,7 @@ class Call
         }
         if (!is_null($typeId)) {
             if (isset($this->_cachedRepresentAccs[$typeId])) {
-                $result->setData($this->_cachedRepresentAccs[$typeId]);
+                $result->set($this->_cachedRepresentAccs[$typeId]);
                 $result->markSucceed();
             } else {
                 /* there is no cached data yet */
@@ -129,7 +129,7 @@ class Call
                 }
                 /* check selected accounts */
                 if (isset($this->_cachedRepresentAccs[$typeId])) {
-                    $result->setData($this->_cachedRepresentAccs[$typeId]);
+                    $result->set($this->_cachedRepresentAccs[$typeId]);
                     $result->markSucceed();
                 } else {
                     /* there is no accounts yet */
@@ -138,9 +138,9 @@ class Call
                     $req->setAssetTypeId($typeId);
                     $req->setCreateNewAccountIfMissed();
                     $resp = $this->get($req);
-                    $accData = $resp->getData();
+                    $accData = $resp->get();
                     $this->_cachedRepresentAccs[$accData[Account::ATTR_ASSET_TYPE_ID]] = new Account($accData);
-                    $result->setData($accData);
+                    $result->set($accData);
                     $result->markSucceed();
                 }
             }

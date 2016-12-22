@@ -56,7 +56,7 @@ class Add
                     . "#{$req->getCreditAccId()}) cannot be inserted . ");
             }
             $tranId = $resp->getTransactionId();
-            $ref = $one->getData($asRef);
+            $ref = $one->get($asRef);
             if (
                 !is_null($asRef) &&
                 isset($ref)

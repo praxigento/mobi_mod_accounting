@@ -17,7 +17,7 @@ class Admin
     /** @return int */
     public function getOperationRef()
     {
-        $result = parent::getData(self::ATTR_OPER_REF);
+        $result = parent::get(self::ATTR_OPER_REF);
         return $result;
     }
 
@@ -29,20 +29,20 @@ class Admin
     /** @return int */
     public function getUserRef()
     {
-        $result = parent::getData(self::ATTR_USER_REF);
+        $result = parent::get(self::ATTR_USER_REF);
         return $result;
     }
 
     /** @param int $data */
     public function setOperationRef($data)
     {
-        parent::setData(self::ATTR_OPER_REF, $data);
+        parent::set(self::ATTR_OPER_REF, $data);
     }
 
     /** @param int $data */
     public function setUserRef($data)
     {
-        parent::setData(self::ATTR_USER_REF, $data);
+        parent::set(self::ATTR_USER_REF, $data);
     }
 
 }

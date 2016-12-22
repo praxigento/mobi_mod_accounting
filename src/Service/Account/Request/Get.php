@@ -36,56 +36,56 @@ class Get extends \Praxigento\Core\Service\Base\Request
 
     public function getAccountId()
     {
-        $result = $this->getData(static::ACCOUNT_ID);
+        $result = $this->get(static::ACCOUNT_ID);
         return $result;
     }
 
     public function getAssetTypeCode()
     {
-        $result = $this->getData(static::ASSET_TYPE_CODE);
+        $result = $this->get(static::ASSET_TYPE_CODE);
         return $result;
     }
 
     public function getAssetTypeId()
     {
-        $result = $this->getData(static::ASSET_TYPE_ID);
+        $result = $this->get(static::ASSET_TYPE_ID);
         return $result;
     }
 
     public function getCreateNewAccountIfMissed()
     {
-        $result = $this->getData(static::CREATE_NEW_ACCOUNT_IF_MISSED);
+        $result = $this->get(static::CREATE_NEW_ACCOUNT_IF_MISSED);
         return $result;
     }
 
     public function getCustomerId()
     {
-        $result = $this->getData(static::CUSTOMER_ID);
+        $result = $this->get(static::CUSTOMER_ID);
         return $result;
     }
 
     public function setAccountId($data)
     {
-        $this->setData(static::ACCOUNT_ID, $data);
+        $this->set(static::ACCOUNT_ID, $data);
     }
 
     public function setAssetTypeCode($data)
     {
-        $this->setData(static::ASSET_TYPE_CODE, $data);
+        $this->set(static::ASSET_TYPE_CODE, $data);
     }
 
     public function setAssetTypeId($data)
     {
-        $this->setData(static::ASSET_TYPE_ID, $data);
+        $this->set(static::ASSET_TYPE_ID, $data);
     }
 
     public function setCreateNewAccountIfMissed($data = true)
     {
-        $this->setData(static::CREATE_NEW_ACCOUNT_IF_MISSED, $data);
+        $this->set(static::CREATE_NEW_ACCOUNT_IF_MISSED, $data);
     }
 
     public function setCustomerId($data)
     {
-        $this->setData(static::CUSTOMER_ID, $data);
+        $this->set(static::CUSTOMER_ID, $data);
     }
 }

@@ -17,14 +17,14 @@ class Customer
     /** @return int */
     public function getCustomerRef()
     {
-        $result = parent::getData(self::ATTR_CUST_REF);
+        $result = parent::get(self::ATTR_CUST_REF);
         return $result;
     }
 
     /** @return int */
     public function getOperationRef()
     {
-        $result = parent::getData(self::ATTR_OPER_REF);
+        $result = parent::get(self::ATTR_OPER_REF);
         return $result;
     }
 
@@ -36,13 +36,13 @@ class Customer
     /** @param int $data */
     public function setCustomerRef($data)
     {
-        parent::setData(self::ATTR_CUST_REF, $data);
+        parent::set(self::ATTR_CUST_REF, $data);
     }
 
     /** @param int $data */
     public function setOperationRef($data)
     {
-        parent::setData(self::ATTR_OPER_REF, $data);
+        parent::set(self::ATTR_OPER_REF, $data);
     }
 
 }

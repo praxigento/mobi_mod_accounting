@@ -81,7 +81,7 @@ class Call
         $dateTo = $request->getDateTo();
         /* get the last balance date */
         $reqLastDate = new Request\GetLastDate();
-        $reqLastDate->setData(Request\GetLastDate::ASSET_TYPE_ID, $assetTypeId);
+        $reqLastDate->set(Request\GetLastDate::ASSET_TYPE_ID, $assetTypeId);
         $respLastDate = $this->getLastDate($reqLastDate);
         $lastDate = $respLastDate->getLastDate();
         $balances = $this->_repoBalance->getOnDate($assetTypeId, $lastDate);
@@ -148,7 +148,7 @@ class Call
         $assetTypeId = $request->getAssetTypeId();
         $rows = $this->_repoBalance->getOnDate($assetTypeId, $dateOn);
         if (count($rows) > 0) {
-            $result->setData($rows);
+            $result->set($rows);
             $result->markSucceed();
         }
         return $result;
@@ -167,7 +167,7 @@ class Call
         if ($balanceMaxDate) {
             /* there is balance data */
             $dayBefore = $this->_toolPeriod->getPeriodPrev($balanceMaxDate, IPeriod::TYPE_DAY);
-            $result->setData([Response\GetLastDate::LAST_DATE => $dayBefore]);
+            $result->set([Response\GetLastDate::LAST_DATE => $dayBefore]);
             $result->markSucceed();
         } else {
             /* there is no balance data yet, get transaction with minimal date */
@@ -175,7 +175,7 @@ class Call
             if ($transactionMinDate) {
                 $period = $this->_toolPeriod->getPeriodCurrent($transactionMinDate);
                 $dayBefore = $this->_toolPeriod->getPeriodPrev($period, IPeriod::TYPE_DAY);
-                $result->setData([Response\GetLastDate::LAST_DATE => $dayBefore]);
+                $result->set([Response\GetLastDate::LAST_DATE => $dayBefore]);
                 $result->markSucceed();
             }
         }

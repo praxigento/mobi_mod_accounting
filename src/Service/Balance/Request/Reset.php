@@ -15,12 +15,12 @@ class Reset extends \Praxigento\Core\Service\Base\Request
 
     public function getDateFrom()
     {
-        $result = $this->getData(static::DATE_FROM);
+        $result = $this->get(static::DATE_FROM);
         return $result;
     }
 
     public function setDateFrom($data)
     {
-        $this->setData(static::DATE_FROM, $data);
+        $this->set(static::DATE_FROM, $data);
     }
 }

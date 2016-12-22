@@ -65,11 +65,11 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private function _calculateBalances()
     {
         $req = new BalanceCalcRequest();
-        $req->setData(BalanceCalcRequest::ASSET_TYPE_ID, $this->typeAssetId);
-        $req->setData(BalanceCalcRequest::DATE_TO, self::DATA_DATE_BALANCE_UP_TO);
+        $req->set(BalanceCalcRequest::ASSET_TYPE_ID, $this->typeAssetId);
+        $req->set(BalanceCalcRequest::DATE_TO, self::DATA_DATE_BALANCE_UP_TO);
         $resp = $this->_callBalance->calc($req);
         $this->assertTrue($resp->isSucceed());
-        $this->_logger->debug("Balances are calculated up to '" . $req->getData(BalanceCalcRequest::DATE_TO) . "'.");
+        $this->_logger->debug("Balances are calculated up to '" . $req->get(BalanceCalcRequest::DATE_TO) . "'.");
     }
 
     private function _checkBalancesCurrent()
@@ -78,11 +78,11 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $req->setAccountId($this->acc1[Account::ATTR_ID]);
         $resp = $this->_callAccount->get($req);
         $this->assertTrue($resp->isSucceed());
-        $this->assertEquals(0 - $this->_amount, $resp->getData(Account::ATTR_BALANCE));
+        $this->assertEquals(0 - $this->_amount, $resp->get(Account::ATTR_BALANCE));
         $req->setAccountId($this->acc2[Account::ATTR_ID]);
         $resp = $this->_callAccount->get($req);
         $this->assertTrue($resp->isSucceed());
-        $this->assertEquals(0 + $this->_amount, $resp->getData(Account::ATTR_BALANCE));
+        $this->assertEquals(0 + $this->_amount, $resp->get(Account::ATTR_BALANCE));
         $this->_logger->debug("Current balance (in 'accounts' table) is checked.");
     }
 
@@ -114,18 +114,18 @@ class Main_IntegrationTest extends BaseIntegrationTest
         /* create account for Customer 1 */
         $custId = $this->_mapCustomerMageIdByIndex[1];
         $req = new AccountGetRequest();
-        $req->setData(AccountGetRequest::CUSTOMER_ID, $custId);
-        $req->setData(AccountGetRequest::ASSET_TYPE_ID, $this->typeAssetId);
-        $req->setData(AccountGetRequest::CREATE_NEW_ACCOUNT_IF_MISSED, true);
+        $req->set(AccountGetRequest::CUSTOMER_ID, $custId);
+        $req->set(AccountGetRequest::ASSET_TYPE_ID, $this->typeAssetId);
+        $req->set(AccountGetRequest::CREATE_NEW_ACCOUNT_IF_MISSED, true);
         $resp = $this->_callAccount->get($req);
         $this->assertTrue($resp->isSucceed());
-        $this->acc1 = $resp->getData();
+        $this->acc1 = $resp->get();
         /* create account for Customer 2 */
         $custId = $this->_mapCustomerMageIdByIndex[2];
-        $req->setData(AccountGetRequest::CUSTOMER_ID, $custId);
+        $req->set(AccountGetRequest::CUSTOMER_ID, $custId);
         $resp = $this->_callAccount->get($req);
         $this->assertTrue($resp->isSucceed());
-        $this->acc2 = $resp->getData();
+        $this->acc2 = $resp->get();
         $accFirstId = $this->acc1[Account::ATTR_ID];
         $accSecondId = $this->acc2[Account::ATTR_ID];
         $this->_logger->debug("2 customer accounts are created (#$accFirstId, #$accSecondId).");

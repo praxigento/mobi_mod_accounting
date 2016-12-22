@@ -10,12 +10,12 @@ class Reset extends \Praxigento\Core\Service\Base\Response
 
     public function getRowsDeleted()
     {
-        $result = $this->getData(self::ROWS_DELETED);
+        $result = $this->get(self::ROWS_DELETED);
         return $result;
     }
 
     public function setRowsDeleted($data)
     {
-        $this->setData(self::ROWS_DELETED, $data);
+        $this->set(self::ROWS_DELETED, $data);
     }
 }

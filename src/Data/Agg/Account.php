@@ -23,61 +23,61 @@ class Account
     /** @return string */
     public function getAsset()
     {
-        $result = parent::getData(self::AS_ASSET);
+        $result = parent::get(self::AS_ASSET);
         return $result;
     }
 
     /** @return double */
     public function getBalance()
     {
-        $result = parent::getData(self::AS_BALANCE);
+        $result = parent::get(self::AS_BALANCE);
         return $result;
     }
 
     /** @return string */
     public function getCustomerEmail()
     {
-        $result = parent::getData(self::AS_CUST_EMAIL);
+        $result = parent::get(self::AS_CUST_EMAIL);
         return $result;
     }
 
     /** @return string */
     public function getCustomerName()
     {
-        $result = parent::getData(self::AS_CUST_NAME);
+        $result = parent::get(self::AS_CUST_NAME);
         return $result;
     }
 
     /** @return int */
     public function getId()
     {
-        $result = parent::getData(self::AS_ID);
+        $result = parent::get(self::AS_ID);
         return $result;
     }
 
     public function setAsset($data)
     {
-        parent::setData(self::AS_ASSET, $data);
+        parent::set(self::AS_ASSET, $data);
     }
 
     public function setBalance($data)
     {
-        parent::setData(self::AS_BALANCE, $data);
+        parent::set(self::AS_BALANCE, $data);
     }
 
     public function setCustomerEmail($data)
     {
-        parent::setData(self::AS_CUST_EMAIL, $data);
+        parent::set(self::AS_CUST_EMAIL, $data);
     }
 
     public function setCustomerName($data)
     {
-        parent::setData(self::AS_CUST_NAME, $data);
+        parent::set(self::AS_CUST_NAME, $data);
     }
 
     public function setId($data)
     {
-        parent::setData(self::AS_ID, $data);
+        parent::set(self::AS_ID, $data);
     }
 
 }

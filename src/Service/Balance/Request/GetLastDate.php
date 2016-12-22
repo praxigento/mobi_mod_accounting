@@ -21,23 +21,23 @@ class GetLastDate extends \Praxigento\Core\Service\Base\Request
 
     public function getAssetTypeCode()
     {
-        $result = $this->getData(static::ASSET_TYPE_CODE);
+        $result = $this->get(static::ASSET_TYPE_CODE);
         return $result;
     }
 
     public function getAssetTypeId()
     {
-        $result = $this->getData(static::ASSET_TYPE_ID);
+        $result = $this->get(static::ASSET_TYPE_ID);
         return $result;
     }
 
     public function setAssetTypeId($data)
     {
-        $this->setData(static::ASSET_TYPE_ID, $data);
+        $this->set(static::ASSET_TYPE_ID, $data);
     }
 
     public function setAssetTypeCode($data)
     {
-        $this->setData(static::ASSET_TYPE_CODE, $data);
+        $this->set(static::ASSET_TYPE_CODE, $data);
     }
 }

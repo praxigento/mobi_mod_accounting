@@ -20,23 +20,23 @@ class GetBalancesOnDate extends \Praxigento\Core\Service\Base\Request
 
     public function getAssetTypeId()
     {
-        $result = $this->getData(static::ASSET_TYPE_ID);
+        $result = $this->get(static::ASSET_TYPE_ID);
         return $result;
     }
     public function setAssetTypeId($data)
     {
-        $this->setData(static::ASSET_TYPE_ID, $data);
+        $this->set(static::ASSET_TYPE_ID, $data);
     }
 
     public function getDate()
     {
-        $result = $this->getData(static::DATE);
+        $result = $this->get(static::DATE);
         return $result;
     }
 
 
     public function setDate($data)
     {
-        $this->setData(static::DATE, $data);
+        $this->set(static::DATE, $data);
     }
 }

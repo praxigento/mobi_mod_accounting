@@ -30,9 +30,9 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $obm = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var  $call \Praxigento\Accounting\Service\Account\Call */
         $call = $obm->get('Praxigento\Accounting\Service\Account\Call');
-        $request = new Request\GetRepresentative();
-        $request->setData(GetRepresentativeRequest::ASSET_TYPE_ID, 1);
-        $response = $call->getRepresentative($request);
+        $req = new Request\GetRepresentative();
+        $req->set(GetRepresentativeRequest::ASSET_TYPE_ID, 1);
+        $response = $call->getRepresentative($req);
         $this->assertTrue($response->isSucceed());
     }
 

@@ -143,11 +143,11 @@ class Call_UnitTest
         $req->setAssetTypeId($assetTypeId1);
         $resp = $this->obj->getRepresentative($req);
         $this->assertTrue($resp->isSucceed());
-        $this->assertEquals($accId1, $resp->getData(Account::ATTR_ID));
+        $this->assertEquals($accId1, $resp->get(Account::ATTR_ID));
         /* secondary request to use cache */
         $resp = $this->obj->getRepresentative($req);
         $this->assertTrue($resp->isSucceed());
-        $this->assertEquals($accId1, $resp->getData(Account::ATTR_ID));
+        $this->assertEquals($accId1, $resp->get(Account::ATTR_ID));
     }
 
     public function test_get_byAccountId()

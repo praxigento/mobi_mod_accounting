@@ -20,23 +20,23 @@ class Calc extends \Praxigento\Core\Service\Base\Request
 
     public function getAssetTypeId()
     {
-        $result = $this->getData(static::ASSET_TYPE_ID);
+        $result = $this->get(static::ASSET_TYPE_ID);
         return $result;
     }
 
     public function getDateTo()
     {
-        $result = $this->getData(static::DATE_TO);
+        $result = $this->get(static::DATE_TO);
         return $result;
     }
 
     public function setAssetTypeId($data)
     {
-        $this->setData(static::ASSET_TYPE_ID, $data);
+        $this->set(static::ASSET_TYPE_ID, $data);
     }
 
     public function setDateTo($data)
     {
-        $this->setData(static::DATE_TO, $data);
+        $this->set(static::DATE_TO, $data);
     }
 }

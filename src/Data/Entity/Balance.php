@@ -21,7 +21,7 @@ class Balance extends EntityBase
      */
     public function getAccountId()
     {
-        $result = parent::getData(self::ATTR_ACCOUNT_ID);
+        $result = parent::get(self::ATTR_ACCOUNT_ID);
         return $result;
     }
 
@@ -30,7 +30,7 @@ class Balance extends EntityBase
      */
     public function getBalanceClose()
     {
-        $result = parent::getData(self::ATTR_BALANCE_CLOSE);
+        $result = parent::get(self::ATTR_BALANCE_CLOSE);
         return $result;
     }
 
@@ -39,7 +39,7 @@ class Balance extends EntityBase
      */
     public function getBalanceOpen()
     {
-        $result = parent::getData(self::ATTR_BALANCE_OPEN);
+        $result = parent::get(self::ATTR_BALANCE_OPEN);
         return $result;
     }
 
@@ -48,7 +48,7 @@ class Balance extends EntityBase
      */
     public function getDate()
     {
-        $result = parent::getData(self::ATTR_DATE);
+        $result = parent::get(self::ATTR_DATE);
         return $result;
     }
 
@@ -63,7 +63,7 @@ class Balance extends EntityBase
      */
     public function getTotalCredit()
     {
-        $result = parent::getData(self::ATTR_TOTAL_CREDIT);
+        $result = parent::get(self::ATTR_TOTAL_CREDIT);
         return $result;
     }
 
@@ -72,7 +72,7 @@ class Balance extends EntityBase
      */
     public function getTotalDebit()
     {
-        $result = parent::getData(self::ATTR_TOTAL_DEBIT);
+        $result = parent::get(self::ATTR_TOTAL_DEBIT);
         return $result;
     }
 
@@ -81,7 +81,7 @@ class Balance extends EntityBase
      */
     public function setAccountId($data)
     {
-        parent::setData(self::ATTR_ACCOUNT_ID, $data);
+        parent::set(self::ATTR_ACCOUNT_ID, $data);
     }
 
     /**
@@ -89,7 +89,7 @@ class Balance extends EntityBase
      */
     public function setBalanceClose($data)
     {
-        parent::setData(self::ATTR_BALANCE_CLOSE, $data);
+        parent::set(self::ATTR_BALANCE_CLOSE, $data);
     }
 
     /**
@@ -97,7 +97,7 @@ class Balance extends EntityBase
      */
     public function setBalanceOpen($data)
     {
-        parent::setData(self::ATTR_BALANCE_OPEN, $data);
+        parent::set(self::ATTR_BALANCE_OPEN, $data);
     }
 
     /**
@@ -105,7 +105,7 @@ class Balance extends EntityBase
      */
     public function setDate($data)
     {
-        parent::setData(self::ATTR_DATE, $data);
+        parent::set(self::ATTR_DATE, $data);
     }
 
     /**
@@ -113,7 +113,7 @@ class Balance extends EntityBase
      */
     public function setTotalCredit($data)
     {
-        parent::setData(self::ATTR_TOTAL_CREDIT, $data);
+        parent::set(self::ATTR_TOTAL_CREDIT, $data);
     }
 
     /**
@@ -121,6 +121,6 @@ class Balance extends EntityBase
      */
     public function setTotalDebit($data)
     {
-        parent::setData(self::ATTR_TOTAL_DEBIT, $data);
+        parent::set(self::ATTR_TOTAL_DEBIT, $data);
     }
 }

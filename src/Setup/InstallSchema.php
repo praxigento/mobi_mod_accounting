@@ -31,42 +31,42 @@ class InstallSchema
 
         /* Type / Asset */
         $entityAlias = TypeAsset::ENTITY_NAME;
-        $demEntity = $demPackage->getData('package/Type/entity/Asset');
+        $demEntity = $demPackage->get('package/Type/entity/Asset');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Type / Operation */
         $entityAlias = TypeOperation::ENTITY_NAME;
-        $demEntity = $demPackage->getData('package/Type/entity/Operation');
+        $demEntity = $demPackage->get('package/Type/entity/Operation');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Account */
         $entityAlias = Account::ENTITY_NAME;
-        $demEntity = $demPackage->getData('entity/Account');
+        $demEntity = $demPackage->get('entity/Account');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Operation */
         $entityAlias = Operation::ENTITY_NAME;
-        $demEntity = $demPackage->getData('entity/Operation');
+        $demEntity = $demPackage->get('entity/Operation');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Transaction */
         $entityAlias = Transaction::ENTITY_NAME;
-        $demEntity = $demPackage->getData('entity/Transaction');
+        $demEntity = $demPackage->get('entity/Transaction');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Balance */
         $entityAlias = Balance::ENTITY_NAME;
-        $demEntity = $demPackage->getData('entity/Balance');
+        $demEntity = $demPackage->get('entity/Balance');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Log / Change / Admin  */
         $entityAlias = LogChangeAdmin::ENTITY_NAME;
-        $demEntity = $demPackage->getData('package/Log/package/Change/entity/Admin');
+        $demEntity = $demPackage->get('package/Log/package/Change/entity/Admin');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
         /* Log / Change / Customer */
         $entityAlias = LogChangeCustomer::ENTITY_NAME;
-        $demEntity = $demPackage->getData('package/Log/package/Change/entity/Customer');
+        $demEntity = $demPackage->get('package/Log/package/Change/entity/Customer');
         $this->_toolDem->createEntity($entityAlias, $demEntity);
 
 
