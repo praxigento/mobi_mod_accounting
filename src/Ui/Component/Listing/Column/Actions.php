@@ -30,7 +30,7 @@ class Actions
     public function prepareDataSource(array $dataSource)
     {
         if (isset($dataSource['data']['items'])) {
-            $name = $this->get('name');
+            $name = $this->getData('name');
             foreach ($dataSource['data']['items'] as & $item) {
                 $item[$name]['edit'] = [
                     'label' => __('Edit'),
