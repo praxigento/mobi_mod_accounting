@@ -33,10 +33,10 @@ class Balance
     {
         $asAccount = 'a';
         $asBalance = 'b';
-        $tblAccount = $this->_resource->getTableName(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME);
-        $tblBalance = $this->_resource->getTableName(\Praxigento\Accounting\Data\Entity\Balance::ENTITY_NAME);
+        $tblAccount = $this->resource->getTableName(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME);
+        $tblBalance = $this->resource->getTableName(\Praxigento\Accounting\Data\Entity\Balance::ENTITY_NAME);
         /* select from account */
-        $query = $this->_conn->select();
+        $query = $this->conn->select();
         $query->from([$asAccount => $tblAccount], []);
         /* join balance */
         $on = $asAccount . '.' . \Praxigento\Accounting\Data\Entity\Account::ATTR_ID . '='
@@ -49,7 +49,7 @@ class Balance
         $query->order([$asBalance . '.' . \Praxigento\Accounting\Data\Entity\Balance::ATTR_DATE . ' DESC']);
         /* perform query */
         // $sql = (string)$query;
-        $result = $this->_conn->fetchOne($query, $bind);
+        $result = $this->conn->fetchOne($query, $bind);
         return $result;
     }
 
@@ -84,15 +84,15 @@ class Balance
     public function getOnDate($assetTypeId, $yyyymmdd)
     {
         $result = [];
-        $conn = $this->_conn;
+        $conn = $this->conn;
         $bind = [];
         /* see MOBI-112 */
         $asAccount = 'acc';
         $asBal4Max = 'bal4Max';
         $asMax = 'balMax';
         $asBal = 'bal';
-        $tblAccount = $this->_resource->getTableName(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME);
-        $tblBalance = $this->_resource->getTableName(\Praxigento\Accounting\Data\Entity\Balance::ENTITY_NAME);
+        $tblAccount = $this->resource->getTableName(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME);
+        $tblBalance = $this->resource->getTableName(\Praxigento\Accounting\Data\Entity\Balance::ENTITY_NAME);
         /* select MAX(date) from prxgt_acc_balance (internal select) */
         $q4Max = $conn->select();
         $colDateMax = 'date_max';
@@ -149,14 +149,14 @@ class Balance
 
     public function updateBalances($updateData)
     {
-        $this->_conn->beginTransaction();
-        $tbl = $this->_resource->getTableName(\Praxigento\Accounting\Data\Entity\Balance::ENTITY_NAME);
+        $this->conn->beginTransaction();
+        $tbl = $this->resource->getTableName(\Praxigento\Accounting\Data\Entity\Balance::ENTITY_NAME);
         foreach ($updateData as $accountId => $byDate) {
             foreach ($byDate as $date => $data) {
-                $this->_conn->insert($tbl, $data);
+                $this->conn->insert($tbl, $data);
             }
         }
-        $this->_conn->commit();
+        $this->conn->commit();
     }
 
 }

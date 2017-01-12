@@ -59,13 +59,13 @@ class Transaction
      */
     public function getForPeriod($assetTypeId, $timestampFrom, $timestampTo)
     {
-        $paramAssetType = $this->_conn->quote($assetTypeId, \Zend_Db::INT_TYPE);
+        $paramAssetType = $this->conn->quote($assetTypeId, \Zend_Db::INT_TYPE);
         $asAccount = 'acc';
         $asTrans = 'trn';
-        $tblAccount = $this->_resource->getTableName(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME);
-        $tblTrans = $this->_resource->getTableName(\Praxigento\Accounting\Data\Entity\Transaction::ENTITY_NAME);
+        $tblAccount = $this->resource->getTableName(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME);
+        $tblTrans = $this->resource->getTableName(\Praxigento\Accounting\Data\Entity\Transaction::ENTITY_NAME);
         /* select from prxgt_acc_account  */
-        $query = $this->_conn->select();
+        $query = $this->conn->select();
         $query->from([$asAccount => $tblAccount], []);
         /* join prxgt_acc_transaction  */
         $on = $asAccount . '.' . \Praxigento\Accounting\Data\Entity\Account::ATTR_ID . '='
@@ -86,7 +86,7 @@ class Transaction
         /* order by */
         $query->order($asTrans . '.' . \Praxigento\Accounting\Data\Entity\Transaction::ATTR_DATE_APPLIED . ' ASC');
         // $sql = (string)$query;
-        $result = $this->_conn->fetchAll($query, $bind);
+        $result = $this->conn->fetchAll($query, $bind);
         return $result;
     }
 
@@ -108,10 +108,10 @@ class Transaction
     {
         $asAccount = 'a';
         $asTrans = 'trn';
-        $tblAccount = $this->_resource->getTableName(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME);
-        $tblTrans = $this->_resource->getTableName(\Praxigento\Accounting\Data\Entity\Transaction::ENTITY_NAME);
+        $tblAccount = $this->resource->getTableName(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME);
+        $tblTrans = $this->resource->getTableName(\Praxigento\Accounting\Data\Entity\Transaction::ENTITY_NAME);
         /* select from account */
-        $query = $this->_conn->select();
+        $query = $this->conn->select();
         $query->from([$asAccount => $tblAccount], []);
         /* join transactions on debit account */
         $on = $asAccount . '.' . \Praxigento\Accounting\Data\Entity\Account::ATTR_ID . '='
@@ -130,7 +130,7 @@ class Transaction
         $query->order([$asTrans . '.' . \Praxigento\Accounting\Data\Entity\Transaction::ATTR_DATE_APPLIED . ' ASC']);
         /* perform query */
         // $sql = (string)$query;
-        $result = $this->_conn->fetchOne($query, $bind);
+        $result = $this->conn->fetchOne($query, $bind);
         return $result;
     }
 

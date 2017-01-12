@@ -62,10 +62,10 @@ class Module extends Db implements IModule
     {
         $asAccount = 'a';
         $asBalance = 'b';
-        $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
-        $tblBalance = $this->_resource->getTableName(Balance::ENTITY_NAME);
+        $tblAccount = $this->resource->getTableName(Account::ENTITY_NAME);
+        $tblBalance = $this->resource->getTableName(Balance::ENTITY_NAME);
         /* select from account */
-        $query = $this->_conn->select();
+        $query = $this->conn->select();
         $query->from([$asAccount => $tblAccount], []);
         /* join balance */
         $on = $asAccount . '.' . Account::ATTR_ID . '=' . $asBalance . '.' . Balance::ATTR_ACCOUNT_ID;
@@ -77,7 +77,7 @@ class Module extends Db implements IModule
         $query->order([$asBalance . '.' . Balance::ATTR_DATE . ' DESC']);
         /* perform query */
         // $sql = (string)$query;
-        $result = $this->_conn->fetchOne($query, $bind);
+        $result = $this->conn->fetchOne($query, $bind);
         return $result;
     }
 
@@ -112,15 +112,15 @@ class Module extends Db implements IModule
     public function getBalancesOnDate($assetTypeId, $yyyymmdd)
     {
         $result = [];
-        $conn = $this->_conn;
+        $conn = $this->conn;
         $bind = [];
         /* see MOBI-112 */
         $asAccount = 'acc';
         $asBal4Max = 'bal4Max';
         $asMax = 'balMax';
         $asBal = 'bal';
-        $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
-        $tblBalance = $this->_resource->getTableName(Balance::ENTITY_NAME);
+        $tblAccount = $this->resource->getTableName(Account::ENTITY_NAME);
+        $tblBalance = $this->resource->getTableName(Balance::ENTITY_NAME);
         /* select MAX(date) from prxgt_acc_balance (internal select) */
         $q4Max = $conn->select();
         $colDateMax = 'date_max';
@@ -178,7 +178,7 @@ class Module extends Db implements IModule
     public function getRepresentativeCustomerId()
     {
         if (is_null($this->_cachedRepresCustId)) {
-            $conn = $this->_conn;
+            $conn = $this->conn;
             /* there is no cached value for the customer ID, select data from DB */
             $where = Cfg::E_CUSTOMER_A_EMAIL . '=' . $conn->quote(self::CUSTOMER_REPRESENTATIVE_EMAIL);
             $data = $this->_repoGeneric->getEntities(Cfg::ENTITY_MAGE_CUSTOMER, Cfg::E_CUSTOMER_A_ENTITY_ID,
@@ -218,10 +218,10 @@ class Module extends Db implements IModule
     {
         $asAccount = 'a';
         $asTrans = 'trn';
-        $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
-        $tblTrans = $this->_resource->getTableName(Transaction::ENTITY_NAME);
+        $tblAccount = $this->resource->getTableName(Account::ENTITY_NAME);
+        $tblTrans = $this->resource->getTableName(Transaction::ENTITY_NAME);
         /* select from account */
-        $query = $this->_conn->select();
+        $query = $this->conn->select();
         $query->from([$asAccount => $tblAccount], []);
         /* join transactions on debit account */
         $on = $asAccount . '.' . Account::ATTR_ID . '=' . $asTrans . '.' . Transaction::ATTR_DEBIT_ACC_ID;
@@ -234,7 +234,7 @@ class Module extends Db implements IModule
         $query->order([$asTrans . '.' . Transaction::ATTR_DATE_APPLIED . ' ASC']);
         /* perform query */
         // $sql = (string)$query;
-        $result = $this->_conn->fetchOne($query, $bind);
+        $result = $this->conn->fetchOne($query, $bind);
         return $result;
     }
 
@@ -258,13 +258,13 @@ class Module extends Db implements IModule
      */
     public function getTransactionsForPeriod($assetTypeId, $timestampFrom, $timestampTo)
     {
-        $paramAssetType = $this->_conn->quote($assetTypeId, \Zend_Db::INT_TYPE);
+        $paramAssetType = $this->conn->quote($assetTypeId, \Zend_Db::INT_TYPE);
         $asAccount = 'acc';
         $asTrans = 'trn';
-        $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
-        $tblTrans = $this->_resource->getTableName(Transaction::ENTITY_NAME);
+        $tblAccount = $this->resource->getTableName(Account::ENTITY_NAME);
+        $tblTrans = $this->resource->getTableName(Transaction::ENTITY_NAME);
         /* select from prxgt_acc_account  */
-        $query = $this->_conn->select();
+        $query = $this->conn->select();
         $query->from([$asAccount => $tblAccount], []);
         /* join prxgt_acc_transaction  */
         $on = $asAccount . '.' . Account::ATTR_ID . '=' . $asTrans . '.' . Transaction::ATTR_DEBIT_ACC_ID;
@@ -282,19 +282,19 @@ class Module extends Db implements IModule
         /* order by */
         $query->order($asTrans . '.' . Transaction::ATTR_DATE_APPLIED . ' ASC');
         // $sql = (string)$query;
-        $result = $this->_conn->fetchAll($query, $bind);
+        $result = $this->conn->fetchAll($query, $bind);
         return $result;
     }
 
     public function updateBalances($updateData)
     {
-        $this->_conn->beginTransaction();
-        $tbl = $this->_resource->getTableName(Balance::ENTITY_NAME);
+        $this->conn->beginTransaction();
+        $tbl = $this->resource->getTableName(Balance::ENTITY_NAME);
         foreach ($updateData as $accountId => $byDate) {
             foreach ($byDate as $date => $data) {
-                $this->_conn->insert($tbl, $data);
+                $this->conn->insert($tbl, $data);
             }
         }
-        $this->_conn->commit();
+        $this->conn->commit();
     }
 }

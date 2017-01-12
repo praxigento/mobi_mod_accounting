@@ -89,7 +89,7 @@ class Account
     public function getRepresentativeCustomerId()
     {
         if (is_null($this->cachedRepresCustId)) {
-            $conn = $this->_conn;
+            $conn = $this->conn;
             /* there is no cached value for the customer ID, select data from DB */
             $where = Cfg::E_CUSTOMER_A_EMAIL . '=' . $conn->quote(self::CUSTOMER_REPRESENTATIVE_EMAIL);
             $data = $this->_repoGeneric->getEntities(Cfg::ENTITY_MAGE_CUSTOMER, Cfg::E_CUSTOMER_A_ENTITY_ID,
