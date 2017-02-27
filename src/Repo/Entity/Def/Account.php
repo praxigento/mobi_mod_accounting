@@ -123,4 +123,9 @@ class Account
         $rowsUpdated = $this->updateById($accountId, $bind);
         return $rowsUpdated;
     }
+
+    public function getAllByAssetTypeCode($assetTypeCode)
+    {
+
+    }
 }

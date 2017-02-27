@@ -22,6 +22,14 @@ interface IAccount
     public function getAllByCustomerId($customerId);
 
     /**
+     * Get all accounts by asset type code.
+     *
+     * @param string $assetTypeCode
+     * @return \Praxigento\Accounting\Data\Entity\Account[]|null
+     */
+    public function getAllByAssetTypeCode($assetTypeCode);
+
+    /**
      * Get asset type ID for the given account.
      *
      * @param int $accountId
