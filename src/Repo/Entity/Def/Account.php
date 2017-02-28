@@ -6,12 +6,14 @@ namespace Praxigento\Accounting\Repo\Entity\Def;
 
 use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Data\Entity\Account as Entity;
+use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 
 class Account
     extends \Praxigento\Core\Repo\Def\Entity
     implements \Praxigento\Accounting\Repo\Entity\IAccount
 {
     const ADMIN_WEBSITE_ID = Cfg::DEF_WEBSITE_ID_ADMIN;
+    const BIND_CODE = 'code';
     const CUSTOMER_REPRESENTATIVE_EMAIL = Cfg::CUSTOMER_REPRESENTATIVE_EMAIL;
     /**
      * Cache for ID of the representative customer.
@@ -29,6 +31,50 @@ class Account
     public function cacheReset()
     {
         $this->cachedRepresCustId = null;
+    }
+
+    /**
+     * SELECT
+     * paa.*
+     * FROM prxgt_acc_type_asset pata
+     * LEFT JOIN prxgt_acc_account paa
+     * ON pata.id = paa.asset_type_id
+     * WHERE pata.code = "PV";
+     *
+     * @inheritdoc
+     */
+    public function getAllByAssetTypeCode($assetTypeCode)
+    {
+        /* aliases and tables */
+        $asType = 'at';
+        $asAcc = 'acc';
+        /* SELECT FROM prxgt_acc_type_asset */
+        $query = $this->conn->select();
+        $tbl = $this->resource->getTableName(TypeAsset::ENTITY_NAME);
+        $cols = [];
+        $query->from([$asType => $tbl], $cols);
+        /* LEFT JOIN prxgt_acc_account */
+        $tbl = $this->resource->getTableName(Entity::ENTITY_NAME);
+        $on = $asAcc . '.' . Entity::ATTR_ASSET_TYPE_ID . '=' . $asType . '.' . TypeAsset::ATTR_ID;
+        $cols = [
+            Entity::ATTR_ID,
+            Entity::ATTR_ASSET_TYPE_ID,
+            Entity::ATTR_BALANCE,
+            Entity::ATTR_CUST_ID
+        ];
+        $query->joinLeft([$asAcc => $tbl], $on, $cols);
+        /* WHERE */
+        $where = $asType . '.' . TypeAsset::ATTR_CODE . '=:' . self::BIND_CODE;
+        $query->where($where);
+        /* bind vars and fetch results */
+        $bind = [self::BIND_CODE => $assetTypeCode];
+        $rs = $this->conn->fetchAll($query, $bind);
+        $result = [];
+        foreach ($rs as $one) {
+            $item = new Entity($one);
+            $result[$item->getId()] = $item;
+        }
+        return $result;
     }
 
     public function getAllByCustomerId($customerId)
@@ -122,10 +168,5 @@ class Account
         $bind = [Entity::ATTR_BALANCE => $exp];
         $rowsUpdated = $this->updateById($accountId, $bind);
         return $rowsUpdated;
-    }
-
-    public function getAllByAssetTypeCode($assetTypeCode)
-    {
-
     }
 }
