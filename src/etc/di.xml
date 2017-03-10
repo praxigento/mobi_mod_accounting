@@ -2,7 +2,16 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
-    <!-- Repos -->
+    <!-- *** -->
+    <!-- API -->
+    <!-- *** -->
+    <preference for="\Praxigento\Accounting\Api\Transaction\GetInterface"
+            type="\Praxigento\Accounting\Api\Transaction\Get"/>
+
+
+    <!-- **** -->
+    <!-- Repo -->
+    <!-- **** -->
     <preference for="\Praxigento\Accounting\Repo\Agg\IAccount"
             type="\Praxigento\Accounting\Repo\Agg\Def\Account"/>
     <preference for="\Praxigento\Accounting\Repo\Agg\IOperation"
@@ -28,7 +37,9 @@
     <preference for="Praxigento\Accounting\Repo\IModule"
             type="Praxigento\Accounting\Repo\Def\Module"/>
 
+    <!-- ******** -->
     <!-- Services -->
+    <!-- ******** -->
     <preference for="Praxigento\Accounting\Service\IAccount"
             type="Praxigento\Accounting\Service\Account\Call"/>
     <preference for="Praxigento\Accounting\Service\IBalance"
