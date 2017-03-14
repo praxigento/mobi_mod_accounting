@@ -5,7 +5,7 @@
 namespace Praxigento\Accounting\Api\Transaction\Get;
 
 /**
- * Request to get transactions for the customer.
+ * Request to get all transactions according to some selection conditions (search criteria).
  *
  * (Define getters explicitly to use with Swagger tool)
  * (Define setters explicitly to use with Magento JSON2PHP conversion tool)

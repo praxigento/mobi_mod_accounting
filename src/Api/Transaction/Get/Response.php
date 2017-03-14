@@ -5,7 +5,7 @@
 namespace Praxigento\Accounting\Api\Transaction\Get;
 
 /**
- * Request to get transactions entries for customer.
+ * Response to get all transactions according to some selection conditions (search criteria).
  *
  * (Define getters explicitly to use with Swagger tool)
  *
