@@ -5,7 +5,7 @@
 namespace Praxigento\Accounting\Api\Transaction\Get;
 
 /**
- * Request to get entries for downline tree node.
+ * Request to get transactions for the customer.
  *
  * (Define getters explicitly to use with Swagger tool)
  * (Define setters explicitly to use with Magento JSON2PHP conversion tool)
@@ -15,24 +15,24 @@ class Request
     extends \Flancer32\Lib\Data
 {
     /**
-     * Incremental ID of the order.
+     * Root Customer ID for development purposes.
      *
-     * @return string
+     * @return int
      */
-    public function getIdInc()
+    public function getRootCustId()
     {
-        $result = parent::getIdInc();
+        $result = parent::getRootCustId();
         return $result;
     }
 
     /**
-     * Incremental ID of the order.
+     * Root Customer ID for development purposes.
      *
-     * @param stirng $data
+     * @param int $data
      */
-    public function setIdInc($data)
+    public function setRootCustId($data)
     {
-        parent::setIdInc($data);
+        parent::setRootCustId($data);
     }
 
 }

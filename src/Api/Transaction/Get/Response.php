@@ -5,7 +5,7 @@
 namespace Praxigento\Accounting\Api\Transaction\Get;
 
 /**
- * Request to get entries for downline tree node.
+ * Request to get transactions entries for customer.
  *
  * (Define getters explicitly to use with Swagger tool)
  *
@@ -14,7 +14,7 @@ class Response
     extends \Praxigento\Core\Api\Response
 {
     /**
-     * @return \Praxigento\Accounting\Api\Transaction\Get\Response\Data
+     * @return \Praxigento\Accounting\Api\Transaction\Get\Response\Entry[]
      */
     public function getData()
     {
@@ -23,7 +23,7 @@ class Response
     }
 
     /**
-     * @param \Praxigento\Accounting\Api\Transaction\Get\Response\Data $data
+     * @param \Praxigento\Accounting\Api\Transaction\Get\Response\Entry[] $data
      */
     public function setData($data)
     {

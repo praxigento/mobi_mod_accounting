@@ -6,33 +6,12 @@ namespace Praxigento\Accounting\Api\Transaction\Get\Response;
 
 /**
  * This is API response data, getters only are defined.
- * Response is based on \Praxigento\Pv\Data\Entity\Sale entity data object.
  */
 interface Data
 {
     /**
-     * @return string
+     * @return \Praxigento\Accounting\Api\Transaction\Get\Response\Data\Entry[]
      */
-    public function getDatePaid();
-
-    /**
-     * @return double
-     */
-    public function getDiscount();
-
-    /**
-     * @return int
-     */
-    public function getSaleId();
-
-    /**
-     * @return double
-     */
-    public function getSubtotal();
-
-    /**
-     * @return double
-     */
-    public function getTotal();
+    public function getEntries();
 
 }
