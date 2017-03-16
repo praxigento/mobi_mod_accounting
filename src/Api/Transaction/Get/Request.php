@@ -15,6 +15,15 @@ class Request
     extends \Flancer32\Lib\Data
 {
     /**
+     * @return \Praxigento\Core\Api\Request\Part\Conditions|null
+     */
+    public function getConditions()
+    {
+        $result = parent::getConditions();
+        return $result;
+    }
+
+    /**
      * Root Customer ID for development purposes.
      *
      * @return int
@@ -22,6 +31,15 @@ class Request
     public function getRootCustId()
     {
         $result = parent::getRootCustId();
+        return $result;
+    }
+
+    /**
+     * @return \Magento\Framework\Api\SearchCriteria|null
+     */
+    public function getSearchCriteria()
+    {
+        $result = parent::getSearchCriteria();
         return $result;
     }
 
@@ -34,5 +52,4 @@ class Request
     {
         parent::setRootCustId($data);
     }
-
 }
