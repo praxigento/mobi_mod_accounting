@@ -35,12 +35,11 @@ class Request
     }
 
     /**
-     * @return \Magento\Framework\Api\SearchCriteria|null
+     * @param \Praxigento\Core\Api\Request\Part\Conditions $data
      */
-    public function getSearchCriteria()
+    public function setConditions($data)
     {
-        $result = parent::getSearchCriteria();
-        return $result;
+        parent::setConditions($data);
     }
 
     /**
