@@ -9,6 +9,7 @@ use Praxigento\Accounting\Data\Entity\Account as Acc;
 use Praxigento\Accounting\Repo\Query\Trans\Get\Builder as Builder;
 
 class Get
+    extends \Praxigento\Core\Api\Processor\WithQuery
     implements \Praxigento\Accounting\Api\Transaction\GetInterface
 {
     const BIND_CUST_ID = 'custId';
@@ -34,29 +35,35 @@ class Get
         $this->qbldTrans = $qbldTrans;
     }
 
-    public function exec(\Praxigento\Accounting\Api\Transaction\Get\Request $data)
-    {
-        $result = new \Praxigento\Accounting\Api\Transaction\Get\Response();
+//    public function exec(\Praxigento\Accounting\Api\Transaction\Get\Request $data)
+//    {
+//        $result = parent::exec($data);
+//        return $result;
+//    }
 
-        /* create context for request processing */
-        $ctx = new \Flancer32\Lib\Data();
-        $ctx->set(self::CTX_REQ, $data);
-        $ctx->set(self::CTX_QUERY, null);
-        $ctx->set(self::CTX_BIND, new \Flancer32\Lib\Data());
-        $ctx->set(self::CTX_VARS, new \Flancer32\Lib\Data());
-        $ctx->set(self::CTX_RESULT, null);
-
-        /* parse request, prepare query and fetch data */
-        $this->prepareQueryParameters($ctx);
-        $this->getSelectQuery($ctx);
-        $this->populateQuery($ctx);
-        $this->performQuery($ctx);
-
-        /* get query results from context and add to API response */
-        $rs = $ctx->get(self::CTX_RESULT);
-        $result->setData($rs);
-        return $result;
-    }
+//    public function exec(\Praxigento\Accounting\Api\Transaction\Get\Request $data)
+//    {
+//        $result = new \Praxigento\Accounting\Api\Transaction\Get\Response();
+//
+//        /* create context for request processing */
+//        $ctx = new \Flancer32\Lib\Data();
+//        $ctx->set(self::CTX_REQ, $data);
+//        $ctx->set(self::CTX_QUERY, null);
+//        $ctx->set(self::CTX_BIND, new \Flancer32\Lib\Data());
+//        $ctx->set(self::CTX_VARS, new \Flancer32\Lib\Data());
+//        $ctx->set(self::CTX_RESULT, null);
+//
+//        /* parse request, prepare query and fetch data */
+//        $this->prepareQueryParameters($ctx);
+//        $this->getSelectQuery($ctx);
+//        $this->populateQuery($ctx);
+//        $this->performQuery($ctx);
+//
+//        /* get query results from context and add to API response */
+//        $rs = $ctx->get(self::CTX_RESULT);
+//        $result->setData($rs);
+//        return $result;
+//    }
 
     /**
      * @return \Praxigento\Core\Repo\Query\IBuilder
@@ -67,9 +74,7 @@ class Get
         return $result;
     }
 
-    /**
-     * @param \Flancer32\Lib\Data $ctx
-     */
+
     protected function getSelectQuery(\Flancer32\Lib\Data $ctx)
     {
         $query = $this->qbldTrans->getSelectQuery();
