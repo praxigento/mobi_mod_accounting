@@ -23,11 +23,29 @@ class Response
     }
 
     /**
+     * @return string
+     */
+    public function getRequest()
+    {
+        $result = parent::getRequest();
+        return $result;
+    }
+
+    /**
      * @param \Praxigento\Accounting\Api\Transaction\Get\Response\Entry[] $data
      */
     public function setData($data)
     {
         parent::set(self::ATTR_DATA, $data);
+    }
+
+    /**
+     *
+     * @param string $data
+     */
+    public function setRequest($data)
+    {
+        parent::setRequest($data);
     }
 
 }

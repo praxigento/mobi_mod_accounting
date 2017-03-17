@@ -12,17 +12,8 @@ namespace Praxigento\Accounting\Api\Transaction\Get;
  *
  */
 class Request
-    extends \Flancer32\Lib\Data
+    extends \Praxigento\Core\Api\Request\WithCond
 {
-    /**
-     * @return \Praxigento\Core\Api\Request\Part\Conditions|null
-     */
-    public function getConditions()
-    {
-        $result = parent::getConditions();
-        return $result;
-    }
-
     /**
      * Root Customer ID for development purposes.
      *
@@ -32,14 +23,6 @@ class Request
     {
         $result = parent::getRootCustId();
         return $result;
-    }
-
-    /**
-     * @param \Praxigento\Core\Api\Request\Part\Conditions $data
-     */
-    public function setConditions($data)
-    {
-        parent::setConditions($data);
     }
 
     /**
