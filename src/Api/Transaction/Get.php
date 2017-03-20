@@ -14,83 +14,25 @@ class Get
 {
     const BIND_CUST_ID = 'custId';
 
-    const CTX_BIND = 'bind';
-    const CTX_QUERY = 'query';
-    const CTX_REQ = 'request';
-    const CTX_RESULT = 'result';
-    const CTX_VARS = 'vars';
-
     const VAR_CUST_ID = 'cust_id';
 
     /** @var \Praxigento\Core\Api\IAuthenticator */
     protected $authenticator;
     /** @var \Praxigento\Accounting\Repo\Query\Trans\Get\Builder */
-    protected $qbldTrans;
+    protected $qbld;
 
     public function __construct(
-        \Praxigento\Core\Api\IAuthenticator $authenticator,
-        \Praxigento\Accounting\Repo\Query\Trans\Get\Builder $qbldTrans
+        \Praxigento\Accounting\Repo\Query\Trans\Get\Builder $qbld,
+        \Praxigento\Core\Api\IAuthenticator $authenticator
     ) {
+        parent::__construct($qbld);
         $this->authenticator = $authenticator;
-        $this->qbldTrans = $qbldTrans;
     }
 
-//    public function exec(\Praxigento\Accounting\Api\Transaction\Get\Request $data)
-//    {
-//        $result = parent::exec($data);
-//        return $result;
-//    }
-
-//    public function exec(\Praxigento\Accounting\Api\Transaction\Get\Request $data)
-//    {
-//        $result = new \Praxigento\Accounting\Api\Transaction\Get\Response();
-//
-//        /* create context for request processing */
-//        $ctx = new \Flancer32\Lib\Data();
-//        $ctx->set(self::CTX_REQ, $data);
-//        $ctx->set(self::CTX_QUERY, null);
-//        $ctx->set(self::CTX_BIND, new \Flancer32\Lib\Data());
-//        $ctx->set(self::CTX_VARS, new \Flancer32\Lib\Data());
-//        $ctx->set(self::CTX_RESULT, null);
-//
-//        /* parse request, prepare query and fetch data */
-//        $this->prepareQueryParameters($ctx);
-//        $this->getSelectQuery($ctx);
-//        $this->populateQuery($ctx);
-//        $this->performQuery($ctx);
-//
-//        /* get query results from context and add to API response */
-//        $rs = $ctx->get(self::CTX_RESULT);
-//        $result->setData($rs);
-//        return $result;
-//    }
-
-    /**
-     * @return \Praxigento\Core\Repo\Query\IBuilder
-     */
-    protected function getQueryBuilder()
+    public function exec(\Praxigento\Accounting\Api\Transaction\Get\Request $data)
     {
-        $result = $this->manObj->get(\Praxigento\Accounting\Repo\Query\Trans\Get\Builder::class);
+        $result = parent::process($data);
         return $result;
-    }
-
-
-    protected function createQuerySelect(\Flancer32\Lib\Data $ctx)
-    {
-        $query = $this->qbldTrans->getSelectQuery();
-        $ctx->set(self::CTX_QUERY, $query);
-    }
-
-    protected function performQuery(\Flancer32\Lib\Data $ctx)
-    {
-        /* get working vars from context */
-        $bind = $ctx->get(self::CTX_BIND);
-        $query = $ctx->get(self::CTX_QUERY);
-
-        $conn = $query->getConnection();
-        $rs = $conn->fetchAll($query, (array)$bind->get());
-
-        $ctx->set(self::CTX_RESULT, $rs);
     }
 
     protected function populateQuery(\Flancer32\Lib\Data $ctx)
