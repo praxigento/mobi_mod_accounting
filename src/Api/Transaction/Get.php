@@ -75,7 +75,7 @@ class Get
     }
 
 
-    protected function getSelectQuery(\Flancer32\Lib\Data $ctx)
+    protected function createQuerySelect(\Flancer32\Lib\Data $ctx)
     {
         $query = $this->qbldTrans->getSelectQuery();
         $ctx->set(self::CTX_QUERY, $query);
