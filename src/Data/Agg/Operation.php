@@ -8,7 +8,7 @@ namespace Praxigento\Accounting\Data\Agg;
  * Aggregate for operations grid.
  */
 class Operation
-    extends \Flancer32\Lib\DataObject
+    extends \Flancer32\Lib\Data
 {
     /**#@+
      * Aliases for data attributes.

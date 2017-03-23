@@ -8,7 +8,7 @@ namespace Praxigento\Accounting\Data\Agg;
  * Aggregate for transactions grid.
  */
 class Transaction
-    extends \Flancer32\Lib\DataObject
+    extends \Flancer32\Lib\Data
 {
     /**#@+
      * Aliases for data attributes.

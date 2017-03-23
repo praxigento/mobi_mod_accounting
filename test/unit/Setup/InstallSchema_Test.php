@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Setup;
 
-use Flancer32\Lib\DataObject;
+use Flancer32\Lib\Data as DataObject;
 use Praxigento\Accounting\Data\Entity\Account as Account;
 use Praxigento\Accounting\Data\Entity\Balance as Balance;
 use Praxigento\Accounting\Data\Entity\Log\Change\Admin as LogChangeAdmin;
