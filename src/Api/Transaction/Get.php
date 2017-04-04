@@ -2,6 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Accounting\Api\Transaction;
 
 use Praxigento\Accounting\Config as Cfg;
@@ -27,6 +28,23 @@ class Get
     ) {
         parent::__construct($qbld);
         $this->authenticator = $authenticator;
+    }
+
+    protected function authorize(\Flancer32\Lib\Data $ctx)
+    {
+        /* get working vars from context */
+        $vars = $ctx->get(self::CTX_VARS);
+        $custId = $vars->get(self::VAR_CUST_ID);
+
+        /* only currently logged in  customer can get account statement */
+        $currentCustId = $this->authenticator->getCurrentUserId();
+        if (
+            is_null($custId) ||
+            ($custId != $currentCustId)
+        ) {
+            $msg = __('You are not authorized to perform this operation.');
+            throw new \Magento\Framework\Exception\AuthorizationException($msg);
+        }
     }
 
     public function exec(\Praxigento\Accounting\Api\Transaction\Get\Request $data)
@@ -75,5 +93,4 @@ class Get
         /* save to context */
         $vars->set(self::VAR_CUST_ID, $rootCustId);
     }
-
 }
