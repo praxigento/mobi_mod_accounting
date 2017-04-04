@@ -37,7 +37,7 @@ class Get
         $custId = $vars->get(self::VAR_CUST_ID);
 
         /* only currently logged in  customer can get account statement */
-        $currentCustId = $this->authenticator->getCurrentUserId();
+        $currentCustId = $this->authenticator->getCurrentCustomerId();
         if (
             is_null($custId) ||
             ($custId != $currentCustId)
@@ -86,11 +86,9 @@ class Get
 
         /* root customer id */
         $rootCustId = $req->getRootCustId();
-        if (is_null($rootCustId)) {
-            $user = $this->authenticator->getCurrentUserData();
-            $rootCustId = $user->get(Cfg::E_CUSTOMER_A_ENTITY_ID);
-        }
+        $currentCustId = $this->authenticator->getCurrentCustomerId($rootCustId);
+
         /* save to context */
-        $vars->set(self::VAR_CUST_ID, $rootCustId);
+        $vars->set(self::VAR_CUST_ID, $currentCustId);
     }
 }
