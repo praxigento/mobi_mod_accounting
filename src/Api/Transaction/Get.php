@@ -5,7 +5,6 @@
 
 namespace Praxigento\Accounting\Api\Transaction;
 
-use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Data\Entity\Account as Acc;
 use Praxigento\Accounting\Repo\Query\Trans\Get\Builder as Builder;
 
@@ -23,10 +22,11 @@ class Get
     protected $qbld;
 
     public function __construct(
+        \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Accounting\Repo\Query\Trans\Get\Builder $qbld,
         \Praxigento\Core\Api\IAuthenticator $authenticator
     ) {
-        parent::__construct($qbld);
+        parent::__construct($manObj, $qbld);
         $this->authenticator = $authenticator;
     }
 
