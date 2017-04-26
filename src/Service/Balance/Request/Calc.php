@@ -2,10 +2,17 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Accounting\Service\Balance\Request;
 
 class Calc extends \Praxigento\Core\Service\Base\Request
 {
+    /**
+     * Code of the account's asset type. Use $accountTypeId or $assetTypeCode to set asset type. $assetTypeId is more
+     * preferable then $assetTypeCode (if both are set).
+     * @var string
+     */
+    const ASSET_TYPE_CODE = 'asset_type_code';
     /**
      * ID of the account's asset type.
      * @var int
@@ -18,6 +25,12 @@ class Calc extends \Praxigento\Core\Service\Base\Request
      */
     const DATE_TO = 'date_to';
 
+    public function getAssetTypeCode()
+    {
+        $result = $this->get(static::ASSET_TYPE_CODE);
+        return $result;
+    }
+
     public function getAssetTypeId()
     {
         $result = $this->get(static::ASSET_TYPE_ID);
@@ -28,6 +41,11 @@ class Calc extends \Praxigento\Core\Service\Base\Request
     {
         $result = $this->get(static::DATE_TO);
         return $result;
+    }
+
+    public function setAssetTypeCode($data)
+    {
+        $this->set(static::ASSET_TYPE_CODE, $data);
     }
 
     public function setAssetTypeId($data)

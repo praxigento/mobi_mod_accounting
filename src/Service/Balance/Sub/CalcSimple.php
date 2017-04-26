@@ -17,24 +17,36 @@ class CalcSimple
     /**
      * @var \Praxigento\Core\Tool\IPeriod
      */
-    private $_toolPeriod;
+    private $toolPeriod;
 
     /**
      * CalcSimple constructor.
      */
     public function __construct(IPeriod $toolPeriod)
     {
-        $this->_toolPeriod = $toolPeriod;
+        $this->toolPeriod = $toolPeriod;
     }
 
+    /**
+     * Walk trough transactions ordered by date applied and compose balances.
+     *
+     * @param array $currentBalances balances for the begin of the period.
+     * @param array $transactions all transactions for the period
+     * @return array balances for the period
+     */
     public function calcBalances($currentBalances, $transactions)
     {
         $result = [];
-        foreach ($transactions as $one) {
+
+        /* convert current balances for internal format and sort transactions by date applied (already sorted in DB, but...) */
+        $balPrepared = $this->prepareBalances($currentBalances);
+        $transPrepared = $this->prepareTransactions($transactions);
+
+        foreach ($transPrepared as $one) {
             $accDebit = $one[Transaction::ATTR_DEBIT_ACC_ID];
             $accCredit = $one[Transaction::ATTR_CREDIT_ACC_ID];
             $timestamp = $one[Transaction::ATTR_DATE_APPLIED];
-            $date = $this->_toolPeriod->getPeriodCurrent($timestamp, IPeriod::TYPE_DAY);
+            $date = $this->toolPeriod->getPeriodCurrent($timestamp, IPeriod::TYPE_DAY);
             $changeValue = $one[Transaction::ATTR_VALUE];
             /**
              * process debit account
@@ -54,17 +66,20 @@ class CalcSimple
                     Balance::ATTR_BALANCE_CLOSE => 0,
                 ];
                 /* we need to update opening balance */
-                if (isset($result[$accDebit])) {
-                    $last = end($result[$accDebit]);
-                    $data[Balance::ATTR_BALANCE_OPEN] = $last[Balance::ATTR_BALANCE_CLOSE];
-                } elseif (isset($currentBalances[$accDebit])) {
-                    $data[Balance::ATTR_BALANCE_OPEN] = $currentBalances[$accDebit][Balance::ATTR_BALANCE_CLOSE];
+                if (isset($balPrepared[$accDebit])) {
+                    $data[Balance::ATTR_BALANCE_OPEN] = $balPrepared[$accDebit];
+                    $data[Balance::ATTR_BALANCE_CLOSE] = $balPrepared[$accDebit];
                 }
             }
             /* change debit related values */
             $data[Balance::ATTR_TOTAL_DEBIT] += $changeValue;
             $data[Balance::ATTR_BALANCE_CLOSE] -= $changeValue;
             $result[$accDebit][$date] = $data;
+            if (isset($balPrepared[$accDebit])) {
+                $balPrepared[$accDebit] -= $changeValue;
+            } else {
+                $balPrepared[$accDebit] = -$changeValue;
+            }
             /**
              * process credit account
              */
@@ -83,18 +98,53 @@ class CalcSimple
                     Balance::ATTR_BALANCE_CLOSE => 0,
                 ];
                 /* we need to update opening balance */
-                if (isset($result[$accCredit])) {
-                    $last = end($result[$accCredit]);
-                    $data[Balance::ATTR_BALANCE_OPEN] = $last[Balance::ATTR_BALANCE_CLOSE];
-                } elseif (isset($currentBalances[$accCredit])) {
-                    $data[Balance::ATTR_BALANCE_OPEN] = $currentBalances[$accCredit][Balance::ATTR_BALANCE_CLOSE];
+                if (isset($balPrepared[$accCredit])) {
+                    $data[Balance::ATTR_BALANCE_OPEN] = $balPrepared[$accCredit];
+                    $data[Balance::ATTR_BALANCE_CLOSE] = $balPrepared[$accCredit];
                 }
             }
             /* change credit related values */
             $data[Balance::ATTR_TOTAL_CREDIT] += $changeValue;
             $data[Balance::ATTR_BALANCE_CLOSE] += $changeValue;
             $result[$accCredit][$date] = $data;
+            if (isset($balPrepared[$accCredit])) {
+                $balPrepared[$accCredit] += $changeValue;
+            } else {
+                $balPrepared[$accCredit] = $changeValue;
+            }
         }
         return $result;
+    }
+
+    protected function prepareBalances($balances)
+    {
+        $result = [];
+        foreach ($balances as $balance) {
+            $accountId = $balance[\Praxigento\Accounting\Data\Entity\Account::ATTR_ID];
+            $value = $balance[Balance::ATTR_BALANCE_CLOSE];
+            $result[$accountId] = $value;
+        }
+        return $result;
+    }
+
+    /**
+     * Order transactions by date_applied
+     *
+     * @param array $transactions
+     */
+    protected function prepareTransactions($transactions)
+    {
+        usort($transactions, function ($a, $b) {
+            $aTs = $a[Transaction::ATTR_DATE_APPLIED];
+            $bTs = $b[Transaction::ATTR_DATE_APPLIED];
+            $result = 0;
+            if ($aTs < $bTs) {
+                $result = -1;
+            } elseif ($aTs > $bTs) {
+                $result = 1;
+            }
+            return $result;
+        });
+        return $transactions;
     }
 }

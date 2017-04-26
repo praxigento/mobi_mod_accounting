@@ -24,6 +24,8 @@ class Call
     protected $_repoAccount;
     /** @var \Praxigento\Accounting\Repo\Entity\IBalance */
     protected $_repoBalance;
+    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\IAdmin */
+    protected $_repoLogChangeAdmin;
     /** @var \Praxigento\Accounting\Repo\IModule */
     protected $_repoMod;
     /** @var \Praxigento\Accounting\Repo\Entity\IOperation */
@@ -34,14 +36,12 @@ class Call
     protected $_repoTypeAsset;
     /** @var \Praxigento\Accounting\Repo\Entity\Type\IOperation */
     protected $_repoTypeOper;
-    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\IAdmin */
-    protected $_repoLogChangeAdmin;
     /** @var Sub\CalcSimple Simple balance calculator. */
     protected $_subCalcSimple;
-    /** @var  \Praxigento\Core\Tool\IPeriod */
-    protected $_toolPeriod;
     /** @var \Praxigento\Core\Tool\IDate */
     protected $_toolDate;
+    /** @var  \Praxigento\Core\Tool\IPeriod */
+    protected $_toolPeriod;
 
     public function __construct(
         \Praxigento\Core\Fw\Logger\App $logger,
@@ -78,20 +78,29 @@ class Call
     {
         $result = new Response\Calc();
         $assetTypeId = $request->getAssetTypeId();
+        $assetTypeCode = $request->getAssetTypeCode();
         $dateTo = $request->getDateTo();
         /* get the last balance date */
         $reqLastDate = new Request\GetLastDate();
-        $reqLastDate->set(Request\GetLastDate::ASSET_TYPE_ID, $assetTypeId);
+        $reqLastDate->setAssetTypeId($assetTypeId);
+        $reqLastDate->setAssetTypeCode($assetTypeCode);
         $respLastDate = $this->getLastDate($reqLastDate);
         $lastDate = $respLastDate->getLastDate();
         $balances = $this->_repoBalance->getOnDate($assetTypeId, $lastDate);
+        /* check date to */
+        if (is_null($dateTo)) {
+            $today = $this->_toolPeriod->getPeriodCurrent();
+            $dateTo = $this->_toolPeriod->getPeriodPrev($today);
+        }
         /* get transactions for period */
-        $dtFrom = $this->_toolPeriod->getTimestampFrom($lastDate, IPeriod::TYPE_DAY);
-        $dtTo = $this->_toolPeriod->getTimestampTo($dateTo, IPeriod::TYPE_DAY);
-        $trans = $this->_repoTransaction->getForPeriod($assetTypeId, $dtFrom, $dtTo);
-        $updates = $this->_subCalcSimple->calcBalances($balances, $trans);
-        $this->_repoBalance->updateBalances($updates);
-        $result->markSucceed();
+        if ($lastDate) {
+            $dtFrom = $this->_toolPeriod->getTimestampFrom($lastDate, IPeriod::TYPE_DAY);
+            $dtTo = $this->_toolPeriod->getTimestampTo($dateTo, IPeriod::TYPE_DAY);
+            $trans = $this->_repoTransaction->getForPeriod($assetTypeId, $dtFrom, $dtTo);
+            $updates = $this->_subCalcSimple->calcBalances($balances, $trans);
+            $this->_repoBalance->updateBalances($updates);
+            $result->markSucceed();
+        }
         return $result;
     }
 
