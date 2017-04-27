@@ -93,13 +93,16 @@ class Call
         $balances = $this->_repoBalance->getOnDate($assetTypeId, $lastDate);
         /* check date to */
         if (is_null($dateTo)) {
-            $today = $this->_toolPeriod->getPeriodCurrentOld();
+            /* use 'yesterday' */
+            $dtMageNow = $this->_toolDate->getMageNow();
+            $today = $this->_toolPeriod->getPeriodCurrent($dtMageNow);
             $dateTo = $this->_toolPeriod->getPeriodPrev($today);
         }
         /* get transactions for period */
         if ($lastDate) {
-            $dtFrom = $this->_toolPeriod->getTimestampFrom($lastDate, IPeriod::TYPE_DAY);
-            $dtTo = $this->_toolPeriod->getTimestampTo($dateTo, IPeriod::TYPE_DAY);
+            /* first date should be after balance last date */
+            $dtFrom = $this->_toolPeriod->getTimestampNextFrom($lastDate);
+            $dtTo = $this->_toolPeriod->getTimestampTo($dateTo);
             $trans = $this->_repoTransaction->getForPeriod($assetTypeId, $dtFrom, $dtTo);
             $updates = $this->_subCalcSimple->calcBalances($balances, $trans);
             $this->_repoBalance->updateBalances($updates);

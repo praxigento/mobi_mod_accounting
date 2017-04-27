@@ -2,12 +2,13 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Accounting\Service\Balance\Request;
 
 class Reset extends \Praxigento\Core\Service\Base\Request
 {
     /**
-     * Reset balance starting from this date (including).
+     * Reset balance starting from this date (including, Magento time).
      *
      * @var  string datestamp (YYYYMMDD).
      */

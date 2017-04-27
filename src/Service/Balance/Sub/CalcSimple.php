@@ -10,7 +10,6 @@ namespace Praxigento\Accounting\Service\Balance\Sub;
 
 use Praxigento\Accounting\Data\Entity\Balance;
 use Praxigento\Accounting\Data\Entity\Transaction;
-use Praxigento\Core\Tool\Def\Period;
 use Praxigento\Core\Tool\IPeriod;
 
 class CalcSimple
@@ -47,7 +46,7 @@ class CalcSimple
             $accDebit = $one[Transaction::ATTR_DEBIT_ACC_ID];
             $accCredit = $one[Transaction::ATTR_CREDIT_ACC_ID];
             $timestamp = $one[Transaction::ATTR_DATE_APPLIED];
-            $date = $this->toolPeriod->getPeriodCurrentOld($timestamp, Period::TYPE_DAY, false);
+            $date = $this->toolPeriod->getPeriodCurrent($timestamp, +1);
             $changeValue = $one[Transaction::ATTR_VALUE];
             /**
              * process debit account
