@@ -2,6 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Accounting\Repo\Entity\Def;
 
 class Balance
@@ -120,11 +121,11 @@ class Balance
             . $asAccount . '.' . \Praxigento\Accounting\Data\Entity\Account::ATTR_ID;
         $cols = [];
         $query->joinLeft([$asMax => $q4Max], $on, $cols);
-        /* join prxgt_acc_balance again (ON pab.account_id = m.account_id AND pab.date = m.date_max) */
-        $on = $asMax . '.' . \Praxigento\Accounting\Data\Entity\Balance::ATTR_ACCOUNT_ID . '='
-            . $asBal . '.' . \Praxigento\Accounting\Data\Entity\Balance::ATTR_ACCOUNT_ID;
-        $on .= ' AND ' . $asMax . '.' . $colDateMax . '='
-            . $asBal . '.' . \Praxigento\Accounting\Data\Entity\Balance::ATTR_DATE;
+        /* MOBI-688: join prxgt_acc_balance again (ON pab.account_id = m.account_id AND pab.date = m.date_max) */
+        $on = $asBal . '.' . \Praxigento\Accounting\Data\Entity\Balance::ATTR_ACCOUNT_ID . '='
+            . $asMax . '.' . \Praxigento\Accounting\Data\Entity\Balance::ATTR_ACCOUNT_ID;
+        $on .= ' AND ' . $asBal . '.' . \Praxigento\Accounting\Data\Entity\Balance::ATTR_DATE . '='
+            . $asMax . '.' . $colDateMax;
         $cols = [
             \Praxigento\Accounting\Data\Entity\Balance::ATTR_DATE,
             \Praxigento\Accounting\Data\Entity\Balance::ATTR_BALANCE_OPEN,
