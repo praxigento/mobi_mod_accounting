@@ -50,16 +50,16 @@ class Calc
         \Symfony\Component\Console\Input\InputInterface $input,
         \Symfony\Component\Console\Output\OutputInterface $output
     ) {
-        $output->writeln("<info>Start calculation of the accounts balances.<info>");
         /* get CLI input parameters */
-        $dstamp = $input->getOption(self::OPT_DATESTAMP_NAME);
+        $period = $input->getOption(self::OPT_DATESTAMP_NAME);
+        $output->writeln("<info>Start calculation of the accounts balances (up to $period).<info>");
 
         /* perform action */
         $assets = $this->getAssetTypesIds();
         foreach ($assets as $typeId => $typeCode) {
             $req = new \Praxigento\Accounting\Service\Balance\Request\Calc();
             $req->setAssetTypeId($typeId);
-            $req->setDateTo($dstamp);
+            $req->setDateTo($period);
             $resp = $this->callBalance->calc($req);
             if ($resp->isSucceed()) {
                 $output->writeln("<info>Balances for asset '$typeCode' are calculated.<info>");

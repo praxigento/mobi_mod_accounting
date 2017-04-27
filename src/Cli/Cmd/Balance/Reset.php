@@ -11,7 +11,7 @@ namespace Praxigento\Accounting\Cli\Cmd\Balance;
 class Reset
     extends \Praxigento\Core\Cli\Cmd\Base
 {
-
+    const OPT_DATESTAMP_DEF = '10170101';
     const OPT_DATESTAMP_NAME = 'date';
     const OPT_DATESTAMP_SHORTCUT = 'd';
     /** @var \Praxigento\Accounting\Service\IBalance */
@@ -36,7 +36,8 @@ class Reset
             self::OPT_DATESTAMP_NAME,
             self::OPT_DATESTAMP_SHORTCUT,
             \Symfony\Component\Console\Input\InputOption::VALUE_OPTIONAL,
-            'Date from (inclusive) to reset balances (-d 20170308).'
+            'Date from (inclusive) to reset balances (-d 20170308).',
+            self::OPT_DATESTAMP_DEF
         );
     }
 
@@ -44,13 +45,13 @@ class Reset
         \Symfony\Component\Console\Input\InputInterface $input,
         \Symfony\Component\Console\Output\OutputInterface $output
     ) {
-        $output->writeln("<info>Start reset of the accounts balances.<info>");
         /* get CLI input parameters */
-        $dstamp = $input->getOption(self::OPT_DATESTAMP_NAME);
+        $period = $input->getOption(self::OPT_DATESTAMP_NAME);
+        $output->writeln("<info>Start reset of the accounts balances (from '$period').<info>");
 
         /* perform action */
         $req = new \Praxigento\Accounting\Service\Balance\Request\Reset();
-        $req->setDateFrom($dstamp);
+        $req->setDateFrom($period);
         $this->callBalance->reset($req);
 
         $output->writeln('<info>Command is completed.<info>');
