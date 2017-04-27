@@ -202,9 +202,9 @@ class Call_UnitTest
         $this->mRepoMod
             ->shouldReceive('getTransactionMinDateApplied')->once()
             ->andReturn($DS_MIN_DATE);
-        // $period = $this->_toolPeriod->getPeriodCurrent($transactionMinDate);
+        // $period = $this->_toolPeriod->getPeriodCurrentOld($transactionMinDate);
         $this->mToolPeriod
-            ->shouldReceive('getPeriodCurrent')->once()
+            ->shouldReceive('getPeriodCurrentOld')->once()
             ->andReturn($PERIOD);
         // $dayBefore = $this->_toolPeriod->getPeriodPrev($period, IPeriod::TYPE_DAY);
         $this->mToolPeriod

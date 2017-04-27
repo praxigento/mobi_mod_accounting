@@ -93,7 +93,7 @@ class Call
         $balances = $this->_repoBalance->getOnDate($assetTypeId, $lastDate);
         /* check date to */
         if (is_null($dateTo)) {
-            $today = $this->_toolPeriod->getPeriodCurrent();
+            $today = $this->_toolPeriod->getPeriodCurrentOld();
             $dateTo = $this->_toolPeriod->getPeriodPrev($today);
         }
         /* get transactions for period */
@@ -186,7 +186,7 @@ class Call
             /* there is no balance data yet, get transaction with minimal date */
             $transactionMinDate = $this->_repoTransaction->getMinDateApplied($assetTypeId);
             if ($transactionMinDate) {
-                $period = $this->_toolPeriod->getPeriodCurrent($transactionMinDate);
+                $period = $this->_toolPeriod->getPeriodCurrentOld($transactionMinDate);
                 $dayBefore = $this->_toolPeriod->getPeriodPrev($period, IPeriod::TYPE_DAY);
                 $result->set([Response\GetLastDate::LAST_DATE => $dayBefore]);
                 $result->markSucceed();

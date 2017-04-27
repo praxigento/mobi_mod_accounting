@@ -67,13 +67,13 @@ class CalcSimple_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
 
         /** === Setup Mocks === */
         $this->mToolPeriod
-            ->shouldReceive('getPeriodCurrent')->once()
+            ->shouldReceive('getPeriodCurrentOld')->once()
             ->andReturn($DATESTAMP_1);
         $this->mToolPeriod
-            ->shouldReceive('getPeriodCurrent')->once()
+            ->shouldReceive('getPeriodCurrentOld')->once()
             ->andReturn($DATESTAMP_1);
         $this->mToolPeriod
-            ->shouldReceive('getPeriodCurrent')->once()
+            ->shouldReceive('getPeriodCurrentOld')->once()
             ->andReturn($DATESTAMP_2);
         /** === Call and asserts  === */
         $updates = $this->obj->calcBalances($CURRENT_BALANCES, $TRANS);
