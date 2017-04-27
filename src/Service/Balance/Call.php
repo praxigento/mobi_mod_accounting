@@ -11,6 +11,8 @@ use Praxigento\Accounting\Data\Entity\Log\Change\Admin as ELogChangeAdmin;
 use Praxigento\Core\Tool\IPeriod;
 
 /**
+ * TODO: split this service (one operation per class)
+ *
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
@@ -19,31 +21,31 @@ class Call
     implements \Praxigento\Accounting\Service\IBalance
 {
     /** @var \Praxigento\Core\Transaction\Database\IManager */
-    protected $_manTrans;
+    protected $manTrans;
     /** @var \Praxigento\Accounting\Repo\Entity\IAccount */
-    protected $_repoAccount;
+    protected $repoAccount;
     /** @var \Praxigento\Accounting\Repo\Entity\IBalance */
-    protected $_repoBalance;
+    protected $repoBalance;
     /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\IAdmin */
-    protected $_repoLogChangeAdmin;
+    protected $repoLogChangeAdmin;
     /** @var \Praxigento\Accounting\Repo\IModule */
-    protected $_repoMod;
+    protected $repoMod;
     /** @var \Praxigento\Accounting\Repo\Entity\IOperation */
-    protected $_repoOperation;
+    protected $repoOperation;
     /** @var \Praxigento\Accounting\Repo\Entity\ITransaction */
-    protected $_repoTransaction;
+    protected $repoTransaction;
     /** @var \Praxigento\Accounting\Repo\Entity\Type\IAsset */
-    protected $_repoTypeAsset;
+    protected $repoTypeAsset;
     /** @var \Praxigento\Accounting\Repo\Entity\Type\IOperation */
-    protected $_repoTypeOper;
-    /** @var Sub\CalcSimple Simple balance calculator. */
-    protected $_subCalcSimple;
-    /** @var \Praxigento\Core\Tool\IDate */
-    protected $_toolDate;
-    /** @var  \Praxigento\Core\Tool\IPeriod */
-    protected $_toolPeriod;
+    protected $repoTypeOper;
     /** @var \Magento\Framework\App\ResourceConnection */
     protected $resource;
+    /** @var Sub\CalcSimple Simple balance calculator. */
+    protected $subCalcSimple;
+    /** @var \Praxigento\Core\Tool\IDate */
+    protected $toolDate;
+    /** @var  \Praxigento\Core\Tool\IPeriod */
+    protected $toolPeriod;
 
     public function __construct(
         \Praxigento\Core\Fw\Logger\App $logger,
@@ -64,18 +66,18 @@ class Call
     ) {
         parent::__construct($logger, $manObj);
         $this->resource = $resource;
-        $this->_manTrans = $manTrans;
-        $this->_toolDate = $toolDate;
-        $this->_toolPeriod = $toolPeriod;
-        $this->_repoMod = $repoMod;
-        $this->_repoAccount = $repoAccount;
-        $this->_repoBalance = $repoBalance;
-        $this->_repoOperation = $repoOperation;
-        $this->_repoTransaction = $repoTransaction;
-        $this->_repoTypeAsset = $repoTypeAsset;
-        $this->_repoTypeOper = $repoTypeOper;
-        $this->_repoLogChangeAdmin = $repoLogChangeAdmin;
-        $this->_subCalcSimple = $subCalcSimple;
+        $this->manTrans = $manTrans;
+        $this->toolDate = $toolDate;
+        $this->toolPeriod = $toolPeriod;
+        $this->repoMod = $repoMod;
+        $this->repoAccount = $repoAccount;
+        $this->repoBalance = $repoBalance;
+        $this->repoOperation = $repoOperation;
+        $this->repoTransaction = $repoTransaction;
+        $this->repoTypeAsset = $repoTypeAsset;
+        $this->repoTypeOper = $repoTypeOper;
+        $this->repoLogChangeAdmin = $repoLogChangeAdmin;
+        $this->subCalcSimple = $subCalcSimple;
     }
 
     public function calc(Request\Calc $request)
@@ -90,22 +92,22 @@ class Call
         $reqLastDate->setAssetTypeCode($assetTypeCode);
         $respLastDate = $this->getLastDate($reqLastDate);
         $lastDate = $respLastDate->getLastDate();
-        $balances = $this->_repoBalance->getOnDate($assetTypeId, $lastDate);
+        $balances = $this->repoBalance->getOnDate($assetTypeId, $lastDate);
         /* check date to */
         if (is_null($dateTo)) {
             /* use 'yesterday' */
-            $dtMageNow = $this->_toolDate->getMageNow();
-            $today = $this->_toolPeriod->getPeriodCurrent($dtMageNow);
-            $dateTo = $this->_toolPeriod->getPeriodPrev($today);
+            $dtMageNow = $this->toolDate->getMageNow();
+            $today = $this->toolPeriod->getPeriodCurrent($dtMageNow);
+            $dateTo = $this->toolPeriod->getPeriodPrev($today);
         }
         /* get transactions for period */
         if ($lastDate) {
             /* first date should be after balance last date */
-            $dtFrom = $this->_toolPeriod->getTimestampNextFrom($lastDate);
-            $dtTo = $this->_toolPeriod->getTimestampTo($dateTo);
-            $trans = $this->_repoTransaction->getForPeriod($assetTypeId, $dtFrom, $dtTo);
-            $updates = $this->_subCalcSimple->calcBalances($balances, $trans);
-            $this->_repoBalance->updateBalances($updates);
+            $dtFrom = $this->toolPeriod->getTimestampNextFrom($lastDate);
+            $dtTo = $this->toolPeriod->getTimestampTo($dateTo);
+            $trans = $this->repoTransaction->getForPeriod($assetTypeId, $dtFrom, $dtTo);
+            $updates = $this->subCalcSimple->calcBalances($balances, $trans);
+            $this->repoBalance->updateBalances($updates);
             $result->markSucceed();
         }
         return $result;
@@ -117,20 +119,20 @@ class Call
         $accCustId = $request->getCustomerAccountId();
         $adminUserId = $request->getAdminUserId();
         $value = $request->getChangeValue();
-        $def = $this->_manTrans->begin();
+        $def = $this->manTrans->begin();
         try {
             /* get account's asset type by ID */
-            $assetTypeId = $this->_repoAccount->getAssetTypeId($accCustId);
+            $assetTypeId = $this->repoAccount->getAssetTypeId($accCustId);
             /* get representative account id for given asset type */
-            $accRepresId = $this->_repoAccount->getRepresentativeAccountId($assetTypeId);
+            $accRepresId = $this->repoAccount->getRepresentativeAccountId($assetTypeId);
             /* get operation type by code and date performed */
-            $operTypeId = $this->_repoTypeOper->getIdByCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
-            $dateNow = $this->_toolDate->getUtcNowForDb();
+            $operTypeId = $this->repoTypeOper->getIdByCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
+            $dateNow = $this->toolDate->getUtcNowForDb();
             /* create operation */
             $operation = new \Praxigento\Accounting\Data\Entity\Operation();
             $operation->setTypeId($operTypeId);
             $operation->setDatePerformed($dateNow);
-            $operId = $this->_repoOperation->create($operation);
+            $operId = $this->repoOperation->create($operation);
             /* create transaction */
             $trans = new \Praxigento\Accounting\Data\Entity\Transaction();
             $trans->setOperationId($operId);
@@ -143,16 +145,16 @@ class Call
                 $trans->setCreditAccId($accRepresId);
             }
             $trans->setValue(abs($value));
-            $this->_repoTransaction->create($trans);
+            $this->repoTransaction->create($trans);
             /* log details (operator name who performs the operation) */
             $log = new ELogChangeAdmin();
             $log->setOperationRef($operId);
             $log->setUserRef($adminUserId);
-            $this->_repoLogChangeAdmin->create($log);
-            $this->_manTrans->commit($def);
+            $this->repoLogChangeAdmin->create($log);
+            $this->manTrans->commit($def);
             $result->markSucceed();
         } finally {
-            $this->_manTrans->end($def);
+            $this->manTrans->end($def);
         }
         return $result;
     }
@@ -162,7 +164,7 @@ class Call
         $result = new Response\GetBalancesOnDate();
         $dateOn = $request->getDate();
         $assetTypeId = $request->getAssetTypeId();
-        $rows = $this->_repoBalance->getOnDate($assetTypeId, $dateOn);
+        $rows = $this->repoBalance->getOnDate($assetTypeId, $dateOn);
         if (count($rows) > 0) {
             $result->set($rows);
             $result->markSucceed();
@@ -176,10 +178,10 @@ class Call
         $assetTypeId = $request->getAssetTypeId();
         $assetTypeCode = $request->getAssetTypeCode();
         if (is_null($assetTypeId)) {
-            $assetTypeId = $this->_repoTypeAsset->getIdByCode($assetTypeCode);
+            $assetTypeId = $this->repoTypeAsset->getIdByCode($assetTypeCode);
         }
         /* get the maximal date for balance */
-        $balanceMaxDate = $this->_repoBalance->getMaxDate($assetTypeId);
+        $balanceMaxDate = $this->repoBalance->getMaxDate($assetTypeId);
         if ($balanceMaxDate) {
             /* there is balance data */
             //$dayBefore = $this->_toolPeriod->getPeriodPrev($balanceMaxDate, IPeriod::TYPE_DAY);
@@ -187,10 +189,10 @@ class Call
             $result->markSucceed();
         } else {
             /* there is no balance data yet, get transaction with minimal date */
-            $transactionMinDate = $this->_repoTransaction->getMinDateApplied($assetTypeId);
+            $transactionMinDate = $this->repoTransaction->getMinDateApplied($assetTypeId);
             if ($transactionMinDate) {
-                $period = $this->_toolPeriod->getPeriodCurrentOld($transactionMinDate);
-                $dayBefore = $this->_toolPeriod->getPeriodPrev($period, IPeriod::TYPE_DAY);
+                $period = $this->toolPeriod->getPeriodCurrentOld($transactionMinDate);
+                $dayBefore = $this->toolPeriod->getPeriodPrev($period, IPeriod::TYPE_DAY);
                 $result->set([Response\GetLastDate::LAST_DATE => $dayBefore]);
                 $result->markSucceed();
             }
@@ -205,7 +207,7 @@ class Call
         $conn = $this->resource->getConnection();
         $quoted = $conn->quote($dateFrom);
         $where = Balance::ATTR_DATE . '>=' . $quoted;
-        $rows = $this->_repoBalance->delete($where);
+        $rows = $this->repoBalance->delete($where);
         if ($rows !== false) {
             $result->setRowsDeleted($rows);
             $result->markSucceed();
