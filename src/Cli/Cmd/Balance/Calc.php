@@ -11,6 +11,9 @@ namespace Praxigento\Accounting\Cli\Cmd\Balance;
 class Calc
     extends \Praxigento\Core\Cli\Cmd\Base
 {
+    const OPT_DATESTAMP_DEF = '31171231';
+    const OPT_DATESTAMP_NAME = 'date';
+    const OPT_DATESTAMP_SHORTCUT = 'd';
 
     /** @var \Praxigento\Accounting\Service\IBalance */
     protected $callBalance;
@@ -24,11 +27,23 @@ class Calc
     ) {
         parent::__construct(
             $manObj,
-            'prxgt:acc:balance_calc',
+            'prxgt:acc:balance:calc',
             'Calculate accounts balances.'
         );
         $this->repoTypeAsset = $repoTypeAsset;
         $this->callBalance = $callBalance;
+    }
+
+    protected function configure()
+    {
+        parent::configure();
+        $this->addOption(
+            self::OPT_DATESTAMP_NAME,
+            self::OPT_DATESTAMP_SHORTCUT,
+            \Symfony\Component\Console\Input\InputOption::VALUE_OPTIONAL,
+            'Date from (inclusive) to reset balances (-d 20170308).',
+            self::OPT_DATESTAMP_DEF
+        );
     }
 
     protected function execute(
@@ -36,11 +51,15 @@ class Calc
         \Symfony\Component\Console\Output\OutputInterface $output
     ) {
         $output->writeln("<info>Start calculation of the accounts balances.<info>");
+        /* get CLI input parameters */
+        $dstamp = $input->getOption(self::OPT_DATESTAMP_NAME);
 
+        /* perform action */
         $assets = $this->getAssetTypesIds();
         foreach ($assets as $typeId => $typeCode) {
             $req = new \Praxigento\Accounting\Service\Balance\Request\Calc();
             $req->setAssetTypeId($typeId);
+            $req->setDateTo($dstamp);
             $resp = $this->callBalance->calc($req);
             if ($resp->isSucceed()) {
                 $output->writeln("<info>Balances for asset '$typeCode' are calculated.<info>");

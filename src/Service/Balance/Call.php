@@ -42,10 +42,13 @@ class Call
     protected $_toolDate;
     /** @var  \Praxigento\Core\Tool\IPeriod */
     protected $_toolPeriod;
+    /** @var \Magento\Framework\App\ResourceConnection */
+    protected $resource;
 
     public function __construct(
         \Praxigento\Core\Fw\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
+        \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Core\Tool\IDate $toolDate,
         \Praxigento\Core\Tool\IPeriod $toolPeriod,
@@ -60,6 +63,7 @@ class Call
         Sub\CalcSimple $subCalcSimple
     ) {
         parent::__construct($logger, $manObj);
+        $this->resource = $resource;
         $this->_manTrans = $manTrans;
         $this->_toolDate = $toolDate;
         $this->_toolPeriod = $toolPeriod;
@@ -175,8 +179,8 @@ class Call
         $balanceMaxDate = $this->_repoBalance->getMaxDate($assetTypeId);
         if ($balanceMaxDate) {
             /* there is balance data */
-            $dayBefore = $this->_toolPeriod->getPeriodPrev($balanceMaxDate, IPeriod::TYPE_DAY);
-            $result->set([Response\GetLastDate::LAST_DATE => $dayBefore]);
+            //$dayBefore = $this->_toolPeriod->getPeriodPrev($balanceMaxDate, IPeriod::TYPE_DAY);
+            $result->set([Response\GetLastDate::LAST_DATE => $balanceMaxDate]);
             $result->markSucceed();
         } else {
             /* there is no balance data yet, get transaction with minimal date */
@@ -195,8 +199,9 @@ class Call
     {
         $result = new Response\Reset();
         $dateFrom = $request->getDateFrom();
-        /* TODO: quote $dateFrom to prevent SQL injects */
-        $where = Balance::ATTR_DATE . '>=' . $dateFrom;
+        $conn = $this->resource->getConnection();
+        $quoted = $conn->quote($dateFrom);
+        $where = Balance::ATTR_DATE . '>=' . $quoted;
         $rows = $this->_repoBalance->delete($where);
         if ($rows !== false) {
             $result->setRowsDeleted($rows);
