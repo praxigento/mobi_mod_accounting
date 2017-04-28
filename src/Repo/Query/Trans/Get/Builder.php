@@ -46,7 +46,7 @@ class Builder
      */
     public function getSelectQuery(\Praxigento\Core\Repo\Query\IBuilder $qbuild = null)
     {
-        $result = $this->conn->select();
+        $result = $this->conn->select();    // this is independent query, ignore input query builder
         /* create shortcuts for table aliases */
         $asTrans = self::AS_TRANS;
         $asOper = self::AS_OPER;
