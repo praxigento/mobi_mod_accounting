@@ -16,6 +16,6 @@ interface IGet
      *
      * @return \Praxigento\Accounting\Service\Balance\Get\Response
      */
-    public function getBalancesOnDate(\Praxigento\Accounting\Service\Balance\Get\Request $request);
+    public function exec(\Praxigento\Accounting\Service\Balance\Get\Request $request);
 
 }

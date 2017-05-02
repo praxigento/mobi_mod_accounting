@@ -57,8 +57,10 @@
             type="Praxigento\Accounting\Service\Account\Call"/>
     <preference for="Praxigento\Accounting\Service\IBalance"
             type="Praxigento\Accounting\Service\Balance\Call"/>
+    <preference for="\Praxigento\Accounting\Service\Balance\Get\ITurnover"
+            type="\Praxigento\Accounting\Service\Balance\Get\Turnover"/>
     <preference for="\Praxigento\Accounting\Service\Balance\IGet"
-            type="\Praxigento\BonusHybrid\Service\Calc\Get"/>
+            type="\Praxigento\Accounting\Service\Balance\Get"/>
     <preference for="Praxigento\Accounting\Service\IOperation"
             type="Praxigento\Accounting\Service\Operation\Call"/>
     <preference for="Praxigento\Accounting\Service\ITransaction"
