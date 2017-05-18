@@ -55,7 +55,7 @@ class Call
     public function get(Request\Get $request)
     {
         $result = new Response\Get();
-        $this->_logger->info("'Get account' operation is called.");
+        $this->logger->info("'Get account' operation is called.");
         $accountId = $request->getAccountId();
         $customerId = $request->getCustomerId();
         $assetTypeId = $request->getAssetTypeId();
@@ -89,10 +89,10 @@ class Call
                 $data[Account::ATTR_ID] = $accId;
                 $result->set($data);
                 $result->markSucceed();
-                $this->_logger->info("There is no account for customer #{$customerId} and asset type #$assetTypeId. New account #$accId is created.");
+                $this->logger->info("There is no account for customer #{$customerId} and asset type #$assetTypeId. New account #$accId is created.");
             }
         }
-        $this->_logger->info("'Get account' operation is completed.");
+        $this->logger->info("'Get account' operation is completed.");
         return $result;
     }
 
@@ -106,7 +106,7 @@ class Call
         $result = new Response\GetRepresentative();
         $typeId = $request->getAssetTypeId();
         $typeCode = $request->getAssetTypeCode();
-        $this->_logger->info("'Get representative account' operation is called.");
+        $this->logger->info("'Get representative account' operation is called.");
         if (is_null($typeId)) {
             $typeId = $this->_repoTypeAsset->getIdByCode($typeCode);
         }
@@ -145,13 +145,13 @@ class Call
                 }
             }
         } else {
-            $this->_logger->error("Asset type is not defined (asset code: $typeCode).");
+            $this->logger->error("Asset type is not defined (asset code: $typeCode).");
         }
         if ($result->isSucceed()) {
             $repAccId = $result->getId();
-            $this->_logger->info("Representative account #$repAccId is found.");
+            $this->logger->info("Representative account #$repAccId is found.");
         }
-        $this->_logger->info("'Get representative account' operation is completed.");
+        $this->logger->info("'Get representative account' operation is completed.");
         return $result;
     }
 
