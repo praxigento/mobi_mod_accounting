@@ -24,9 +24,10 @@ class Get
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Accounting\Repo\Query\Trans\Get\Builder $qbld,
+        \Praxigento\Core\Helper\Config $hlpCfg,
         \Praxigento\Core\Api\IAuthenticator $authenticator
     ) {
-        parent::__construct($manObj, $qbld);
+        parent::__construct($manObj, $qbld, $hlpCfg);
         $this->authenticator = $authenticator;
     }
 
