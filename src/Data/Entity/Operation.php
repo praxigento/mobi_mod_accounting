@@ -4,9 +4,8 @@
  */
 namespace Praxigento\Accounting\Data\Entity;
 
-use Praxigento\Core\Data\Entity\Base as EntityBase;
-
-class Operation extends EntityBase
+class Operation
+    extends \Praxigento\Core\Data\Entity\Base
 {
     const ATTR_DATE_PREFORMED = 'date_performed';
     const ATTR_ID = 'id';

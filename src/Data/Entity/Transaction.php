@@ -4,9 +4,8 @@
  */
 namespace Praxigento\Accounting\Data\Entity;
 
-use Praxigento\Core\Data\Entity\Base as EntityBase;
-
-class Transaction extends EntityBase
+class Transaction
+    extends \Praxigento\Core\Data\Entity\Base
 {
     const ATTR_CREDIT_ACC_ID = 'credit_acc_id';
     /* date when asset transaction should change balances (can be in the past) */

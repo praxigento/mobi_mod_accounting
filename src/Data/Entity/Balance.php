@@ -4,9 +4,8 @@
  */
 namespace Praxigento\Accounting\Data\Entity;
 
-use Praxigento\Core\Data\Entity\Base as EntityBase;
-
-class Balance extends EntityBase
+class Balance
+    extends \Praxigento\Core\Data\Entity\Base
 {
     const ATTR_ACCOUNT_ID = 'account_id';
     const ATTR_BALANCE_CLOSE = 'closing_balance';

@@ -6,9 +6,8 @@
  */
 namespace Praxigento\Accounting\Data\Entity\Type;
 
-use Praxigento\Core\Data\Entity\Type\Base as Base;
-
-class Asset extends Base
+class Asset
+    extends \Praxigento\Core\Data\Entity\Type\Base
 {
     const ENTITY_NAME = 'prxgt_acc_type_asset';
 }

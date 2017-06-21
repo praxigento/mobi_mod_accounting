@@ -6,9 +6,8 @@
  */
 namespace Praxigento\Accounting\Data\Entity\Type;
 
-use Praxigento\Core\Data\Entity\Type\Base as TypeBase;
-
-class Operation extends TypeBase
+class Operation
+    extends \Praxigento\Core\Data\Entity\Type\Base
 {
     const ENTITY_NAME = 'prxgt_acc_type_operation';
 }
