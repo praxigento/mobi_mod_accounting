@@ -21,7 +21,7 @@ class Admin
         return $result;
     }
 
-    public function getPrimaryKeyAttrs()
+    public static function getPrimaryKeyAttrs()
     {
         return [self::ATTR_OPER_REF];
     }

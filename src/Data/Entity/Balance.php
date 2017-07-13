@@ -52,7 +52,7 @@ class Balance
     }
 
     /** @inheritdoc */
-    public function getPrimaryKeyAttrs()
+    public static function getPrimaryKeyAttrs()
     {
         return [self::ATTR_ACCOUNT_ID, self::ATTR_DATE];
     }
