@@ -86,7 +86,7 @@ class Account
             /* return all entries */
             $entries = [];
             foreach ($found as $item) {
-                $entry = $this->_createEntityInstance($item);
+                $entry = $this->_createEntityInstance($item->get());
                 $entries[] = $entry;
             }
             $result = $entries;
@@ -113,7 +113,7 @@ class Account
         $found = $this->get($where);
         if ($found && count($found)) {
             $data = reset($found);
-            $result = $this->_createEntityInstance($data);
+            $result = $this->_createEntityInstance($data->get());
         }
         return $result;
     }
