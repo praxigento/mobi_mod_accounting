@@ -83,13 +83,8 @@ class Account
         $where = '(' . Entity::ATTR_CUST_ID . '=' . (int)$customerId . ')';
         $found = $this->get($where);
         if ($found) {
-            /* return all entries */
-            $entries = [];
-            foreach ($found as $item) {
-                $entry = $this->createEntity($item->get());
-                $entries[] = $entry;
-            }
-            $result = $entries;
+            /* TODO: use equal approach - '[]' instead of 'null' if not found */
+            $result = $found;
         }
         return $result;
     }
@@ -112,8 +107,7 @@ class Account
         $where = "$where AND (" . Entity::ATTR_ASSET_TYPE_ID . '=' . (int)$assetTypeId . ')';
         $found = $this->get($where);
         if ($found && count($found)) {
-            $data = reset($found);
-            $result = $this->createEntity($data->get());
+            $result = reset($found);
         }
         return $result;
     }
