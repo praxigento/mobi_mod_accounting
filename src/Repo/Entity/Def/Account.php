@@ -86,7 +86,7 @@ class Account
             /* return all entries */
             $entries = [];
             foreach ($found as $item) {
-                $entry = $this->_createEntityInstance($item->get());
+                $entry = $this->createEntity($item->get());
                 $entries[] = $entry;
             }
             $result = $entries;
@@ -113,7 +113,7 @@ class Account
         $found = $this->get($where);
         if ($found && count($found)) {
             $data = reset($found);
-            $result = $this->_createEntityInstance($data->get());
+            $result = $this->createEntity($data->get());
         }
         return $result;
     }
@@ -138,14 +138,14 @@ class Account
             $conn = $this->conn;
             /* there is no cached value for the customer ID, select data from DB */
             $where = Cfg::E_CUSTOMER_A_EMAIL . '=' . $conn->quote(self::CUSTOMER_REPRESENTATIVE_EMAIL);
-            $data = $this->_repoGeneric->getEntities(Cfg::ENTITY_MAGE_CUSTOMER, Cfg::E_CUSTOMER_A_ENTITY_ID,
+            $data = $this->repoGeneric->getEntities(Cfg::ENTITY_MAGE_CUSTOMER, Cfg::E_CUSTOMER_A_ENTITY_ID,
                 $where);
             if (count($data) == 0) {
                 $bind = [
                     Cfg::E_CUSTOMER_A_WEBSITE_ID => self::ADMIN_WEBSITE_ID,
                     Cfg::E_CUSTOMER_A_EMAIL => self::CUSTOMER_REPRESENTATIVE_EMAIL
                 ];
-                $id = $this->_repoGeneric->addEntity(Cfg::ENTITY_MAGE_CUSTOMER, $bind);
+                $id = $this->repoGeneric->addEntity(Cfg::ENTITY_MAGE_CUSTOMER, $bind);
                 if ($id > 0) {
                     $this->cachedRepresCustId = $id;
                 }
