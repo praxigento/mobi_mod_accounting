@@ -25,7 +25,7 @@ class Module_UnitTest
     {
         parent::setUp();
         $this->mRepoGeneric = $this->_mockRepoGeneric();
-        $this->mRepoAccount = $this->_mock(\Praxigento\Accounting\Repo\Entity\Def\Account::class);
+        $this->mRepoAccount = $this->_mock(\Praxigento\Accounting\Repo\Entity\Account::class);
         $this->repo = new Module(
             $this->mResource,
             $this->mRepoGeneric,

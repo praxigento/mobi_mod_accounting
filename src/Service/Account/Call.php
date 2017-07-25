@@ -15,11 +15,11 @@ class Call
 {
     /** @var array save accounts data for representative customer. */
     protected $_cachedRepresentAccs = [];
-    /** @var  \Praxigento\Accounting\Repo\Entity\Def\Account */
+    /** @var  \Praxigento\Accounting\Repo\Entity\Account */
     protected $_repoAccount;
     /** @var \Praxigento\Accounting\Repo\IModule */
     protected $_repoMod;
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\Def\Asset */
+    /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
     protected $_repoTypeAsset;
 
     /**
@@ -28,8 +28,8 @@ class Call
     public function __construct(
         \Praxigento\Core\Fw\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Accounting\Repo\Entity\Def\Account $repoAccount,
-        \Praxigento\Accounting\Repo\Entity\Type\Def\Asset $repoTypeAsset,
+        \Praxigento\Accounting\Repo\Entity\Account $repoAccount,
+        \Praxigento\Accounting\Repo\Entity\Type\Asset $repoTypeAsset,
         \Praxigento\Accounting\Repo\IModule $repoMod
     ) {
         parent::__construct($logger, $manObj);

@@ -22,7 +22,7 @@ class Module extends Db implements IModule
      * @var int
      */
     protected $_cachedRepresCustId;
-    /** @var \Praxigento\Accounting\Repo\Entity\Def\Account */
+    /** @var \Praxigento\Accounting\Repo\Entity\Account */
     protected $_repoAccount;
     /** @var  \Praxigento\Core\Repo\IGeneric */
     protected $_repoGeneric;
@@ -30,7 +30,7 @@ class Module extends Db implements IModule
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric,
-        \Praxigento\Accounting\Repo\Entity\Def\Account $repoAccount
+        \Praxigento\Accounting\Repo\Entity\Account $repoAccount
     ) {
         parent::__construct($resource);
         $this->_repoGeneric = $repoGeneric;

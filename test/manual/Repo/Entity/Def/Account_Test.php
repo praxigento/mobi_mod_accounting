@@ -2,7 +2,8 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Accounting\Repo\Entity\Def;
+
+namespace Praxigento\Accounting\Repo\Entity;
 
 use Magento\Framework\App\ObjectManager;
 use Praxigento\Accounting\Data\Entity\Account as Entity;
@@ -14,13 +15,13 @@ class Account_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
     const DEF_ACCOUNT_ID = 283;
     const DEF_ASSET_TYPE_ID = 1;
     const DEF_CUSTOMER_ID = 504;
-    /** @var  \Praxigento\Accounting\Repo\Entity\Def\Account */
+    /** @var  \Praxigento\Accounting\Repo\Entity\Account */
     private $_obj;
 
     public function setUp()
     {
         parent::setUp();
-        $this->_obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Repo\Entity\Def\Account::class);
+        $this->_obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Repo\Entity\Account::class);
     }
 
     public function test_create()

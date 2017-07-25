@@ -28,8 +28,8 @@ class Call_UnitTest
     {
         parent::setUp();
         $this->mManTrans = $this->_mockTransactionManager();
-        $this->mRepoAcc = $this->_mock(\Praxigento\Accounting\Repo\Entity\Def\Account::class);
-        $this->mRepoTrans = $this->_mock(\Praxigento\Accounting\Repo\Entity\Def\Transaction::class);
+        $this->mRepoAcc = $this->_mock(\Praxigento\Accounting\Repo\Entity\Account::class);
+        $this->mRepoTrans = $this->_mock(\Praxigento\Accounting\Repo\Entity\Transaction::class);
         $this->obj = new Call(
             $this->mLogger,
             $this->mManObj,

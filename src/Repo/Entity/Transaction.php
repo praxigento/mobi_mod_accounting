@@ -3,20 +3,20 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Repo\Entity\Def;
+namespace Praxigento\Accounting\Repo\Entity;
 
 use Praxigento\Accounting\Data\Entity\Transaction as Entity;
 
 class Transaction
     extends \Praxigento\Core\Repo\Def\Entity
 {
-    /** @var \Praxigento\Accounting\Repo\Entity\Def\Account */
+    /** @var \Praxigento\Accounting\Repo\Entity\Account */
     protected $_repoAccount;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric,
-        \Praxigento\Accounting\Repo\Entity\Def\Account $repoAccount
+        \Praxigento\Accounting\Repo\Entity\Account $repoAccount
     )
     {
         parent::__construct($resource, $repoGeneric, Entity::class);

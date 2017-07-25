@@ -16,13 +16,13 @@ class Call
 {
     /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
-    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Def\Admin */
+    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Admin */
     protected $_repoELogChangeAdmin;
-    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Def\Customer */
+    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Customer */
     protected $_repoELogChangeCust;
-    /** @var  \Praxigento\Accounting\Repo\Entity\Def\Operation */
+    /** @var  \Praxigento\Accounting\Repo\Entity\Operation */
     protected $_repoOper;
-    /** @var  \Praxigento\Accounting\Repo\Entity\Type\Def\Operation */
+    /** @var  \Praxigento\Accounting\Repo\Entity\Type\Operation */
     protected $_repoTypeOper;
     /** @var Sub\Add */
     protected $_subAdd;
@@ -31,10 +31,10 @@ class Call
         \Praxigento\Core\Fw\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
-        \Praxigento\Accounting\Repo\Entity\Def\Operation $repoOper,
-        \Praxigento\Accounting\Repo\Entity\Type\Def\Operation $repoTypeOper,
-        \Praxigento\Accounting\Repo\Entity\Log\Change\Def\Admin $repoELogChangeAdmin,
-        \Praxigento\Accounting\Repo\Entity\Log\Change\Def\Customer $repoELogChangeCust,
+        \Praxigento\Accounting\Repo\Entity\Operation $repoOper,
+        \Praxigento\Accounting\Repo\Entity\Type\Operation $repoTypeOper,
+        \Praxigento\Accounting\Repo\Entity\Log\Change\Admin $repoELogChangeAdmin,
+        \Praxigento\Accounting\Repo\Entity\Log\Change\Customer $repoELogChangeCust,
         Sub\Add $subAdd
     ) {
         parent::__construct($logger, $manObj);

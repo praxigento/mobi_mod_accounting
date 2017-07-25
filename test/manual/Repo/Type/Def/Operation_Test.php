@@ -10,13 +10,13 @@ include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Operation_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
 {
-    /** @var  \Praxigento\Accounting\Repo\Entity\Type\Def\Operation */
+    /** @var  \Praxigento\Accounting\Repo\Entity\Type\Operation */
     private $_obj;
 
     public function setUp()
     {
         parent::setUp();
-        $this->_obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Repo\Entity\Type\Def\Operation::class);
+        $this->_obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Repo\Entity\Type\Operation::class);
     }
 
     public function test_getIdByCode()

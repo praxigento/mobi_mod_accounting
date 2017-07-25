@@ -2,7 +2,8 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Accounting\Repo\Entity\Log\Change\Def;
+
+namespace Praxigento\Accounting\Repo\Entity\Log\Change;
 
 class Customer
     extends \Praxigento\Core\Repo\Entity\Def\Type

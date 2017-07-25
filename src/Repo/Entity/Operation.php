@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Repo\Entity\Def;
+namespace Praxigento\Accounting\Repo\Entity;
 
 use Magento\Framework\App\ResourceConnection;
 use Praxigento\Accounting\Data\Entity\Operation as Entity;

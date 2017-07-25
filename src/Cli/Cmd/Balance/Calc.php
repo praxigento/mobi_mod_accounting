@@ -17,12 +17,12 @@ class Calc
 
     /** @var \Praxigento\Accounting\Service\IBalance */
     protected $callBalance;
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\Def\Asset */
+    /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
     protected $repoTypeAsset;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Accounting\Repo\Entity\Type\Def\Asset $repoTypeAsset,
+        \Praxigento\Accounting\Repo\Entity\Type\Asset $repoTypeAsset,
         \Praxigento\Accounting\Service\IBalance $callBalance
     ) {
         parent::__construct(

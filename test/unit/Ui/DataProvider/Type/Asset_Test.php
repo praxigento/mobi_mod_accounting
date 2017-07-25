@@ -23,7 +23,7 @@ class Asset_UnitTest
     {
         parent::setUp();
         /** create mocks */
-        $this->mRepo = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\Def\Asset::class);
+        $this->mRepo = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\Asset::class);
         /** create object to test */
         $this->obj = new Asset(
             $this->mUrl,

@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Repo\Entity\Def;
+namespace Praxigento\Accounting\Repo\Entity;
 
 use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Data\Entity\Account as Entity;
