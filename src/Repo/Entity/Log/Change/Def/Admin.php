@@ -6,7 +6,6 @@ namespace Praxigento\Accounting\Repo\Entity\Log\Change\Def;
 
 class Admin
     extends \Praxigento\Core\Repo\Entity\Def\Type
-    implements \Praxigento\Accounting\Repo\Entity\Log\Change\IAdmin
 {
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,

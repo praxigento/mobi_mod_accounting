@@ -46,13 +46,13 @@ class Call_UnitTest
         $this->mToolDate = $this->_mock(\Praxigento\Core\Tool\IDate::class);
         $this->mToolPeriod = $this->_mock(\Praxigento\Core\Tool\IPeriod::class);
         $this->mRepoMod = $this->_mock(\Praxigento\Accounting\Repo\IModule::class);
-        $this->mRepoAccount = $this->_mock(\Praxigento\Accounting\Repo\Entity\IAccount::class);
-        $this->mRepoBalance = $this->_mock(\Praxigento\Accounting\Repo\Entity\IBalance::class);
-        $this->mRepoOperation = $this->_mock(\Praxigento\Accounting\Repo\Entity\IOperation::class);
-        $this->mRepoTransaction = $this->_mock(\Praxigento\Accounting\Repo\Entity\ITransaction::class);
-        $this->mRepoTypeAsset = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\IAsset::class);
-        $this->mRepoTypeOper = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\IOperation::class);
-        $this->mRepoLogChangeAdmin = $this->_mock(\Praxigento\Accounting\Repo\Entity\Log\Change\IAdmin::class);
+        $this->mRepoAccount = $this->_mock(\Praxigento\Accounting\Repo\Entity\Def\Account::class);
+        $this->mRepoBalance = $this->_mock(\Praxigento\Accounting\Repo\Entity\Def\Balance::class);
+        $this->mRepoOperation = $this->_mock(\Praxigento\Accounting\Repo\Entity\Def\Operation::class);
+        $this->mRepoTransaction = $this->_mock(\Praxigento\Accounting\Repo\Entity\Def\Transaction::class);
+        $this->mRepoTypeAsset = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\Def\Asset::class);
+        $this->mRepoTypeOper = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\Def\Operation::class);
+        $this->mRepoLogChangeAdmin = $this->_mock(\Praxigento\Accounting\Repo\Entity\Log\Change\Def\Admin::class);
         $this->mSubCalcSimple = $this->_mock(Sub\CalcSimple::class);
         /** reset args. to create mock of the tested object */
         $this->objArgs = [

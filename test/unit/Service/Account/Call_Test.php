@@ -28,8 +28,8 @@ class Call_UnitTest
     {
         parent::setUp();
         /** create mocks */
-        $this->mRepoAccount = $this->_mock(\Praxigento\Accounting\Repo\Entity\IAccount::class);
-        $this->mRepoTypeAsset = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\IAsset::class);
+        $this->mRepoAccount = $this->_mock(\Praxigento\Accounting\Repo\Entity\Def\Account::class);
+        $this->mRepoTypeAsset = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\Def\Asset::class);
         $this->mRepoMod = $this->_mock(\Praxigento\Accounting\Repo\IModule::class);
         /** setup mocks for constructor */
         /** create object to test */

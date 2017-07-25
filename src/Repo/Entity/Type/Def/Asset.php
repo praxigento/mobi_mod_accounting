@@ -6,7 +6,6 @@ namespace Praxigento\Accounting\Repo\Entity\Type\Def;
 
 class Asset
     extends \Praxigento\Core\Repo\Entity\Def\Type
-    implements \Praxigento\Accounting\Repo\Entity\Type\IAsset
 {
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,

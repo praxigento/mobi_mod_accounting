@@ -2,6 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Accounting\Repo\Entity\Def;
 
 use Praxigento\Accounting\Config as Cfg;
@@ -10,7 +11,6 @@ use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 
 class Account
     extends \Praxigento\Core\Repo\Def\Entity
-    implements \Praxigento\Accounting\Repo\Entity\IAccount
 {
     const ADMIN_WEBSITE_ID = Cfg::DEF_WEBSITE_ID_ADMIN;
     const BIND_CODE = 'code';
@@ -24,7 +24,8 @@ class Account
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric
-    ) {
+    )
+    {
         parent::__construct($resource, $repoGeneric, Entity::class);
     }
 
@@ -34,14 +35,27 @@ class Account
     }
 
     /**
+     * @param \Praxigento\Accounting\Data\Entity\Account|array $data
+     * @return int
+     */
+    public function create($data)
+    {
+        $result = parent::create($data);
+        return $result;
+    }
+
+    /**
+     * Get all accounts by asset type code.
+     *
+     * @param string $assetTypeCode
+     * @return \Praxigento\Accounting\Data\Entity\Account[]|null
+     *
      * SELECT
      * paa.*
      * FROM prxgt_acc_type_asset pata
      * LEFT JOIN prxgt_acc_account paa
      * ON pata.id = paa.asset_type_id
      * WHERE pata.code = "PV";
-     *
-     * @inheritdoc
      */
     public function getAllByAssetTypeCode($assetTypeCode)
     {
@@ -77,6 +91,12 @@ class Account
         return $result;
     }
 
+    /**
+     * Get all customer accounts.
+     *
+     * @param int $customerId
+     * @return \Praxigento\Accounting\Data\Entity\Account[]|null
+     */
     public function getAllByCustomerId($customerId)
     {
         $result = null;
@@ -89,6 +109,12 @@ class Account
         return $result;
     }
 
+    /**
+     * Get asset type ID for the given account.
+     *
+     * @param int $accountId
+     * @return int
+     */
     public function getAssetTypeId($accountId)
     {
         $result = null;
@@ -100,6 +126,13 @@ class Account
         return $result;
     }
 
+    /**
+     * Get account for the $customerId by $assetTypeId.
+     *
+     * @param int $customerId
+     * @param int $assetTypeId
+     * @return \Praxigento\Accounting\Data\Entity\Account|null
+     */
     public function getByCustomerId($customerId, $assetTypeId)
     {
         $result = null;
@@ -112,6 +145,22 @@ class Account
         return $result;
     }
 
+    /**
+     * @param int $id
+     * @return \Praxigento\Accounting\Data\Entity\Account|bool
+     */
+    public function getById($id)
+    {
+        $result = parent::getById($id);
+        return $result;
+    }
+
+    /**
+     * Return representative account ID for given asset type.
+     *
+     * @param int $assetTypeId
+     * @return int|null
+     */
     public function getRepresentativeAccountId($assetTypeId)
     {
         /* TODO: add cache for accounts ids */
@@ -126,6 +175,10 @@ class Account
         return $result;
     }
 
+    /**
+     * Return MageID for customer that represents store in accounting.
+     * @return int
+     */
     public function getRepresentativeCustomerId()
     {
         if (is_null($this->cachedRepresCustId)) {
@@ -151,6 +204,13 @@ class Account
         return $this->cachedRepresCustId;
     }
 
+    /**
+     * Add/subtract value to/from account current balance.
+     *
+     * @param int $accountId
+     * @param float $delta change value (negative or positive)
+     * @return int number of updated rows in DB
+     */
     public function updateBalance($accountId, $delta)
     {
         if ($delta < 0) {

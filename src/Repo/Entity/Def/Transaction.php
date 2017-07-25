@@ -2,26 +2,33 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Accounting\Repo\Entity\Def;
 
 use Praxigento\Accounting\Data\Entity\Transaction as Entity;
 
 class Transaction
     extends \Praxigento\Core\Repo\Def\Entity
-    implements \Praxigento\Accounting\Repo\Entity\ITransaction
 {
-    /** @var \Praxigento\Accounting\Repo\Entity\IAccount */
+    /** @var \Praxigento\Accounting\Repo\Entity\Def\Account */
     protected $_repoAccount;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric,
-        \Praxigento\Accounting\Repo\Entity\IAccount $repoAccount
-    ) {
+        \Praxigento\Accounting\Repo\Entity\Def\Account $repoAccount
+    )
+    {
         parent::__construct($resource, $repoGeneric, Entity::class);
         $this->_repoAccount = $repoAccount;
     }
 
+    /**
+     * Create transaction and update balances in account table.
+     *
+     * @param \Praxigento\Accounting\Data\Entity\Transaction|array $data
+     * @return int
+     */
     public function create($data)
     {
         $result = parent::create($data);
@@ -40,6 +47,12 @@ class Transaction
     }
 
     /**
+     * @param $assetTypeId
+     * @param $timestampFrom
+     * @param $timestampTo
+     *
+     * @return mixed
+     *
      * SELECT
      * `trn`.*
      * FROM `prxgt_acc_account` AS `acc`
@@ -91,6 +104,12 @@ class Transaction
     }
 
     /**
+     * Get date for first transaction.
+     *
+     * @param null $assetTypeId
+     *
+     * @return mixed
+     *
      * SELECT pat.date_applied
      * FROM prxgt_acc_type_asset pata
      * LEFT JOIN prxgt_acc_account paa

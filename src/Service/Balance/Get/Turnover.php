@@ -16,7 +16,7 @@ class Turnover
     protected $conn;
     /** @var \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder */
     protected $qbldBalClose;
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\IAsset */
+    /** @var \Praxigento\Accounting\Repo\Entity\Type\Def\Asset */
     protected $repoTypeAsset;
     /** @var \Magento\Framework\App\ResourceConnection */
     protected $resource;
@@ -29,7 +29,7 @@ class Turnover
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Tool\IPeriod $toolPeriod,
         \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder $qbldBalClose,
-        \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset
+        \Praxigento\Accounting\Repo\Entity\Type\Def\Asset $repoTypeAsset
     ) {
         parent::__construct($logger, $manObj);
         $this->resource = $resource;

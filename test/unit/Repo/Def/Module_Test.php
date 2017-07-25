@@ -15,17 +15,17 @@ class Module_UnitTest
     extends \Praxigento\Core\Test\BaseCase\Repo
 {
     /** @var  \Mockery\MockInterface */
+    private $mRepoAccount;
+    /** @var  \Mockery\MockInterface */
     private $mRepoGeneric;
     /** @var  Module */
     private $repo;
-    /** @var  \Mockery\MockInterface */
-    private $mRepoAccount;
 
     protected function setUp()
     {
         parent::setUp();
         $this->mRepoGeneric = $this->_mockRepoGeneric();
-        $this->mRepoAccount = $this->_mock(\Praxigento\Accounting\Repo\Entity\IAccount::class);
+        $this->mRepoAccount = $this->_mock(\Praxigento\Accounting\Repo\Entity\Def\Account::class);
         $this->repo = new Module(
             $this->mResource,
             $this->mRepoGeneric,

@@ -23,7 +23,7 @@ class Oper_UnitTest
     {
         parent::setUp();
         /** create mocks */
-        $this->mRepo = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\IOperation::class);
+        $this->mRepo = $this->_mock(\Praxigento\Accounting\Repo\Entity\Type\Def\Operation::class);
         /** create object to test */
         $this->obj = new Oper(
             $this->mUrl,

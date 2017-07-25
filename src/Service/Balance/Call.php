@@ -22,21 +22,21 @@ class Call
 {
     /** @var \Praxigento\Core\Transaction\Database\IManager */
     protected $manTrans;
-    /** @var \Praxigento\Accounting\Repo\Entity\IAccount */
+    /** @var \Praxigento\Accounting\Repo\Entity\Def\Account */
     protected $repoAccount;
-    /** @var \Praxigento\Accounting\Repo\Entity\IBalance */
+    /** @var \Praxigento\Accounting\Repo\Entity\Def\Balance */
     protected $repoBalance;
-    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\IAdmin */
+    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Def\Admin */
     protected $repoLogChangeAdmin;
     /** @var \Praxigento\Accounting\Repo\IModule */
     protected $repoMod;
-    /** @var \Praxigento\Accounting\Repo\Entity\IOperation */
+    /** @var \Praxigento\Accounting\Repo\Entity\Def\Operation */
     protected $repoOperation;
-    /** @var \Praxigento\Accounting\Repo\Entity\ITransaction */
+    /** @var \Praxigento\Accounting\Repo\Entity\Def\Transaction */
     protected $repoTransaction;
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\IAsset */
+    /** @var \Praxigento\Accounting\Repo\Entity\Type\Def\Asset */
     protected $repoTypeAsset;
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\IOperation */
+    /** @var \Praxigento\Accounting\Repo\Entity\Type\Def\Operation */
     protected $repoTypeOper;
     /** @var \Magento\Framework\App\ResourceConnection */
     protected $resource;
@@ -55,13 +55,13 @@ class Call
         \Praxigento\Core\Tool\IDate $toolDate,
         \Praxigento\Core\Tool\IPeriod $toolPeriod,
         \Praxigento\Accounting\Repo\IModule $repoMod,
-        \Praxigento\Accounting\Repo\Entity\IAccount $repoAccount,
-        \Praxigento\Accounting\Repo\Entity\IBalance $repoBalance,
-        \Praxigento\Accounting\Repo\Entity\IOperation $repoOperation,
-        \Praxigento\Accounting\Repo\Entity\ITransaction $repoTransaction,
-        \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset,
-        \Praxigento\Accounting\Repo\Entity\Type\IOperation $repoTypeOper,
-        \Praxigento\Accounting\Repo\Entity\Log\Change\IAdmin $repoLogChangeAdmin,
+        \Praxigento\Accounting\Repo\Entity\Def\Account $repoAccount,
+        \Praxigento\Accounting\Repo\Entity\Def\Balance $repoBalance,
+        \Praxigento\Accounting\Repo\Entity\Def\Operation $repoOperation,
+        \Praxigento\Accounting\Repo\Entity\Def\Transaction $repoTransaction,
+        \Praxigento\Accounting\Repo\Entity\Type\Def\Asset $repoTypeAsset,
+        \Praxigento\Accounting\Repo\Entity\Type\Def\Operation $repoTypeOper,
+        \Praxigento\Accounting\Repo\Entity\Log\Change\Def\Admin $repoLogChangeAdmin,
         Sub\CalcSimple $subCalcSimple
     ) {
         parent::__construct($logger, $manObj);

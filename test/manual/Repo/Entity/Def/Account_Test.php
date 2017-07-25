@@ -20,7 +20,7 @@ class Account_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
     public function setUp()
     {
         parent::setUp();
-        $this->_obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Repo\Entity\IAccount::class);
+        $this->_obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Repo\Entity\Def\Account::class);
     }
 
     public function test_create()

@@ -7,17 +7,42 @@ namespace Praxigento\Accounting\Repo\Entity\Def;
 
 class Balance
     extends \Praxigento\Core\Repo\Def\Entity
-    implements \Praxigento\Accounting\Repo\Entity\IBalance
 {
-
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\IGeneric $repoGeneric
-    ) {
+    )
+    {
         parent::__construct($resource, $repoGeneric, \Praxigento\Accounting\Data\Entity\Balance::class);
     }
 
     /**
+     * @param array|\Praxigento\Accounting\Data\Entity\Balance $data
+     * @return int
+     */
+    public function create($data)
+    {
+        $result = parent::create($data);
+        return $result;
+    }
+
+    /**
+     * @param int $id
+     * @return \Praxigento\Accounting\Data\Entity\Balance|bool
+     */
+    public function getById($id)
+    {
+        $result = parent::getById($id);
+        return $result;
+    }
+
+    /**
+     * Get maximal datestamp for existing balance by asset type id or null if no data is found.
+     *
+     * @param int $assetTypeId
+     *
+     * @return string YYYYMMDD
+     *
      * SELECT
      * `b`.`date`
      * FROM `prxgt_acc_account` AS `a`
@@ -55,6 +80,13 @@ class Balance
     }
 
     /**
+     * Get balances on concrete date.
+     *
+     * @param $assetTypeId
+     * @param $yyyymmdd
+     *
+     * @return array
+     *
      * Select balances on date by asset type.
      *
      * SELECT
@@ -148,6 +180,10 @@ class Balance
         return $result;
     }
 
+    /**
+     * @param $updateData
+     * @return mixed
+     */
     public function updateBalances($updateData)
     {
         $this->conn->beginTransaction();

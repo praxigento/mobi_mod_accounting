@@ -38,10 +38,10 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private $_callBalance;
     /** @var  \Praxigento\Accounting\Service\Operation\Call */
     private $_callOperation;
+    /** @var  \Praxigento\Accounting\Repo\Entity\Def\Balance */
+    private $_repoBalance;
     /** @var \Praxigento\Core\Repo\IGeneric */
     private $_repoGeneric;
-    /** @var  \Praxigento\Accounting\Repo\Entity\IBalance */
-    private $_repoBalance;
     private $acc1 = [];
     private $acc2 = [];
     private $cust1 = [];
@@ -59,7 +59,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $this->_callBalance = $this->_manObj->get(\Praxigento\Accounting\Service\Balance\Call::class);
         $this->_callOperation = $this->_manObj->get(\Praxigento\Accounting\Service\Operation\Call::class);
         $this->_repoGeneric = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
-        $this->_repoBalance = $this->_manObj->get(\Praxigento\Accounting\Repo\Entity\IBalance::class);
+        $this->_repoBalance = $this->_manObj->get(\Praxigento\Accounting\Repo\Entity\Def\Balance::class);
     }
 
     private function _calculateBalances()

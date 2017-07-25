@@ -5,7 +5,6 @@
 namespace Praxigento\Accounting\Service\Account;
 
 use Praxigento\Accounting\Data\Entity\Account as Account;
-use Praxigento\Core\Service\Base\Call as BaseCall;
 
 /**
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
@@ -16,11 +15,11 @@ class Call
 {
     /** @var array save accounts data for representative customer. */
     protected $_cachedRepresentAccs = [];
-    /** @var  \Praxigento\Accounting\Repo\Entity\IAccount */
+    /** @var  \Praxigento\Accounting\Repo\Entity\Def\Account */
     protected $_repoAccount;
     /** @var \Praxigento\Accounting\Repo\IModule */
     protected $_repoMod;
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\IAsset */
+    /** @var \Praxigento\Accounting\Repo\Entity\Type\Def\Asset */
     protected $_repoTypeAsset;
 
     /**
@@ -29,8 +28,8 @@ class Call
     public function __construct(
         \Praxigento\Core\Fw\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Accounting\Repo\Entity\IAccount $repoAccount,
-        \Praxigento\Accounting\Repo\Entity\Type\IAsset $repoTypeAsset,
+        \Praxigento\Accounting\Repo\Entity\Def\Account $repoAccount,
+        \Praxigento\Accounting\Repo\Entity\Type\Def\Asset $repoTypeAsset,
         \Praxigento\Accounting\Repo\IModule $repoMod
     ) {
         parent::__construct($logger, $manObj);

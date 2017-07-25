@@ -16,7 +16,7 @@ class Oper
     public function __construct(
         \Magento\Framework\UrlInterface $url,
         \Praxigento\Core\Repo\Query\Criteria\IAdapter $critAdapter,
-        \Praxigento\Accounting\Repo\Entity\Type\IOperation $repo,
+        \Praxigento\Accounting\Repo\Entity\Type\Def\Operation $repo,
         \Magento\Framework\View\Element\UiComponent\DataProvider\Reporting $reporting,
         \Magento\Framework\Api\Search\SearchCriteriaBuilder $searchCritBuilder,
         \Magento\Framework\App\RequestInterface $request,

@@ -6,7 +6,6 @@ namespace Praxigento\Accounting\Repo\Entity\Type\Def;
 
 class Operation
     extends \Praxigento\Core\Repo\Entity\Def\Type
-    implements \Praxigento\Accounting\Repo\Entity\Type\IOperation
 {
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,

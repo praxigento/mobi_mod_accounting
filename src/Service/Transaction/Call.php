@@ -16,9 +16,9 @@ class Call
 {
     /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
-    /** @var  \Praxigento\Accounting\Repo\Entity\IAccount */
+    /** @var  \Praxigento\Accounting\Repo\Entity\Def\Account */
     protected $_repoAcc;
-    /** @var  \Praxigento\Accounting\Repo\Entity\ITransaction */
+    /** @var  \Praxigento\Accounting\Repo\Entity\Def\Transaction */
     protected $_repoTrans;
 
     /**
@@ -28,8 +28,8 @@ class Call
         \Praxigento\Core\Fw\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
-        \Praxigento\Accounting\Repo\Entity\IAccount $repoAcc,
-        \Praxigento\Accounting\Repo\Entity\ITransaction $repoTrans
+        \Praxigento\Accounting\Repo\Entity\Def\Account $repoAcc,
+        \Praxigento\Accounting\Repo\Entity\Def\Transaction $repoTrans
     ) {
         parent::__construct($logger, $manObj);
         $this->_manTrans = $manTrans;
