@@ -6,9 +6,9 @@ namespace Praxigento\Accounting\Repo\Agg\Def\Account;
 
 use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Data\Agg\Account as AggEntity;
-use Praxigento\Accounting\Data\Entity\Account as EAccount;
-use Praxigento\Accounting\Data\Entity\Type\Asset as ETypeAsset;
 use Praxigento\Accounting\Repo\Agg\IAccount as AggRepo;
+use Praxigento\Accounting\Repo\Entity\Data\Account as EAccount;
+use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as ETypeAsset;
 
 class SelectFactory
     extends \Praxigento\Core\Repo\Agg\BaseSelectFactory

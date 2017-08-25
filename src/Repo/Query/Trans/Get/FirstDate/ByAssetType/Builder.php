@@ -5,9 +5,9 @@
 
 namespace Praxigento\Accounting\Repo\Query\Trans\Get\FirstDate\ByAssetType;
 
-use Praxigento\Accounting\Data\Entity\Account as EAccount;
-use Praxigento\Accounting\Data\Entity\Transaction as ETrans;
-use Praxigento\Accounting\Data\Entity\Type\Asset as ETypeAsset;
+use Praxigento\Accounting\Repo\Entity\Data\Account as EAccount;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction as ETrans;
+use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as ETypeAsset;
 
 /**
  * Build query to get transactions for the customer.

@@ -80,8 +80,8 @@ class Calc
         $types = $this->repoTypeAsset->get();
         foreach ($types as $type) {
             /* convert to DataObject if repo response is array */
-            /** @var \Praxigento\Accounting\Data\Entity\Type\Asset $obj */
-            $obj = (is_array($type)) ? new \Praxigento\Accounting\Data\Entity\Type\Asset($type) : $type;
+            /** @var \Praxigento\Accounting\Repo\Entity\Data\Type\Asset $obj */
+            $obj = (is_array($type)) ? new \Praxigento\Accounting\Repo\Entity\Data\Type\Asset($type) : $type;
             $typeId = $obj->getId();
             $typeCode = $obj->getCode();
             $result[$typeId] = $typeCode;

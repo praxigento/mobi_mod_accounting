@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Repo\Entity;
 
 use Magento\Framework\App\ObjectManager;
-use Praxigento\Accounting\Data\Entity\Account as Entity;
+use Praxigento\Accounting\Repo\Entity\Data\Account as Entity;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 

@@ -6,14 +6,14 @@
  */
 namespace Praxigento\Accounting\Setup;
 
-use Praxigento\Accounting\Data\Entity\Account as Account;
-use Praxigento\Accounting\Data\Entity\Balance as Balance;
-use Praxigento\Accounting\Data\Entity\Log\Change\Admin as LogChangeAdmin;
-use Praxigento\Accounting\Data\Entity\Log\Change\Customer as LogChangeCustomer;
-use Praxigento\Accounting\Data\Entity\Operation as Operation;
-use Praxigento\Accounting\Data\Entity\Transaction as Transaction;
-use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
-use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
+use Praxigento\Accounting\Repo\Entity\Data\Account as Account;
+use Praxigento\Accounting\Repo\Entity\Data\Balance as Balance;
+use Praxigento\Accounting\Repo\Entity\Data\Log\Change\Admin as LogChangeAdmin;
+use Praxigento\Accounting\Repo\Entity\Data\Log\Change\Customer as LogChangeCustomer;
+use Praxigento\Accounting\Repo\Entity\Data\Operation as Operation;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction as Transaction;
+use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as TypeAsset;
+use Praxigento\Accounting\Repo\Entity\Data\Type\Operation as TypeOperation;
 
 /**
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)

@@ -6,8 +6,8 @@
 namespace Praxigento\Accounting\Repo\Entity;
 
 use Praxigento\Accounting\Config as Cfg;
-use Praxigento\Accounting\Data\Entity\Account as Entity;
-use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
+use Praxigento\Accounting\Repo\Entity\Data\Account as Entity;
+use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as TypeAsset;
 
 class Account
     extends \Praxigento\Core\Repo\Def\Entity
@@ -35,7 +35,7 @@ class Account
     }
 
     /**
-     * @param \Praxigento\Accounting\Data\Entity\Account|array $data
+     * @param \Praxigento\Accounting\Repo\Entity\Data\Account|array $data
      * @return int
      */
     public function create($data)
@@ -48,7 +48,7 @@ class Account
      * Get all accounts by asset type code.
      *
      * @param string $assetTypeCode
-     * @return \Praxigento\Accounting\Data\Entity\Account[]|null
+     * @return \Praxigento\Accounting\Repo\Entity\Data\Account[]|null
      *
      * SELECT
      * paa.*
@@ -95,7 +95,7 @@ class Account
      * Get all customer accounts.
      *
      * @param int $customerId
-     * @return \Praxigento\Accounting\Data\Entity\Account[]|null
+     * @return \Praxigento\Accounting\Repo\Entity\Data\Account[]|null
      */
     public function getAllByCustomerId($customerId)
     {
@@ -131,7 +131,7 @@ class Account
      *
      * @param int $customerId
      * @param int $assetTypeId
-     * @return \Praxigento\Accounting\Data\Entity\Account|null
+     * @return \Praxigento\Accounting\Repo\Entity\Data\Account|null
      */
     public function getByCustomerId($customerId, $assetTypeId)
     {
@@ -147,7 +147,7 @@ class Account
 
     /**
      * @param int $id
-     * @return \Praxigento\Accounting\Data\Entity\Account|bool
+     * @return \Praxigento\Accounting\Repo\Entity\Data\Account|bool
      */
     public function getById($id)
     {

@@ -7,9 +7,9 @@ namespace Praxigento\Accounting\Repo\Agg\Def\Account;
 
 use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Data\Agg\Account as Agg;
-use Praxigento\Accounting\Data\Entity\Account;
-use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Repo\Agg\IAccount as Repo;
+use Praxigento\Accounting\Repo\Entity\Data\Account;
+use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as TypeAsset;
 
 class Mapper
     extends \Praxigento\Core\Repo\Query\Criteria\Def\Mapper

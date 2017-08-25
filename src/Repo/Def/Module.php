@@ -6,9 +6,9 @@
 namespace Praxigento\Accounting\Repo\Def;
 
 use Praxigento\Accounting\Config as Cfg;
-use Praxigento\Accounting\Data\Entity\Account;
-use Praxigento\Accounting\Data\Entity\Balance;
-use Praxigento\Accounting\Data\Entity\Transaction;
+use Praxigento\Accounting\Repo\Entity\Data\Account;
+use Praxigento\Accounting\Repo\Entity\Data\Balance;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction;
 use Praxigento\Accounting\Repo\IModule;
 use Praxigento\Core\Repo\Def\Db;
 

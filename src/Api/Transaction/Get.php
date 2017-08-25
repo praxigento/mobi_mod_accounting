@@ -5,7 +5,7 @@
 
 namespace Praxigento\Accounting\Api\Transaction;
 
-use Praxigento\Accounting\Data\Entity\Account as Acc;
+use Praxigento\Accounting\Repo\Entity\Data\Account as Acc;
 use Praxigento\Accounting\Repo\Query\Trans\Get\Builder as Builder;
 
 class Get

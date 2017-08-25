@@ -15,7 +15,7 @@ class Admin
         parent::__construct(
             $resource,
             $repoGeneric,
-            \Praxigento\Accounting\Data\Entity\Log\Change\Admin::class
+            \Praxigento\Accounting\Repo\Entity\Data\Log\Change\Admin::class
         );
     }
 }

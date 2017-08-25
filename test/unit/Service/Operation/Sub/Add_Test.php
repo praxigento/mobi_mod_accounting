@@ -4,16 +4,16 @@
  */
 namespace Praxigento\Accounting\Service\Operation\Sub;
 
-use Praxigento\Accounting\Data\Entity\Transaction;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction;
 use Praxigento\Accounting\Service\Transaction\Response\Add as AddResponse;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
 class Add_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery {
-    /** @var  Add */
-    private $obj;
     /** @var  \Mockery\MockInterface */
     private $mCallTransaction;
+    /** @var  Add */
+    private $obj;
 
     protected function setUp() {
         parent::setUp();
@@ -23,18 +23,19 @@ class Add_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         );
     }
 
-    public function test_transactions_ref() {
+    /**
+     * @expectedException \Exception
+     */
+    public function test_transactions_exception()
+    {
         /** === Test Data === */
         $OPER_ID = 2;
         $DATE_PERFORMED = 'date';
-        $AS_REF = 'ref';
-        $REF = 16;
         $TRANS = [
             [
-                $AS_REF                         => $REF,
                 Transaction::ATTR_DEBIT_ACC_ID  => 'debit',
                 Transaction::ATTR_CREDIT_ACC_ID => 'credit',
-                Transaction::ATTR_VALUE         => 'value'
+                Transaction::ATTR_VALUE => 'value',
             ]
         ];
         $TRAN_ID = 4;
@@ -45,16 +46,10 @@ class Add_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         $this->mCallTransaction
             ->shouldReceive('add')
             ->andReturn($mResp);
-        // if(!$resp->isSucceed()) {
-        $mResp->markSucceed();
-        // $tranId = $resp->getTransactionId();
-        $mResp->setTransactionId($TRAN_ID);
 
         /** === Call and asserts  === */
 
-        $resp = $this->obj->transactions($OPER_ID, $TRANS, $DATE_PERFORMED, $AS_REF);
-        $this->assertTrue(is_array($resp));
-        $this->assertEquals($REF, $resp[$TRAN_ID]);
+        $this->obj->transactions($OPER_ID, $TRANS, $DATE_PERFORMED);
     }
 
     public function test_transactions_noRef() {
@@ -88,18 +83,19 @@ class Add_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         $this->assertEquals($TRAN_ID, reset($resp));
     }
 
-    /**
-     * @expectedException \Exception
-     */
-    public function test_transactions_exception() {
+    public function test_transactions_ref()
+    {
         /** === Test Data === */
         $OPER_ID = 2;
         $DATE_PERFORMED = 'date';
+        $AS_REF = 'ref';
+        $REF = 16;
         $TRANS = [
             [
+                $AS_REF => $REF,
                 Transaction::ATTR_DEBIT_ACC_ID  => 'debit',
                 Transaction::ATTR_CREDIT_ACC_ID => 'credit',
-                Transaction::ATTR_VALUE         => 'value',
+                Transaction::ATTR_VALUE => 'value'
             ]
         ];
         $TRAN_ID = 4;
@@ -110,10 +106,16 @@ class Add_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         $this->mCallTransaction
             ->shouldReceive('add')
             ->andReturn($mResp);
+        // if(!$resp->isSucceed()) {
+        $mResp->markSucceed();
+        // $tranId = $resp->getTransactionId();
+        $mResp->setTransactionId($TRAN_ID);
 
         /** === Call and asserts  === */
 
-        $this->obj->transactions($OPER_ID, $TRANS, $DATE_PERFORMED);
+        $resp = $this->obj->transactions($OPER_ID, $TRANS, $DATE_PERFORMED, $AS_REF);
+        $this->assertTrue(is_array($resp));
+        $this->assertEquals($REF, $resp[$TRAN_ID]);
     }
 
 }

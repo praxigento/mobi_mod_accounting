@@ -6,10 +6,10 @@ namespace Praxigento\Accounting\Repo\Agg\Def\Transaction;
 
 use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Data\Agg\Transaction as AggEntity;
-use Praxigento\Accounting\Data\Entity\Account as EAccount;
-use Praxigento\Accounting\Data\Entity\Transaction as ETransaction;
-use Praxigento\Accounting\Data\Entity\Type\Asset as ETypeAsset;
 use Praxigento\Accounting\Repo\Agg\Def\Transaction as Repo;
+use Praxigento\Accounting\Repo\Entity\Data\Account as EAccount;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction as ETransaction;
+use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as ETypeAsset;
 
 class SelectFactory
     extends \Praxigento\Core\Repo\Agg\BaseSelectFactory

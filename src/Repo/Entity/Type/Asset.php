@@ -15,7 +15,7 @@ class Asset
         parent::__construct(
             $resource,
             $repoGeneric,
-            \Praxigento\Accounting\Data\Entity\Type\Asset::class
+            \Praxigento\Accounting\Repo\Entity\Data\Type\Asset::class
         );
     }
 }

@@ -5,9 +5,9 @@
 namespace Praxigento\Accounting\Repo\Agg\Def\Operation;
 
 use Praxigento\Accounting\Data\Agg\Operation as Agg;
-use Praxigento\Accounting\Data\Entity\Operation;
-use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOper;
 use Praxigento\Accounting\Repo\Agg\IOperation as Repo;
+use Praxigento\Accounting\Repo\Entity\Data\Operation;
+use Praxigento\Accounting\Repo\Entity\Data\Type\Operation as TypeOper;
 
 class Mapper
     extends \Praxigento\Core\Repo\Query\Criteria\Def\Mapper

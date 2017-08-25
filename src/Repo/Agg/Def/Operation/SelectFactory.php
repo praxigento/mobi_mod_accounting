@@ -5,9 +5,9 @@
 namespace Praxigento\Accounting\Repo\Agg\Def\Operation;
 
 use Praxigento\Accounting\Data\Agg\Operation as AggEntity;
-use Praxigento\Accounting\Data\Entity\Operation as EOperation;
-use Praxigento\Accounting\Data\Entity\Type\Operation as ETypeOper;
 use Praxigento\Accounting\Repo\Agg\IOperation as AggRepo;
+use Praxigento\Accounting\Repo\Entity\Data\Operation as EOperation;
+use Praxigento\Accounting\Repo\Entity\Data\Type\Operation as ETypeOper;
 
 class SelectFactory
     extends \Praxigento\Core\Repo\Agg\BaseSelectFactory

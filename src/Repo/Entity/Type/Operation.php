@@ -15,7 +15,7 @@ class Operation
         parent::__construct(
             $resource,
             $repoGeneric,
-            \Praxigento\Accounting\Data\Entity\Type\Operation::class
+            \Praxigento\Accounting\Repo\Entity\Data\Type\Operation::class
         );
     }
 

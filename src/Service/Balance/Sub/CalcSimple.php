@@ -8,8 +8,8 @@
 namespace Praxigento\Accounting\Service\Balance\Sub;
 
 
-use Praxigento\Accounting\Data\Entity\Balance;
-use Praxigento\Accounting\Data\Entity\Transaction;
+use Praxigento\Accounting\Repo\Entity\Data\Balance;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction;
 use Praxigento\Core\Tool\IPeriod;
 
 class CalcSimple
@@ -120,7 +120,7 @@ class CalcSimple
     {
         $result = [];
         foreach ($balances as $balance) {
-            $accountId = $balance[\Praxigento\Accounting\Data\Entity\Account::ATTR_ID];
+            $accountId = $balance[\Praxigento\Accounting\Repo\Entity\Data\Account::ATTR_ID];
             $value = $balance[Balance::ATTR_BALANCE_CLOSE];
             $result[$accountId] = $value;
         }

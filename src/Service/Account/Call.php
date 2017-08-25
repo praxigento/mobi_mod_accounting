@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Service\Account;
 
-use Praxigento\Accounting\Data\Entity\Account as Account;
+use Praxigento\Accounting\Repo\Entity\Data\Account as Account;
 
 /**
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)

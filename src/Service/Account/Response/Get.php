@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Service\Account\Response;
 
-use Praxigento\Accounting\Data\Entity\Account;
+use Praxigento\Accounting\Repo\Entity\Data\Account;
 
 class Get extends \Praxigento\Core\Service\Base\Response
 {

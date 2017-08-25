@@ -2,7 +2,8 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Accounting\Data\Entity;
+
+namespace Praxigento\Accounting\Repo\Entity\Data;
 
 class Account
     extends \Praxigento\Core\Data\Entity\Base

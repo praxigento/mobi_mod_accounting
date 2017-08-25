@@ -4,7 +4,8 @@
  *
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Accounting\Data\Entity\Type;
+
+namespace Praxigento\Accounting\Repo\Entity\Data\Type;
 
 class Operation
     extends \Praxigento\Core\Data\Entity\Type\Base

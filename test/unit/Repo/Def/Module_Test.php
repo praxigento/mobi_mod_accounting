@@ -5,9 +5,9 @@
 namespace Praxigento\Accounting\Repo\Def;
 
 use Praxigento\Accounting\Config as Cfg;
-use Praxigento\Accounting\Data\Entity\Account;
-use Praxigento\Accounting\Data\Entity\Balance;
-use Praxigento\Accounting\Data\Entity\Transaction;
+use Praxigento\Accounting\Repo\Entity\Data\Account;
+use Praxigento\Accounting\Repo\Entity\Data\Balance;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
 
@@ -55,12 +55,12 @@ class Module_UnitTest
         // $tbl = $this->_resource->getTableName(Asset::ENTITY_NAME);
         $this->mResource
             ->shouldReceive('getTableName')->once()
-            ->with(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME)
+            ->with(\Praxigento\Accounting\Repo\Entity\Data\Account::ENTITY_NAME)
             ->andReturn($TBL_ACC);
         // $tblBalance = $this->_resource->getTableName(Balance::ENTITY_NAME);
         $this->mResource
             ->shouldReceive('getTableName')->once()
-            ->with(\Praxigento\Accounting\Data\Entity\Balance::ENTITY_NAME)
+            ->with(\Praxigento\Accounting\Repo\Entity\Data\Balance::ENTITY_NAME)
             ->andReturn($TBL_BALANCE);
         // $query = $this->_conn->select();
         $mQuery = $this->_mockDbSelect();
@@ -98,12 +98,12 @@ class Module_UnitTest
         // $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
         $this->mResource
             ->shouldReceive('getTableName')
-            ->with(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME)
+            ->with(\Praxigento\Accounting\Repo\Entity\Data\Account::ENTITY_NAME)
             ->andReturn($TBL_ACC);
         // $tblBalance = $this->_resource->getTableName(Balance::ENTITY_NAME);
         $this->mResource
             ->shouldReceive('getTableName')
-            ->with(\Praxigento\Accounting\Data\Entity\Balance::ENTITY_NAME)
+            ->with(\Praxigento\Accounting\Repo\Entity\Data\Balance::ENTITY_NAME)
             ->andReturn($TBL_BALANCE);
         // $q4Max = $conn->select();
         $mQ4Max = $this->_mockDbSelect();
@@ -201,12 +201,12 @@ class Module_UnitTest
         // $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
         $this->mResource
             ->shouldReceive('getTableName')
-            ->with(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME)
+            ->with(\Praxigento\Accounting\Repo\Entity\Data\Account::ENTITY_NAME)
             ->andReturn($TBL_ACC);
         // $tblTrans = $this->_resource->getTableName(Transaction::ENTITY_NAME);
         $this->mResource
             ->shouldReceive('getTableName')
-            ->with(\Praxigento\Accounting\Data\Entity\Transaction::ENTITY_NAME)
+            ->with(\Praxigento\Accounting\Repo\Entity\Data\Transaction::ENTITY_NAME)
             ->andReturn($TBL_TRANS);
         // $query = $this->_conn->select();
         $mQuery = $this->_mockDbSelect();
@@ -247,12 +247,12 @@ class Module_UnitTest
         // $tblAccount = $this->_resource->getTableName(Account::ENTITY_NAME);
         $this->mResource
             ->shouldReceive('getTableName')->once()
-            ->with(\Praxigento\Accounting\Data\Entity\Account::ENTITY_NAME)
+            ->with(\Praxigento\Accounting\Repo\Entity\Data\Account::ENTITY_NAME)
             ->andReturn($TBL_ACC);
         // $tblTrans = $this->_resource->getTableName(Transaction::ENTITY_NAME);
         $this->mResource
             ->shouldReceive('getTableName')->once()
-            ->with(\Praxigento\Accounting\Data\Entity\Transaction::ENTITY_NAME)
+            ->with(\Praxigento\Accounting\Repo\Entity\Data\Transaction::ENTITY_NAME)
             ->andReturn($TBL_TRANS);
         // $query = $this->_conn->select();
         $mQuery = $this->_mockDbSelect();
@@ -296,7 +296,7 @@ class Module_UnitTest
         // $tbl = $this->_resource->getTableName(Balance::ENTITY_NAME);
         $this->mResource
             ->shouldReceive('getTableName')->once()
-            ->with(\Praxigento\Accounting\Data\Entity\Balance::ENTITY_NAME)
+            ->with(\Praxigento\Accounting\Repo\Entity\Data\Balance::ENTITY_NAME)
             ->andReturn($TBL_BALANCE);
         // $this->_conn->insert($tbl, $data);
         $this->mConn

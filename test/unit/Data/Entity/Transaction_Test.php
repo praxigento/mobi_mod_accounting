@@ -3,10 +3,10 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Data\Entity;
+namespace Praxigento\Accounting\Repo\Entity\Data;
 
 include_once(__DIR__ . '/../../phpunit_bootstrap.php');
-use Praxigento\Accounting\Data\Entity\Transaction as DataEntity;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction as DataEntity;
 
 class Transaction_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
 {

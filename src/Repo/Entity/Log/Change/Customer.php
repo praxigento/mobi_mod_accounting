@@ -15,7 +15,7 @@ class Customer
         parent::__construct(
             $resource,
             $repoGeneric,
-            \Praxigento\Accounting\Data\Entity\Log\Change\Customer::class
+            \Praxigento\Accounting\Repo\Entity\Data\Log\Change\Customer::class
         );
     }
 }

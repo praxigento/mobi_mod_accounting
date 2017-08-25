@@ -5,7 +5,7 @@
 
 namespace Praxigento\Accounting\Service\Operation\Sub;
 
-use Praxigento\Accounting\Data\Entity\Transaction;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction;
 use Praxigento\Accounting\Service\Transaction\Request\Add as AddTransactionRequest;
 use Praxigento\Accounting\Service\Transaction\Response\Add as AddTransactionResponse;
 

@@ -7,7 +7,7 @@
 namespace Praxigento\Accounting\Setup;
 
 use Praxigento\Accounting\Config as Cfg;
-use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
+use Praxigento\Accounting\Repo\Entity\Data\Type\Operation as TypeOperation;
 
 /**
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)

@@ -4,11 +4,11 @@
  */
 namespace Praxigento\Accounting\Lib\Test\Story01;
 
-use Praxigento\Accounting\Data\Entity\Account;
-use Praxigento\Accounting\Data\Entity\Balance;
-use Praxigento\Accounting\Data\Entity\Transaction;
-use Praxigento\Accounting\Data\Entity\Type\Asset as TypeAsset;
-use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
+use Praxigento\Accounting\Repo\Entity\Data\Account;
+use Praxigento\Accounting\Repo\Entity\Data\Balance;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction;
+use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as TypeAsset;
+use Praxigento\Accounting\Repo\Entity\Data\Type\Operation as TypeOperation;
 use Praxigento\Accounting\Service\Account\Request\Get as AccountGetRequest;
 use Praxigento\Accounting\Service\Balance\Request\Calc as BalanceCalcRequest;
 use Praxigento\Accounting\Service\Operation\Request\Add as OperationAddRequest;

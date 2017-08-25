@@ -5,8 +5,8 @@
 namespace Praxigento\Accounting\Repo\Agg\Def\Operation;
 
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
-use Praxigento\Accounting\Data\Entity\Operation as EOperation;
-use Praxigento\Accounting\Data\Entity\Type\Operation as ETypeOper;
+use Praxigento\Accounting\Repo\Entity\Data\Operation as EOperation;
+use Praxigento\Accounting\Repo\Entity\Data\Type\Operation as ETypeOper;
 
 /**
  * @SuppressWarnings(PHPMD.CamelCaseClassName)

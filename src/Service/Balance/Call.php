@@ -6,8 +6,8 @@
 namespace Praxigento\Accounting\Service\Balance;
 
 use Praxigento\Accounting\Config as Cfg;
-use Praxigento\Accounting\Data\Entity\Balance;
-use Praxigento\Accounting\Data\Entity\Log\Change\Admin as ELogChangeAdmin;
+use Praxigento\Accounting\Repo\Entity\Data\Balance;
+use Praxigento\Accounting\Repo\Entity\Data\Log\Change\Admin as ELogChangeAdmin;
 use Praxigento\Core\Tool\IPeriod;
 
 /**
@@ -129,12 +129,12 @@ class Call
             $operTypeId = $this->repoTypeOper->getIdByCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
             $dateNow = $this->toolDate->getUtcNowForDb();
             /* create operation */
-            $operation = new \Praxigento\Accounting\Data\Entity\Operation();
+            $operation = new \Praxigento\Accounting\Repo\Entity\Data\Operation();
             $operation->setTypeId($operTypeId);
             $operation->setDatePerformed($dateNow);
             $operId = $this->repoOperation->create($operation);
             /* create transaction */
-            $trans = new \Praxigento\Accounting\Data\Entity\Transaction();
+            $trans = new \Praxigento\Accounting\Repo\Entity\Data\Transaction();
             $trans->setOperationId($operId);
             $trans->setDateApplied($dateNow);
             if ($value > 0) {

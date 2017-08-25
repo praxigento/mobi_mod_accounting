@@ -5,7 +5,7 @@
 
 namespace Praxigento\Accounting\Service\Operation;
 
-use Praxigento\Accounting\Data\Entity\Operation as EntityOperation;
+use Praxigento\Accounting\Repo\Entity\Data\Operation as EntityOperation;
 
 /**
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
@@ -84,14 +84,14 @@ class Call
                 $result->setTransactionsIds($transIds);
                 /* log customer link */
                 if ($customerId) {
-                    $log = new \Praxigento\Accounting\Data\Entity\Log\Change\Customer();
+                    $log = new \Praxigento\Accounting\Repo\Entity\Data\Log\Change\Customer();
                     $log->setCustomerRef($customerId);
                     $log->setOperationRef($operId);
                     $this->_repoELogChangeCust->create($log);
                 }
                 /* log admin link */
                 if ($adminUserId) {
-                    $log = new \Praxigento\Accounting\Data\Entity\Log\Change\Admin();
+                    $log = new \Praxigento\Accounting\Repo\Entity\Data\Log\Change\Admin();
                     $log->setUserRef($adminUserId);
                     $log->setOperationRef($operId);
                     $this->_repoELogChangeAdmin->create($log);

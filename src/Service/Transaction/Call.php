@@ -5,7 +5,7 @@
 
 namespace Praxigento\Accounting\Service\Transaction;
 
-use Praxigento\Accounting\Data\Entity\Transaction as Transaction;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction as Transaction;
 
 /**
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)

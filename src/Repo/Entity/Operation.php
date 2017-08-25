@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Repo\Entity;
 
 use Magento\Framework\App\ResourceConnection;
-use Praxigento\Accounting\Data\Entity\Operation as Entity;
+use Praxigento\Accounting\Repo\Entity\Data\Operation as Entity;
 use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
 use Praxigento\Core\Repo\IGeneric as IRepoGeneric;
 
@@ -21,7 +21,7 @@ class Operation extends BaseEntityRepo
     }
 
     /**
-     * @param array|\Praxigento\Accounting\Data\Entity\Operation $data
+     * @param array|\Praxigento\Accounting\Repo\Entity\Data\Operation $data
      * @return int
      */
     public function create($data)
