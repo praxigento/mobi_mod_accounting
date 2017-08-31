@@ -22,6 +22,8 @@ interface IAccount extends ICached
      * @param Request\GetRepresentative $request
      *
      * @return Response\GetRepresentative
+     *
+     * @deprecated use \Praxigento\Accounting\Repo\Entity\Account::getRepresentativeAccountId
      */
     public function getRepresentative(Request\GetRepresentative $request);
 }
