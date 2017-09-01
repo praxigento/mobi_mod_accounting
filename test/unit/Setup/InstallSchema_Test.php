@@ -4,7 +4,6 @@
  */
 namespace Praxigento\Accounting\Setup;
 
-use Flancer32\Lib\Data as DataObject;
 use Praxigento\Accounting\Repo\Entity\Data\Account as Account;
 use Praxigento\Accounting\Repo\Entity\Data\Balance as Balance;
 use Praxigento\Accounting\Repo\Entity\Data\Log\Change\Admin as LogChangeAdmin;
@@ -13,6 +12,7 @@ use Praxigento\Accounting\Repo\Entity\Data\Operation as Operation;
 use Praxigento\Accounting\Repo\Entity\Data\Transaction as Transaction;
 use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as TypeAsset;
 use Praxigento\Accounting\Repo\Entity\Data\Type\Operation as TypeOperation;
+use Praxigento\Core\Data as DataObject;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 

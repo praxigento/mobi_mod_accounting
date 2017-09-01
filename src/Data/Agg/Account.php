@@ -8,7 +8,7 @@ namespace Praxigento\Accounting\Data\Agg;
 
 
 class Account
-    extends \Flancer32\Lib\Data
+    extends \Praxigento\Core\Data
 {
     /**#@+
      * Aliases for data attributes.

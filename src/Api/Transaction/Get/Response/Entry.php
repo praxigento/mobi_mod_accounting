@@ -5,7 +5,7 @@
 namespace Praxigento\Accounting\Api\Transaction\Get\Response;
 
 class Entry
-    extends \Flancer32\Lib\Data
+    extends \Praxigento\Core\Data
 {
 
 }
