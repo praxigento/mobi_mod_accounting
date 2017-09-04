@@ -127,7 +127,8 @@ class Account
     }
 
     /**
-     * Get account for the $customerId by $assetTypeId.
+     * Get account data for the $customerId by $assetTypeId. Create new one if there is no account for this
+     * customer/asset.
      *
      * @param int $customerId
      * @param int $assetTypeId
@@ -141,6 +142,13 @@ class Account
         $found = $this->get($where);
         if ($found && count($found)) {
             $result = reset($found);
+        } else {
+            /* there is no account for this customer/asset */
+            $entity = new Entity();
+            $entity->setCustomerId($customerId);
+            $entity->setAssetTypeId($assetTypeId);
+            $accId = $this->create($entity);
+            $result = $this->getById($accId);
         }
         return $result;
     }
@@ -156,7 +164,8 @@ class Account
     }
 
     /**
-     * Return representative account ID for given asset type.
+     * Return representative account ID for given asset type. Create new account if there is no yet representative
+     * account for this asset type.
      *
      * @param int $assetTypeId
      * @return int|null
@@ -170,13 +179,21 @@ class Account
             $found = $this->getByCustomerId($custId, $assetTypeId);
             if ($found) {
                 $result = $found->getId();
+            } else {
+                /* there is no yet representative account for this asset type */
+                $account = new Entity();
+                $account->setAssetTypeId($assetTypeId);
+                $account->setCustomerId($custId);
+                $result = $this->create($account);
             }
         }
         return $result;
     }
 
     /**
-     * Return MageID for customer that represents store in accounting.
+     * Return MageID for customer that represents store owner in accounting. Create new representative customer
+     *if it is not exist yet.
+     *
      * @return int
      */
     public function getRepresentativeCustomerId()
