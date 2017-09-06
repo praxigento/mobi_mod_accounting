@@ -15,6 +15,14 @@
                 parent="Praxigento_Accounting::accounts"
                 action="accounts/accounts"
                 resource="Praxigento_Accounting::admin_accounts_accounts"/>
+        <add id="Praxigento_Accounting::accounts_accounts2"
+             title="Accounts2"
+             translate="title"
+             module="Praxigento_Accounting"
+             sortOrder="110"
+             parent="Praxigento_Accounting::accounts"
+             action="accounts/accounts2"
+             resource="Praxigento_Accounting::admin_accounts_accounts2"/>
         <add id="Praxigento_Accounting::accounts_operations"
                 title="Operations"
                 translate="title"

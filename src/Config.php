@@ -9,6 +9,7 @@ namespace Praxigento\Accounting;
 class Config extends \Praxigento\Core\Config
 {
     const ACL_ACCOUNTS_ACCOUNTS = 'admin_accounts_accounts';
+    const ACL_ACCOUNTS_ACCOUNTS2 = 'admin_accounts_accounts2';
     const ACL_ACCOUNTS_OPERATIONS = 'admin_accounts_operations';
     const ACL_ACCOUNTS_TRANSACTIONS = 'admin_accounts_transactions';
     const ACL_ACCOUNTS_TYPES_ASSET = 'admin_accounts_types_asset';
@@ -17,6 +18,7 @@ class Config extends \Praxigento\Core\Config
     const CUSTOMER_REPRESENTATIVE_EMAIL = 'MOBI_REPRESENTATIVE';
     const DS_ACCOUNTS_GRID = 'accounts_accounts_grid_data_source';
     const MENU_ACCOUNTS_ACCOUNTS = self::ACL_ACCOUNTS_ACCOUNTS;
+    const MENU_ACCOUNTS_ACCOUNTS2 = self::ACL_ACCOUNTS_ACCOUNTS2;
     const MENU_ACCOUNTS_OPERATIONS = self::ACL_ACCOUNTS_OPERATIONS;
     const MENU_ACCOUNTS_TRANSACTIONS = self::ACL_ACCOUNTS_TRANSACTIONS;
     const MENU_ACCOUNTS_TYPES_ASSET = self::ACL_ACCOUNTS_TYPES_ASSET;
