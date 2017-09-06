@@ -41,15 +41,15 @@ class Account2
             $val = $url->getRouteUrl(static::UICD_UPDATE_URL);
             $data[static::UIC_CONFIG][static::UIC_UPDATE_URL] = $val;
         }
-        parent::__construct($name, 'id', 'Id', $reporting, $searchCriteriaBuilder, $request, $filterBuilder, $meta, $data);
+        parent::__construct($name, 'entity_id', 'id', $reporting, $searchCriteriaBuilder, $request, $filterBuilder, $meta, $data);
     }
 
 
     public function getData()
     {
         $items = [
-            ['Id' => 1, 'CustName' => 'name'],
-            ['Id' => 2, 'CustName' => 'nam2e']
+            ['Id' => 1, 'CustName' => 'name', 'CustEmail' => 'name@mail.com', 'Balance' => 47.9287, 'Asset' => '2'],
+            ['Id' => 2, 'CustName' => 'nam2e', 'CustEmail' => 'name2@mail.com', 'Balance' => 12.6562, 'Asset' => '3']
         ];
 
         $result = [
