@@ -46,6 +46,7 @@ class SelectFactory
             AggEntity::AS_CUST_EMAIL => Cfg::E_CUSTOMER_A_EMAIL
         ];
         $result->joinLeft($tblCust, $cond, $cols);
+        $sql = (string)$result;
         return $result;
     }
 
