@@ -25,9 +25,9 @@ class Account2
     const UIC_UPDATE_URL = 'update_url';
 
     /**#@- */
-    /** @var \Praxigento\Accounting\Repo\Query\Account\Grid\ItemsBuilder */
+    /** @var \Praxigento\Accounting\Ui\DataProvider\Account2\Query\ItemsBuilder */
     private $qbItems;
-    /** @var \Praxigento\Accounting\Repo\Query\Account\Grid\TotalBuilder */
+    /** @var \Praxigento\Accounting\Ui\DataProvider\Account2\Query\TotalBuilder */
     private $qbTotal;
 
     public function __construct($name,
@@ -35,8 +35,8 @@ class Account2
                                 SearchCriteriaBuilder $searchCriteriaBuilder,
                                 RequestInterface $request,
                                 FilterBuilder $filterBuilder,
-                                \Praxigento\Accounting\Repo\Query\Account\Grid\ItemsBuilder $qbItems,
-                                \Praxigento\Accounting\Repo\Query\Account\Grid\TotalBuilder $qbTotal,
+                                \Praxigento\Accounting\Ui\DataProvider\Account2\Query\ItemsBuilder $qbItems,
+                                \Praxigento\Accounting\Ui\DataProvider\Account2\Query\TotalBuilder $qbTotal,
 
                                 array $meta = [],
                                 array $data = [])
@@ -46,7 +46,7 @@ class Account2
             $val = $url->getRouteUrl(static::UICD_UPDATE_URL);
             $data[static::UIC_CONFIG][static::UIC_UPDATE_URL] = $val;
         }
-        $reporting = new Account2\Report();
+        $reporting = new \Praxigento\Accounting\Ui\DataProvider\Account2\Report();
         $this->qbItems = $qbItems;
         $this->qbTotal = $qbTotal;
         parent::__construct($name, 'entity_id', 'id', $reporting, $searchCriteriaBuilder, $request, $filterBuilder, $meta, $data);
