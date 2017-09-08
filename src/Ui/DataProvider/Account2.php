@@ -17,14 +17,18 @@ class Account2
 {
     const JSON_ATTR_ITEMS = 'items';
     const JSON_ATTR_TOTAL_RECORDS = 'totalRecords';
+
     /**#@+
      * UI XML arguments and default values to configure this component.
      */
     const UICD_UPDATE_URL = 'mui/index/render';
     const UIC_CONFIG = 'config';
     const UIC_UPDATE_URL = 'update_url';
-
     /**#@- */
+    /** @var  \Praxigento\Core\Repo\Query\Criteria\IMapper */
+    protected $api2sqlMapper;
+    /** @var  \Praxigento\Core\Repo\Query\Criteria\IAdapter */
+    protected $criteriaAdapter;
     /** @var \Praxigento\Accounting\Ui\DataProvider\Account2\Query\ItemsBuilder */
     private $qbItems;
     /** @var \Praxigento\Accounting\Ui\DataProvider\Account2\Query\TotalBuilder */
@@ -37,7 +41,9 @@ class Account2
                                 FilterBuilder $filterBuilder,
                                 \Praxigento\Accounting\Ui\DataProvider\Account2\Query\ItemsBuilder $qbItems,
                                 \Praxigento\Accounting\Ui\DataProvider\Account2\Query\TotalBuilder $qbTotal,
-
+                                \Praxigento\Core\Repo\Query\Criteria\IAdapter $critAdapter,
+                                \Praxigento\Accounting\Ui\DataProvider\Account2\Query\Mapper $api2sqlMapper,
+                                \Praxigento\Accounting\Ui\DataProvider\Account2\Report $reporting,
                                 array $meta = [],
                                 array $data = [])
     {
@@ -46,9 +52,12 @@ class Account2
             $val = $url->getRouteUrl(static::UICD_UPDATE_URL);
             $data[static::UIC_CONFIG][static::UIC_UPDATE_URL] = $val;
         }
-        $reporting = new \Praxigento\Accounting\Ui\DataProvider\Account2\Report();
+
         $this->qbItems = $qbItems;
         $this->qbTotal = $qbTotal;
+        /* post construction setup */
+        $this->criteriaAdapter = $critAdapter;
+        $this->api2sqlMapper = $api2sqlMapper;
         parent::__construct($name, 'entity_id', 'id', $reporting, $searchCriteriaBuilder, $request, $filterBuilder, $meta, $data);
     }
 
@@ -56,12 +65,26 @@ class Account2
     public function getData()
     {
         $searchCriteria = $this->getSearchCriteria();
-        $items = [];
-        $this->qbItems->build();
-        $this->qbTotal->build();
+        $where = $this->criteriaAdapter->getWhereFromApiCriteria($searchCriteria, $this->api2sqlMapper);
+        /* get query to select data */
+        $queryItems = $this->qbItems->build();
+        $queryItems->where($where);
+        /* set order */
+        $order = $this->criteriaAdapter->getOrderFromApiCriteria($searchCriteria);
+        $queryItems->order($order);
+        /* limit pages */
+        $pageSize = $searchCriteria->getPageSize();
+        $pageIndx = $searchCriteria->getCurrentPage();
+        $queryItems->limitPage($pageIndx, $pageSize);
+        /* get query for total count */
+        $conn = $queryItems->getConnection();
+        $items = $conn->fetchAll($queryItems);
+        $queryTotal = $this->qbTotal->build();
+        $queryTotal->where($where);
+        $total = $conn->fetchOne($queryTotal);
 
         $result = [
-            static::JSON_ATTR_TOTAL_RECORDS => 0,
+            static::JSON_ATTR_TOTAL_RECORDS => $total,
             static::JSON_ATTR_ITEMS => $items
         ];
         return $result;
