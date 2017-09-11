@@ -21,7 +21,7 @@ class Mapper
         $last = Repo::AS_CUSTOMER . '.' . Cfg::E_CUSTOMER_A_LASTNAME;
         $expValue = "CONCAT($first, ' ', $last)";
         $exp = new \Praxigento\Core\Repo\Query\Expression($expValue);
-        $this->_map = [
+        $this->map = [
             Agg::AS_ASSET => Repo::AS_TYPE_ASSET . '.' . TypeAsset::ATTR_CODE,
             Agg::AS_CUST_NAME => $exp,
             Agg::AS_CUST_EMAIL => Repo::AS_CUSTOMER . '.' . Cfg::E_CUSTOMER_A_EMAIL,

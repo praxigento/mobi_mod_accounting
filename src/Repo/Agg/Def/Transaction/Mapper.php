@@ -15,7 +15,7 @@ class Mapper
 {
     public function __construct()
     {
-        $this->_map = [
+        $this->map = [
             Agg::AS_ASSET => Repo::AS_ASSET . '.' . TypeAsset::ATTR_CODE,
             Agg::AS_CREDIT => Repo::AS_CUST_CREDIT . '.' . Cfg::E_CUSTOMER_A_EMAIL,
             Agg::AS_DATE_APPLIED => Repo::AS_TRANS . '.' . Transaction::ATTR_DATE_APPLIED,
