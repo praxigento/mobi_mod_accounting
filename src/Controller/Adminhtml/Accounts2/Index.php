@@ -28,4 +28,11 @@ class Index
             $pageTitle
         );
     }
+
+    protected function _isAllowed()
+    {
+        $result = parent::_isAllowed();
+        $result = $result && $this->_authorization->isAllowed(Cfg::ACL_ACCOUNTS_ACCOUNTS2);
+        return $result;
+    }
 }
