@@ -15,7 +15,7 @@ class Account
         $requestFieldName,
         \Magento\Framework\Api\Search\SearchCriteriaBuilder $searchCriteriaBuilder,
         \Magento\Framework\App\RequestInterface $request,
-        \Magento\Framework\Api\FilterBuilder $filterBuilder,
+        \Praxigento\Accounting\Ui\DataProvider\Grid\Account\QueryBuilder $gridQueryBuilder,
         array $meta = [],
         array $data = []
     )
@@ -26,7 +26,7 @@ class Account
             $requestFieldName,
             $searchCriteriaBuilder,
             $request,
-            $filterBuilder,
+            $gridQueryBuilder,
             $meta,
             $data
         );

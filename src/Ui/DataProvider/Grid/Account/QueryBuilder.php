@@ -6,14 +6,14 @@
  * Time: 9:57
  */
 
-namespace Praxigento\Accounting\Ui\DataProvider\Grid\Account\Items;
+namespace Praxigento\Accounting\Ui\DataProvider\Grid\Account;
 
 use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Repo\Entity\Data\Account as EAccount;
 use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as ETypeAsset;
 
 
-class Builder
+class QueryBuilder
     extends \Praxigento\Core\Ui\DataProvider\Grid\Query\Builder
 {
 

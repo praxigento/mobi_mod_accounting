@@ -10,6 +10,7 @@ namespace Praxigento\Accounting\Ui\Component\Listing\Column;
 class Actions
     extends \Magento\Ui\Component\Listing\Columns\Column
 {
+    const A_ID = \Praxigento\Accounting\Ui\DataProvider\Grid\Account\QueryBuilder::A_ID;
     /**
      * @var \Magento\Framework\UrlInterface
      */
@@ -34,7 +35,7 @@ class Actions
             foreach ($dataSource['data']['items'] as & $item) {
                 $item[$name]['edit'] = [
                     'label' => __('Edit'),
-                    'id' => $item['Id']
+                    'id' => $item[self::A_ID]
                 ];
 //                $item[$name . '_html'] = "<button class='button' translate='yes'><span>Change</span></button>";
 //                $item[$name . '_title'] = __('Change account balance');
