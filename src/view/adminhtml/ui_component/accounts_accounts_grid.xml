@@ -17,8 +17,9 @@
     <!-- **************************************************** -->
     <dataSource name="accounts_accounts_grid_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Praxigento\Accounting\Ui\DataProvider\Account2</argument>
+            <argument name="class" xsi:type="string">\Praxigento\Core\Ui\DataProvider\Grid\Base</argument>
             <argument name="name" xsi:type="string">accounts_accounts_grid_data_source</argument>
+            <argument name="gridQueryBuilder" xsi:type="object">\Praxigento\Accounting\Ui\DataProvider\Grid\Account\QueryBuilder</argument>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
@@ -102,7 +103,7 @@
             </item>
         </argument>
 
-        <column name="Id">
+        <column name="id">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">number</item>
@@ -112,7 +113,7 @@
                 </item>
             </argument>
         </column>
-        <column name="CustName">
+        <column name="custName">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
@@ -121,7 +122,7 @@
                 </item>
             </argument>
         </column>
-        <column name="CustEmail">
+        <column name="custEmail">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
@@ -130,7 +131,7 @@
                 </item>
             </argument>
         </column>
-        <column name="Balance">
+        <column name="balance">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">price</item>
@@ -139,7 +140,7 @@
                 </item>
             </argument>
         </column>
-        <column name="Asset">
+        <column name="asset">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
@@ -153,8 +154,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="component" xsi:type="string">Praxigento_Accounting/js/grid/columns/actions</item>
-                    <!--<item name="component" xsi:type="string">Magento_Ui/js/grid/columns/actions</item>-->
-                    <item name="indexField" xsi:type="string">Id</item>
+                    <item name="indexField" xsi:type="string">id</item>
                     <item name="sortable" xsi:type="boolean">false</item>
                     <item name="sortOrder" xsi:type="number">13</item>
                 </item>

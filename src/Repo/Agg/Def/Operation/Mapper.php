@@ -14,7 +14,7 @@ class Mapper
 {
     public function __construct()
     {
-        $this->_map = [
+        $this->map = [
             Agg::AS_DATE_PERFORMED => Repo::AS_OPER . '.' . Operation::ATTR_DATE_PREFORMED,
             Agg::AS_ID => Repo::AS_OPER . '.' . Operation::ATTR_ID,
             Agg::AS_NOTE => Repo::AS_OPER . '.' . Operation::ATTR_NOTE,

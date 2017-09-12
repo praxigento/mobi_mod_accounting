@@ -16,7 +16,6 @@ class Config extends \Praxigento\Core\Config
     const ACL_ACCOUNTS_TYPES_OPER = 'admin_accounts_types_oper';
     const CODE_TYPE_OPER_CHANGE_BALANCE = 'BALANCE_CHANGE';
     const CUSTOMER_REPRESENTATIVE_EMAIL = 'MOBI_REPRESENTATIVE';
-    const DS_ACCOUNTS_GRID = 'accounts_accounts_grid_data_source';
     const MENU_ACCOUNTS_ACCOUNTS = self::ACL_ACCOUNTS_ACCOUNTS;
     const MENU_ACCOUNTS_ACCOUNTS2 = self::ACL_ACCOUNTS_ACCOUNTS2;
     const MENU_ACCOUNTS_OPERATIONS = self::ACL_ACCOUNTS_OPERATIONS;
