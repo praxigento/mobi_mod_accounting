@@ -32,9 +32,6 @@ class QueryBuilder
 
     /**#@- */
 
-    /** @var  \Praxigento\Core\Repo\Query\Criteria\IMapper */
-    private $mapper;
-
     /**
      * Construct expression for customer name ("firstName lastName").
      */

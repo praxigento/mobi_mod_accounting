@@ -25,10 +25,8 @@
     <!-- **** -->
     <!-- Repo -->
     <!-- **** -->
-    <preference for="\Praxigento\Accounting\Repo\Agg\IAccount"
-            type="\Praxigento\Accounting\Repo\Agg\Def\Account"/>
     <preference for="\Praxigento\Accounting\Repo\Agg\IOperation"
-            type="\Praxigento\Accounting\Repo\Agg\Def\Operation"/>
+                type="\Praxigento\Accounting\Repo\Agg\Def\Operation"/>
     <preference for="\Praxigento\Accounting\Repo\Agg\ITransaction"
             type="\Praxigento\Accounting\Repo\Agg\Def\Transaction"/>
     <preference for="Praxigento\Accounting\Repo\IModule"
