@@ -17,8 +17,11 @@
     <!-- **************************************************** -->
     <dataSource name="accounts_operations_grid_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Praxigento\Accounting\Ui\DataProvider\Operation</argument>
+            <argument name="class" xsi:type="string">\Praxigento\Core\Ui\DataProvider\Grid\Base</argument>
             <argument name="name" xsi:type="string">accounts_operations_grid_data_source</argument>
+            <argument name="gridQueryBuilder" xsi:type="object">
+                \Praxigento\Accounting\Ui\DataProvider\Grid\Operation\QueryBuilder
+            </argument>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
@@ -102,7 +105,7 @@
             </item>
         </argument>
 
-        <column name="Id">
+        <column name="id">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">number</item>
@@ -112,7 +115,7 @@
                 </item>
             </argument>
         </column>
-        <column name="Type">
+        <column name="type">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">number</item>
@@ -121,7 +124,7 @@
                 </item>
             </argument>
         </column>
-        <column name="DatePerformed">
+        <column name="datePerformed">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
@@ -130,7 +133,7 @@
                 </item>
             </argument>
         </column>
-        <column name="Note">
+        <column name="note">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
