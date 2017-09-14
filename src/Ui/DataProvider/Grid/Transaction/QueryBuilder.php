@@ -23,14 +23,14 @@ class QueryBuilder
     /**#@+
      * Aliases for data attributes.
      */
-    const A_ASSET = 'Asset';
-    const A_CREDIT = 'Credit';
-    const A_DATE_APPLIED = 'DateApplied';
-    const A_DEBIT = 'Debit';
-    const A_ID_OPER = 'OperId';
-    const A_ID_TRANS = 'TransId';
-    const A_NOTE = 'Note';
-    const A_VALUE = 'Value';
+    const A_ASSET = 'asset';
+    const A_CREDIT = 'credit';
+    const A_DATE_APPLIED = 'dateApplied';
+    const A_DEBIT = 'debit';
+    const A_ID_OPER = 'operId';
+    const A_ID_TRANS = 'transId';
+    const A_NOTE = 'note';
+    const A_VALUE = 'value';
     /**#@- */
 
     protected function getMapper()
