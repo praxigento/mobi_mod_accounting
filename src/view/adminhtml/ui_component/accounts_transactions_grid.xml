@@ -16,9 +16,14 @@
     <!-- Data Source definition -->
     <!-- **************************************************** -->
     <dataSource name="accounts_transactions_grid_data_source">
-        <argument name="dataProvider" xsi:type="configurableObject">
+        <!--<argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">Praxigento\Accounting\Ui\DataProvider\Transaction</argument>
             <argument name="name" xsi:type="string">accounts_transactions_grid_data_source</argument>
+        </argument>-->
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">\Praxigento\Core\Ui\DataProvider\Grid\Base</argument>
+            <argument name="name" xsi:type="string">accounts_transactions_grid_data_source</argument>
+            <argument name="gridQueryBuilder" xsi:type="object">\Praxigento\Accounting\Ui\DataProvider\Grid\Transaction\QueryBuilder</argument>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">

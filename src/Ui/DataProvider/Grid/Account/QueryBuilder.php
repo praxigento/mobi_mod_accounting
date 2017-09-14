@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dm
- * Date: 07.09.17
- * Time: 9:57
- */
 
 namespace Praxigento\Accounting\Ui\DataProvider\Grid\Account;
 
