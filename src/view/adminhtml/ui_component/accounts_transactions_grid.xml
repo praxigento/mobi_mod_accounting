@@ -17,8 +17,9 @@
     <!-- **************************************************** -->
     <dataSource name="accounts_transactions_grid_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Praxigento\Accounting\Ui\DataProvider\Transaction</argument>
+            <argument name="class" xsi:type="string">\Praxigento\Core\Ui\DataProvider\Grid\Base</argument>
             <argument name="name" xsi:type="string">accounts_transactions_grid_data_source</argument>
+            <argument name="gridQueryBuilder" xsi:type="object">\Praxigento\Accounting\Ui\DataProvider\Grid\Transaction\QueryBuilder</argument>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
@@ -102,7 +103,7 @@
             </item>
         </argument>
 
-        <column name="TransId">
+        <column name="transId">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">number</item>
@@ -112,7 +113,7 @@
                 </item>
             </argument>
         </column>
-        <column name="OperId">
+        <column name="operId">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">number</item>
@@ -121,7 +122,7 @@
                 </item>
             </argument>
         </column>
-        <column name="DateApplied">
+        <column name="dateApplied">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
@@ -130,7 +131,7 @@
                 </item>
             </argument>
         </column>
-        <column name="Debit">
+        <column name="debit">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">number</item>
@@ -139,7 +140,7 @@
                 </item>
             </argument>
         </column>
-        <column name="Credit">
+        <column name="credit">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">number</item>
@@ -148,7 +149,7 @@
                 </item>
             </argument>
         </column>
-        <column name="Value">
+        <column name="value">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">price</item>
@@ -157,7 +158,7 @@
                 </item>
             </argument>
         </column>
-        <column name="Asset">
+        <column name="asset">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
@@ -166,7 +167,7 @@
                 </item>
             </argument>
         </column>
-        <column name="Note">
+        <column name="note">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
