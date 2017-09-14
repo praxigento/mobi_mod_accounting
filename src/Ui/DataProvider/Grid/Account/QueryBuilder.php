@@ -75,7 +75,6 @@ class QueryBuilder
      */
     protected function getQueryItems()
     {
-        /* this is primary query builder, not extender */
         $result = $this->conn->select();
 
         /* define tables aliases for internal usage (in this method) */

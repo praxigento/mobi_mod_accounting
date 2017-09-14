@@ -8,8 +8,6 @@
                         <resource id="Praxigento_Accounting::admin_accounts" title="Accounting" sortOrder="100">
                             <resource id="Praxigento_Accounting::admin_accounts_accounts"
                                     title="Accounts" sortOrder="100"/>
-                            <resource id="Praxigento_Accounting::admin_accounts_accounts2"
-                                      title="Accounts2" sortOrder="110"/>
                             <resource id="Praxigento_Accounting::admin_accounts_operations"
                                     title="Operations" sortOrder="200"/>
                             <resource id="Praxigento_Accounting::admin_accounts_transactions"
