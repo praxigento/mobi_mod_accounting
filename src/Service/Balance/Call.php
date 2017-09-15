@@ -28,8 +28,6 @@ class Call
     protected $repoBalance;
     /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Admin */
     protected $repoLogChangeAdmin;
-    /** @var \Praxigento\Accounting\Repo\IModule */
-    protected $repoMod;
     /** @var \Praxigento\Accounting\Repo\Entity\Operation */
     protected $repoOperation;
     /** @var \Praxigento\Accounting\Repo\Entity\Transaction */
@@ -54,7 +52,6 @@ class Call
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Core\Tool\IDate $toolDate,
         \Praxigento\Core\Tool\IPeriod $toolPeriod,
-        \Praxigento\Accounting\Repo\IModule $repoMod,
         \Praxigento\Accounting\Repo\Entity\Account $repoAccount,
         \Praxigento\Accounting\Repo\Entity\Balance $repoBalance,
         \Praxigento\Accounting\Repo\Entity\Operation $repoOperation,
@@ -69,7 +66,6 @@ class Call
         $this->manTrans = $manTrans;
         $this->toolDate = $toolDate;
         $this->toolPeriod = $toolPeriod;
-        $this->repoMod = $repoMod;
         $this->repoAccount = $repoAccount;
         $this->repoBalance = $repoBalance;
         $this->repoOperation = $repoOperation;
