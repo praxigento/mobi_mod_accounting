@@ -13,7 +13,7 @@ use Praxigento\Accounting\Repo\Query\Balance\MaxDates\Builder as QMaxDates;
  * Build query to get closing balance for all accounts on given date.
  */
 class Builder
-    extends \Praxigento\Core\Repo\Query\Def\Builder
+    extends \Praxigento\Core\Repo\Query\Builder
 {
     /**
      * Tables aliases.
@@ -44,8 +44,7 @@ class Builder
         $this->qbldMaxDates = $qbldOnDate;
     }
 
-
-    public function getSelectQuery(\Praxigento\Core\Repo\Query\IBuilder $qbuild = null)
+    public function build(\Magento\Framework\DB\Select $source = null)
     {
         $result = $this->conn->select();    // this is independent query, ignore input query builder
         /* create shortcuts for table aliases */
@@ -89,4 +88,5 @@ class Builder
         /* result */
         return $result;
     }
+
 }
