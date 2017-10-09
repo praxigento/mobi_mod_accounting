@@ -90,7 +90,7 @@ class Transaction
         $query->where($asTrans . '.' . \Praxigento\Accounting\Repo\Entity\Data\Transaction::ATTR_DATE_APPLIED
             . '>=:date_from');
         $query->where($asTrans . '.' . \Praxigento\Accounting\Repo\Entity\Data\Transaction::ATTR_DATE_APPLIED
-            . '<=:date_to');
+            . '<:date_to');
         $bind = [
             'asset_type_id' => $paramAssetType,
             'date_from' => $timestampFrom,
