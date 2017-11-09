@@ -17,7 +17,7 @@ define([
             /* get action & row data*/
             var action = this.getAction(rowIndex, actionIndex);
             var row = this.rows[rowIndex];
-            var accountId = row['Id'];
+            var accountId = row['id'];
             /* create modal dialog for current row (attributes are case sensitive) */
             var modalHtml = mageTemplate(
                 innerHtml,
