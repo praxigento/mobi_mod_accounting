@@ -14,21 +14,22 @@ define([
     return Actions.extend({
 
         applyAction: function (actionIndex, rowIndex) {
+            debugger;
             /* get action & row data*/
             var action = this.getAction(rowIndex, actionIndex);
             var row = this.rows[rowIndex];
             var accountId = row['Id'];
-            /* create modal dialog for current row */
+            /* create modal dialog for current row (attributes are case sensitive) */
             var modalHtml = mageTemplate(
                 innerHtml,
                 {
                     formAction: 'changeBalance',
-                    assetCode: row.Asset,
-                    balance: row.Balance,
-                    customerName: row.CustName,
-                    customerEmail: row.CustEmail,
-                    customerRef: row.Ref,
-                    accountId: row.Id
+                    assetCode: row.asset,
+                    balance: row.balance,
+                    customerName: row.custName,
+                    customerEmail: row.custEmail,
+                    customerRef: row.ref,
+                    accountId: row.id
                 }
             );
             /* define function to send AJAX request to server */
