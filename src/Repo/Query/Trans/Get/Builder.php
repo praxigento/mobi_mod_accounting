@@ -2,6 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Accounting\Repo\Query\Trans\Get;
 
 use Praxigento\Accounting\Repo\Entity\Data\Account as Acc;
@@ -12,7 +13,7 @@ use Praxigento\Accounting\Repo\Entity\Data\Transaction as Trans;
  * Build query to get transactions for the customer.
  */
 class Builder
-    extends \Praxigento\Core\Repo\Query\Def\Builder
+    extends \Praxigento\Core\Repo\Query\Builder
 {
     /**
      * Tables aliases.
@@ -39,12 +40,7 @@ class Builder
     const A_TRANS_ID = 'transId';
     const A_TRANS_NOTE = 'transNote';
 
-    /**
-     * @inheritdoc
-     *
-     * @SuppressWarnings(PHPMD.ShortVariable)
-     */
-    public function getSelectQuery(\Praxigento\Core\Repo\Query\IBuilder $qbuild = null)
+    public function build(\Magento\Framework\DB\Select $source = null)
     {
         $result = $this->conn->select();    // this is independent query, ignore input query builder
         /* create shortcuts for table aliases */
@@ -88,4 +84,5 @@ class Builder
         /* result */
         return $result;
     }
+
 }

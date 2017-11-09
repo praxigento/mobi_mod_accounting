@@ -13,7 +13,7 @@ use Praxigento\Accounting\Repo\Entity\Data\Balance as Balance;
  * This is auxiliary query to be used in other balance queries. Therefore we use complex names for query's components.
  */
 class Builder
-    extends \Praxigento\Core\Repo\Query\Def\Builder
+    extends \Praxigento\Core\Repo\Query\Builder
 {
     /**
      * Tables aliases.
@@ -29,7 +29,7 @@ class Builder
     /** Bound variables names */
     const BIND_MAX_DATE = 'balanceDateMax';
 
-    public function getSelectQuery(\Praxigento\Core\Repo\Query\IBuilder $qbuild = null)
+    public function build(\Magento\Framework\DB\Select $source = null)
     {
         $result = $this->conn->select();    // this is independent query, ignore input query builder
         /* create shortcuts for table aliases */

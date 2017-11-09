@@ -62,7 +62,7 @@ class Builder
         $result->from([$as => $tbl], $cols);
 
         /* LEFT JOIN MAX_DATES */
-        $queryMaDates = $this->qbldMaxDates->getSelectQuery();
+        $queryMaDates = $this->qbldMaxDates->build();
         $tbl = $queryMaDates;
         $as = $asMax;
         $cols = [];
