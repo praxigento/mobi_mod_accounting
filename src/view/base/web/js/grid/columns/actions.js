@@ -14,7 +14,6 @@ define([
     return Actions.extend({
 
         applyAction: function (actionIndex, rowIndex) {
-            debugger;
             /* get action & row data*/
             var action = this.getAction(rowIndex, actionIndex);
             var row = this.rows[rowIndex];
