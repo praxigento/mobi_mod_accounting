@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd"
+       name="prxgt_accounts_customer_modal"
+       template="templates/customer/modal">
+    <argument name="data" xsi:type="array">
+        <item name="config" xsi:type="array">
+            <item name="component" xsi:type="string">Praxigento_Accounting/js/customer/accounting</item>
+        </item>
+    </argument>
+    <dataSource name="prxgt_accounts_customer_modal_ds">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">\Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider</argument>
+            <argument name="name" xsi:type="string">prxgt_accounts_customer_modal_ds</argument>
+        </argument>
+    </dataSource>
+</modal>
