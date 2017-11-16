@@ -10,4 +10,12 @@
         </resources>
     </route>
 
+    <route url="/V1/prxgt/acc/asset/transfer/init" method="POST">
+        <!-- Get data to initiate asset transfer operation. -->
+        <service class="Praxigento\Accounting\Api\Asset\Transfer\InitInterface" method="exec"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
 </routes>

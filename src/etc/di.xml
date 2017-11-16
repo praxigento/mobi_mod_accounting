@@ -7,6 +7,8 @@
     <!-- *** -->
     <preference for="\Praxigento\Accounting\Api\Transaction\GetInterface"
             type="\Praxigento\Accounting\Api\Transaction\Get"/>
+    <preference for="\Praxigento\Accounting\Api\Asset\Transfer\InitInterface"
+            type="\Praxigento\Accounting\Service\Asset\Transfer\Init"/>
 
 
     <!-- ********************** -->
