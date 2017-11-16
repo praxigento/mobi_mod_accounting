@@ -38,7 +38,8 @@ class AccountingButton
                     'label' => __('Accounting'),
                     'id' => 'customer-edit-prxgt-accounting',
                     'sort_order' => 100,
-                    'on_click' => "debugger; require('uiRegistry').get('prxgt_accounts_customer_modal.prxgt_accounts_customer_modal').applyAction()"
+                    'on_click'=>'false'
+//                    'on_click' => "debugger; require('uiRegistry').get('prxgt_accounts_customer_modal.prxgt_accounts_customer_modal').applyAction()"
                 ];
             }
         }
