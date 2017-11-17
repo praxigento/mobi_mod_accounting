@@ -7,22 +7,40 @@ namespace Praxigento\Accounting\Api\Asset\Transfer\Init\Response;
 class Data
     extends \Praxigento\Core\Data
 {
-    const CUSTOMER_ID = 'customer_id';
+    const ASSETS = 'assets';
+    const CUSTOMER = 'customer';
 
     /**
-     * @return int
+     * @return \Praxigento\Accounting\Api\Asset\Transfer\Init\Response\Data\Asset[]
      */
-    public function getCustomerId()
+    public function getAssets()
     {
-        $result = parent::get(self::CUSTOMER_ID);
+        $result = parent::get(self::ASSETS);
         return $result;
     }
 
     /**
-     * @param int $data
+     * @return \Praxigento\Accounting\Api\Asset\Transfer\Init\Response\Data\Customer
      */
-    public function setCustomerId($data)
+    public function getCustomer()
     {
-        parent::set(self::CUSTOMER_ID, $data);
+        $result = parent::get(self::CUSTOMER);
+        return $result;
+    }
+
+    /**
+     * @param \Praxigento\Accounting\Api\Asset\Transfer\Init\Response\Data\Asset[] $data
+     */
+    public function setAssets($data)
+    {
+        parent::set(self::ASSETS, $data);
+    }
+
+    /**
+     * @param \Praxigento\Accounting\Api\Asset\Transfer\Init\Response\Data\Customer $data
+     */
+    public function setCustomer($data)
+    {
+        parent::set(self::CUSTOMER, $data);
     }
 }
