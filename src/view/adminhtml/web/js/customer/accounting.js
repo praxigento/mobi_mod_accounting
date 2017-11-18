@@ -12,6 +12,7 @@ define([
      */
     /* save globals FROM_KEY */
     var baseUrl = BASE_URL;
+    var originUrl = origin; // global var from hell (I don't know from where)
     var formKey = FORM_KEY;
     /* get customer data from uiRegistry */
     var customerDs = uiRegistry.get('customer_form.customer_form_data_source');
@@ -26,15 +27,17 @@ define([
         debugger;
         /* switch on loader */
         $('body').trigger('processStart');
-        var customerId = customerId;
+        // var customerId = customerId;
 
-        var url = baseUrl + 'accounts/changeBalance/';
+        // var url = baseUrl + '/rest/all/V1/prxgt/acc/asset/transfer/init';
+        var url = baseUrl + 'customer_accounting/init/';
+        // var url = baseUrl + 'edit/accounting/init/';
         var data = {
-            form_key: formKey,
             customerId: customerId
         };
         /* define function to process response from server */
         var fnSuccess = function (data, status, xhr) {
+            debugger;
             if (data.error) {
                 alert('Error: ' + data.message);
             } else {
@@ -43,13 +46,14 @@ define([
             /* switch off loader */
             $('body').trigger('processStop');
         }
-    var opts = {
-        data: data,
-        // contentType: 'application/json',
-        type: 'post',
-        success: fnSuccess
-    };
-    $.ajax(url, opts);
+        var opts = {
+            data: data,
+            // contentType: 'application/json',
+            type: 'post',
+            success: fnSuccess
+        };
+        debugger;
+        $.ajax(url, opts);
     }
 
 

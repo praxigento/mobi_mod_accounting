@@ -1,7 +1,11 @@
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="admin">
         <route id="prxgt_acc_route" frontName="accounts">
             <module name="Praxigento_Accounting"/>
+        </route>
+        <route id="customer">
+            <module name="Praxigento_Accounting" before="Magento_Customer"/>
         </route>
     </router>
 </config>

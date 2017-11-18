@@ -2,6 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Accounting\Controller\Adminhtml\Accounts;
 
 /**
@@ -13,14 +14,15 @@ class ChangeBalance
     const VAR_ACCOUNT_ID = 'accountId';
     const VAR_CHANGE_VALUE = 'changeValue';
     /** @var \Praxigento\Accounting\Service\IBalance */
-    protected $_callBalance;
+    private $callBalance;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Praxigento\Accounting\Service\IBalance $callBalance
-    ) {
+    )
+    {
         parent::__construct($context);
-        $this->_callBalance = $callBalance;
+        $this->callBalance = $callBalance;
     }
 
     public function execute()
@@ -33,7 +35,7 @@ class ChangeBalance
         $req->setCustomerAccountId($accountId);
         $req->setChangeValue($value);
         $req->setAdminUserId($userId);
-        $resp = $this->_callBalance->change($req);
+        $resp = $this->callBalance->change($req);
         $resultPage->setData(['error' => !$resp->isSucceed()]);
         return $resultPage;
     }
