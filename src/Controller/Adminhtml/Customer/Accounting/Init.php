@@ -11,20 +11,19 @@ namespace Praxigento\Accounting\Controller\Adminhtml\Customer\Accounting;
 class Init
     extends \Magento\Backend\App\Action
 {
-    const VAR_CUSTOMER_ID = 'customer_id';
+    const VAR_CUSTOMER_ID = 'customerId';
     /** @var \Praxigento\Accounting\Api\Asset\Transfer\InitInterface */
     private $callInit;
-    /** @var \Magento\Framework\Serialize\Serializer\Json */
-    private $serializer;
+    private $outputProcessor;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Serialize\Serializer\Json $serializer,
+        \Magento\Framework\Webapi\ServiceOutputProcessor $outputProcessor,
         \Praxigento\Accounting\Api\Asset\Transfer\InitInterface $callInit
     )
     {
         parent::__construct($context);
-        $this->serializer = $serializer;
+        $this->outputProcessor = $outputProcessor;
         $this->callInit = $callInit;
     }
 
@@ -36,8 +35,12 @@ class Init
         $req = new \Praxigento\Accounting\Api\Asset\Transfer\Init\Request();
         $req->setCustomerId($customerId);
         $resp = $this->callInit->exec($req);
-        $data = $resp->getData();
-        $json = $this->serializer->serialize($data);
+        /* convert service data object into JSON */
+        $className = \Praxigento\Accounting\Api\Asset\Transfer\InitInterface::class;
+        $methodName = 'exec';
+        $stdResp = $this->outputProcessor->process($resp, $className, $methodName);
+        /* extract data part from response */
+        $data = $stdResp['data'];
         $resultPage->setData($data);
         return $resultPage;
     }

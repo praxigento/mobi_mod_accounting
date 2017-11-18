@@ -22,44 +22,40 @@ define([
     /**
      * Front-back communication functions
      */
-    /* define function to send AJAX request to server */
-    var fnGetCustomerData = function () {
-        debugger;
-        /* switch on loader */
+    /* get initial data to fill in slider (customer info, assets balances, etc.) */
+    var fnAjaxGetInitData = function () {
+        /* switch on ajax loader */
         $('body').trigger('processStart');
-        // var customerId = customerId;
+        var pinCustomerId = customerId; // pin external scope data
 
-        // var url = baseUrl + '/rest/all/V1/prxgt/acc/asset/transfer/init';
-        var url = baseUrl + 'customer_accounting/init/';
-        // var url = baseUrl + 'edit/accounting/init/';
-        var data = {
-            customerId: customerId
-        };
         /* define function to process response from server */
         var fnSuccess = function (data, status, xhr) {
-            debugger;
             if (data.error) {
                 alert('Error: ' + data.message);
             } else {
-                alert('Done');
+                alert(JSON.stringify(data));
             }
             /* switch off loader */
             $('body').trigger('processStop');
         }
+        /* compose request and perform it */
+        var url = baseUrl + 'customer_accounting/init/';
+        /* see \Praxigento\Accounting\Controller\Adminhtml\Customer\Accounting\Init::VAR_CUSTOMER_ID*/
+        var data = {
+            customerId: pinCustomerId
+        };
         var opts = {
             data: data,
-            // contentType: 'application/json',
             type: 'post',
             success: fnSuccess
         };
-        debugger;
         $.ajax(url, opts);
     }
 
 
-    /* functions for accounting slider */
+    /* functions for accounting slider; TODO: remove me */
     var fnGetCustomerDataWrap = function () {
-        fnGetCustomerData();
+        fnAjaxGetInitData();
     }
 
     var options = {
@@ -81,8 +77,11 @@ define([
         }]
     };
 
+    /**
+     * Slider definition.
+     */
     /* function to load data and display slider */
-    var fnOpenModal = function () {
+    var fnModalOpen = function () {
 
         /* see ./view/base/web/templates/modal/accounting.html */
         var modalTmpl = mageTemplate(
@@ -101,13 +100,14 @@ define([
         $('#modal_panel_placeholder').html(modalTmpl);
         var popup = Modal(options, $('#modal_panel_placeholder'));
 
+        /* open modal slider and start ajax request to get init data */
         popup.openModal();
-        // $('body').trigger('processStart');
+        fnAjaxGetInitData();
     }
 
     /* bind modal opening to 'Accounting' button on the form */
     /* (see \Praxigento\Accounting\Block\Customer\Adminhtml\Edit\AccountingButton) */
-    $("#customer-edit-prxgt-accounting").on("click", fnOpenModal);
+    $("#customer-edit-prxgt-accounting").on("click", fnModalOpen);
 
     /* this is required return to prevent Magento parsing errors */
     var result = Component.extend({});
