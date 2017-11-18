@@ -43,7 +43,7 @@ class GetCustomer
         $tbl = $this->resource->getTableName(EDwnlCust::ENTITY_NAME);
         $as = $asDwnl;
         $cols = [
-            self::A_MLM_ID => EDwnlCust::ATTR_HUMAN_REF
+            self::A_MLM_ID => EDwnlCust::ATTR_MLM_ID
         ];
         $result->from([$as => $tbl], $cols);
 
