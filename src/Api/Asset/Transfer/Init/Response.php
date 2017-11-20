@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Api\Asset\Transfer\Init;
 
 /**
- * Response to get get initial data to start asset transfer operation.
+ * Response to get initial data to start asset transfer operation.
  *
  * (Define getters explicitly to use with Swagger tool)
  *

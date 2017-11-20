@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Api\Asset\Transfer\Init;
 
 /**
- * Request to get get initial data to start asset transfer operation.
+ * Request to get initial data to start asset transfer operation.
  *
  * (Define getters explicitly to use with Swagger tool)
  * (Define setters explicitly to use with Magento JSON2PHP conversion tool)
