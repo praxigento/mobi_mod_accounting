@@ -63,7 +63,7 @@ class Request
      */
     public function getIsDirect()
     {
-        $result = parent::get(self::CUSTOMER_ID);
+        $result = parent::get(self::IS_DIRECT);
         return $result;
     }
 

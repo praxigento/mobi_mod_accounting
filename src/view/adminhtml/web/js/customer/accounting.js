@@ -165,7 +165,8 @@ define([
         var customerId = viewModel.customer.id;
         var counterPartyId = viewModel.selectedCounterparty;
         var type = viewModel.transferType();
-        var isDirect = (type == TYPE_BETWEEN);
+        var isDirect = (type == TYPE_DIRECT);
+        debugger
         /* see: \Praxigento\Accounting\Controller\Adminhtml\Customer\Accounting\Process */
         var data = {
             amount: amount,

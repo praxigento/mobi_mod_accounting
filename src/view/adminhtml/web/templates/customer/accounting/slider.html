@@ -38,6 +38,9 @@
                        value: selectedAsset,
                        optionsCaption: 'Choose...'"
                             class="admin__control-select"></select>
+                    <span data-bind="with: selectedAsset()">
+                        <span data-bind="text: $data.acc_balance"></span>
+                    </span>
                 </div>
             </div>
 

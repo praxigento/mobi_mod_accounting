@@ -40,7 +40,9 @@ class Process
         $assetId = (int)$this->getRequest()->getParam(self::VAR_ASSET_ID);
         $counterPartyId = (int)$this->getRequest()->getParam(self::VAR_COUNTER_PARTY_ID);
         $customerId = (int)$this->getRequest()->getParam(self::VAR_CUSTOMER_ID);
-        $isDirect = (bool)$this->getRequest()->getParam(self::VAR_IS_DIRECT);
+        /* convert string 'true' or 'false' to boolean */
+        $isDirect = $this->getRequest()->getParam(self::VAR_IS_DIRECT);
+        $isDirect = filter_var($isDirect, FILTER_VALIDATE_BOOLEAN);
 
         /* TODO: add ACL */
         $userId = $this->_auth->getUser()->getId();
