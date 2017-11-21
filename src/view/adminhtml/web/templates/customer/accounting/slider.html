@@ -8,7 +8,7 @@
                 <div class="admin__field-control">
                     <span data-bind="text: customer.name_first"></span>
                     <span data-bind="text: customer.name_last"></span>
-                    &lt;<span data-bind="text: customer.email"></span>&gt;
+                    &lt;<span data-bind="text: customer.email"></span>&gt;&gt;
                     <br/>
                     <span>MLM ID: <span data-bind="text: customer.mlm_id"></span></span>
                 </div>
@@ -57,6 +57,14 @@
                 <label class="admin__field-label"><span>Counterparty:</span></label>
                 <div class="admin__field-control required">
                     <input id="prxgtCustomerSearch" data-bind="value: counterparty" class="admin__control-text"/>
+                </div>
+            </div>
+
+            <div class="admin__field" data-bind="visible:operationId>0">
+                <label class="admin__field-label"><span>&nbsp;</span></label>
+                <div class="admin__field-control">
+                    <span>Transfer is succeed. Operation #</span>
+                    <span data-bind="text:operationId"></span>
                 </div>
             </div>
 

@@ -26,14 +26,17 @@ define([
     var urlTransferInit = baseUrl + 'customer_accounting/init/';
     var urlTransferProcess = baseUrl + 'customer_accounting/process/';
     var urlCustomerSearch = baseAdminUrl + 'prxgt_dwnl/customer/search/';
+    /* slider itself */
+    var popup;
     /* View Model for slider */
     var viewModel = {
-        assets: undefined,
-        customer: undefined,
-        selectedCounterparty: undefined,
         amount: ko.observable(0),
+        assets: undefined,
         counterparty: ko.observable(),
+        customer: undefined,
+        operationId: 0,
         selectedAsset: ko.observable(),
+        selectedCounterparty: undefined,
         transferType: ko.observable(TYPE_DIRECT)
     };
 
@@ -74,7 +77,7 @@ define([
             var fnModalOpen = function () {
                 /* set parsed HTML as content for modal placeholder create modal slider */
                 $('#modal_panel_placeholder').html(innerHtml);
-                var popup = Modal(options, $('#modal_panel_placeholder'));
+                popup = Modal(options, $('#modal_panel_placeholder'));
 
                 /* open modal slider, populate knockout view-model and bind it to template */
                 popup.openModal();
@@ -82,6 +85,7 @@ define([
                 viewModel.assets = data.assets;
                 viewModel.counterparty = ko.observable();
                 viewModel.customer = data.customer;
+                viewModel.operationId = 0;
                 viewModel.transferType = ko.observable(TYPE_DIRECT);
                 var elm = document.getElementById('modal_panel_placeholder');
                 ko.cleanNode(elm);
@@ -166,7 +170,7 @@ define([
         var counterPartyId = viewModel.selectedCounterparty;
         var type = viewModel.transferType();
         var isDirect = (type == TYPE_DIRECT);
-        debugger
+
         /* see: \Praxigento\Accounting\Controller\Adminhtml\Customer\Accounting\Process */
         var data = {
             amount: amount,
@@ -178,7 +182,16 @@ define([
 
         /* process response from server: create modal slider and populate with data */
         var fnSuccess = function (data) {
-            debugger;
+            /* switch off ajax loader */
+            $('body').trigger('processStop');
+            viewModel.operationId = data.oper_id;
+            var elm = document.getElementById('modal_panel_placeholder');
+            ko.cleanNode(elm);
+            ko.applyBindings(viewModel, elm);
+            /* wait 3 sec. & close modal */
+            setTimeout(function () {
+                popup.closeModal();
+            }, 3000);
         }
 
         var opts = {
@@ -186,13 +199,14 @@ define([
             type: 'post',
             success: fnSuccess
         };
-        debugger;
+
         $.ajax(urlTransferProcess, opts);
+        /* switch on ajax loader */
+        $('body').trigger('processStart');
     }
 
     var fnAutocompleteSelected = function (event, ui) {
         viewModel.selectedCounterparty = ui.item.data.id;
-        debugger;
     }
 
     /* bind modal opening to 'Accounting' button on the form */
