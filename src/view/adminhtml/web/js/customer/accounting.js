@@ -23,6 +23,8 @@ define([
     /* define local working data */
     var baseAdminUrl = baseUrl.replace('/customer/', '/');
     /* see \Praxigento\Downline\Controller\Adminhtml\Customer\Search */
+    var urlTransferInit = baseUrl + 'customer_accounting/init/';
+    var urlTransferProcess = baseUrl + 'customer_accounting/process/';
     var urlCustomerSearch = baseAdminUrl + 'prxgt_dwnl/customer/search/';
     /* View Model for slider */
     var viewModel = {
@@ -43,7 +45,6 @@ define([
     var fnAjaxGetInitData = function () {
         /* switch on ajax loader */
         $('body').trigger('processStart');
-        var pinCustomerId = customerId; // pin external scope data
 
         /* process response from server: create modal slider and populate with data */
         var fnSuccess = function (data) {
@@ -110,17 +111,16 @@ define([
 
         }
         /* compose request and perform it */
-        var url = baseUrl + 'customer_accounting/init/';
         /* see \Praxigento\Accounting\Controller\Adminhtml\Customer\Accounting\Init::VAR_CUSTOMER_ID*/
         var data = {
-            customerId: pinCustomerId
+            customerId: customerId
         };
         var opts = {
             data: data,
             type: 'post',
             success: fnSuccess
         };
-        $.ajax(url, opts);
+        $.ajax(urlTransferInit, opts);
     }
 
     /**
@@ -144,7 +144,6 @@ define([
                     var nameFirst = one.name_first;
                     var nameLast = one.name_last;
                     var email = one.email;
-                    var id = one.id;
                     var mlmId = one.mlm_id;
                     var label = nameFirst + ' ' + nameLast + ' <' + email + '> / ' + mlmId;
                     var foundOne = {
@@ -164,12 +163,30 @@ define([
         var assetId = asset.asset_id;
         var amount = viewModel.amount();
         var customerId = viewModel.customer.id;
-        var counterpartyId = viewModel.selectedCounterparty;
+        var counterPartyId = viewModel.selectedCounterparty;
         var type = viewModel.transferType();
-        if (type == TYPE_BETWEEN) {
+        var isDirect = (type == TYPE_BETWEEN);
+        /* see: \Praxigento\Accounting\Controller\Adminhtml\Customer\Accounting\Process */
+        var data = {
+            amount: amount,
+            assetId: assetId,
+            counterPartyId: counterPartyId,
+            customerId: customerId,
+            isDirect: isDirect,
+        };
 
+        /* process response from server: create modal slider and populate with data */
+        var fnSuccess = function (data) {
+            debugger;
         }
+
+        var opts = {
+            data: data,
+            type: 'post',
+            success: fnSuccess
+        };
         debugger;
+        $.ajax(urlTransferProcess, opts);
     }
 
     var fnAutocompleteSelected = function (event, ui) {

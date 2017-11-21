@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Api\Asset\Transfer;
 
 /**
- * Get initial data to start asset transfer operation.
+ * Get initial data to start asset transfer operation on UI.
  */
 interface InitInterface
 {
