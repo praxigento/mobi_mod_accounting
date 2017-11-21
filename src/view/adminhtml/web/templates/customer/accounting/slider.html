@@ -1,0 +1,63 @@
+<div class="modal-content">
+
+    <div class="admin__fieldset-wrapper-content _hide">
+        <fieldset class="admin__fieldset">
+
+            <div class="admin__field">
+                <label class="admin__field-label"><span>Customer:</span></label>
+                <div class="admin__field-control">
+                    <span data-bind="text: customer.name_first"></span>
+                    <span data-bind="text: customer.name_last"></span>
+                    &lt;<span data-bind="text: customer.email"></span>&gt;
+                    <br/>
+                    <span>MLM ID: <span data-bind="text: customer.mlm_id"></span></span>
+                </div>
+            </div>
+
+            <div class="admin__field _required">
+                <label class="admin__field-label"><span>Transfer type:</span></label>
+                <div class="admin__field-control required">
+                    <div>
+                        <input type="radio" id="prxgtTypeDirect" name="transferType" value="direct"
+                               data-bind="checked: transferType"/>
+                        <label for="prxgtTypeDirect">Direct</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="prxgtTypeBetween" name="transferType" value="between"
+                               data-bind="checked: transferType"/>
+                        <label for="prxgtTypeBetween">Between customers</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin__field _required">
+                <label class="admin__field-label"><span>Asset:</span></label>
+                <div class="admin__field-control required">
+                    <select data-bind="options: assets,
+                       optionsText: 'asset_code',
+                       value: selectedAsset,
+                       optionsCaption: 'Choose...'"
+                            class="admin__control-select"></select>
+                </div>
+            </div>
+
+
+            <div class="admin__field _required">
+                <label class="admin__field-label"><span>Amount:</span></label>
+                <div class="admin__field-control required">
+                    <input data-bind="value: amount" class="admin__control-text"/>
+                </div>
+            </div>
+
+
+            <div class="admin__field _required" data-bind="visible: transferType()=='between'">
+                <label class="admin__field-label"><span>Counterparty:</span></label>
+                <div class="admin__field-control required">
+                    <input id="prxgtCustomerSearch" data-bind="value: counterparty" class="admin__control-text"/>
+                </div>
+            </div>
+
+        </fieldset>
+
+    </div>
+</div>
