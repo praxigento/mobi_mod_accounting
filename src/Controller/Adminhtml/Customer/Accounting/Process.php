@@ -45,7 +45,12 @@ class Process
         /* TODO: add ACL */
         $userId = $this->_auth->getUser()->getId();
         $req = new \Praxigento\Accounting\Api\Asset\Transfer\Process\Request();
+        $req->setAmount($amount);
+        $req->setAssetTypeId($assetId);
+        $req->setCounterPartyId($counterPartyId);
         $req->setCustomerId($customerId);
+        $req->setIsDirect($isDirect);
+        $req->setUserId($userId);
         $resp = $this->callProcess->exec($req);
 
         /* convert service data object into JSON */

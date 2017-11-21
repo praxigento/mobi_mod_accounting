@@ -11,8 +11,8 @@ namespace Praxigento\Accounting\Api\Asset\Transfer;
 interface ProcessInterface
 {
     /**
-     * @param \Praxigento\Accounting\Api\Asset\Transfer\Process\Request $data
+     * @param \Praxigento\Accounting\Api\Asset\Transfer\Process\Request $request
      * @return \Praxigento\Accounting\Api\Asset\Transfer\Process\Response
      */
-    public function exec(\Praxigento\Accounting\Api\Asset\Transfer\Process\Request $data);
+    public function exec(\Praxigento\Accounting\Api\Asset\Transfer\Process\Request $request);
 }
