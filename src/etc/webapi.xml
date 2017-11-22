@@ -2,20 +2,13 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
 
-    <route url="/V1/prxgt/acc/trans/get" method="POST">
-        <!-- Get transactions data. -->
-        <service class="Praxigento\Accounting\Api\Transaction\GetInterface" method="exec"/>
-        <resources>
-            <resource ref="anonymous"/>
-        </resources>
-    </route>
-
-    <route url="/V1/prxgt/acc/asset/transfer/init" method="POST">
-        <!-- Get data to initiate asset transfer operation. -->
-        <service class="Praxigento\Accounting\Api\Asset\Transfer\InitInterface" method="exec"/>
-        <resources>
-            <resource ref="anonymous"/>
-        </resources>
-    </route>
+    <!-- TODO: use it or remove it. -->
+    <!--<route url="/V1/prxgt/acc/trans/get" method="POST">-->
+    <!--&lt;!&ndash; Get transactions data. &ndash;&gt;-->
+    <!--<service class="Praxigento\Accounting\Api\Transaction\GetInterface" method="exec"/>-->
+    <!--<resources>-->
+    <!--<resource ref="anonymous"/>-->
+    <!--</resources>-->
+    <!--</route>-->
 
 </routes>

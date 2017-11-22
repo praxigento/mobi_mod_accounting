@@ -6,6 +6,8 @@ namespace Praxigento\Accounting\Api\Transaction;
 
 /**
  * Get all transactions according to some selection conditions (search criteria).
+ *
+ * @deprecated TODO: use it or remove it.
  */
 interface GetInterface
 {
