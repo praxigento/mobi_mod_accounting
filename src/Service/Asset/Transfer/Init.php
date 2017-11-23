@@ -10,13 +10,13 @@ use Praxigento\Accounting\Api\Asset\Transfer\Init\Response as AResponse;
 use Praxigento\Accounting\Api\Asset\Transfer\Init\Response\Data as DRespData;
 use Praxigento\Accounting\Api\Asset\Transfer\Init\Response\Data\Asset as DAsset;
 use Praxigento\Accounting\Api\Asset\Transfer\Init\Response\Data\Customer as DCustomer;
-use Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\Get as QBGetAssets;
+use Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetAssets as QBGetAssets;
 use Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetCustomer as QBGetCustomer;
 
 class Init
     implements \Praxigento\Accounting\Api\Asset\Transfer\InitInterface
 {
-    /** @var \Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\Get */
+    /** @var \Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetAssets */
     private $qbGetAssets;
     /** @var \Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetCustomer */
     private $qbGetCustomer;
