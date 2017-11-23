@@ -77,10 +77,12 @@ class Get
 
     protected function process($request)
     {
-        /* */
+        /* define local working data */
         assert($request instanceof \Praxigento\Accounting\Api\Account\Asset\Get\Request);
         $customerId = $request->getCustomerId();
-        /**/
+
+        /* perform processing */
+        $customerId = $this->authenticator->getCurrentCustomerId($customerId);
         $items = $this->loadAssetsData($customerId);
 
         /* compose result */
