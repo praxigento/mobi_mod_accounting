@@ -4,6 +4,7 @@
  *
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Accounting;
 
 class Config extends \Praxigento\Core\Config
@@ -23,5 +24,6 @@ class Config extends \Praxigento\Core\Config
     const MENU_ACCOUNTS_TYPES_ASSET = self::ACL_ACCOUNTS_TYPES_ASSET;
     const MENU_ACCOUNTS_TYPES_OPER = self::ACL_ACCOUNTS_TYPES_OPER;
     const MODULE = 'Praxigento_Accounting';
-    const ROUTE_NAME_ADMIN_ACCOUNTS = 'accounts';
+    const ROUTE_NAME_ADMIN_ACCOUNTS = 'account';
+    const ROUTE_NAME_FRONT_ACCOUNTS = 'account';
 }

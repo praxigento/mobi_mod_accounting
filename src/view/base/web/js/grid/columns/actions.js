@@ -37,7 +37,7 @@ define([
                 var input = $('#prxgt-change-balance-value');
                 msg.text('Loading...');
                 var value = input.val();
-                var url = baseUrl + 'accounts/changeBalance/';
+                var url = baseUrl + 'account/changeBalance/';
                 var data = {changeValue: value, accountId: accountId};
                 /* define function to process response from server */
                 var fnSuccess = function (data, status, xhr) {
