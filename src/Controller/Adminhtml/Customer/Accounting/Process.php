@@ -9,60 +9,52 @@ namespace Praxigento\Accounting\Controller\Adminhtml\Customer\Accounting;
  * Perform assets transfer.
  */
 class Process
-    extends \Magento\Backend\App\Action
+    extends \Praxigento\Core\App\Action\Back\Api\Base
 {
-    const VAR_AMOUNT = 'amount';
-    const VAR_ASSET_ID = 'assetId';
-    const VAR_COUNTER_PARTY_ID = 'counterPartyId';
-    const VAR_CUSTOMER_ID = 'customerId';
-    const VAR_IS_DIRECT = 'isDirect';
-
     /** @var \Praxigento\Accounting\Api\Service\Asset\Transfer\IProcess */
     private $callProcess;
 
-    private $outputProcessor;
-
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\Webapi\ServiceInputProcessor $inputProcessor,
         \Magento\Framework\Webapi\ServiceOutputProcessor $outputProcessor,
+        \Praxigento\Core\Fw\Logger\App $logger,
+        \Praxigento\Core\Api\IAuthenticator $authenticator,
         \Praxigento\Accounting\Api\Service\Asset\Transfer\IProcess $callProcess
     )
     {
-        parent::__construct($context);
-        $this->outputProcessor = $outputProcessor;
+        parent::__construct($context, $inputProcessor, $outputProcessor, $logger, $authenticator);
         $this->callProcess = $callProcess;
     }
 
-    public function execute()
+    protected function getInDataType(): string
     {
-        $resultPage = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_JSON);
-        $amount = (float)$this->getRequest()->getParam(self::VAR_AMOUNT);
-        $assetId = (int)$this->getRequest()->getParam(self::VAR_ASSET_ID);
-        $counterPartyId = (int)$this->getRequest()->getParam(self::VAR_COUNTER_PARTY_ID);
-        $customerId = (int)$this->getRequest()->getParam(self::VAR_CUSTOMER_ID);
-        /* convert string 'true' or 'false' to boolean */
-        $isDirect = $this->getRequest()->getParam(self::VAR_IS_DIRECT);
-        $isDirect = filter_var($isDirect, FILTER_VALIDATE_BOOLEAN);
-
-        /* TODO: add ACL */
-        $userId = $this->_auth->getUser()->getId();
-        $req = new \Praxigento\Accounting\Api\Service\Asset\Transfer\Process\Request();
-        $req->setAmount($amount);
-        $req->setAssetId($assetId);
-        $req->setCounterPartyId($counterPartyId);
-        $req->setCustomerId($customerId);
-        $req->setIsDirect($isDirect);
-        $req->setUserId($userId);
-        $resp = $this->callProcess->exec($req);
-
-        /* convert service data object into JSON */
-        $className = \Praxigento\Accounting\Api\Service\Asset\Transfer\IProcess::class;
-        $methodName = 'exec';
-        $stdResp = $this->outputProcessor->process($resp, $className, $methodName);
-
-        /* extract data part from response */
-        $data = $stdResp[\Praxigento\Core\Api\Response::ATTR_DATA];
-        $resultPage->setData($data);
-        return $resultPage;
+        return \Praxigento\Accounting\Api\Ctrl\Adminhtml\Customer\Accounting\Process\Request::class;
     }
+
+    protected function getOutDataType(): string
+    {
+        return \Praxigento\Accounting\Api\Ctrl\Adminhtml\Customer\Accounting\Process\Response::class;
+    }
+
+    protected function process($request)
+    {
+        /* define local working data */
+        assert($request instanceof \Praxigento\Accounting\Api\Service\Asset\Transfer\Process\Request);
+        $amount = $request->getAmount();
+        $customerId = $request->getCustomerId();
+
+        /* perform processing */
+        $userId = $this->_auth->getUser()->getId();
+        $customerId = $this->authenticator->getCurrentCustomerId($customerId);
+        $request->setCustomerId($customerId);
+        $request->setIsDirect(false);
+        $request->setAmount(abs($amount));
+        $request->setUserId($userId);
+        $result = $this->callProcess->exec($request);
+
+        /* compose result */
+        return $result;
+    }
+
 }

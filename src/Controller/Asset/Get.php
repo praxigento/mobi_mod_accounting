@@ -12,7 +12,7 @@ use Praxigento\Accounting\Repo\Query\Asset\Get as QBGetAssets;
  * Web API action to get assets for the customer.
  */
 class Get
-    extends \Praxigento\Core\App\Action\Front\Base
+    extends \Praxigento\Core\App\Action\Front\Api\Base
 {
     private $qbGet;
 

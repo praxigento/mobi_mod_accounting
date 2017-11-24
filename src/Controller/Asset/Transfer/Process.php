@@ -10,7 +10,7 @@ namespace Praxigento\Accounting\Controller\Asset\Transfer;
  * Web API action to process assets transfer for the customer.
  */
 class Process
-    extends \Praxigento\Core\App\Action\Front\Base
+    extends \Praxigento\Core\App\Action\Front\Api\Base
 {
     /** @var \Praxigento\Accounting\Api\Service\Asset\Transfer\IProcess */
     private $callProcess;

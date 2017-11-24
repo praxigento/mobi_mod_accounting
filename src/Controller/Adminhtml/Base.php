@@ -10,6 +10,6 @@ namespace Praxigento\Accounting\Controller\Adminhtml;
  * TODO: why did I create empty wrapper?
  */
 abstract class Base
-    extends \Praxigento\Core\Controller\Adminhtml\Base
+    extends \Praxigento\Core\App\Action\Back\Base
 {
 }
