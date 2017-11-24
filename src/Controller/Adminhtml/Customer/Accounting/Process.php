@@ -19,11 +19,10 @@ class Process
         \Magento\Framework\Webapi\ServiceInputProcessor $inputProcessor,
         \Magento\Framework\Webapi\ServiceOutputProcessor $outputProcessor,
         \Praxigento\Core\Fw\Logger\App $logger,
-        \Praxigento\Core\Api\IAuthenticator $authenticator,
         \Praxigento\Accounting\Api\Service\Asset\Transfer\IProcess $callProcess
     )
     {
-        parent::__construct($context, $inputProcessor, $outputProcessor, $logger, $authenticator);
+        parent::__construct($context, $inputProcessor, $outputProcessor, $logger);
         $this->callProcess = $callProcess;
     }
 
@@ -41,15 +40,9 @@ class Process
     {
         /* define local working data */
         assert($request instanceof \Praxigento\Accounting\Api\Service\Asset\Transfer\Process\Request);
-        $amount = $request->getAmount();
-        $customerId = $request->getCustomerId();
 
         /* perform processing */
         $userId = $this->_auth->getUser()->getId();
-        $customerId = $this->authenticator->getCurrentCustomerId($customerId);
-        $request->setCustomerId($customerId);
-        $request->setIsDirect(false);
-        $request->setAmount(abs($amount));
         $request->setUserId($userId);
         $result = $this->callProcess->exec($request);
 

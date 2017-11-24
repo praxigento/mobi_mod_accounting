@@ -179,12 +179,13 @@ define([
             customerId: customerId,
             isDirect: isDirect,
         };
+        var json = JSON.stringify(data);
 
         /* process response from server: create modal slider and populate with data */
-        var fnSuccess = function (data) {
+        var fnSuccess = function (response) {
             /* switch off ajax loader */
             $('body').trigger('processStop');
-            viewModel.operationId = data.oper_id;
+            viewModel.operationId = response.data.oper_id;
             var elm = document.getElementById('modal_panel_placeholder');
             ko.cleanNode(elm);
             ko.applyBindings(viewModel, elm);
@@ -195,7 +196,8 @@ define([
         }
 
         var opts = {
-            data: data,
+            data: json,
+            contentType: 'application/json',
             type: 'post',
             success: fnSuccess
         };
