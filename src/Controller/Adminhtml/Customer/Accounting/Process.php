@@ -48,7 +48,7 @@ class Process
         $userId = $this->_auth->getUser()->getId();
         $req = new \Praxigento\Accounting\Api\Asset\Transfer\Process\Request();
         $req->setAmount($amount);
-        $req->setAssetTypeId($assetId);
+        $req->setAssetId($assetId);
         $req->setCounterPartyId($counterPartyId);
         $req->setCustomerId($customerId);
         $req->setIsDirect($isDirect);
