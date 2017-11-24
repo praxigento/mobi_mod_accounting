@@ -35,7 +35,7 @@ class Process
     {
         /* define local working data */
         $amount = $request->getAmount();
-        $assetTypeId = $request->getAssetTypeId();
+        $assetTypeId = $request->getAssetId();
         $counterPartyId = $request->getCounterPartyId();
         $customerId = $request->getCustomerId();
         $isDirect = $request->getIsDirect();

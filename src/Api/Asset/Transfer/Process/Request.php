@@ -16,11 +16,11 @@ class Request
     extends \Praxigento\Core\Api\Request
 {
     const AMOUNT = 'amount';
-    const ASSET_TYPE_ID = 'asset_type_id';
-    const COUNTER_PARTY_ID = 'counter_party_id';
-    const CUSTOMER_ID = 'customer_id';
-    const IS_DIRECT = 'is_direct';
-    const USER_ID = 'user_id';
+    const ASSET_ID = 'assetId';
+    const COUNTER_PARTY_ID = 'counterPartyId';
+    const CUSTOMER_ID = 'customerId';
+    const IS_DIRECT = 'isDirect';
+    const USER_ID = 'userId';
 
     /**
      * @return float
@@ -34,9 +34,9 @@ class Request
     /**
      * @return int
      */
-    public function getAssetTypeId()
+    public function getAssetId()
     {
-        $result = parent::get(self::ASSET_TYPE_ID);
+        $result = parent::get(self::ASSET_ID);
         return $result;
     }
 
@@ -87,9 +87,9 @@ class Request
     /**
      * @param int $data
      */
-    public function setAssetTypeId($data)
+    public function setAssetId($data)
     {
-        parent::set(self::ASSET_TYPE_ID, $data);
+        parent::set(self::ASSET_ID, $data);
     }
 
     /**

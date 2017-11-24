@@ -12,7 +12,7 @@ namespace Praxigento\Accounting\Api\Account\Asset\Get\Response;
  *
  */
 class Data
-    extends \Praxigento\Core\Api\Response
+    extends \Praxigento\Core\Data
 {
     const ITEMS = 'items';
 
