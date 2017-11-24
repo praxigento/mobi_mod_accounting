@@ -17,7 +17,7 @@ class Process
     const VAR_CUSTOMER_ID = 'customerId';
     const VAR_IS_DIRECT = 'isDirect';
 
-    /** @var \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\ProcessInterface */
+    /** @var \Praxigento\Accounting\Api\Service\Asset\Transfer\IProcess */
     private $callProcess;
 
     private $outputProcessor;
@@ -25,7 +25,7 @@ class Process
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Webapi\ServiceOutputProcessor $outputProcessor,
-        \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\ProcessInterface $callProcess
+        \Praxigento\Accounting\Api\Service\Asset\Transfer\IProcess $callProcess
     )
     {
         parent::__construct($context);
@@ -46,7 +46,7 @@ class Process
 
         /* TODO: add ACL */
         $userId = $this->_auth->getUser()->getId();
-        $req = new \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Process\Request();
+        $req = new \Praxigento\Accounting\Api\Service\Asset\Transfer\Process\Request();
         $req->setAmount($amount);
         $req->setAssetId($assetId);
         $req->setCounterPartyId($counterPartyId);
@@ -56,7 +56,7 @@ class Process
         $resp = $this->callProcess->exec($req);
 
         /* convert service data object into JSON */
-        $className = \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\ProcessInterface::class;
+        $className = \Praxigento\Accounting\Api\Service\Asset\Transfer\IProcess::class;
         $methodName = 'exec';
         $stdResp = $this->outputProcessor->process($resp, $className, $methodName);
 

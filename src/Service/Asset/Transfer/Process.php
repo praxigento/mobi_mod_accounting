@@ -5,13 +5,13 @@
 
 namespace Praxigento\Accounting\Service\Asset\Transfer;
 
-use Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Process\Request as ARequest;
-use Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Process\Response as AResponse;
-use Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Process\Response\Data as ARespData;
+use Praxigento\Accounting\Api\Service\Asset\Transfer\Process\Request as ARequest;
+use Praxigento\Accounting\Api\Service\Asset\Transfer\Process\Response as AResponse;
+use Praxigento\Accounting\Api\Service\Asset\Transfer\Process\Response\Data as ARespData;
 use Praxigento\Accounting\Config as Cfg;
 
 class Process
-    implements \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\ProcessInterface
+    implements \Praxigento\Accounting\Api\Service\Asset\Transfer\IProcess
 {
     /** @var \Praxigento\Accounting\Service\IOperation */
     private $callOper;

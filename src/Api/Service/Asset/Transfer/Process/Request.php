@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Process;
+namespace Praxigento\Accounting\Api\Service\Asset\Transfer\Process;
 
 /**
  * Request to get initial data to start asset transfer operation.
