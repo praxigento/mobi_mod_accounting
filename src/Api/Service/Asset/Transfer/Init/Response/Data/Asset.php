@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response\Data;
+namespace Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data;
 
 class Asset
     extends \Praxigento\Core\Data

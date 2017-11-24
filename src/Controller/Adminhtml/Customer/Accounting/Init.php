@@ -12,14 +12,14 @@ class Init
     extends \Magento\Backend\App\Action
 {
     const VAR_CUSTOMER_ID = 'customerId';
-    /** @var \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\InitInterface */
+    /** @var \Praxigento\Accounting\Api\Service\Asset\Transfer\IInit */
     private $callInit;
     private $outputProcessor;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Webapi\ServiceOutputProcessor $outputProcessor,
-        \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\InitInterface $callInit
+        \Praxigento\Accounting\Api\Service\Asset\Transfer\IInit $callInit
     )
     {
         parent::__construct($context);
@@ -34,12 +34,12 @@ class Init
 
         /* TODO: add ACL */
         $userId = $this->_auth->getUser()->getId();
-        $req = new \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Request();
+        $req = new \Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Request();
         $req->setCustomerId($customerId);
         $resp = $this->callInit->exec($req);
 
         /* convert service data object into JSON */
-        $className = \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\InitInterface::class;
+        $className = \Praxigento\Accounting\Api\Service\Asset\Transfer\IInit::class;
         $methodName = 'exec';
         $stdResp = $this->outputProcessor->process($resp, $className, $methodName);
 

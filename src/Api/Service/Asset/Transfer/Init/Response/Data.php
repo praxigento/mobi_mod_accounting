@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response;
+namespace Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response;
 class Data
     extends \Praxigento\Core\Data
 {
@@ -11,7 +11,7 @@ class Data
     const CUSTOMER = 'customer';
 
     /**
-     * @return \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response\Data\Asset[]
+     * @return \Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Asset[]
      */
     public function getAssets()
     {
@@ -20,7 +20,7 @@ class Data
     }
 
     /**
-     * @return \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response\Data\Customer
+     * @return \Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Customer
      */
     public function getCustomer()
     {
@@ -29,7 +29,7 @@ class Data
     }
 
     /**
-     * @param \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response\Data\Asset[] $data
+     * @param \Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Asset[] $data
      */
     public function setAssets($data)
     {
@@ -37,7 +37,7 @@ class Data
     }
 
     /**
-     * @param \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response\Data\Customer $data
+     * @param \Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Customer $data
      */
     public function setCustomer($data)
     {

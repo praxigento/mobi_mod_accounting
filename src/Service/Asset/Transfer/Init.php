@@ -5,16 +5,16 @@
 
 namespace Praxigento\Accounting\Service\Asset\Transfer;
 
-use Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Request as ARequest;
-use Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response as AResponse;
-use Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response\Data as DRespData;
-use Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response\Data\Asset as DAsset;
-use Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response\Data\Customer as DCustomer;
+use Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Request as ARequest;
+use Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response as AResponse;
+use Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data as DRespData;
+use Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Asset as DAsset;
+use Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Customer as DCustomer;
 use Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetAssets as QBGetAssets;
 use Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetCustomer as QBGetCustomer;
 
 class Init
-    implements \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\InitInterface
+    implements \Praxigento\Accounting\Api\Service\Asset\Transfer\IInit
 {
     /** @var \Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetAssets */
     private $qbGetAssets;
@@ -53,7 +53,7 @@ class Init
      * Load assets data from DB and compose API result component.
      *
      * @param int $custId
-     * @return \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response\Data\Asset[]
+     * @return \Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Asset[]
      */
     private function loadAssetsData($custId)
     {
@@ -87,7 +87,7 @@ class Init
      * Load customer data from DB and compose API result component.
      *
      * @param int $custId
-     * @return \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response\Data\Customer
+     * @return \Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Customer
      */
     private function loadCustomerData($custId)
     {

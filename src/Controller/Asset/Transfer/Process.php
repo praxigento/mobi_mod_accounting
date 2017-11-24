@@ -30,12 +30,12 @@ class Process
 
     protected function getInDataType(): string
     {
-        return \Praxigento\Accounting\Api\Service\Asset\Transfer\Process\Request::class;
+        return \Praxigento\Accounting\Api\Ctrl\Account\Asset\Transfer\Process\Request::class;
     }
 
     protected function getOutDataType(): string
     {
-        return \Praxigento\Accounting\Api\Service\Asset\Transfer\Process\Response::class;
+        return \Praxigento\Accounting\Api\Ctrl\Account\Asset\Transfer\Process\Response::class;
     }
 
     protected function process($request)

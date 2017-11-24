@@ -5,7 +5,7 @@
     <!-- *** -->
     <!-- API -->
     <!-- *** -->
-    <preference for="\Praxigento\Accounting\Api\Ctrl\Asset\Transfer\InitInterface"
+    <preference for="\Praxigento\Accounting\Api\Service\Asset\Transfer\IInit"
                 type="\Praxigento\Accounting\Service\Asset\Transfer\Init"/>
     <preference for="\Praxigento\Accounting\Api\Service\Asset\Transfer\IProcess"
                 type="\Praxigento\Accounting\Service\Asset\Transfer\Process"/>

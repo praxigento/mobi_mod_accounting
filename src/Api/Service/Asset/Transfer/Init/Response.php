@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init;
+namespace Praxigento\Accounting\Api\Service\Asset\Transfer\Init;
 
 /**
  * Response to get initial data to start asset transfer operation.
@@ -15,7 +15,7 @@ class Response
     extends \Praxigento\Core\Api\Response
 {
     /**
-     * @return \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response\Data
+     * @return \Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data
      */
     public function getData()
     {
@@ -33,7 +33,7 @@ class Response
     }
 
     /**
-     * @param \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response\Data $data
+     * @param \Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data $data
      */
     public function setData($data)
     {
