@@ -31,19 +31,19 @@ class Get
 
     protected function getInDataType(): string
     {
-        return \Praxigento\Accounting\Api\Account\Asset\Get\Request::class;
+        return \Praxigento\Accounting\Api\Ctrl\Account\Asset\Get\Request::class;
     }
 
     protected function getOutDataType(): string
     {
-        return \Praxigento\Accounting\Api\Account\Asset\Get\Response::class;
+        return \Praxigento\Accounting\Api\Ctrl\Account\Asset\Get\Response::class;
     }
 
     /**
      * Load assets data from DB and compose API result component.
      *
      * @param int $custId
-     * @return \Praxigento\Accounting\Api\Asset\Transfer\Init\Response\Data\Asset[]
+     * @return \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Init\Response\Data\Asset[]
      */
     private function loadAssetsData($custId)
     {
@@ -78,7 +78,7 @@ class Get
     protected function process($request)
     {
         /* define local working data */
-        assert($request instanceof \Praxigento\Accounting\Api\Account\Asset\Get\Request);
+        assert($request instanceof \Praxigento\Accounting\Api\Ctrl\Account\Asset\Get\Request);
         $customerId = $request->getCustomerId();
 
         /* perform processing */
@@ -86,8 +86,8 @@ class Get
         $items = $this->loadAssetsData($customerId);
 
         /* compose result */
-        $result = new \Praxigento\Accounting\Api\Account\Asset\Get\Response();
-        $data = new \Praxigento\Accounting\Api\Account\Asset\Get\Response\Data();
+        $result = new \Praxigento\Accounting\Api\Ctrl\Account\Asset\Get\Response();
+        $data = new \Praxigento\Accounting\Api\Ctrl\Account\Asset\Get\Response\Data();
         $data->setItems($items);
         $result->setData($data);
         return $result;

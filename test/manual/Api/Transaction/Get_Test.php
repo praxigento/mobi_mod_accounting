@@ -2,7 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Accounting\Api\Transaction;
+namespace Praxigento\Accounting\Api\Rest\Transaction;
 
 use Magento\Framework\App\ObjectManager;
 
@@ -18,12 +18,12 @@ class Get_ManualTest
     public function setUp()
     {
         parent::setUp();
-        $this->obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Api\Transaction\GetInterface::class);
+        $this->obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Api\Rest\Transaction\GetInterface::class);
     }
 
     public function test_exec()
     {
-        $req = new \Praxigento\Accounting\Api\Transaction\Get\Request();
+        $req = new \Praxigento\Accounting\Api\Rest\Transaction\Get\Request();
         $data = $this->obj->exec($req);
         $this->assertNotNull($data);
     }

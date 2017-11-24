@@ -5,12 +5,12 @@
     <!-- *** -->
     <!-- API -->
     <!-- *** -->
-    <preference for="\Praxigento\Accounting\Api\Asset\Transfer\InitInterface"
+    <preference for="\Praxigento\Accounting\Api\Ctrl\Asset\Transfer\InitInterface"
                 type="\Praxigento\Accounting\Service\Asset\Transfer\Init"/>
-    <preference for="\Praxigento\Accounting\Api\Asset\Transfer\ProcessInterface"
+    <preference for="\Praxigento\Accounting\Api\Ctrl\Asset\Transfer\ProcessInterface"
                 type="\Praxigento\Accounting\Service\Asset\Transfer\Process"/>
-    <preference for="\Praxigento\Accounting\Api\Transaction\GetInterface"
-            type="\Praxigento\Accounting\Api\Transaction\Get"/>
+    <preference for="\Praxigento\Accounting\Api\Rest\Transaction\GetInterface"
+            type="\Praxigento\Accounting\Api\Rest\Transaction\Get"/>
 
 
     <!-- ********************** -->

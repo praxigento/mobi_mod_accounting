@@ -5,7 +5,7 @@
     <!-- TODO: use it or remove it. -->
     <!--<route url="/V1/prxgt/acc/trans/get" method="POST">-->
     <!--&lt;!&ndash; Get transactions data. &ndash;&gt;-->
-    <!--<service class="Praxigento\Accounting\Api\Transaction\GetInterface" method="exec"/>-->
+    <!--<service class="Praxigento\Accounting\Api\Rest\Transaction\GetInterface" method="exec"/>-->
     <!--<resources>-->
     <!--<resource ref="anonymous"/>-->
     <!--</resources>-->

@@ -12,7 +12,7 @@ namespace Praxigento\Accounting\Controller\Asset\Transfer;
 class Process
     extends \Praxigento\Core\App\Action\Front\Base
 {
-    /** @var \Praxigento\Accounting\Api\Asset\Transfer\ProcessInterface */
+    /** @var \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\ProcessInterface */
     private $callProcess;
 
     public function __construct(
@@ -21,7 +21,7 @@ class Process
         \Magento\Framework\Webapi\ServiceOutputProcessor $outputProcessor,
         \Praxigento\Core\Fw\Logger\App $logger,
         \Praxigento\Core\Api\IAuthenticator $authenticator,
-        \Praxigento\Accounting\Api\Asset\Transfer\ProcessInterface $callProcess
+        \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\ProcessInterface $callProcess
     )
     {
         parent::__construct($context, $inputProcessor, $outputProcessor, $logger, $authenticator);
@@ -30,18 +30,18 @@ class Process
 
     protected function getInDataType(): string
     {
-        return \Praxigento\Accounting\Api\Asset\Transfer\Process\Request::class;
+        return \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Process\Request::class;
     }
 
     protected function getOutDataType(): string
     {
-        return \Praxigento\Accounting\Api\Asset\Transfer\Process\Response::class;
+        return \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Process\Response::class;
     }
 
     protected function process($request)
     {
         /* define local working data */
-        assert($request instanceof \Praxigento\Accounting\Api\Asset\Transfer\Process\Request);
+        assert($request instanceof \Praxigento\Accounting\Api\Ctrl\Asset\Transfer\Process\Request);
         $amount = $request->getAmount();
         $customerId = $request->getCustomerId();
 
