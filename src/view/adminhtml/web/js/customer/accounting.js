@@ -23,7 +23,7 @@ define([
     /* define local working data */
     var baseAdminUrl = baseUrl.replace('/customer/', '/');
     /* see \Praxigento\Downline\Controller\Adminhtml\Customer\Search */
-    var urlTransferInit = baseUrl + 'customer_accounting/init/';
+    var urlTransferInit = baseUrl + 'customer_accounting/init/' //?form_key=' + FORM_KEY;
     var urlTransferProcess = baseUrl + 'customer_accounting/process/';
     var urlCustomerSearch = baseAdminUrl + 'prxgt_dwnl/customer/search/';
     /* slider itself */
@@ -50,7 +50,8 @@ define([
         $('body').trigger('processStart');
 
         /* process response from server: create modal slider and populate with data */
-        var fnSuccess = function (data) {
+        var fnSuccess = function (response) {
+            var data = response.data;
             /**
              * Definitions.
              */
@@ -114,16 +115,15 @@ define([
             });
 
         }
+
         /* compose request and perform it */
-        /* see \Praxigento\Accounting\Controller\Adminhtml\Customer\Accounting\Init::VAR_CUSTOMER_ID*/
         var data = {
             customerId: customerId
         };
         var json = JSON.stringify(data);
-
         var opts = {
             data: json,
-            contentType: 'application/json',
+            // contentType: 'application/json',
             type: 'post',
             success: fnSuccess
         };
@@ -200,7 +200,7 @@ define([
 
         var opts = {
             data: json,
-            contentType: 'application/json',
+            // contentType: 'application/json',
             type: 'post',
             success: fnSuccess
         };
