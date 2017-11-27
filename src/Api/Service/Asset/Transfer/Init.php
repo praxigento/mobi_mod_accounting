@@ -8,7 +8,7 @@ namespace Praxigento\Accounting\Api\Service\Asset\Transfer;
 /**
  * Get initial data to start asset transfer operation on UI.
  */
-interface IInit
+interface Init
 {
     /**
      * @param \Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Request $data

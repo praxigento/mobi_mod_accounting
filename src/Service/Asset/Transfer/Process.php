@@ -11,7 +11,7 @@ use Praxigento\Accounting\Api\Service\Asset\Transfer\Process\Response\Data as AR
 use Praxigento\Accounting\Config as Cfg;
 
 class Process
-    implements \Praxigento\Accounting\Api\Service\Asset\Transfer\IProcess
+    implements \Praxigento\Accounting\Api\Service\Asset\Transfer\Process
 {
     /** @var \Praxigento\Accounting\Service\IOperation */
     private $callOper;

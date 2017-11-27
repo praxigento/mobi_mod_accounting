@@ -8,7 +8,7 @@ namespace Praxigento\Accounting\Api\Service\Asset\Transfer;
 /**
  * Perform asset transfer operation.
  */
-interface IProcess
+interface Process
 {
     /**
      * @param \Praxigento\Accounting\Api\Service\Asset\Transfer\Process\Request $request

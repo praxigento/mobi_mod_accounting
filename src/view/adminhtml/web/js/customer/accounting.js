@@ -119,8 +119,11 @@ define([
         var data = {
             customerId: customerId
         };
+        var json = JSON.stringify(data);
+
         var opts = {
-            data: data,
+            data: json,
+            contentType: 'application/json',
             type: 'post',
             success: fnSuccess
         };

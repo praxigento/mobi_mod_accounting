@@ -12,7 +12,7 @@ namespace Praxigento\Accounting\Controller\Asset\Transfer;
 class Process
     extends \Praxigento\Core\App\Action\Front\Api\Base
 {
-    /** @var \Praxigento\Accounting\Api\Service\Asset\Transfer\IProcess */
+    /** @var \Praxigento\Accounting\Api\Service\Asset\Transfer\Process */
     private $callProcess;
 
     public function __construct(
@@ -21,7 +21,7 @@ class Process
         \Magento\Framework\Webapi\ServiceOutputProcessor $outputProcessor,
         \Praxigento\Core\Fw\Logger\App $logger,
         \Praxigento\Core\Api\IAuthenticator $authenticator,
-        \Praxigento\Accounting\Api\Service\Asset\Transfer\IProcess $callProcess
+        \Praxigento\Accounting\Api\Service\Asset\Transfer\Process $callProcess
     )
     {
         parent::__construct($context, $inputProcessor, $outputProcessor, $logger, $authenticator);

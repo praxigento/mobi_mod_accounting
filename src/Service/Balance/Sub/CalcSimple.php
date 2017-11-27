@@ -1,6 +1,6 @@
 <?php
 /**
- * Simple in-memoty balance calculation.
+ * Simple in-memory balance calculation.
  *
  * User: Alex Gusev <alex@flancer64.com>
  */
@@ -131,6 +131,7 @@ class CalcSimple
      * Order transactions by date_applied
      *
      * @param array $transactions
+     * @return array
      */
     protected function prepareTransactions($transactions)
     {

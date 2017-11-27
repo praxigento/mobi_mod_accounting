@@ -13,8 +13,11 @@ use Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Customer
 use Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetAssets as QBGetAssets;
 use Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetCustomer as QBGetCustomer;
 
+/**
+ * Get initialization data for asset transfer modal slider in adminhtml.
+ */
 class Init
-    implements \Praxigento\Accounting\Api\Service\Asset\Transfer\IInit
+    implements \Praxigento\Accounting\Api\Service\Asset\Transfer\Init
 {
     /** @var \Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetAssets */
     private $qbGetAssets;
