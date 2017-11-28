@@ -11,7 +11,7 @@ use Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data as DResp
 use Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Asset as DAsset;
 use Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Customer as DCustomer;
 use Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetAssets as QBGetAssets;
-use Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetCustomer as QBGetCustomer;
+use Praxigento\Core\Api\Service\Customer\Get as ServCustGet;
 
 /**
  * Get initialization data for asset transfer modal slider in adminhtml.
@@ -21,16 +21,16 @@ class Init
 {
     /** @var \Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetAssets */
     private $qbGetAssets;
-    /** @var \Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetCustomer */
-    private $qbGetCustomer;
+    /** @var \Praxigento\Core\Api\Service\Customer\Get */
+    private $servCustGet;
 
     public function __construct(
         QBGetAssets $qbGetAssets,
-        QBGetCustomer $qbGetCustomer
+        ServCustGet $servCustGet
     )
     {
         $this->qbGetAssets = $qbGetAssets;
-        $this->qbGetCustomer = $qbGetCustomer;
+        $this->servCustGet = $servCustGet;
     }
 
     public function exec(ARequest $data)
@@ -94,28 +94,13 @@ class Init
      */
     private function loadCustomerData($custId)
     {
-        $query = $this->qbGetCustomer->build();
-        $conn = $query->getConnection();
-        $bind = [
-            QBGetCustomer::BND_CUST_ID => $custId
-        ];
-        $rs = $conn->fetchRow($query, $bind);
-
-        /* extract DB data */
-        $custId = $rs[QBGetCustomer::A_ID];
-        $email = $rs[QBGetCustomer::A_EMAIL];
-        $nameFirst = $rs[QBGetCustomer::A_NAME_FIRST];
-        $nameLast = $rs[QBGetCustomer::A_NAME_LAST];
-        $mlmId = $rs[QBGetCustomer::A_MLM_ID];
+        $request = new \Praxigento\Core\Api\Service\Customer\Get\Request();
+        $request->setCustomerId($custId);
+        $response = $this->servCustGet->exec($request);
+        $data = $response->get();
 
         /* compose API data */
-        $result = new DCustomer();
-        $result->setId($custId);
-        $result->setEmail($email);
-        $result->setNameFirst($nameFirst);
-        $result->setNameLast($nameLast);
-        $result->setMlmId($mlmId);
-
+        $result = new DCustomer($data);
         return $result;
     }
 }
