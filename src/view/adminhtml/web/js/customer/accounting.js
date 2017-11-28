@@ -131,20 +131,20 @@ define([
     }
 
     /**
-     * Search customers on server and prepare data for UI.
+     * Search counterparty customers on the server and prepare data for UI.
      *
      * @param request
      * @param response
      */
     var fnAjaxCustomerSearch = function (request, response) {
+        var data = {search_key: request.term};
+        var json = JSON.stringify(data);
         $.ajax({
             url: urlCustomerSearch,
-            data: {
-                /* see: \Praxigento\Downline\Controller\Adminhtml\Customer\Search::VAR_SEARCH_KEY*/
-                search_key: request.term
-            },
-            success: function (data) {
+            data: json,
+            success: function (resp) {
                 /* convert API data into JQuery widget data */
+                var data = resp.data;
                 var found = [];
                 for (var i in data.items) {
                     var one = data.items[i];
