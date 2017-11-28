@@ -6,19 +6,19 @@
     <!-- **************************************************** -->
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">accounts_transactions_grid.accounts_transactions_grid_data_source</item>
-            <item name="deps" xsi:type="string">accounts_transactions_grid.accounts_transactions_grid_data_source</item>
+            <item name="provider" xsi:type="string">account_transactions_grid.account_transactions_grid_data_source</item>
+            <item name="deps" xsi:type="string">account_transactions_grid.account_transactions_grid_data_source</item>
         </item>
-        <item name="spinner" xsi:type="string">accounts_transactions_columns</item>
+        <item name="spinner" xsi:type="string">account_transactions_columns</item>
     </argument>
 
     <!-- **************************************************** -->
     <!-- Data Source definition -->
     <!-- **************************************************** -->
-    <dataSource name="accounts_transactions_grid_data_source">
+    <dataSource name="account_transactions_grid_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">\Praxigento\Core\Ui\DataProvider\Grid\Base</argument>
-            <argument name="name" xsi:type="string">accounts_transactions_grid_data_source</argument>
+            <argument name="name" xsi:type="string">account_transactions_grid_data_source</argument>
             <argument name="gridQueryBuilder" xsi:type="object">\Praxigento\Accounting\Ui\DataProvider\Grid\Transaction\QueryBuilder</argument>
         </argument>
         <argument name="data" xsi:type="array">
@@ -46,7 +46,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="columnsData" xsi:type="array">
-                        <item name="provider" xsi:type="string">accounts_transactions_grid.accounts_transactions_grid.accounts_transactions_columns</item>
+                        <item name="provider" xsi:type="string">account_transactions_grid.account_transactions_grid.account_transactions_columns</item>
                     </item>
                     <item name="component" xsi:type="string">Magento_Ui/js/grid/controls/columns</item>
                     <item name="displayArea" xsi:type="string">dataGridActions</item>
@@ -56,15 +56,15 @@
         <filters name="listing_filters">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="columnsProvider" xsi:type="string">accounts_transactions_grid.accounts_transactions_grid.accounts_transactions_columns</item>
+                    <item name="columnsProvider" xsi:type="string">account_transactions_grid.account_transactions_grid.account_transactions_columns</item>
                     <item name="storageConfig" xsi:type="array">
-                        <item name="provider" xsi:type="string">accounts_transactions_grid.accounts_transactions_grid.listing_top.bookmarks</item>
+                        <item name="provider" xsi:type="string">account_transactions_grid.account_transactions_grid.listing_top.bookmarks</item>
                         <item name="namespace" xsi:type="string">current.filters</item>
                     </item>
                     <item name="childDefaults" xsi:type="array">
-                        <item name="provider" xsi:type="string">accounts_transactions_grid.accounts_transactions_grid.listing_top.listing_filters</item>
+                        <item name="provider" xsi:type="string">account_transactions_grid.account_transactions_grid.listing_top.listing_filters</item>
                         <item name="imports" xsi:type="array">
-                            <item name="visible" xsi:type="string">accounts_transactions_grid.accounts_transactions_grid.accounts_transactions_columns.${ $.index }:visible</item>
+                            <item name="visible" xsi:type="string">account_transactions_grid.account_transactions_grid.account_transactions_columns.${ $.index }:visible</item>
                         </item>
                     </item>
                 </item>
@@ -74,10 +74,10 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="storageConfig" xsi:type="array">
-                        <item name="provider" xsi:type="string">accounts_transactions_grid.accounts_transactions_grid.listing_top.bookmarks</item>
+                        <item name="provider" xsi:type="string">account_transactions_grid.account_transactions_grid.listing_top.bookmarks</item>
                         <item name="namespace" xsi:type="string">current.paging</item>
                     </item>
-                    <item name="selectProvider" xsi:type="string">accounts_transactions_grid.accounts_transactions_grid.accounts_transactions_columns.ids</item>
+                    <item name="selectProvider" xsi:type="string">account_transactions_grid.account_transactions_grid.account_transactions_columns.ids</item>
                 </item>
             </argument>
         </paging>
@@ -86,16 +86,16 @@
     <!-- **************************************************** -->
     <!-- Grid Columns -->
     <!-- **************************************************** -->
-    <columns name="accounts_transactions_columns">
+    <columns name="account_transactions_columns">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <item name="storageConfig" xsi:type="array">
-                    <item name="provider" xsi:type="string">accounts_transactions_grid.accounts_transactions_grid.listing_top.bookmarks</item>
+                    <item name="provider" xsi:type="string">account_transactions_grid.account_transactions_grid.listing_top.bookmarks</item>
                     <item name="namespace" xsi:type="string">current</item>
                 </item>
                 <item name="childDefaults" xsi:type="array">
                     <item name="storageConfig" xsi:type="array">
-                        <item name="provider" xsi:type="string">accounts_transactions_grid.accounts_transactions_grid.listing_top.bookmarks</item>
+                        <item name="provider" xsi:type="string">account_transactions_grid.account_transactions_grid.listing_top.bookmarks</item>
                         <item name="root" xsi:type="string">columns.${ $.index }</item>
                         <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
                     </item>
