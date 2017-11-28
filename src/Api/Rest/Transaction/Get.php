@@ -8,6 +8,9 @@ namespace Praxigento\Accounting\Api\Rest\Transaction;
 use Praxigento\Accounting\Repo\Entity\Data\Account as Acc;
 use Praxigento\Accounting\Repo\Query\Trans\Get\Builder as Builder;
 
+/**
+ * @deprecated TODO: use it or remove it.
+ */
 class Get
     extends \Praxigento\Core\Api\Processor\WithQuery
     implements \Praxigento\Accounting\Api\Rest\Transaction\GetInterface
