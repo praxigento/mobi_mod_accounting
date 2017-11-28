@@ -7,7 +7,7 @@ define([
 ], function ($, Actions, mageTemplate, innerHtml) {
     'use strict';
 
-    /* save globals FROM_KEY into local context */
+    /* save globals FORM_KEY into local context */
     var baseUrl = BASE_URL;
     var formKey = FORM_KEY;
 

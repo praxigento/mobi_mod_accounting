@@ -15,10 +15,8 @@ use Praxigento\Accounting\Api\Ctrl\Adminhtml\Customer\Accounting\Init\Response a
 class Init
     extends \Praxigento\Core\App\Action\Back\Api\Base
 {
-    const VAR_CUSTOMER_ID = 'customerId';
     /** @var \Praxigento\Accounting\Service\Asset\Transfer\Init */
     private $callInit;
-    private $outputProcessor;
 
     public function __construct
     (
