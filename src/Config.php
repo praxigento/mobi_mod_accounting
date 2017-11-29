@@ -9,6 +9,7 @@ namespace Praxigento\Accounting;
 
 class Config extends \Praxigento\Core\Config
 {
+    const ACL_ACCOUNTS = 'admin_accounts';
     const ACL_ACCOUNTS_ACCOUNTS = 'admin_accounts_accounts';
     const ACL_ACCOUNTS_ACCOUNTS2 = 'admin_accounts_accounts2';
     const ACL_ACCOUNTS_OPERATIONS = 'admin_accounts_operations';

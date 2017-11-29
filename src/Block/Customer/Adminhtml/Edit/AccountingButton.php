@@ -2,6 +2,8 @@
 
 namespace Praxigento\Accounting\Block\Customer\Adminhtml\Edit;
 
+use Praxigento\Accounting\Config as Cfg;
+
 class AccountingButton
     extends \Magento\Customer\Block\Adminhtml\Edit\GenericButton
     implements \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
@@ -27,20 +29,19 @@ class AccountingButton
     {
         $data = [];
         /* check ACL & store configuration */
-//        $isAllowed = $this->authorization->isAllowed(Cfg::ACL_RULE_LOGIN_AS);
-//        $isConfigured = $this->hlpCfg->getControlsCustomerFormButton();
-//        if ($isAllowed && $isConfigured) {
-        if (true) {
-            $customerId = $this->getCustomerId();
-            $canModify = $customerId && !$this->customerAccountManagement->isReadonly($this->getCustomerId());
-            if ($customerId && $canModify) {
-                $data = [
-                    'label' => __('Accounting'),
-                    'id' => 'customer-edit-prxgt-accounting',
-                    'sort_order' => 100,
-                    'on_click'=>'false'
-//                    'on_click' => "debugger; require('uiRegistry').get('prxgt_accounts_customer_modal.prxgt_accounts_customer_modal').applyAction()"
-                ];
+        $isAllowed = $this->authorization->isAllowed(Cfg::MODULE . '::' . Cfg::ACL_ACCOUNTS);
+        if ($isAllowed) {
+            if (true) {
+                $customerId = $this->getCustomerId();
+                $canModify = $customerId && !$this->customerAccountManagement->isReadonly($this->getCustomerId());
+                if ($customerId && $canModify) {
+                    $data = [
+                        'label' => __('Accounting'),
+                        'id' => 'customer-edit-prxgt-accounting',
+                        'sort_order' => 100,
+                        'on_click' => 'false'
+                    ];
+                }
             }
         }
         return $data;

@@ -5,12 +5,16 @@
 
 namespace Praxigento\Accounting\Controller\Adminhtml\Customer\Accounting;
 
+use Praxigento\Accounting\Config as Cfg;
+
 /**
  * Perform assets transfer.
  */
 class Process
     extends \Praxigento\Core\App\Action\Back\Api\Base
 {
+    const ADMIN_RESOURCE = Cfg::MODULE . '::' . Cfg::ACL_ACCOUNTS;
+
     /** @var \Praxigento\Accounting\Api\Service\Asset\Transfer\Process */
     private $callProcess;
 

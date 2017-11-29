@@ -8,6 +8,7 @@ namespace Praxigento\Accounting\Controller\Adminhtml\Customer\Accounting;
 
 use Praxigento\Accounting\Api\Ctrl\Adminhtml\Customer\Accounting\Init\Request as ARequest;
 use Praxigento\Accounting\Api\Ctrl\Adminhtml\Customer\Accounting\Init\Response as AResponse;
+use Praxigento\Accounting\Config as Cfg;
 
 /**
  * Get customer & assets data to initialize modal slider to perform assets transfer.
@@ -15,6 +16,8 @@ use Praxigento\Accounting\Api\Ctrl\Adminhtml\Customer\Accounting\Init\Response a
 class Init
     extends \Praxigento\Core\App\Action\Back\Api\Base
 {
+    const ADMIN_RESOURCE = Cfg::MODULE . '::' . Cfg::ACL_ACCOUNTS;
+
     /** @var \Praxigento\Accounting\Service\Asset\Transfer\Init */
     private $callInit;
 
