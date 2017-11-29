@@ -61,16 +61,17 @@ class Get
             $assetCode = $db[QBGetAssets::A_ASSET_CODE];
             $accId = $db[QBGetAssets::A_ACC_ID];
             $accBalance = $db[QBGetAssets::A_ACC_BALANCE];
-
-            /* TODO: skip hidden types, like WALLET_HOLD */
+            $isVisible = $db[QBGetAssets::A_IS_VISIBLE];
 
             /* compose API data */
-            $api = new DAsset();
-            $api->setAccBalance($accBalance);
-            $api->setAccId($accId);
-            $api->setAssetCode($assetCode);
-            $api->setAssetId($assetId);
-            $result[] = $api;
+            if ($isVisible) {
+                $api = new DAsset();
+                $api->setAccBalance($accBalance);
+                $api->setAccId($accId);
+                $api->setAssetCode($assetCode);
+                $api->setAssetId($assetId);
+                $result[] = $api;
+            }
         }
         return $result;
     }

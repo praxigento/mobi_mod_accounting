@@ -70,18 +70,21 @@ class Init
         $result = [];
         foreach ($rs as $db) {
             /* extract DB data */
-            $assetId = $db[QBGetAssets::A_ASSET_ID];
-            $assetCode = $db[QBGetAssets::A_ASSET_CODE];
-            $accId = $db[QBGetAssets::A_ACC_ID];
             $accBalance = $db[QBGetAssets::A_ACC_BALANCE];
+            $accId = $db[QBGetAssets::A_ACC_ID];
+            $assetCode = $db[QBGetAssets::A_ASSET_CODE];
+            $assetId = $db[QBGetAssets::A_ASSET_ID];
+            $isVisible = $db[QBGetAssets::A_IS_VISIBLE];
 
-            /* compose API data */
-            $api = new DAsset();
-            $api->setAccBalance($accBalance);
-            $api->setAccId($accId);
-            $api->setAssetCode($assetCode);
-            $api->setAssetId($assetId);
-            $result[] = $api;
+            /* compose API data for visible items */
+            if ($isVisible) {
+                $api = new DAsset();
+                $api->setAccBalance($accBalance);
+                $api->setAccId($accId);
+                $api->setAssetCode($assetCode);
+                $api->setAssetId($assetId);
+                $result[] = $api;
+            }
         }
         return $result;
     }

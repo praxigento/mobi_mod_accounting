@@ -20,7 +20,7 @@ class GetAssets
     const A_ACC_ID = 'accId';
     const A_ASSET_CODE = 'assetCode';
     const A_ASSET_ID = 'assetId';
-
+    const A_IS_VISIBLE = 'isVisible';
     /** Bound variables names */
     const BND_CUST_ID = 'custId';
 
@@ -42,7 +42,8 @@ class GetAssets
         $as = $asType;
         $cols = [
             self::A_ASSET_ID => ETypeAss::ATTR_ID,
-            self::A_ASSET_CODE => ETypeAss::ATTR_CODE
+            self::A_ASSET_CODE => ETypeAss::ATTR_CODE,
+            self::A_IS_VISIBLE => ETypeAss::ATTR_IS_VISIBLE
         ];
         $result->from([$as => $tbl], $cols);
 
