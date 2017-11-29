@@ -13,7 +13,6 @@ define([
      */
     /* component constants */
     var TYPE_DIRECT = 'direct';
-    var TYPE_BETWEEN = 'between';
     /* pin globals into UI component scope */
     var baseUrl = BASE_URL;
     /* get customer data from uiRegistry */
@@ -22,10 +21,9 @@ define([
     var customerId = customer.entity_id;
     /* define local working data */
     var baseAdminUrl = baseUrl.replace('/customer/', '/');
-    /* see \Praxigento\Downline\Controller\Adminhtml\Customer\Search */
-    var urlTransferInit = baseUrl + 'customer_accounting/init/' //?form_key=' + FORM_KEY;
+    var urlTransferInit = baseUrl + 'customer_accounting/init/';
     var urlTransferProcess = baseUrl + 'customer_accounting/process/';
-    var urlCustomerSearch = baseAdminUrl + 'prxgt_dwnl/customer/search/';
+    var urlCustomerSearch = baseAdminUrl + 'prxgt/customer/search/';
     /* slider itself */
     var popup;
     /* View Model for slider */
