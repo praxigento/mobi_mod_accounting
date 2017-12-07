@@ -7,7 +7,7 @@ namespace Praxigento\Accounting\Api\Service\Account\Get;
 
 
 class Request
-    extends \Praxigento\Core\App\WebApi\Request
+    extends \Praxigento\Core\Data
 {
     /**
      * ID of the account. $accountId has the highest priority for identity.
@@ -42,68 +42,80 @@ class Request
      */
     const IS_REPRESENTATIVE = 'is_representative';
 
+    /** @return int */
     public function getAccountId()
     {
-        $result = $this->get(static::ACCOUNT_ID);
+        $result = $this->get(self::ACCOUNT_ID);
         return $result;
     }
 
+    /** @return string */
     public function getAssetTypeCode()
     {
-        $result = $this->get(static::ASSET_TYPE_CODE);
+        $result = $this->get(self::ASSET_TYPE_CODE);
         return $result;
     }
 
+    /** @return int */
     public function getAssetTypeId()
     {
-        $result = $this->get(static::ASSET_TYPE_ID);
+        $result = $this->get(self::ASSET_TYPE_ID);
         return $result;
     }
 
+    /** @return bool */
     public function getCreateNewAccountIfMissed()
     {
-        $result = $this->get(static::CREATE_NEW_ACCOUNT_IF_MISSED);
+        $result = $this->get(self::CREATE_NEW_ACCOUNT_IF_MISSED);
         return $result;
     }
 
+    /** @return int */
     public function getCustomerId()
     {
-        $result = $this->get(static::CUSTOMER_ID);
+        $result = $this->get(self::CUSTOMER_ID);
         return $result;
     }
 
+    /** @return bool */
     public function getIsRepresentative()
     {
-        return $this->get(static::IS_REPRESENTATIVE);
+        return $this->get(self::IS_REPRESENTATIVE);
     }
 
+    /** @param string $data */
     public function setAccountId($data)
     {
-        $this->set(static::ACCOUNT_ID, $data);
+        $this->set(self::ACCOUNT_ID, $data);
     }
 
+    /** @param string $data */
     public function setAssetTypeCode($data)
     {
-        $this->set(static::ASSET_TYPE_CODE, $data);
+        $this->set(self::ASSET_TYPE_CODE, $data);
     }
 
+    /** @param string $data */
     public function setAssetTypeId($data)
     {
-        $this->set(static::ASSET_TYPE_ID, $data);
+        $this->set(self::ASSET_TYPE_ID, $data);
     }
 
-    public function setCreateNewAccountIfMissed($data = true)
+    /** @param bool $data */
+    public function setCreateNewAccountIfMissed($data)
     {
-        $this->set(static::CREATE_NEW_ACCOUNT_IF_MISSED, $data);
+        $this->set(self::CREATE_NEW_ACCOUNT_IF_MISSED, $data);
     }
 
+    /** @param string $data */
     public function setCustomerId($data)
     {
-        $this->set(static::CUSTOMER_ID, $data);
+        $this->set(self::CUSTOMER_ID, $data);
     }
 
-    public function setIsRepresentative($data = TRUE)
+    /** @param bool $data */
+    public function setIsRepresentative($data)
     {
-        $this->set(static::IS_REPRESENTATIVE, $data);
+        $this->set(self::IS_REPRESENTATIVE, $data);
     }
 }

@@ -39,12 +39,12 @@ class Get
      *
      * @return AResponse
      */
-    public function exec(\Praxigento\Accounting\Api\Service\Account\Get\Request $data)
+    public function exec($req)
     {
-        if ($data->getIsRepresentative() === TRUE) {
+        if ($req->getIsRepresentative() === TRUE) {
             $result = new AResponse();
-            $typeId = $data->getAssetTypeId();
-            $typeCode = $data->getAssetTypeCode();
+            $typeId = $req->getAssetTypeId();
+            $typeCode = $req->getAssetTypeCode();
             if (is_null($typeId)) {
                 $typeId = $this->repoTypeAsset->getIdByCode($typeCode);
             }
@@ -84,7 +84,7 @@ class Get
             }
             return $result;
         } else {
-            return $this->get($data);
+            return $this->get($req);
         }
     }
 
