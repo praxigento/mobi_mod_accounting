@@ -1,6 +1,7 @@
 <?php
 /**
  * User: Alex Gusev <alex@flancer64.com>
+ * External Service
  */
 
 namespace Praxigento\Accounting\Api\Service\Asset\Transfer;
