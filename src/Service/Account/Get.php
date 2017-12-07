@@ -1,28 +1,27 @@
 <?php
-/*
- * Get account data or create new account if customer has no account for the requested asset.
+/**
+ *
  */
-
 
 namespace Praxigento\Accounting\Service\Account;
 
 use Praxigento\Accounting\Api\Service\Account\Get\Request as ARequest;
 use Praxigento\Accounting\Api\Service\Account\Get\Response as AResponse;
-use Praxigento\Accounting\Repo\Entity\Data\Account as Account;
+use Praxigento\Accounting\Repo\Entity\Data\Account as EAccount;
 
+/**
+ * Get account data or create new account if customer has no account for the requested asset.
+ */
 class Get
     implements \Praxigento\Accounting\Api\Service\Account\Get
 {
     /** @var array save accounts data for representative customer. */
-    protected $cachedRepresentAccs = [];
+    private $cachedRepresentAccs = [];
     /** @var  \Praxigento\Accounting\Repo\Entity\Account */
-    protected $repoAccount;
+    private $repoAccount;
     /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
-    protected $repoTypeAsset;
+    private $repoTypeAsset;
 
-    /**
-     * Call constructor.
-     */
     public function __construct(
         \Praxigento\Accounting\Repo\Entity\Account $repoAccount,
         \Praxigento\Accounting\Repo\Entity\Type\Asset $repoTypeAsset
@@ -33,96 +32,95 @@ class Get
     }
 
     /**
+     * Perform DB to API data conversion directly.
+     *
+     * @param \Praxigento\Accounting\Repo\Entity\Data\Account $acc
+     * @return \Praxigento\Accounting\Api\Service\Account\Get\Response
+     */
+    private function composeResult(EAccount $acc)
+    {
+        /** define local working data */
+        $accId = $acc->getId();
+        $custId = $acc->getCustomerId();
+        $balance = $acc->getBalance();
+        $typeId = $acc->getAssetTypeId();
+
+        /** compose result */
+        $result = new AResponse();
+        $result->setId($accId);
+        $result->setCustomerId($custId);
+        $result->setBalance($balance);
+        $result->setAssetTypeId($typeId);
+        return $result;
+    }
+
+    /**
      * Get account data or create new account if customer has no account for the requested asset.
      *
-     * @param ARequest $request
+     * @param ARequest $req
      *
      * @return AResponse
      */
     public function exec($req)
     {
-        if ($req->getIsRepresentative() === TRUE) {
-            $result = new AResponse();
-            $typeId = $req->getAssetTypeId();
-            $typeCode = $req->getAssetTypeCode();
-            if (is_null($typeId)) {
-                $typeId = $this->repoTypeAsset->getIdByCode($typeCode);
-            }
-            if (!is_null($typeId)) {
-                if (isset($this->cachedRepresentAccs[$typeId])) {
-                    $result->set($this->cachedRepresentAccs[$typeId]);
-                } else {
-                    /* there is no cached data yet */
-                    /* get representative customer ID */
-                    $customerId = $this->repoAccount->getRepresentativeCustomerId();
-                    /* get all accounts for the representative customer */
-                    $accounts = $this->repoAccount->getAllByCustomerId($customerId);
-                    if ($accounts) {
-                        $mapped = [];
-                        foreach ($accounts as $one) {
-                            $mapped[$one->getAssetTypeId()] = $one;
-                        }
-                        $this->cachedRepresentAccs = $mapped;
-                    }
-                    /* check selected accounts */
-                    if (isset($this->cachedRepresentAccs[$typeId])) {
-                        $result->set($this->cachedRepresentAccs[$typeId]);
-                    } else {
-                        /* there is no accounts yet */
-                        $req = new ARequest();
-                        $req->setCustomerId($customerId);
-                        $req->setAssetTypeId($typeId);
-                        $req->setCreateNewAccountIfMissed();
-                        $resp = $this->get($req);
-                        $accData = $resp->get();
-                        $this->cachedRepresentAccs[$accData[Account::ATTR_ASSET_TYPE_ID]] = new Account($accData);
-                        $result->set($accData);
-                    }
-                }
-            } else {
-                // "Asset type is not defined (asset code: $typeCode)."
-            }
-            return $result;
-        } else {
-            return $this->get($req);
+        assert($req instanceof ARequest);
+        /** define local working data */
+        $result = new AResponse();
+        $typeCode = $req->getAssetTypeCode();
+        $typeId = $req->getAssetTypeId();
+        $custId = $req->getCustomerId();
+        $isRepres = $req->getIsRepresentative();
+
+        /** perform processing */
+        if (is_null($typeId)) {
+            /* get type ID by code if missed */
+            $typeId = $this->repoTypeAsset->getIdByCode($typeCode);
         }
+
+        /* return cached data for representative customer if exists */
+        if (
+            $isRepres &&
+            isset($this->cachedRepresentAccs[$typeId])
+        ) {
+            $result = $this->cachedRepresentAccs[$typeId];
+        } else {
+            /* ... or get data from DB */
+            if ($isRepres) {
+                /* get representative customer ID */
+                $custId = $this->repoAccount->getRepresentativeCustomerId();
+            }
+            $account = $this->getAccount($custId, $typeId);
+            $result = $this->composeResult($account);
+            /* cache data for representative customer */
+            if ($isRepres) {
+                $this->cachedRepresentAccs[$typeId] = $result;
+            }
+        }
+
+        /** compose result */
+        return $result;
     }
 
-    private function get(\Praxigento\Accounting\Api\Service\Account\Get\Request $data)
+    /**
+     * Get account by $custId & asset $typeId or create new one if not found.
+     *
+     * @param int $custId
+     * @param int $typeId
+     * @return EAccount
+     */
+    private function getAccount($custId, $typeId)
     {
-        $result = new AResponse();
-        $accountId = $data->getAccountId();
-        $customerId = $data->getCustomerId();
-        $assetTypeId = $data->getAssetTypeId();
-        $assetTypeCode = $data->getAssetTypeCode();
-        $createNewAccIfMissed = $data->getCreateNewAccountIfMissed();
-        /* accountId has the highest priority */
-        if ($accountId) {
-            $data = $this->repoAccount->getById($accountId);
-        } else {
-            /* try to look up by customer id & asset type id */
-            if (!$assetTypeId) {
-                /* get asset type ID by asset code */
-                $assetTypeId = $this->repoTypeAsset->getIdByCode($assetTypeCode);
-            }
-            /* get account by customerId & assetTypeId */
-            $data = $this->repoAccount->getByCustomerId($customerId, $assetTypeId);
-        }
-        /* analyze found data */
-        if ($data) {
-            $result->set($data);
-        } else {
-            if ($createNewAccIfMissed) {
-                /* not found - add new account */
-                $data = [
-                    Account::ATTR_CUST_ID => $customerId,
-                    Account::ATTR_ASSET_TYPE_ID => $assetTypeId,
-                    Account::ATTR_BALANCE => 0
-                ];
-                $accId = $this->repoAccount->create($data);
-                $data[Account::ATTR_ID] = $accId;
-                $result->set($data);
-            }
+        /** perform processing & compose result */
+        /* get account by customerId & assetTypeId */
+        $result = $this->repoAccount->getByCustomerId($custId, $typeId);
+        if (!$result) {
+            /* create new account */
+            $result = new EAccount();
+            $result->setCustomerId($custId);
+            $result->setAssetTypeId($typeId);
+            $result->setBalance(0);
+            $accId = $this->repoAccount->create($result);
+            $result->setId($accId);
         }
         return $result;
     }
