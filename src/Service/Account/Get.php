@@ -65,7 +65,6 @@ class Get
     {
         assert($req instanceof ARequest);
         /** define local working data */
-        $result = new AResponse();
         $typeCode = $req->getAssetTypeCode();
         $typeId = $req->getAssetTypeId();
         $custId = $req->getCustomerId();

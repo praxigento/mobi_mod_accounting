@@ -26,7 +26,8 @@ class Get_ManualTest
     {
         $def = $this->manTrans->begin();
         $req = new \Praxigento\Accounting\Api\Service\Account\Get\Request();
-        $req->setAccountId('345');
+        $req->setAssetTypeCode('PV');
+        $req->setCustomerId(4);
         $data = $this->obj->exec($req);
         $this->assertNotNull($data);
         $this->manTrans->rollback($def);
