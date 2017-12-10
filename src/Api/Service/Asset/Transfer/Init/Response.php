@@ -12,7 +12,7 @@ namespace Praxigento\Accounting\Api\Service\Asset\Transfer\Init;
  *
  */
 class Response
-    extends \Praxigento\Core\App\WebApi\Response
+    extends \Praxigento\Core\App\Web\Response
 {
     /**
      * @return \Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data

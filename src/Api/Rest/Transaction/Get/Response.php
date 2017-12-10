@@ -11,7 +11,7 @@ namespace Praxigento\Accounting\Api\Rest\Transaction\Get;
  *
  */
 class Response
-    extends \Praxigento\Core\App\WebApi\Response
+    extends \Praxigento\Core\App\Web\Response
 {
     /**
      * @return \Praxigento\Accounting\Api\Rest\Transaction\Get\Response\Entry[]
