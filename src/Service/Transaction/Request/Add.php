@@ -18,6 +18,6 @@ namespace Praxigento\Accounting\Service\Transaction\Request;
  * @method number getValue()
  * @method void setValue(number $data)
  */
-class Add extends \Praxigento\Core\Service\Base\Request {
+class Add extends \Praxigento\Core\App\Service\Base\Request {
 
 }

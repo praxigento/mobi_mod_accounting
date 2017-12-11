@@ -9,7 +9,7 @@ namespace Praxigento\Accounting\Service\Balance\Get\Turnover;
  * @property \Praxigento\Accounting\Service\Balance\Get\Turnover\Data\Entry[] $entries
  */
 class Response
-    extends \Praxigento\Core\Service\Base\Response
+    extends \Praxigento\Core\App\Service\Base\Response
 {
 
 }

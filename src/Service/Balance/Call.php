@@ -17,10 +17,10 @@ use Praxigento\Core\Tool\IPeriod;
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Call
-    extends \Praxigento\Core\Service\Base\Call
+    extends \Praxigento\Core\App\Service\Base\Call
     implements \Praxigento\Accounting\Service\IBalance
 {
-    /** @var \Praxigento\Core\Transaction\Database\IManager */
+    /** @var \Praxigento\Core\App\Transaction\Database\IManager */
     protected $manTrans;
     /** @var \Praxigento\Accounting\Repo\Entity\Account */
     protected $repoAccount;
@@ -46,10 +46,10 @@ class Call
     protected $toolPeriod;
 
     public function __construct(
-        \Praxigento\Core\Fw\Logger\App $logger,
+        \Praxigento\Core\App\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\Transaction\Database\IManager $manTrans,
+        \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
         \Praxigento\Core\Tool\IDate $toolDate,
         \Praxigento\Core\Tool\IPeriod $toolPeriod,
         \Praxigento\Accounting\Repo\Entity\Account $repoAccount,

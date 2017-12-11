@@ -19,7 +19,7 @@ class Process
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Webapi\ServiceInputProcessor $inputProcessor,
         \Magento\Framework\Webapi\ServiceOutputProcessor $outputProcessor,
-        \Praxigento\Core\Fw\Logger\App $logger,
+        \Praxigento\Core\App\Logger\App $logger,
         \Praxigento\Core\App\Web\IAuthenticator $authenticator,
         \Praxigento\Accounting\Api\Service\Asset\Transfer\Process $callProcess
     )

@@ -13,7 +13,7 @@ use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as ETypeAsset;
  * Build query to get transactions for the customer.
  */
 class Builder
-    extends \Praxigento\Core\Repo\Query\Def\Builder
+    extends \Praxigento\Core\App\Repo\Query\Def\Builder
 {
     /** Tables aliases for external usage ('camelCase' naming) */
     const AS_ACC = 'paa';

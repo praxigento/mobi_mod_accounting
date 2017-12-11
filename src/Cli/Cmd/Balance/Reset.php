@@ -9,7 +9,7 @@ namespace Praxigento\Accounting\Cli\Cmd\Balance;
  * Reset accounts balances.
  */
 class Reset
-    extends \Praxigento\Core\Cli\Cmd\Base
+    extends \Praxigento\Core\App\Cli\Cmd\Base
 {
     const OPT_DATESTAMP_DEF = '10170101';
     const OPT_DATESTAMP_NAME = 'date';

@@ -8,14 +8,14 @@ namespace Praxigento\Accounting\Repo\Entity;
 use Praxigento\Accounting\Repo\Entity\Data\Transaction as Entity;
 
 class Transaction
-    extends \Praxigento\Core\Repo\Def\Entity
+    extends \Praxigento\Core\App\Repo\Def\Entity
 {
     /** @var \Praxigento\Accounting\Repo\Entity\Account */
     protected $_repoAccount;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\Repo\IGeneric $repoGeneric,
+        \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
         \Praxigento\Accounting\Repo\Entity\Account $repoAccount
     )
     {

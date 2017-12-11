@@ -13,7 +13,7 @@ use Praxigento\Accounting\Repo\Query\Balance\MaxDates\Builder as QMaxDates;
  * Build query to get closing balance for all accounts on given date.
  */
 class Builder
-    extends \Praxigento\Core\Repo\Query\Builder
+    extends \Praxigento\Core\App\Repo\Query\Builder
 {
     /**
      * Tables aliases.
@@ -82,7 +82,7 @@ class Builder
 
         /* WHERE */
         $expValue = "$asBal." . Balance::ATTR_DATE . " IS NOT NULL";
-        $exp = new \Praxigento\Core\Repo\Query\Expression($expValue);
+        $exp = new \Praxigento\Core\App\Repo\Query\Expression($expValue);
         $result->where($exp);
 
         /* result */

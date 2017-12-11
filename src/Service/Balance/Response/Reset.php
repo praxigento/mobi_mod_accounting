@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Service\Balance\Response;
 
-class Reset extends \Praxigento\Core\Service\Base\Response
+class Reset extends \Praxigento\Core\App\Service\Base\Response
 {
     const ROWS_DELETED = 'rows_deleted';
 

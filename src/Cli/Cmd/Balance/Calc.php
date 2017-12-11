@@ -9,7 +9,7 @@ namespace Praxigento\Accounting\Cli\Cmd\Balance;
  * Calculate accounts balances.
  */
 class Calc
-    extends \Praxigento\Core\Cli\Cmd\Base
+    extends \Praxigento\Core\App\Cli\Cmd\Base
 {
     const OPT_DATESTAMP_DEF = '31171231';
     const OPT_DATESTAMP_NAME = 'date';

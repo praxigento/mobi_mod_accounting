@@ -8,7 +8,7 @@ namespace Praxigento\Accounting\Service\Balance\Request;
  * Classic definition for accessors is used in REST API data transformation (JSON <=> Data Objects).
  */
 class Change
-    extends \Praxigento\Core\Service\Base\Request
+    extends \Praxigento\Core\App\Service\Base\Request
 {
     /** @return int */
     public function getAdminUserId()

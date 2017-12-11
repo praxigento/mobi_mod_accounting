@@ -6,7 +6,7 @@ namespace Praxigento\Accounting\Service;
 
 use Praxigento\Accounting\Service\Account\Request;
 use Praxigento\Accounting\Service\Account\Response;
-use Praxigento\Core\ICached;
+use Praxigento\Core\App\ICached;
 
 interface IAccount extends ICached
 {

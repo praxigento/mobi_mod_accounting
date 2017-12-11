@@ -11,10 +11,10 @@ use Praxigento\Accounting\Repo\Entity\Data\Transaction as Transaction;
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Call
-    extends \Praxigento\Core\Service\Base\Call
+    extends \Praxigento\Core\App\Service\Base\Call
     implements \Praxigento\Accounting\Service\ITransaction
 {
-    /** @var  \Praxigento\Core\Transaction\Database\IManager */
+    /** @var  \Praxigento\Core\App\Transaction\Database\IManager */
     protected $_manTrans;
     /** @var  \Praxigento\Accounting\Repo\Entity\Account */
     protected $_repoAcc;
@@ -25,9 +25,9 @@ class Call
      * Call constructor.
      */
     public function __construct(
-        \Praxigento\Core\Fw\Logger\App $logger,
+        \Praxigento\Core\App\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Core\Transaction\Database\IManager $manTrans,
+        \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\Account $repoAcc,
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTrans
     ) {

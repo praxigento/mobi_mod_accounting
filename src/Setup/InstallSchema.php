@@ -19,7 +19,7 @@ use Praxigento\Accounting\Repo\Entity\Data\Type\Operation as TypeOperation;
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  */
 class InstallSchema
-    extends \Praxigento\Core\Setup\Schema\Base
+    extends \Praxigento\Core\App\Setup\Schema\Base
 {
 
     protected function _setup()

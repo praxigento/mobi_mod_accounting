@@ -6,7 +6,7 @@ namespace Praxigento\Accounting\Service\Account\Response;
 
 use Praxigento\Accounting\Repo\Entity\Data\Account;
 
-class Get extends \Praxigento\Core\Service\Base\Response
+class Get extends \Praxigento\Core\App\Service\Base\Response
 {
     /**
      * @return int

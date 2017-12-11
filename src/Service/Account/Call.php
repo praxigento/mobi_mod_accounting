@@ -10,7 +10,7 @@ use Praxigento\Accounting\Repo\Entity\Data\Account as Account;
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Call
-    extends \Praxigento\Core\Service\Base\Call
+    extends \Praxigento\Core\App\Service\Base\Call
     implements \Praxigento\Accounting\Service\IAccount
 {
     /** @var array save accounts data for representative customer. */
@@ -24,7 +24,7 @@ class Call
      * Call constructor.
      */
     public function __construct(
-        \Praxigento\Core\Fw\Logger\App $logger,
+        \Praxigento\Core\App\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Accounting\Repo\Entity\Account $repoAccount,
         \Praxigento\Accounting\Repo\Entity\Type\Asset $repoTypeAsset

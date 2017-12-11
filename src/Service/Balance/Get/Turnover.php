@@ -9,7 +9,7 @@ use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder as QBalanceClose;
 
 class Turnover
-    extends \Praxigento\Core\Service\Base\Call
+    extends \Praxigento\Core\App\Service\Base\Call
     implements \Praxigento\Accounting\Service\Balance\Get\ITurnover
 {
     /** @var \Magento\Framework\DB\Adapter\AdapterInterface */
@@ -24,7 +24,7 @@ class Turnover
     protected $toolPeriod;
 
     public function __construct(
-        \Praxigento\Core\Fw\Logger\App $logger,
+        \Praxigento\Core\App\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Tool\IPeriod $toolPeriod,

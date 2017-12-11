@@ -10,6 +10,6 @@ namespace Praxigento\Accounting\Service\Operation\Response;
  * @method array getTransactionsIds() [$transId, ...] or [$transId => $ref, ...]
  * @method void setTransactionsIds(array $data)
  */
-class Add extends \Praxigento\Core\Service\Base\Response {
+class Add extends \Praxigento\Core\App\Service\Base\Response {
 
 }

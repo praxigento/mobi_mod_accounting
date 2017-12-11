@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Repo\Entity\Data;
 
 class Operation
-    extends \Praxigento\Core\Data\Entity\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_DATE_PREFORMED = 'date_performed';
     const ATTR_ID = 'id';

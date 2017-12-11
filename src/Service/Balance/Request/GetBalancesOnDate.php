@@ -4,7 +4,7 @@
  */
 namespace Praxigento\Accounting\Service\Balance\Request;
 
-class GetBalancesOnDate extends \Praxigento\Core\Service\Base\Request
+class GetBalancesOnDate extends \Praxigento\Core\App\Service\Base\Request
 {
     /**
      * ID of the account's asset type.

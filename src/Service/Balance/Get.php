@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Service\Balance;
 
 class Get
-    extends \Praxigento\Core\Service\Base\Call
+    extends \Praxigento\Core\App\Service\Base\Call
     implements \Praxigento\Accounting\Service\Balance\IGet
 {
     /** @var \Magento\Framework\DB\Adapter\AdapterInterface */
@@ -21,7 +21,7 @@ class Get
     protected $toolPeriod;
 
     public function __construct(
-        \Praxigento\Core\Fw\Logger\App $logger,
+        \Praxigento\Core\App\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Tool\IPeriod $toolPeriod,

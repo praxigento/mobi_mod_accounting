@@ -9,7 +9,7 @@ use Praxigento\Accounting\Repo\Entity\Data\Account as EAcc;
 use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as ETypeAss;
 
 class Get
-    extends \Praxigento\Core\Repo\Query\Builder
+    extends \Praxigento\Core\App\Repo\Query\Builder
 {
     /** Tables aliases for external usage */
     const AS_ACC = 'acc';

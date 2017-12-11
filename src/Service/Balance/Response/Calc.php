@@ -4,6 +4,6 @@
  */
 namespace Praxigento\Accounting\Service\Balance\Response;
 
-class Calc extends \Praxigento\Core\Service\Base\Response {
+class Calc extends \Praxigento\Core\App\Service\Base\Response {
 
 }

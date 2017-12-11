@@ -13,7 +13,7 @@ use Praxigento\Accounting\Repo\Entity\Data\Balance as Balance;
  * This is auxiliary query to be used in other balance queries. Therefore we use complex names for query's components.
  */
 class Builder
-    extends \Praxigento\Core\Repo\Query\Builder
+    extends \Praxigento\Core\App\Repo\Query\Builder
 {
     /**
      * Tables aliases.
@@ -39,7 +39,7 @@ class Builder
         $tbl = $this->resource->getTableName(Balance::ENTITY_NAME);
         $as = $asBal;
         $expValue = "MAX($asBal." . Balance::ATTR_DATE . ")";
-        $exp = new \Praxigento\Core\Repo\Query\Expression($expValue);
+        $exp = new \Praxigento\Core\App\Repo\Query\Expression($expValue);
         $cols = [
             self::A_ACC_ID => Balance::ATTR_ACCOUNT_ID,
             self::A_DATE_MAX => $exp

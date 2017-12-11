@@ -11,10 +11,10 @@ use Praxigento\Accounting\Repo\Entity\Data\Operation as EntityOperation;
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Call
-    extends \Praxigento\Core\Service\Base\Call
+    extends \Praxigento\Core\App\Service\Base\Call
     implements \Praxigento\Accounting\Service\IOperation
 {
-    /** @var  \Praxigento\Core\Transaction\Database\IManager */
+    /** @var  \Praxigento\Core\App\Transaction\Database\IManager */
     protected $_manTrans;
     /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Admin */
     protected $_repoELogChangeAdmin;
@@ -28,9 +28,9 @@ class Call
     protected $_subAdd;
 
     public function __construct(
-        \Praxigento\Core\Fw\Logger\App $logger,
+        \Praxigento\Core\App\Logger\App $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Core\Transaction\Database\IManager $manTrans,
+        \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\Operation $repoOper,
         \Praxigento\Accounting\Repo\Entity\Type\Operation $repoTypeOper,
         \Praxigento\Accounting\Repo\Entity\Log\Change\Admin $repoELogChangeAdmin,

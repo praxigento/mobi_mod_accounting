@@ -9,7 +9,7 @@ namespace Praxigento\Accounting\Repo\Entity\Data\Log\Change;
  * Log for change balance operations performed by customers.
  */
 class Customer
-    extends \Praxigento\Core\Data\Entity\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_CUST_REF = 'customer_ref';
     const ATTR_OPER_REF = 'operation_ref';

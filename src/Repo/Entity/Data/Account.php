@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Repo\Entity\Data;
 
 class Account
-    extends \Praxigento\Core\Data\Entity\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_ASSET_TYPE_ID = 'asset_type_id';
     const ATTR_BALANCE = 'balance';

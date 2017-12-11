@@ -7,8 +7,8 @@ namespace Praxigento\Accounting\Repo\Entity;
 
 use Magento\Framework\App\ResourceConnection;
 use Praxigento\Accounting\Repo\Entity\Data\Operation as Entity;
-use Praxigento\Core\Repo\Def\Entity as BaseEntityRepo;
-use Praxigento\Core\Repo\IGeneric as IRepoGeneric;
+use Praxigento\Core\App\Repo\Def\Entity as BaseEntityRepo;
+use Praxigento\Core\App\Repo\IGeneric as IRepoGeneric;
 
 class Operation extends BaseEntityRepo
 {

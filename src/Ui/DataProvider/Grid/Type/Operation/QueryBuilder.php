@@ -5,7 +5,7 @@ namespace Praxigento\Accounting\Ui\DataProvider\Grid\Type\Operation;
 use Praxigento\Accounting\Repo\Entity\Data\Type\Operation as ETypeOperation;
 
 class QueryBuilder
-    extends \Praxigento\Core\Ui\DataProvider\Grid\Query\Builder
+    extends \Praxigento\Core\App\Ui\DataProvider\Grid\Query\Builder
 {
     /**#@+ Tables aliases for external usage ('camelCase' naming) */
     const AS_TYP_OPERATION = 'top';
@@ -28,7 +28,7 @@ class QueryBuilder
                 self::A_CODE => self::AS_TYP_OPERATION . '.' . ETypeOperation::ATTR_CODE,
                 self::A_NOTE => self::AS_TYP_OPERATION . '.' . ETypeOperation::ATTR_NOTE
             ];
-            $this->mapper = new \Praxigento\Core\Repo\Query\Criteria\Def\Mapper($map);
+            $this->mapper = new \Praxigento\Core\App\Repo\Query\Criteria\Def\Mapper($map);
         }
         $result = $this->mapper;
         return $result;
@@ -66,7 +66,7 @@ class QueryBuilder
         /**
          * if ($column instanceof \Zend_Db_Expr) {...}
          */
-        $exp = new \Praxigento\Core\Repo\Query\Expression($value);
+        $exp = new \Praxigento\Core\App\Repo\Query\Expression($value);
         /**
          *  list($correlationName, $column, $alias) = $columnEntry;
          */

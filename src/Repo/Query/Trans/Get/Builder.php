@@ -13,7 +13,7 @@ use Praxigento\Accounting\Repo\Entity\Data\Transaction as Trans;
  * Build query to get transactions for the customer.
  */
 class Builder
-    extends \Praxigento\Core\Repo\Query\Builder
+    extends \Praxigento\Core\App\Repo\Query\Builder
 {
     /**
      * Tables aliases.

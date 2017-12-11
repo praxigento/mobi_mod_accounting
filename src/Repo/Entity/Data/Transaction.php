@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Repo\Entity\Data;
 
 class Transaction
-    extends \Praxigento\Core\Data\Entity\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_CREDIT_ACC_ID = 'credit_acc_id';
     /* date when asset transaction should change balances (can be in the past) */

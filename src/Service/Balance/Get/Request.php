@@ -12,7 +12,7 @@ namespace Praxigento\Accounting\Service\Balance\Get;
  * @property string $assetTypeCode
  */
 class Request
-    extends \Praxigento\Core\Service\Base\Request
+    extends \Praxigento\Core\App\Service\Base\Request
 {
 
 }

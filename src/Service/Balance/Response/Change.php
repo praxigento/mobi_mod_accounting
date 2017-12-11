@@ -5,7 +5,7 @@
 namespace Praxigento\Accounting\Service\Balance\Response;
 
 class Change
-    extends \Praxigento\Core\Service\Base\Response
+    extends \Praxigento\Core\App\Service\Base\Response
 {
 
 }

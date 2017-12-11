@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Repo\Entity\Data;
 
 class Balance
-    extends \Praxigento\Core\Data\Entity\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_ACCOUNT_ID = 'account_id';
     const ATTR_BALANCE_CLOSE = 'closing_balance';

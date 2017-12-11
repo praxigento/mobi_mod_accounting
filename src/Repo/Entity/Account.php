@@ -10,7 +10,7 @@ use Praxigento\Accounting\Repo\Entity\Data\Account as Entity;
 use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as TypeAsset;
 
 class Account
-    extends \Praxigento\Core\Repo\Def\Entity
+    extends \Praxigento\Core\App\Repo\Def\Entity
 {
     const ADMIN_WEBSITE_ID = Cfg::DEF_WEBSITE_ID_ADMIN;
     const BIND_CODE = 'code';
@@ -23,7 +23,7 @@ class Account
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\Repo\IGeneric $repoGeneric
+        \Praxigento\Core\App\Repo\IGeneric $repoGeneric
     )
     {
         parent::__construct($resource, $repoGeneric, Entity::class);
@@ -235,7 +235,7 @@ class Account
         } else {
             $exp = '(`' . Entity::ATTR_BALANCE . '`+' . abs($delta) . ')';
         }
-        $exp = new \Praxigento\Core\Repo\Query\Expression($exp);
+        $exp = new \Praxigento\Core\App\Repo\Query\Expression($exp);
         $bind = [Entity::ATTR_BALANCE => $exp];
         $rowsUpdated = $this->updateById($accountId, $bind);
         return $rowsUpdated;

@@ -22,6 +22,6 @@ namespace Praxigento\Accounting\Service\Operation\Request;
  * @method int getAdminUserId() if set then new log record will be added to Admin User Log
  * @method void setAdminUserId(int $data)
  */
-class Add extends \Praxigento\Core\Service\Base\Request
+class Add extends \Praxigento\Core\App\Service\Base\Request
 {
 }

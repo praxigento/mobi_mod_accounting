@@ -8,7 +8,7 @@
 namespace Praxigento\Accounting\Repo\Entity\Data\Type;
 
 class Operation
-    extends \Praxigento\Core\Data\Entity\Type\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Type\Base
 {
     const ENTITY_NAME = 'prxgt_acc_type_operation';
 }
