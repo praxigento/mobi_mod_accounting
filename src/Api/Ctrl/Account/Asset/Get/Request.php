@@ -13,7 +13,7 @@ namespace Praxigento\Accounting\Api\Ctrl\Account\Asset\Get;
  *
  */
 class Request
-    extends \Praxigento\Core\App\Web\Request
+    extends \Praxigento\Core\App\Api\Web\Request
 {
     const ASSET_CODE = 'assetCode';
     const ASSET_ID = 'assetId';

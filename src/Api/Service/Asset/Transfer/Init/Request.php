@@ -13,7 +13,7 @@ namespace Praxigento\Accounting\Api\Service\Asset\Transfer\Init;
  *
  */
 class Request
-    extends \Praxigento\Core\App\Web\Request
+    extends \Praxigento\Core\App\Api\Web\Request
 {
     const CUSTOMER_ID = 'customerId';
 

@@ -12,7 +12,7 @@ namespace Praxigento\Accounting\Api\Rest\Transaction\Get;
  *
  */
 class Request
-    extends \Praxigento\Core\App\Web\Request\WithCond
+    extends \Praxigento\Core\App\Api\Web\Request\WithCond
 {
     /**
      * Root Customer ID for development purposes.

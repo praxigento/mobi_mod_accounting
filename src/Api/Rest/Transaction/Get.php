@@ -12,14 +12,14 @@ use Praxigento\Accounting\Repo\Query\Trans\Get\Builder as Builder;
  * @deprecated TODO: use it or remove it.
  */
 class Get
-    extends \Praxigento\Core\App\Web\Processor\WithQuery
+    extends \Praxigento\Core\App\Api\Web\Processor\WithQuery
     implements \Praxigento\Accounting\Api\Rest\Transaction\GetInterface
 {
     const BIND_CUST_ID = 'custId';
 
     const VAR_CUST_ID = 'cust_id';
 
-    /** @var \Praxigento\Core\App\Web\IAuthenticator */
+    /** @var \Praxigento\Core\App\Api\Web\IAuthenticator */
     protected $authenticator;
     /** @var \Praxigento\Accounting\Repo\Query\Trans\Get\Builder */
     protected $qbld;
@@ -28,7 +28,7 @@ class Get
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Accounting\Repo\Query\Trans\Get\Builder $qbld,
         \Praxigento\Core\Helper\Config $hlpCfg,
-        \Praxigento\Core\App\Web\IAuthenticator $authenticator
+        \Praxigento\Core\App\Api\Web\IAuthenticator $authenticator
     ) {
         parent::__construct($manObj, $qbld, $hlpCfg);
         $this->authenticator = $authenticator;

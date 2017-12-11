@@ -13,7 +13,7 @@ namespace Praxigento\Accounting\Api\Service\Asset\Transfer\Process;
  *
  */
 class Request
-    extends \Praxigento\Core\App\Web\Request
+    extends \Praxigento\Core\App\Api\Web\Request
 {
     const AMOUNT = 'amount';
     const ASSET_ID = 'assetId';
