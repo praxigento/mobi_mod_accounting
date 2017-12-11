@@ -20,10 +20,10 @@ define([
     var customer = customerDs.data.customer;
     var customerId = customer.entity_id;
     /* define local working data */
-    var baseAdminUrl = baseUrl.replace('/customer/', '/');
     var urlTransferInit = baseUrl + 'customer_accounting/init/';
     var urlTransferProcess = baseUrl + 'customer_accounting/process/';
-    var urlCustomerSearch = baseAdminUrl + 'prxgt/customer/search/';
+    var urlOrigin = window.location.origin;
+    var urlRestCustomerSearch = urlOrigin + '/rest/all/V1/prxgt/customer/search/by_key';
     /* slider itself */
     var popup;
     /* View Model for slider */
@@ -135,11 +135,13 @@ define([
      * @param response
      */
     var fnAjaxCustomerSearch = function (request, response) {
-        var data = {search_key: request.term};
+        var data = {request: {data: {search_key: request.term}}};
         var json = JSON.stringify(data);
         $.ajax({
-            url: urlCustomerSearch,
+            url: urlRestCustomerSearch,
             data: json,
+            contentType: 'application/json',
+            type: 'post',
             success: function (resp) {
                 /* convert API data into JQuery widget data */
                 var data = resp.data;
