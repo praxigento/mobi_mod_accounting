@@ -11,7 +11,7 @@ use Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data as DResp
 use Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Asset as DAsset;
 use Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Customer as DCustomer;
 use Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetAssets as QBGetAssets;
-use Praxigento\Core\Api\Service\Customer\Get as ServCustGet;
+use Praxigento\Core\Api\Service\Customer\Get\ById as ServCustGet;
 
 /**
  * Get initialization data for asset transfer modal slider in adminhtml.
@@ -21,7 +21,7 @@ class Init
 {
     /** @var \Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query\GetAssets */
     private $qbGetAssets;
-    /** @var \Praxigento\Core\Api\Service\Customer\Get */
+    /** @var \Praxigento\Core\Api\Service\Customer\Get\ById */
     private $servCustGet;
 
     public function __construct(
