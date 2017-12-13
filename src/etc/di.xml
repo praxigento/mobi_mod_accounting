@@ -2,13 +2,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
-    <!-- ******** -->
-    <!-- API REST -->
-    <!-- ******** -->
-    <!--<preference for="\Praxigento\Accounting\Api\Rest\Transaction\GetInterface"-->
-    <!--type="\Praxigento\Accounting\Api\Rest\Transaction\Get"/>-->
-
-
     <!-- *********** -->
     <!-- API Service -->
     <!-- *********** -->
@@ -18,6 +11,14 @@
                 type="\Praxigento\Accounting\Service\Asset\Transfer\Init"/>
     <preference for="\Praxigento\Accounting\Api\Service\Asset\Transfer\Process"
                 type="\Praxigento\Accounting\Service\Asset\Transfer\Process"/>
+
+
+
+    <!-- ******* -->
+    <!-- API Web -->
+    <!-- ******* -->
+    <preference for="\Praxigento\Accounting\Api\Web\Account\Asset\Transfer\InitInterface"
+                type="\Praxigento\Accounting\Web\Account\Asset\Transfer\Init"/>
 
 
     <!-- ********************** -->
