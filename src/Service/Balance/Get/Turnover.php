@@ -24,7 +24,7 @@ class Turnover
     protected $toolPeriod;
 
     public function __construct(
-        \Praxigento\Core\App\Logger\App $logger,
+        \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Tool\IPeriod $toolPeriod,

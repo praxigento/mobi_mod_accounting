@@ -20,7 +20,7 @@ class Get
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Webapi\ServiceInputProcessor $inputProcessor,
         \Magento\Framework\Webapi\ServiceOutputProcessor $outputProcessor,
-        \Praxigento\Core\App\Logger\App $logger,
+        \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\App\Api\Web\IAuthenticator $authenticator,
         \Praxigento\Accounting\Repo\Query\Asset\Get $qbGet
     )

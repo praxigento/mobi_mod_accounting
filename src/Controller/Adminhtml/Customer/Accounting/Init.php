@@ -26,7 +26,7 @@ class Init
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Webapi\ServiceInputProcessor $inputProcessor,
         \Magento\Framework\Webapi\ServiceOutputProcessor $outputProcessor,
-        \Praxigento\Core\App\Logger\App $logger,
+        \Psr\Log\LoggerInterface $logger,
         \Praxigento\Accounting\Service\Asset\Transfer\Init $callInit
     )
     {
