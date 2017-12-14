@@ -3,25 +3,24 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Api\Service\Asset\Transfer\Init;
+namespace Praxigento\Accounting\Service\Account\Asset\Get;
 
 /**
- * Request to get initial data to start asset transfer operation.
+ * Request to get asset data for a customer (available asset types, existing accounts & balances).
  *
  * (Define getters explicitly to use with Swagger tool)
  * (Define setters explicitly to use with Magento JSON2PHP conversion tool)
  *
  */
 class Request
-    extends \Praxigento\Core\App\Api\Web\Request
+    extends \Praxigento\Core\Data
 {
     const CUSTOMER_ID = 'customerId';
 
     /**
      * @return int
      */
-    public function getCustomerId()
-    {
+    public function getCustomerId() {
         $result = parent::get(self::CUSTOMER_ID);
         return $result;
     }
@@ -29,8 +28,7 @@ class Request
     /**
      * @param int $data
      */
-    public function setCustomerId($data)
-    {
+    public function setCustomerId($data) {
         parent::set(self::CUSTOMER_ID, $data);
     }
 }

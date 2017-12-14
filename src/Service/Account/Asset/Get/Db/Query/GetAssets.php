@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Service\Asset\Transfer\Init\Db\Query;
+namespace Praxigento\Accounting\Service\Account\Asset\Get\Db\Query;
 
 use Praxigento\Accounting\Repo\Entity\Data\Account as EAcc;
 use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as ETypeAss;
@@ -28,8 +28,7 @@ class GetAssets
     const E_ACC = EAcc::ENTITY_NAME;
     const E_TYPE = ETypeAss::ENTITY_NAME;
 
-    public function build(\Magento\Framework\DB\Select $source = null)
-    {
+    public function build(\Magento\Framework\DB\Select $source = null) {
         /* this is root query builder (started from SELECT) */
         $result = $this->conn->select();
 

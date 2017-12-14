@@ -5,9 +5,6 @@
 
 namespace Praxigento\Accounting\Controller\Adminhtml\Customer\Accounting;
 
-
-use Praxigento\Accounting\Api\Ctrl\Adminhtml\Customer\Accounting\Init\Request as ARequest;
-use Praxigento\Accounting\Api\Ctrl\Adminhtml\Customer\Accounting\Init\Response as AResponse;
 use Praxigento\Accounting\Config as Cfg;
 
 /**
@@ -18,20 +15,15 @@ class Init
 {
     const ADMIN_RESOURCE = Cfg::MODULE . '::' . Cfg::ACL_ACCOUNTS;
 
-    /** @var \Praxigento\Accounting\Service\Asset\Transfer\Init */
-    private $callInit;
-
     public function __construct
     (
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Webapi\ServiceInputProcessor $inputProcessor,
         \Magento\Framework\Webapi\ServiceOutputProcessor $outputProcessor,
-        \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Accounting\Service\Asset\Transfer\Init $callInit
+        \Psr\Log\LoggerInterface $logger
     )
     {
         parent::__construct($context, $inputProcessor, $outputProcessor, $logger);
-        $this->callInit = $callInit;
     }
 
     protected function getInDataType(): string

@@ -7,8 +7,6 @@
     <!-- *********** -->
     <preference for="\Praxigento\Accounting\Api\Service\Account\Get"
                 type="\Praxigento\Accounting\Service\Account\Get"/>
-    <preference for="\Praxigento\Accounting\Api\Service\Asset\Transfer\Init"
-                type="\Praxigento\Accounting\Service\Asset\Transfer\Init"/>
     <preference for="\Praxigento\Accounting\Api\Service\Asset\Transfer\Process"
                 type="\Praxigento\Accounting\Service\Asset\Transfer\Process"/>
 
@@ -17,6 +15,8 @@
     <!-- ******* -->
     <!-- API Web -->
     <!-- ******* -->
+    <preference for="\Praxigento\Accounting\Api\Web\Account\Asset\GetInterface"
+                type="\Praxigento\Accounting\Web\Account\Asset\Get"/>
     <preference for="\Praxigento\Accounting\Api\Web\Account\Asset\Transfer\InitInterface"
                 type="\Praxigento\Accounting\Web\Account\Asset\Transfer\Init"/>
 

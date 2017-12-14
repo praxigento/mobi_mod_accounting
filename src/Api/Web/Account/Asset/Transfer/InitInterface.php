@@ -7,6 +7,9 @@ namespace Praxigento\Accounting\Api\Web\Account\Asset\Transfer;
 
 /**
  * Load initial data for asset transfer dialogs.
+ * @deprecated use 2 requests instead this:
+ *      - \Praxigento\Core\Api\Web\Customer\Get\ByIdInterface
+ *      -
  */
 interface InitInterface
 {

@@ -3,21 +3,20 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data;
+namespace Praxigento\Accounting\Service\Account\Asset\Get\Response;
 
-class Asset
+class Item
     extends \Praxigento\Core\Data
 {
-    const ACC_BALANCE = 'acc_balance';
-    const ACC_ID = 'acc_id';
-    const ASSET_CODE = 'asset_code';
-    const ASSET_ID = 'asset_id';
+    const ACC_BALANCE = 'accBalance';
+    const ACC_ID = 'accId';
+    const ASSET_CODE = 'assetCode';
+    const ASSET_ID = 'assetId';
 
     /**
      * @return float|null
      */
-    public function getAccBalance()
-    {
+    public function getAccBalance() {
         $result = parent::get(self::ACC_BALANCE);
         return $result;
     }
@@ -25,8 +24,7 @@ class Asset
     /**
      * @return int|null
      */
-    public function getAccId()
-    {
+    public function getAccId() {
         $result = parent::get(self::ACC_ID);
         return $result;
     }
@@ -34,8 +32,7 @@ class Asset
     /**
      * @return string
      */
-    public function getAssetCode()
-    {
+    public function getAssetCode() {
         $result = parent::get(self::ASSET_CODE);
         return $result;
     }
@@ -43,8 +40,7 @@ class Asset
     /**
      * @return int
      */
-    public function getAssetId()
-    {
+    public function getAssetId() {
         $result = parent::get(self::ASSET_ID);
         return $result;
     }
@@ -52,32 +48,28 @@ class Asset
     /**
      * @param float $data
      */
-    public function setAccBalance($data)
-    {
+    public function setAccBalance($data) {
         parent::set(self::ACC_BALANCE, $data);
     }
 
     /**
      * @param int $data
      */
-    public function setAccId($data)
-    {
+    public function setAccId($data) {
         parent::set(self::ACC_ID, $data);
     }
 
     /**
      * @param string $data
      */
-    public function setAssetCode($data)
-    {
+    public function setAssetCode($data) {
         parent::set(self::ASSET_CODE, $data);
     }
 
     /**
      * @param int $data
      */
-    public function setAssetId($data)
-    {
+    public function setAssetId($data) {
         parent::set(self::ASSET_ID, $data);
     }
 

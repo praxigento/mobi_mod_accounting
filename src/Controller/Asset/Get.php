@@ -44,6 +44,8 @@ class Get
      *
      * @param int $custId
      * @return \Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Asset[]
+     *
+     * @deprecated class \Praxigento\Accounting\Api\Service\Asset\Transfer\Init\Response\Data\Asset is removed
      */
     private function loadAssetsData($custId)
     {
