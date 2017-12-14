@@ -7,7 +7,7 @@ namespace Praxigento\Accounting\Api\Web\Account\Asset\Get\Request;
 
 
 class Data
-    extends \Praxigento\Core\Data
+    extends \Praxigento\Accounting\Service\Account\Asset\Get\Request
 {
 
 }

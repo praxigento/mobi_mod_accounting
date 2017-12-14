@@ -29,10 +29,14 @@ class Get
         assert($request instanceof ARequest);
         /** define local working data */
         $data = $request->getData();
-        $dev = $request->getDev();
-        $custId = $data->getCustomer();
-        $reqCustId = $dev->getCustId();
+        $custId = $data->getCustomerId();
 
+        $dev = $request->getDev();
+        if ($dev) {
+            $reqCustId = $dev->getCustId();
+        } else {
+            $reqCustId = $custId;
+        }
         /** TODO: add access rights validation */
         $reqCustId = $this->auth->getCurrentCustomerId($reqCustId);
 

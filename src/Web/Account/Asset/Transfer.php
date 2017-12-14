@@ -29,15 +29,19 @@ class Transfer
         assert($request instanceof ARequest);
         /** define local working data */
         $data = $request->getData();
-        $dev = $request->getDev();
         $amount = $data->getAmount();
         $assetTypeId = $data->getAssetId();
         $counterPartyId = $data->getCounterPartyId();
         $custId = $data->getCustomerId();
         $isDirect = $data->getIsDirect();
-        $devAdminId = $dev->getAdminId();
-        $devCustId = $dev->getCustId();
-
+        $dev = $request->getDev();
+        if ($dev) {
+            $devAdminId = $dev->getAdminId();
+            $devCustId = $dev->getCustId();
+        } else {
+            $devAdminId = 1;
+            $devCustId = $custId;
+        }
         /** TODO: add access rights validation */
         $reqAdminId = $this->auth->getCurrentCustomerId($devAdminId);
         $reqCustId = $this->auth->getCurrentCustomerId($devCustId);
