@@ -3,15 +3,18 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Service\Asset\Transfer;
+namespace Praxigento\Accounting\Service\Account\Asset;
 
-use Praxigento\Accounting\Api\Service\Asset\Transfer\Process\Request as ARequest;
-use Praxigento\Accounting\Api\Service\Asset\Transfer\Process\Response as AResponse;
-use Praxigento\Accounting\Api\Service\Asset\Transfer\Process\Response\Data as ARespData;
 use Praxigento\Accounting\Config as Cfg;
+use Praxigento\Accounting\Service\Account\Asset\Transfer\Request as ARequest;
+use Praxigento\Accounting\Service\Account\Asset\Transfer\Response as AResponse;
 
-class Process
-    implements \Praxigento\Accounting\Api\Service\Asset\Transfer\Process
+/**
+ * Internal service to process asset transfer between accounts (customer or representative).
+ *
+ * This service is not used outside this module.
+ */
+class Transfer
 {
     /** @var \Praxigento\Accounting\Service\IOperation */
     private $callOper;
@@ -72,11 +75,11 @@ class Process
         }
         /* compose transaction and create operation */
         $trans = $this->prepareTrans($amount, $accIdDebit, $accIdCredit);
-        $data = $this->transfer($userId, $trans);
+        $operId = $this->transfer($userId, $trans);
 
         /* compose result */
         $result = new AResponse();
-        $result->setData($data);
+        $result->setOperId($operId);
         return $result;
     }
 
@@ -98,14 +101,16 @@ class Process
         $req = new \Praxigento\Accounting\Service\Operation\Request\Add();
         $req->setAdminUserId($userId);
         $req->setOperationTypeCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
-        $req->setOperationNote("Asset transfer initiated by manager #$userId");
+        if ($userId) {
+            $req->setOperationNote("Asset transfer initiated by manager #$userId.");
+        } else {
+            $req->setOperationNote("Asset transfer initiated by customer.");
+        }
         $req->setTransactions($trans);
         $datePerformed = $this->hlpData->getUtcNowForDb();
         $req->setDatePerformed($datePerformed);
         $resp = $this->callOper->add($req);
-        $operId = $resp->getOperationId();
-        $result = new ARespData();
-        $result->setOperId($operId);
+        $result = $resp->getOperationId();
         return $result;
     }
 }

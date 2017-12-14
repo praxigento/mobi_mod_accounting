@@ -9,9 +9,9 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route url="/V1/prxgt/account/asset/transfer/init" method="POST">
-        <!-- Get customer data to init asset transfer dialog (assets, balances & customer info). -->
-        <service class="Praxigento\Accounting\Api\Web\Account\Asset\Transfer\InitInterface" method="exec"/>
+    <route url="/V1/prxgt/account/asset/transfer" method="POST">
+        <!-- Transfer asset from customer to customer or from/to customer account. -->
+        <service class="Praxigento\Accounting\Api\Web\Account\Asset\TransferInterface" method="exec"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
