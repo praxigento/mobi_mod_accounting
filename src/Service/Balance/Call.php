@@ -25,13 +25,13 @@ class Call
     /** @var \Praxigento\Accounting\Repo\Entity\Account */
     protected $repoAccount;
     /** @var \Praxigento\Accounting\Repo\Entity\Balance */
-    protected $repoBalance;
+    public $repoBalance;
     /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Admin */
     protected $repoLogChangeAdmin;
     /** @var \Praxigento\Accounting\Repo\Entity\Operation */
     protected $repoOperation;
     /** @var \Praxigento\Accounting\Repo\Entity\Transaction */
-    protected $repoTransaction;
+    public $repoTransaction;
     /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
     protected $repoTypeAsset;
     /** @var \Praxigento\Accounting\Repo\Entity\Type\Operation */
@@ -39,11 +39,11 @@ class Call
     /** @var \Magento\Framework\App\ResourceConnection */
     protected $resource;
     /** @var Sub\CalcSimple Simple balance calculator. */
-    protected $subCalcSimple;
+    public $subCalcSimple;
     /** @var \Praxigento\Core\Tool\IDate */
-    protected $toolDate;
+    public $toolDate;
     /** @var  \Praxigento\Core\Tool\IPeriod */
-    protected $toolPeriod;
+    public $toolPeriod;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
