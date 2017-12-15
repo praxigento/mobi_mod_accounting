@@ -3,7 +3,7 @@
  *
  */
 
-namespace Praxigento\Accounting\Api\Service\Account\Balance\Calc;
+namespace Praxigento\Accounting\Service\Account\Balance\Calc;
 
 class Request
     extends \Praxigento\Core\Data

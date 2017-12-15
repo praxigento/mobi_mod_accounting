@@ -5,15 +5,14 @@
 
 namespace Praxigento\Accounting\Service\Account\Balance;
 
-use Praxigento\Accounting\Api\Service\Account\Balance\Calc\Request as ARequest;
-use Praxigento\Accounting\Api\Service\Account\Balance\Calc\Response as AResponse;
+use Praxigento\Accounting\Service\Account\Balance\Calc\Request as ARequest;
+use Praxigento\Accounting\Service\Account\Balance\Calc\Response as AResponse;
 
 class Calc
-    implements \Praxigento\Accounting\Api\Service\Account\Balance\Calc
 {
 
     /**
-     * @param ARequest $req
+     * @param ARequest $request
      * @return AResponse
      */
     public function exec($request)
