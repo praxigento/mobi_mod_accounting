@@ -10,15 +10,6 @@ use Praxigento\Accounting\Service\Balance\Response;
 interface IBalance
 {
     /**
-     * Calculate asset balances up to given date (including).
-     *
-     * @param Request\Calc $request
-     *
-     * @return Response\Calc
-     */
-    public function calc(Request\Calc $request);
-
-    /**
      * Change balance of the customer account.
      *
      * @param Request\Change $request

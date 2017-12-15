@@ -76,39 +76,6 @@ class Call
         $this->subCalcSimple = $subCalcSimple;
     }
 
-    public function calc(Request\Calc $request)
-    {
-        $result = new Response\Calc();
-        $assetTypeId = $request->getAssetTypeId();
-        $assetTypeCode = $request->getAssetTypeCode();
-        $dateTo = $request->getDateTo();
-        /* get the last balance date */
-        $reqLastDate = new Request\GetLastDate();
-        $reqLastDate->setAssetTypeId($assetTypeId);
-        $reqLastDate->setAssetTypeCode($assetTypeCode);
-        $respLastDate = $this->getLastDate($reqLastDate);
-        $lastDate = $respLastDate->getLastDate();
-        $balances = $this->repoBalance->getOnDate($assetTypeId, $lastDate);
-        /* check date to */
-        if (is_null($dateTo)) {
-            /* use 'yesterday' */
-            $dtMageNow = $this->toolDate->getMageNow();
-            $today = $this->toolPeriod->getPeriodCurrent($dtMageNow);
-            $dateTo = $this->toolPeriod->getPeriodPrev($today);
-        }
-        /* get transactions for period */
-        if ($lastDate) {
-            /* first date should be after balance last date */
-            $dtFrom = $this->toolPeriod->getTimestampNextFrom($lastDate);
-            $dtTo = $this->toolPeriod->getTimestampTo($dateTo);
-            $trans = $this->repoTransaction->getForPeriod($assetTypeId, $dtFrom, $dtTo);
-            $updates = $this->subCalcSimple->calcBalances($balances, $trans);
-            $this->repoBalance->updateBalances($updates);
-            $result->markSucceed();
-        }
-        return $result;
-    }
-
     public function change(Request\Change $request)
     {
         $result = new Response\Reset();
