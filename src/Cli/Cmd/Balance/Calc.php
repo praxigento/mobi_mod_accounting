@@ -15,7 +15,7 @@ class Calc
     const OPT_DATESTAMP_NAME = 'date';
     const OPT_DATESTAMP_SHORTCUT = 'd';
 
-    /** @var \Praxigento\Accounting\Service\IBalance */
+    /** @var \Praxigento\Accounting\Api\Service\Account\Balance\Calc */
     protected $callBalance;
     /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
     protected $repoTypeAsset;
@@ -23,7 +23,7 @@ class Calc
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Accounting\Repo\Entity\Type\Asset $repoTypeAsset,
-        \Praxigento\Accounting\Service\IBalance $callBalance
+        \Praxigento\Accounting\Api\Service\Account\Balance\Calc $callBalance
     ) {
         parent::__construct(
             $manObj,
@@ -57,10 +57,10 @@ class Calc
         /* perform action */
         $assets = $this->getAssetTypesIds();
         foreach ($assets as $typeId => $typeCode) {
-            $req = new \Praxigento\Accounting\Service\Balance\Request\Calc();
+            $req = new \Praxigento\Accounting\Api\Service\Account\Balance\Calc\Request();
             $req->setAssetTypeId($typeId);
             $req->setDateTo($period);
-            $resp = $this->callBalance->calc($req);
+            $resp = $this->callBalance->exec($req);
             if ($resp->isSucceed()) {
                 $output->writeln("<info>Balances for asset '$typeCode' are calculated.<info>");
             } else {
