@@ -25,25 +25,23 @@ class Call
     /** @var \Praxigento\Accounting\Repo\Entity\Account */
     protected $repoAccount;
     /** @var \Praxigento\Accounting\Repo\Entity\Balance */
-    public $repoBalance;
+    protected $repoBalance;
     /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Admin */
     protected $repoLogChangeAdmin;
     /** @var \Praxigento\Accounting\Repo\Entity\Operation */
     protected $repoOperation;
     /** @var \Praxigento\Accounting\Repo\Entity\Transaction */
-    public $repoTransaction;
+    protected $repoTransaction;
     /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
     protected $repoTypeAsset;
     /** @var \Praxigento\Accounting\Repo\Entity\Type\Operation */
     protected $repoTypeOper;
     /** @var \Magento\Framework\App\ResourceConnection */
     protected $resource;
-    /** @var Sub\CalcSimple Simple balance calculator. */
-    public $subCalcSimple;
     /** @var \Praxigento\Core\Tool\IDate */
-    public $toolDate;
+    protected $toolDate;
     /** @var  \Praxigento\Core\Tool\IPeriod */
-    public $toolPeriod;
+    protected $toolPeriod;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
@@ -58,8 +56,7 @@ class Call
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTransaction,
         \Praxigento\Accounting\Repo\Entity\Type\Asset $repoTypeAsset,
         \Praxigento\Accounting\Repo\Entity\Type\Operation $repoTypeOper,
-        \Praxigento\Accounting\Repo\Entity\Log\Change\Admin $repoLogChangeAdmin,
-        Sub\CalcSimple $subCalcSimple
+        \Praxigento\Accounting\Repo\Entity\Log\Change\Admin $repoLogChangeAdmin
     ) {
         parent::__construct($logger, $manObj);
         $this->resource = $resource;
@@ -73,7 +70,6 @@ class Call
         $this->repoTypeAsset = $repoTypeAsset;
         $this->repoTypeOper = $repoTypeOper;
         $this->repoLogChangeAdmin = $repoLogChangeAdmin;
-        $this->subCalcSimple = $subCalcSimple;
     }
 
     public function change(Request\Change $request)

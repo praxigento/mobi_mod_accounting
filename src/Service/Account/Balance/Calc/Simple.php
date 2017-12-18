@@ -5,14 +5,14 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Service\Balance\Sub;
+namespace Praxigento\Accounting\Service\Account\Balance\Calc;
 
 
 use Praxigento\Accounting\Repo\Entity\Data\Balance;
 use Praxigento\Accounting\Repo\Entity\Data\Transaction;
 use Praxigento\Core\Tool\IPeriod;
 
-class CalcSimple
+class Simple
 {
     /**
      * @var \Praxigento\Core\Tool\IPeriod
@@ -20,7 +20,7 @@ class CalcSimple
     private $toolPeriod;
 
     /**
-     * CalcSimple constructor.
+     * Simple constructor.
      */
     public function __construct(IPeriod $toolPeriod)
     {
@@ -34,7 +34,7 @@ class CalcSimple
      * @param array $transactions all transactions for the period
      * @return array balances for the period
      */
-    public function calcBalances($currentBalances, $transactions)
+    public function exec($currentBalances, $transactions)
     {
         $result = [];
 
@@ -116,7 +116,7 @@ class CalcSimple
         return $result;
     }
 
-    protected function prepareBalances($balances)
+    private function prepareBalances($balances)
     {
         $result = [];
         foreach ($balances as $balance) {
@@ -133,7 +133,7 @@ class CalcSimple
      * @param array $transactions
      * @return array
      */
-    protected function prepareTransactions($transactions)
+    private function prepareTransactions($transactions)
     {
         usort($transactions, function ($a, $b) {
             $aTs = $a[Transaction::ATTR_DATE_APPLIED];
