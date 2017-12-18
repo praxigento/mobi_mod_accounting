@@ -10,6 +10,7 @@ use Praxigento\Accounting\Service\Account\Balance\Calc\Response as AResponse;
 
 class Calc
 {
+
     /** @var \Praxigento\Accounting\Service\Balance\Call */
     protected $balanceCall;
     /** @var \Praxigento\Accounting\Repo\Entity\Balance */
