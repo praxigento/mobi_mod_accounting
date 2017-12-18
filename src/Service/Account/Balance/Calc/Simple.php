@@ -8,23 +8,24 @@
 namespace Praxigento\Accounting\Service\Account\Balance\Calc;
 
 
-use Praxigento\Accounting\Repo\Entity\Data\Balance;
-use Praxigento\Accounting\Repo\Entity\Data\Transaction;
-use Praxigento\Core\Tool\IPeriod;
+use Praxigento\Accounting\Repo\Entity\Data\Balance as Balance;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction as Transaction;
 
 class Simple
 {
     /**
      * @var \Praxigento\Core\Tool\IPeriod
      */
-    private $toolPeriod;
+    private $hlpPeriod;
 
     /**
      * Simple constructor.
      */
-    public function __construct(IPeriod $toolPeriod)
+    public function __construct(
+        \Praxigento\Core\Tool\IPeriod $hlpPeriod
+    )
     {
-        $this->toolPeriod = $toolPeriod;
+        $this->hlpPeriod = $hlpPeriod;
     }
 
     /**
@@ -46,7 +47,7 @@ class Simple
             $accDebit = $one[Transaction::ATTR_DEBIT_ACC_ID];
             $accCredit = $one[Transaction::ATTR_CREDIT_ACC_ID];
             $timestamp = $one[Transaction::ATTR_DATE_APPLIED];
-            $date = $this->toolPeriod->getPeriodCurrent($timestamp, +1);
+            $date = $this->hlpPeriod->getPeriodCurrent($timestamp, +1);
             $changeValue = $one[Transaction::ATTR_VALUE];
             /**
              * process debit account

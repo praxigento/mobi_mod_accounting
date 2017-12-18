@@ -8,36 +8,41 @@ namespace Praxigento\Accounting\Service\Account\Balance;
 use Praxigento\Accounting\Service\Account\Balance\Calc\Request as ARequest;
 use Praxigento\Accounting\Service\Account\Balance\Calc\Response as AResponse;
 
+/**
+ * Calculate daily balances.
+ *
+ * This service is not used outside this module.
+ */
 class Calc
 {
 
     /** @var \Praxigento\Accounting\Service\Balance\Call */
-    protected $balanceCall;
-    /** @var \Praxigento\Accounting\Repo\Entity\Balance */
-    protected $repoBalance;
-    /** @var \Praxigento\Accounting\Repo\Entity\Transaction */
-    protected $repoTransaction;
-    /** @var \Praxigento\Accounting\Service\Account\Balance\Calc\Simple Simple balance calculator. */
-    protected $subCalcSimple;
+    private $balanceCall;
     /** @var \Praxigento\Core\Tool\IDate */
-    protected $toolDate;
+    private $hlpDate;
     /** @var  \Praxigento\Core\Tool\IPeriod */
-    protected $toolPeriod;
+    private $hlpPeriod;
+    /** @var \Praxigento\Accounting\Repo\Entity\Balance */
+    private $repoBalance;
+    /** @var \Praxigento\Accounting\Repo\Entity\Transaction */
+    private $repoTransaction;
+    /** @var \Praxigento\Accounting\Service\Account\Balance\Calc\Simple Simple balance calculator. */
+    private $subCalcSimple;
 
     public function __construct(
         \Praxigento\Accounting\Repo\Entity\Balance $repoBalance,
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTransaction,
-        \Praxigento\Core\Tool\IDate $toolDate,
-        \Praxigento\Core\Tool\IPeriod $toolPeriod,
-        \Praxigento\Accounting\Service\Balance\Call $balanceCall,
+        \Praxigento\Core\Tool\IDate $hlpDate,
+        \Praxigento\Core\Tool\IPeriod $hlpPeriod,
+        \Praxigento\Accounting\Service\Balance\Call $servBalance,
         \Praxigento\Accounting\Service\Account\Balance\Calc\Simple $subCalcSimple
     )
     {
         $this->repoBalance = $repoBalance;
         $this->repoTransaction = $repoTransaction;
-        $this->toolDate = $toolDate;
-        $this->toolPeriod = $toolPeriod;
-        $this->balanceCall = $balanceCall;
+        $this->hlpDate = $hlpDate;
+        $this->hlpPeriod = $hlpPeriod;
+        $this->balanceCall = $servBalance;
         $this->subCalcSimple = $subCalcSimple;
     }
 
@@ -61,15 +66,15 @@ class Calc
         /* check date to */
         if (is_null($dateTo)) {
             /* use 'yesterday' */
-            $dtMageNow = $this->toolDate->getMageNow();
-            $today = $this->toolPeriod->getPeriodCurrent($dtMageNow);
-            $dateTo = $this->toolPeriod->getPeriodPrev($today);
+            $dtMageNow = $this->hlpDate->getMageNow();
+            $today = $this->hlpPeriod->getPeriodCurrent($dtMageNow);
+            $dateTo = $this->hlpPeriod->getPeriodPrev($today);
         }
         /* get transactions for period */
         if ($lastDate) {
             /* first date should be after balance last date */
-            $dtFrom = $this->toolPeriod->getTimestampNextFrom($lastDate);
-            $dtTo = $this->toolPeriod->getTimestampTo($dateTo);
+            $dtFrom = $this->hlpPeriod->getTimestampNextFrom($lastDate);
+            $dtTo = $this->hlpPeriod->getTimestampTo($dateTo);
             $trans = $this->repoTransaction->getForPeriod($assetTypeId, $dtFrom, $dtTo);
             $updates = $this->subCalcSimple->exec($balances, $trans);
             $this->repoBalance->updateBalances($updates);
