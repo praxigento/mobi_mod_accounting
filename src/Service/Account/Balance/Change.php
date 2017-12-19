@@ -5,28 +5,30 @@
 
 namespace Praxigento\Accounting\Service\Account\Balance;
 
-use Praxigento\Accounting\Service\Account\Balance\Change\Request as CRequest;
-use Praxigento\Accounting\Service\Account\Balance\Change\Response as CResponse;
+use Praxigento\Accounting\Service\Account\Balance\Change\Request as ARequest;
+use Praxigento\Accounting\Service\Account\Balance\Change\Response as AResponse;
 
 class Change
 {
-    /** @var \Praxigento\Accounting\Repo\Entity\Account */
-    protected $repoAccount;
-    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Admin */
-    protected $repoLogChangeAdmin;
-    /** @var \Praxigento\Accounting\Repo\Entity\Operation */
-    protected $repoOperation;
-    /** @var \Praxigento\Accounting\Repo\Entity\Transaction */
-    protected $repoTransaction;
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\Operation */
-    protected $repoTypeOper;
     /** @var \Praxigento\Core\Tool\IDate */
-    protected $toolDate;
+    private $hlpDate;
+    /** @var \Praxigento\Core\App\Transaction\Database\IManager */
+    private $manTrans;
+    /** @var \Praxigento\Accounting\Repo\Entity\Account */
+    private $repoAccount;
+    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Admin */
+    private $repoLogChangeAdmin;
+    /** @var \Praxigento\Accounting\Repo\Entity\Operation */
+    private $repoOperation;
+    /** @var \Praxigento\Accounting\Repo\Entity\Transaction */
+    private $repoTransaction;
+    /** @var \Praxigento\Accounting\Repo\Entity\Type\Operation */
+    private $repoTypeOper;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
-        \Praxigento\Core\Tool\IDate $toolDate,
+        \Praxigento\Core\Tool\IDate $hlpDate,
         \Praxigento\Accounting\Repo\Entity\Account $repoAccount,
         \Praxigento\Accounting\Repo\Entity\Operation $repoOperation,
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTransaction,
@@ -35,7 +37,7 @@ class Change
     )
     {
         $this->manTrans = $manTrans;
-        $this->toolDate = $toolDate;
+        $this->hlpDate = $hlpDate;
         $this->repoAccount = $repoAccount;
         $this->repoOperation = $repoOperation;
         $this->repoTransaction = $repoTransaction;
@@ -44,12 +46,12 @@ class Change
     }
 
     /**
-     * @param CRequest $request
-     * @return CResponse
+     * @param ARequest $request
+     * @return AResponse
      */
     public function exec($request)
     {
-        $result = new CResponse();
+        $result = new AResponse();
         $accCustId = $request->getCustomerAccountId();
         $adminUserId = $request->getAdminUserId();
         $value = $request->getChangeValue();
@@ -61,7 +63,7 @@ class Change
             $accRepresId = $this->repoAccount->getRepresentativeAccountId($assetTypeId);
             /* get operation type by code and date performed */
             $operTypeId = $this->repoTypeOper->getIdByCode(\Praxigento\Accounting\Config::CODE_TYPE_OPER_CHANGE_BALANCE);
-            $dateNow = $this->toolDate->getUtcNowForDb();
+            $dateNow = $this->hlpDate->getUtcNowForDb();
             /* create operation */
             $operation = new \Praxigento\Accounting\Repo\Entity\Data\Operation();
             $operation->setTypeId($operTypeId);
