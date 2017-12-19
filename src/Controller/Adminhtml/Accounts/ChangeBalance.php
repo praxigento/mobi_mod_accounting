@@ -13,16 +13,16 @@ class ChangeBalance
 {
     const VAR_ACCOUNT_ID = 'accountId';
     const VAR_CHANGE_VALUE = 'changeValue';
-    /** @var \Praxigento\Accounting\Service\IBalance */
-    private $callBalance;
+    /** @var \Praxigento\Accounting\Service\Account\Balance\Change */
+    private $changeBalance;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Praxigento\Accounting\Service\IBalance $callBalance
+        \Praxigento\Accounting\Service\Account\Balance\Change $callBalance
     )
     {
         parent::__construct($context);
-        $this->callBalance = $callBalance;
+        $this->changeBalance = $callBalance;
     }
 
     public function execute()
@@ -31,11 +31,11 @@ class ChangeBalance
         $value = $this->getRequest()->getParam(self::VAR_CHANGE_VALUE);
         $accountId = $this->getRequest()->getParam(self::VAR_ACCOUNT_ID);
         $userId = $this->_auth->getUser()->getId();
-        $req = new \Praxigento\Accounting\Service\Balance\Request\Change();
+        $req = new \Praxigento\Accounting\Service\Account\Balance\Change\Request();
         $req->setCustomerAccountId($accountId);
         $req->setChangeValue($value);
         $req->setAdminUserId($userId);
-        $resp = $this->callBalance->change($req);
+        $resp = $this->changeBalance->exec($req);
         $resultPage->setData(['error' => !$resp->isSucceed()]);
         return $resultPage;
     }

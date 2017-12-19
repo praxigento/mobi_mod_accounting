@@ -9,13 +9,6 @@ use Praxigento\Accounting\Service\Balance\Response;
 
 interface IBalance
 {
-    /**
-     * Change balance of the customer account.
-     *
-     * @param Request\Change $request
-     * @return Response\Change
-     */
-    public function change(Request\Change $request);
 
     /**
      * Get asset balances on the requested date.
