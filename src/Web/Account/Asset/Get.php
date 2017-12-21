@@ -31,14 +31,8 @@ class Get
         $data = $request->getData();
         $custId = $data->getCustomerId();
 
-        $dev = $request->getDev();
-        if ($dev) {
-            $reqCustId = $dev->getCustId();
-        } else {
-            $reqCustId = $custId;
-        }
         /** TODO: add access rights validation */
-        $reqCustId = $this->auth->getCurrentCustomerId($reqCustId);
+        $reqCustId = $this->auth->getCurrentCustomerId($request);
 
         /** perform processing */
         $items = $this->getAssets($reqCustId);

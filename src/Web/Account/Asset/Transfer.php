@@ -34,17 +34,10 @@ class Transfer
         $counterPartyId = $data->getCounterPartyId();
         $custId = $data->getCustomerId();
         $isDirect = $data->getIsDirect();
-        $dev = $request->getDev();
-        if ($dev) {
-            $devAdminId = $dev->getAdminId();
-            $devCustId = $dev->getCustId();
-        } else {
-            $devAdminId = 1;
-            $devCustId = $custId;
-        }
+
         /** TODO: add access rights validation */
-        $reqAdminId = $this->auth->getCurrentCustomerId($devAdminId);
-        $reqCustId = $this->auth->getCurrentCustomerId($devCustId);
+        $reqAdminId = $this->auth->getCurrentAdminId($request);
+        $reqCustId = $this->auth->getCurrentCustomerId($request);
 
         /** perform processing */
         $resp = $this->transfer($amount, $assetTypeId, $counterPartyId, $custId, $isDirect, $reqAdminId);
