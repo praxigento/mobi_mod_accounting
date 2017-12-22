@@ -1,10 +1,12 @@
 <?php
 /**
- * User: Alex Gusev <alex@flancer64.com>
+ *
  */
-namespace Praxigento\Accounting\Service\Balance\Request;
 
-class GetLastDate extends \Praxigento\Core\App\Service\Base\Request
+namespace Praxigento\Accounting\Service\Account\Balance\LastDate;
+
+class Request
+    extends \Praxigento\Core\App\Service\Base\Request
 {
     /**
      * Code of the account's asset type. Use $accountTypeId or $assetTypeCode to set asset type. $assetTypeId is more
@@ -31,13 +33,13 @@ class GetLastDate extends \Praxigento\Core\App\Service\Base\Request
         return $result;
     }
 
-    public function setAssetTypeId($data)
-    {
-        $this->set(static::ASSET_TYPE_ID, $data);
-    }
-
     public function setAssetTypeCode($data)
     {
         $this->set(static::ASSET_TYPE_CODE, $data);
+    }
+
+    public function setAssetTypeId($data)
+    {
+        $this->set(static::ASSET_TYPE_ID, $data);
     }
 }

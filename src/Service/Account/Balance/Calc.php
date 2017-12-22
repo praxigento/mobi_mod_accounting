@@ -16,8 +16,8 @@ use Praxigento\Accounting\Service\Account\Balance\Calc\Response as AResponse;
 class Calc
 {
 
-    /** @var \Praxigento\Accounting\Service\Balance\Call */
-    private $balanceCall;
+    /** @var \Praxigento\Accounting\Service\Account\Balance\LastDate */
+    private $balanceGetLastDate;
     /** @var \Praxigento\Core\Tool\IDate */
     private $hlpDate;
     /** @var  \Praxigento\Core\Tool\IPeriod */
@@ -34,7 +34,7 @@ class Calc
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTransaction,
         \Praxigento\Core\Tool\IDate $hlpDate,
         \Praxigento\Core\Tool\IPeriod $hlpPeriod,
-        \Praxigento\Accounting\Service\Balance\Call $servBalance,
+        \Praxigento\Accounting\Service\Account\Balance\LastDate $balanceGetLastDate,
         \Praxigento\Accounting\Service\Account\Balance\Calc\Simple $subCalcSimple
     )
     {
@@ -42,7 +42,7 @@ class Calc
         $this->repoTransaction = $repoTransaction;
         $this->hlpDate = $hlpDate;
         $this->hlpPeriod = $hlpPeriod;
-        $this->balanceCall = $servBalance;
+        $this->balanceGetLastDate = $balanceGetLastDate;
         $this->subCalcSimple = $subCalcSimple;
     }
 
@@ -60,7 +60,7 @@ class Calc
         $reqLastDate = new \Praxigento\Accounting\Service\Balance\Request\GetLastDate();
         $reqLastDate->setAssetTypeId($assetTypeId);
         $reqLastDate->setAssetTypeCode($assetTypeCode);
-        $respLastDate = $this->balanceCall->getLastDate($reqLastDate);
+        $respLastDate = $this->balanceGetLastDate->exec($reqLastDate);
         $lastDate = $respLastDate->getLastDate();
         $balances = $this->repoBalance->getOnDate($assetTypeId, $lastDate);
         /* check date to */

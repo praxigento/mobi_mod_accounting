@@ -34,8 +34,6 @@
     <!-- ******** -->
     <!-- Services -->
     <!-- ******** -->
-    <preference for="Praxigento\Accounting\Service\IBalance"
-            type="Praxigento\Accounting\Service\Balance\Call"/>
     <preference for="\Praxigento\Accounting\Service\Balance\Get\ITurnover"
             type="\Praxigento\Accounting\Service\Balance\Get\Turnover"/>
     <preference for="\Praxigento\Accounting\Service\Balance\IGet"

@@ -1,11 +1,12 @@
 <?php
 /**
- * User: Alex Gusev <alex@flancer64.com>
+ *
  */
 
-namespace Praxigento\Accounting\Service\Balance\Request;
+namespace Praxigento\Accounting\Service\Account\Balance\Reset;
 
-class Reset extends \Praxigento\Core\App\Service\Base\Request
+class Request
+    extends \Praxigento\Core\App\Service\Base\Request
 {
     /**
      * Reset balance starting from this date (including, Magento time).
@@ -24,4 +25,5 @@ class Reset extends \Praxigento\Core\App\Service\Base\Request
     {
         $this->set(static::DATE_FROM, $data);
     }
+
 }

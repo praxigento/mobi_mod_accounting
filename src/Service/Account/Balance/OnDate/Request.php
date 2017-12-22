@@ -1,10 +1,12 @@
 <?php
 /**
- * User: Alex Gusev <alex@flancer64.com>
+ *
  */
-namespace Praxigento\Accounting\Service\Balance\Request;
 
-class GetBalancesOnDate extends \Praxigento\Core\App\Service\Base\Request
+namespace Praxigento\Accounting\Service\Account\Balance\OnDate;
+
+class Request
+    extends \Praxigento\Core\App\Service\Base\Request
 {
     /**
      * ID of the account's asset type.
@@ -23,10 +25,6 @@ class GetBalancesOnDate extends \Praxigento\Core\App\Service\Base\Request
         $result = $this->get(static::ASSET_TYPE_ID);
         return $result;
     }
-    public function setAssetTypeId($data)
-    {
-        $this->set(static::ASSET_TYPE_ID, $data);
-    }
 
     public function getDate()
     {
@@ -34,9 +32,14 @@ class GetBalancesOnDate extends \Praxigento\Core\App\Service\Base\Request
         return $result;
     }
 
+    public function setAssetTypeId($data)
+    {
+        $this->set(static::ASSET_TYPE_ID, $data);
+    }
 
     public function setDate($data)
     {
         $this->set(static::DATE, $data);
     }
+
 }

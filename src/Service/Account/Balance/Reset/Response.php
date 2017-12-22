@@ -1,10 +1,12 @@
 <?php
 /**
- * User: Alex Gusev <alex@flancer64.com>
+ *
  */
-namespace Praxigento\Accounting\Service\Balance\Response;
 
-class Reset extends \Praxigento\Core\App\Service\Base\Response
+namespace Praxigento\Accounting\Service\Account\Balance\Reset;
+
+class Response
+    extends \Praxigento\Core\App\Service\Base\Response
 {
     const ROWS_DELETED = 'rows_deleted';
 
@@ -18,4 +20,5 @@ class Reset extends \Praxigento\Core\App\Service\Base\Response
     {
         $this->set(self::ROWS_DELETED, $data);
     }
+
 }
