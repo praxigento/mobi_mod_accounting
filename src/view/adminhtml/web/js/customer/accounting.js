@@ -129,7 +129,7 @@ define([
         /* switch on ajax loader */
         $('body').trigger('processStart');
         /* compose and perform ajax request to get customer data */
-        var request = {request: {data: {customerId: customerId}}};
+        var request = {request: {data: {customerId: customerId}, isAdmin: true}};
         var json = JSON.stringify(request);
         var opts = {
             data: json,
