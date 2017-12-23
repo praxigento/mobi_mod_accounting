@@ -21,7 +21,9 @@ define([
     var customerId = customer.entity_id;
     /* define local working data */
     var urlOrigin = window.location.origin;
-    var urlCustomerGet = urlOrigin + '/rest/all/V1/prxgt/customer/get/by_id';
+    var urlAdminBase = baseUrl.replace('/customer/', '/');
+    var urlCustomerGet = urlAdminBase + 'prxgt/customer/get_byId/?form_key=' + FORM_KEY;
+    ;
     var urlTransfer = urlOrigin + '/rest/all/V1/prxgt/account/asset/transfer';
     var urlAssetGet = urlOrigin + '/rest/all/V1/prxgt/account/asset/get';
     var urlCustomerSearch = urlOrigin + '/rest/all/V1/prxgt/customer/search/by_key';
@@ -128,8 +130,9 @@ define([
          */
         /* switch on ajax loader */
         $('body').trigger('processStart');
+
         /* compose and perform ajax request to get customer data */
-        var request = {request: {data: {customerId: customerId}, isAdmin: true}};
+        var request = {data: {customer_id: customerId}};
         var json = JSON.stringify(request);
         var opts = {
             data: json,
