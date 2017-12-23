@@ -17,12 +17,11 @@ define([
     const baseUrl = BASE_URL;
     const formKey = '?form_key=' + FORM_KEY;
     /* define local working data */
-    const urlOrigin = window.location.origin;
     const urlAdminBase = baseUrl.replace('/customer/', '/');
     const urlAssetGet = urlAdminBase + 'account/asset/get/' + formKey;
     const urlCustomerGet = urlAdminBase + 'prxgt/customer/get_byId/' + formKey;
     const urlCustomerSearch = urlAdminBase + 'prxgt/customer/search_byKey/' + formKey;
-    const urlTransfer = urlOrigin + '/rest/all/V1/prxgt/account/asset/transfer';
+    const urlTransfer = urlAdminBase + 'account/asset/transfer/' + formKey;
     /* get current customer data from uiRegistry */
     const customerDs = uiRegistry.get('customer_form.customer_form_data_source');
     const customer = customerDs.data.customer;
@@ -199,7 +198,7 @@ define([
         var type = viewModel.transferType();
         var isDirect = (type == TYPE_DIRECT);
 
-        /* see: \Praxigento\Accounting\Controller\Adminhtml\Customer\Accounting\Process */
+        /* see: \Praxigento\Accounting\Controller\Adminhtml\Asset\Transfer */
         var data = {
             amount: amount,
             assetId: assetId,
@@ -207,7 +206,7 @@ define([
             customerId: customerId,
             isDirect: isDirect,
         };
-        var json = JSON.stringify({request: {data: data}});
+        var json = JSON.stringify({data: data});
 
         /* process response from server: create modal slider and populate with data */
         var fnSuccess = function (response) {
