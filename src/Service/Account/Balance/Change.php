@@ -5,6 +5,7 @@
 
 namespace Praxigento\Accounting\Service\Account\Balance;
 
+use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Service\Account\Balance\Change\Request as ARequest;
 use Praxigento\Accounting\Service\Account\Balance\Change\Response as AResponse;
 
@@ -34,8 +35,7 @@ class Change
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTransaction,
         \Praxigento\Accounting\Repo\Entity\Type\Operation $repoTypeOper,
         \Praxigento\Accounting\Repo\Entity\Log\Change\Admin $repoLogChangeAdmin
-    )
-    {
+    ) {
         $this->manTrans = $manTrans;
         $this->hlpDate = $hlpDate;
         $this->repoAccount = $repoAccount;
@@ -62,7 +62,7 @@ class Change
             /* get representative account id for given asset type */
             $accRepresId = $this->repoAccount->getRepresentativeAccountId($assetTypeId);
             /* get operation type by code and date performed */
-            $operTypeId = $this->repoTypeOper->getIdByCode(\Praxigento\Accounting\Config::CODE_TYPE_OPER_CHANGE_BALANCE);
+            $operTypeId = $this->repoTypeOper->getIdByCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
             $dateNow = $this->hlpDate->getUtcNowForDb();
             /* create operation */
             $operation = new \Praxigento\Accounting\Repo\Entity\Data\Operation();

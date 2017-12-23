@@ -13,16 +13,11 @@ use Praxigento\Accounting\Service\Account\Balance\Reset\Response as AResponse;
 class Reset
 {
     /** @var \Praxigento\Accounting\Repo\Entity\Balance */
-    protected $repoBalance;
-    /** @var \Magento\Framework\App\ResourceConnection */
-    protected $resource;
+    private $repoBalance;
 
     public function __construct(
-        \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Accounting\Repo\Entity\Balance $repoBalance
-    )
-    {
-        $this->resource = $resource;
+    ) {
         $this->repoBalance = $repoBalance;
     }
 
@@ -35,7 +30,7 @@ class Reset
     {
         $result = new AResponse();
         $dateFrom = $request->getDateFrom();
-        $conn = $this->resource->getConnection();
+        $conn = $this->repoBalance->getConnection();
         $quoted = $conn->quote($dateFrom);
         $where = ABalance::ATTR_DATE . '>=' . $quoted;
         $rows = $this->repoBalance->delete($where);

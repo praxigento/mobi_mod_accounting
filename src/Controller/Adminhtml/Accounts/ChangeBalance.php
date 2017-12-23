@@ -7,6 +7,10 @@ namespace Praxigento\Accounting\Controller\Adminhtml\Accounts;
 
 /**
  * This controller should return JSON as result of the processing.
+ *
+ * @deprecated old version of the asset transfer function,
+ *      use
+ *              \Praxigento\Accounting\Service\Account\Asset\Transfer
  */
 class ChangeBalance
     extends \Magento\Backend\App\Action
@@ -14,15 +18,15 @@ class ChangeBalance
     const VAR_ACCOUNT_ID = 'accountId';
     const VAR_CHANGE_VALUE = 'changeValue';
     /** @var \Praxigento\Accounting\Service\Account\Balance\Change */
-    private $changeBalance;
+    private $servBalanceChange;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Praxigento\Accounting\Service\Account\Balance\Change $callBalance
+        \Praxigento\Accounting\Service\Account\Balance\Change $servBalanceChange
     )
     {
         parent::__construct($context);
-        $this->changeBalance = $callBalance;
+        $this->servBalanceChange = $servBalanceChange;
     }
 
     public function execute()
@@ -35,7 +39,7 @@ class ChangeBalance
         $req->setCustomerAccountId($accountId);
         $req->setChangeValue($value);
         $req->setAdminUserId($userId);
-        $resp = $this->changeBalance->exec($req);
+        $resp = $this->servBalanceChange->exec($req);
         $resultPage->setData(['error' => !$resp->isSucceed()]);
         return $resultPage;
     }

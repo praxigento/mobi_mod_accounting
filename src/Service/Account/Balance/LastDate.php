@@ -12,26 +12,25 @@ use Praxigento\Core\Tool\IPeriod;
 
 class LastDate
 {
-    /** @var \Praxigento\Accounting\Repo\Entity\Balance */
-    protected $repoBalance;
-    /** @var \Praxigento\Accounting\Repo\Entity\Transaction */
-    protected $repoTransaction;
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
-    protected $repoTypeAsset;
     /** @var  \Praxigento\Core\Tool\IPeriod */
-    protected $toolPeriod;
+    private $hlpPeriod;
+    /** @var \Praxigento\Accounting\Repo\Entity\Balance */
+    private $repoBalance;
+    /** @var \Praxigento\Accounting\Repo\Entity\Transaction */
+    private $repoTransaction;
+    /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
+    private $repoTypeAsset;
 
     public function __construct(
         \Praxigento\Accounting\Repo\Entity\Balance $repoBalance,
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTransaction,
         \Praxigento\Accounting\Repo\Entity\Type\Asset $repoTypeAsset,
-        \Praxigento\Core\Tool\IPeriod $toolPeriod
-    )
-    {
-        $this->repoTypeAsset = $repoTypeAsset;
+        \Praxigento\Core\Tool\IPeriod $hlpPeriod
+    ) {
+        $this->repoBalance = $repoBalance;
         $this->repoTransaction = $repoTransaction;
         $this->repoTypeAsset = $repoTypeAsset;
-        $this->toolPeriod = $toolPeriod;
+        $this->hlpPeriod = $hlpPeriod;
     }
 
     /**
@@ -59,8 +58,8 @@ class LastDate
             /* there is no balance data yet, get transaction with minimal date */
             $transactionMinDate = $this->repoTransaction->getMinDateApplied($assetTypeId);
             if ($transactionMinDate) {
-                $period = $this->toolPeriod->getPeriodCurrentOld($transactionMinDate);
-                $dayBefore = $this->toolPeriod->getPeriodPrev($period, IPeriod::TYPE_DAY);
+                $period = $this->hlpPeriod->getPeriodCurrent($transactionMinDate);
+                $dayBefore = $this->hlpPeriod->getPeriodPrev($period, IPeriod::TYPE_DAY);
                 $result->set([AResponse::LAST_DATE => $dayBefore]);
                 $result->markSucceed();
             }
