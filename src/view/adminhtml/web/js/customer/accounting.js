@@ -12,25 +12,25 @@ define([
      * Collect working data into the local context (scope).
      */
     /* component constants */
-    var TYPE_DIRECT = 'direct';
+    const TYPE_DIRECT = 'direct';
     /* pin globals into UI component scope */
-    var baseUrl = BASE_URL;
-    /* get current customer data from uiRegistry */
-    var customerDs = uiRegistry.get('customer_form.customer_form_data_source');
-    var customer = customerDs.data.customer;
-    var customerId = customer.entity_id;
+    const baseUrl = BASE_URL;
+    const formKey = '?form_key=' + FORM_KEY;
     /* define local working data */
-    var urlOrigin = window.location.origin;
-    var urlAdminBase = baseUrl.replace('/customer/', '/');
-    var urlCustomerGet = urlAdminBase + 'prxgt/customer/get_byId/?form_key=' + FORM_KEY;
-    ;
-    var urlTransfer = urlOrigin + '/rest/all/V1/prxgt/account/asset/transfer';
-    var urlAssetGet = urlOrigin + '/rest/all/V1/prxgt/account/asset/get';
-    var urlCustomerSearch = urlOrigin + '/rest/all/V1/prxgt/customer/search/by_key';
+    const urlOrigin = window.location.origin;
+    const urlAdminBase = baseUrl.replace('/customer/', '/');
+    const urlAssetGet = urlAdminBase + 'account/asset/get/' + formKey;
+    const urlCustomerGet = urlAdminBase + 'prxgt/customer/get_byId/' + formKey;
+    const urlCustomerSearch = urlAdminBase + 'prxgt/customer/search_byKey/' + formKey;
+    const urlTransfer = urlOrigin + '/rest/all/V1/prxgt/account/asset/transfer';
+    /* get current customer data from uiRegistry */
+    const customerDs = uiRegistry.get('customer_form.customer_form_data_source');
+    const customer = customerDs.data.customer;
+    const customerId = customer.entity_id;
     /* slider itself */
     var popup;
     /* View Model for slider */
-    var viewModel = {
+    const viewModel = {
         amount: ko.observable(0),
         assets: undefined,
         counterparty: ko.observable(),
@@ -132,7 +132,7 @@ define([
         $('body').trigger('processStart');
 
         /* compose and perform ajax request to get customer data */
-        var request = {data: {customer_id: customerId}};
+        var request = {data: {customerId: customerId}};
         var json = JSON.stringify(request);
         var opts = {
             data: json,
@@ -142,7 +142,7 @@ define([
         };
         $.ajax(urlCustomerGet, opts);
         /* compose and perform ajax request to get assets data */
-        request = {request: {data: {customerId: customerId}}};
+        request = {data: {customerId: customerId}};
         json = JSON.stringify(request);
         opts = {
             data: json,
@@ -160,7 +160,7 @@ define([
      * @param response
      */
     var fnAjaxCustomerSearch = function (request, response) {
-        var data = {request: {data: {search_key: request.term}}};
+        var data = {data: {search_key: request.term}};
         var json = JSON.stringify(data);
         $.ajax({
             url: urlCustomerSearch,
