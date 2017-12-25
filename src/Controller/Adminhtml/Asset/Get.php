@@ -12,18 +12,14 @@ class Get
     extends \Praxigento\Core\App\Action\Back\Api\Base
 {
 
-    /** @var \Praxigento\Core\App\Api\Web\IAuthenticator */
-    private $authenticator;
     /** @var \Praxigento\Accounting\Service\Account\Asset\Get */
     private $servAssetGet;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Praxigento\Core\App\Api\Web\IAuthenticator $authenticator,
         \Praxigento\Accounting\Service\Account\Asset\Get $servAssetGet
     ) {
         parent::__construct($context);
-        $this->authenticator = $authenticator;
         $this->servAssetGet = $servAssetGet;
     }
 
@@ -43,10 +39,6 @@ class Get
         /** define local working data */
         $data = $request->getData();
         $customerId = $data->getCustomerId();
-
-        /* get currently logged in users */
-
-        /* analyze logged in users */
 
         /** perform processing */
         $req = new \Praxigento\Accounting\Service\Account\Asset\Get\Request();
