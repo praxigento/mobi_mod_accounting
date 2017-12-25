@@ -37,7 +37,7 @@ class Transfer
 
         /** TODO: add access rights validation */
         $reqAdminId = $this->auth->getCurrentAdminId($request);
-        $reqCustId = $this->auth->getCurrentCustomerId($request);
+        $reqCustId = $this->auth->getCurrentUserId($request);
 
         /** perform processing */
         $resp = $this->transfer($amount, $assetTypeId, $counterPartyId, $custId, $isDirect, $reqAdminId);

@@ -32,7 +32,7 @@ class Get
         $custId = $data->getCustomerId();
 
         /** TODO: add access rights validation */
-        $reqCustId = $this->auth->getCurrentCustomerId($request);
+        $reqCustId = $this->auth->getCurrentUserId($request);
 
         /** perform processing */
         $items = $this->getAssets($reqCustId);
