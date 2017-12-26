@@ -38,7 +38,6 @@ class Operation
         \Praxigento\Accounting\Service\Operation\Add $subAdd
     )
     {
-        parent::__construct($logger, $manObj);
         $this->_manTrans = $manTrans;
         $this->_repoTypeOper = $repoTypeOper;
         $this->_repoOper = $repoOper;
