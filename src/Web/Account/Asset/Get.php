@@ -17,7 +17,7 @@ class Get
     private $servAssetGet;
 
     public function __construct(
-        \Praxigento\Core\App\Api\Web\IAuthenticator $auth,
+        \Praxigento\Core\App\Api\Web\Authenticator\Front $auth,
         \Praxigento\Accounting\Service\Account\Asset\Get $servAssetGet
     ) {
         $this->auth = $auth;
@@ -25,28 +25,23 @@ class Get
     }
 
 
-    public function exec($request) {
+    public function exec($request)
+    {
         assert($request instanceof ARequest);
         /** define local working data */
-        $data = $request->getData();
-        $custId = $data->getCustomerId();
 
-        /** TODO: add access rights validation */
-        $reqCustId = $this->auth->getCurrentUserId($request);
+        /* customer can get assets data for itself only */
+        $custId = $this->auth->getCurrentUserId($request);
 
         /** perform processing */
-        $items = $this->getAssets($reqCustId);
-
-        /** compose result */
-        $result = new AResponse();
-        $result->setData($items);
-        return $result;
-    }
-
-    private function getAssets($custId) {
         $req = new \Praxigento\Accounting\Service\Account\Asset\Get\Request();
         $req->setCustomerId($custId);
         $resp = $this->servAssetGet->exec($req);
-        return $resp;
+
+        /** compose result */
+        $result = new AResponse();
+        $result->setData($resp);
+        return $result;
     }
+
 }

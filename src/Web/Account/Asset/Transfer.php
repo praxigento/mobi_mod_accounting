@@ -17,7 +17,7 @@ class Transfer
     private $servAssetTransfer;
 
     public function __construct(
-        \Praxigento\Core\App\Api\Web\IAuthenticator $auth,
+        \Praxigento\Core\App\Api\Web\Authenticator\Front $auth,
         \Praxigento\Accounting\Service\Account\Asset\Transfer $servAssetTransfer
     ) {
         $this->auth = $auth;
@@ -25,22 +25,28 @@ class Transfer
     }
 
 
-    public function exec($request) {
+    public function exec($request)
+    {
         assert($request instanceof ARequest);
         /** define local working data */
         $data = $request->getData();
         $amount = $data->getAmount();
         $assetTypeId = $data->getAssetId();
         $counterPartyId = $data->getCounterPartyId();
-        $custId = $data->getCustomerId();
-        $isDirect = $data->getIsDirect();
 
-        /** TODO: add access rights validation */
-        $reqAdminId = $this->auth->getCurrentAdminId($request);
-        $reqCustId = $this->auth->getCurrentUserId($request);
+        /* input data filters */
+        $amount = abs($amount); // customer cannot transfer TO his account
+        $isDirect = false; // customer cannot initiate direct transfer
+        $custId = $this->auth->getCurrentUserId($request); // customer can transfer FROM his account only
 
         /** perform processing */
-        $resp = $this->transfer($amount, $assetTypeId, $counterPartyId, $custId, $isDirect, $reqAdminId);
+        $req = new \Praxigento\Accounting\Service\Account\Asset\Transfer\Request();
+        $req->setAmount($amount);
+        $req->setAssetId($assetTypeId);
+        $req->setCounterPartyId($counterPartyId);
+        $req->setCustomerId($custId);
+        $req->setIsDirect($isDirect);
+        $resp = $this->servAssetTransfer->exec($req);
 
         /** compose result */
         $result = new AResponse();
@@ -48,15 +54,4 @@ class Transfer
         return $result;
     }
 
-    private function transfer($amount, $assetTypeId, $cPartyId, $custId, $isDirect, $userId) {
-        $req = new \Praxigento\Accounting\Service\Account\Asset\Transfer\Request();
-        $req->setAmount($amount);
-        $req->setAssetId($assetTypeId);
-        $req->setCounterPartyId($cPartyId);
-        $req->setCustomerId($custId);
-        $req->setIsDirect($isDirect);
-        $req->setUserId($userId);
-        $resp = $this->servAssetTransfer->exec($req);
-        return $resp;
-    }
 }
