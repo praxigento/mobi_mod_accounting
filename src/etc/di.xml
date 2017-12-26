@@ -38,9 +38,7 @@
             type="\Praxigento\Accounting\Service\Balance\Get\Turnover"/>
     <preference for="\Praxigento\Accounting\Service\Balance\IGet"
             type="\Praxigento\Accounting\Service\Balance\Get"/>
-    <preference for="Praxigento\Accounting\Service\IOperation"
-            type="Praxigento\Accounting\Service\Operation\Call"/>
-    <preference for="Praxigento\Accounting\Service\ITransaction"
-            type="Praxigento\Accounting\Service\Transaction\Call"/>
+    <preference for="\Praxigento\Accounting\Api\Service\Operation"
+                type="\Praxigento\Accounting\Service\Operation"/>
 
 </config>

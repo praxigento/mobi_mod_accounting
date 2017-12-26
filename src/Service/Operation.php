@@ -1,18 +1,18 @@
 <?php
 /**
- * User: Alex Gusev <alex@flancer64.com>
+ * User: makhovdmitrii@inbox.ru
  */
 
-namespace Praxigento\Accounting\Service\Operation;
+namespace Praxigento\Accounting\Service;
 
-use Praxigento\Accounting\Repo\Entity\Data\Operation as EntityOperation;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- */
-class Call
-    extends \Praxigento\Core\App\Service\Base\Call
-    implements \Praxigento\Accounting\Service\IOperation
+use Praxigento\Accounting\Api\Service\Operation\Request as ARequest;
+use Praxigento\Accounting\Api\Service\Operation\Response as AResponse;
+use Praxigento\Accounting\Repo\Entity\Data\Operation as EOperation;
+
+
+class Operation
+    implements \Praxigento\Accounting\Api\Service\Operation
 {
     /** @var  \Praxigento\Core\App\Transaction\Database\IManager */
     protected $_manTrans;
@@ -24,7 +24,7 @@ class Call
     protected $_repoOper;
     /** @var  \Praxigento\Accounting\Repo\Entity\Type\Operation */
     protected $_repoTypeOper;
-    /** @var Sub\Add */
+    /** @var \Praxigento\Accounting\Service\Operation\Add */
     protected $_subAdd;
 
     public function __construct(
@@ -35,8 +35,9 @@ class Call
         \Praxigento\Accounting\Repo\Entity\Type\Operation $repoTypeOper,
         \Praxigento\Accounting\Repo\Entity\Log\Change\Admin $repoELogChangeAdmin,
         \Praxigento\Accounting\Repo\Entity\Log\Change\Customer $repoELogChangeCust,
-        Sub\Add $subAdd
-    ) {
+        \Praxigento\Accounting\Service\Operation\Add $subAdd
+    )
+    {
         parent::__construct($logger, $manObj);
         $this->_manTrans = $manTrans;
         $this->_repoTypeOper = $repoTypeOper;
@@ -49,13 +50,13 @@ class Call
     /**
      * Add operation with list of transactions and change account balances.
      *
-     * @param Request\Add $req
+     * @param ARequest $req
      *
-     * @return Response\Add
+     * @return AResponse
      */
-    public function add(Request\Add $req)
+    public function exec(ARequest $req)
     {
-        $result = new Response\Add();
+        $result = new AResponse();
         $operationTypeId = $req->getOperationTypeId();
         $operationTypeCode = $req->getOperationTypeCode();
         $datePerformed = $req->getDatePerformed();
@@ -71,15 +72,15 @@ class Call
                 $operationTypeId = $this->_repoTypeOper->getIdByCode($operationTypeCode);
             }
             $bindToAdd = [
-                EntityOperation::ATTR_TYPE_ID => $operationTypeId,
-                EntityOperation::ATTR_DATE_PREFORMED => $datePerformed
+                EOperation::ATTR_TYPE_ID => $operationTypeId,
+                EOperation::ATTR_DATE_PREFORMED => $datePerformed
             ];
             if (!is_null($note)) {
-                $bindToAdd[EntityOperation::ATTR_NOTE] = $note;
+                $bindToAdd[EOperation::ATTR_NOTE] = $note;
             }
             $operId = $this->_repoOper->create($bindToAdd);
             if ($operId) {
-                $transIds = $this->_subAdd->transactions($operId, $transactions, $datePerformed, $asRef);
+                $transIds = $this->_subAdd->exec($operId, $transactions, $datePerformed, $asRef);
                 $result->setOperationId($operId);
                 $result->setTransactionsIds($transIds);
                 /* log customer link */
@@ -104,4 +105,5 @@ class Call
         }
         return $result;
     }
+
 }

@@ -3,21 +3,21 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Service\Operation\Sub;
+namespace Praxigento\Accounting\Service\Operation;
 
 use Praxigento\Accounting\Repo\Entity\Data\Transaction;
-use Praxigento\Accounting\Service\Transaction\Request\Add as AddTransactionRequest;
-use Praxigento\Accounting\Service\Transaction\Response\Add as AddTransactionResponse;
+use Praxigento\Accounting\Service\Transaction\Request as ARequest;
+use Praxigento\Accounting\Service\Transaction\Response as AResponse;
 
 class Add
 {
     /**
-     * @var \Praxigento\Accounting\Service\ITransaction
+     * @var \Praxigento\Accounting\Service\Transaction
      */
     protected $_callTransaction;
 
     public function __construct(
-        \Praxigento\Accounting\Service\ITransaction $callTransaction
+        \Praxigento\Accounting\Service\Transaction $callTransaction
     ) {
         $this->_callTransaction = $callTransaction;
     }
@@ -33,7 +33,7 @@ class Add
      * @return array
      * @throws \Exception
      */
-    public function transactions($operId, $trans, $datePerformed, $asRef = null)
+    public function exec($operId, $trans, $datePerformed, $asRef = null)
     {
         $result = [];
         foreach ($trans as $one) {
@@ -42,15 +42,15 @@ class Add
             }
             $dateApplied = $one->getDateApplied();
             $dateApplied = $dateApplied ? $dateApplied : $datePerformed;
-            $req = new AddTransactionRequest();
+            $req = new ARequest();
             $req->setOperationId($operId);
             $req->setDebitAccId($one->getDebitAccId());
             $req->setCreditAccId($one->getCreditAccId());
             $req->setValue($one->getValue());
             $req->setNote($one->getNote());
             $req->setDateApplied($dateApplied);
-            /** @var  $resp AddTransactionResponse */
-            $resp = $this->_callTransaction->add($req);
+            /** @var  $resp AResponse */
+            $resp = $this->_callTransaction->exec($req);
             if (!$resp->isSucceed()) {
                 throw new \Exception("Transaction (debit acc. #{$req->getDebitAccId()}, credit acc. "
                     . "#{$req->getCreditAccId()}) cannot be inserted . ");
