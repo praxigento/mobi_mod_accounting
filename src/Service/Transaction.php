@@ -28,7 +28,6 @@ class Transaction
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTrans
     )
     {
-        parent::__construct($logger, $manObj);
         $this->_manTrans = $manTrans;
         $this->_repoAcc = $repoAcc;
         $this->_repoTrans = $repoTrans;
