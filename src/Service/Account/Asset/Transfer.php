@@ -16,7 +16,7 @@ use Praxigento\Accounting\Service\Account\Asset\Transfer\Response as AResponse;
  */
 class Transfer
 {
-    /** @var \Praxigento\Accounting\Service\IOperation */
+    /** @var \Praxigento\Accounting\Api\Service\Operation */
     private $callOper;
     /** @var \Praxigento\Core\Tool\IDate */
     private $hlpData;
@@ -26,7 +26,7 @@ class Transfer
     public function __construct(
         \Praxigento\Core\Tool\IDate $hlpData,
         \Praxigento\Accounting\Repo\Entity\Account $repoAcc,
-        \Praxigento\Accounting\Service\IOperation $callOper
+        \Praxigento\Accounting\Api\Service\Operation $callOper
     )
     {
         $this->hlpData = $hlpData;
@@ -98,7 +98,7 @@ class Transfer
 
     private function transfer($userId, $trans)
     {
-        $req = new \Praxigento\Accounting\Service\Operation\Request\Add();
+        $req = new \Praxigento\Accounting\Api\Service\Operation\Request();
         $req->setAdminUserId($userId);
         $req->setOperationTypeCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
         if ($userId) {
@@ -109,7 +109,7 @@ class Transfer
         $req->setTransactions($trans);
         $datePerformed = $this->hlpData->getUtcNowForDb();
         $req->setDatePerformed($datePerformed);
-        $resp = $this->callOper->add($req);
+        $resp = $this->callOper->exec($req);
         $result = $resp->getOperationId();
         return $result;
     }

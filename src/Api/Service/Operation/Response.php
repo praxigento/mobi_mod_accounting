@@ -1,8 +1,9 @@
 <?php
 /**
- * User: Alex Gusev <alex@flancer64.com>
+ *
  */
-namespace Praxigento\Accounting\Service\Operation\Response;
+
+namespace Praxigento\Accounting\Api\Service\Operation;
 
 /**
  * @method int getOperationId()
@@ -10,6 +11,8 @@ namespace Praxigento\Accounting\Service\Operation\Response;
  * @method array getTransactionsIds() [$transId, ...] or [$transId => $ref, ...]
  * @method void setTransactionsIds(array $data)
  */
-class Add extends \Praxigento\Core\App\Service\Base\Response {
+class Response
+    extends \Praxigento\Core\App\Service\Base\Response
+{
 
 }

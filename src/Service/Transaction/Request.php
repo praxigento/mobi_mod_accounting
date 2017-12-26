@@ -1,8 +1,9 @@
 <?php
 /**
- * User: Alex Gusev <alex@flancer64.com>
+ *
  */
-namespace Praxigento\Accounting\Service\Transaction\Request;
+
+namespace Praxigento\Accounting\Service\Transaction;
 
 /**
  * @method int getCreditAccId()
@@ -18,6 +19,8 @@ namespace Praxigento\Accounting\Service\Transaction\Request;
  * @method number getValue()
  * @method void setValue(number $data)
  */
-class Add extends \Praxigento\Core\App\Service\Base\Request {
+class Request
+    extends \Praxigento\Core\App\Service\Base\Request
+{
 
 }

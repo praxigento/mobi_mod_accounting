@@ -1,19 +1,18 @@
 <?php
 /**
- * User: Alex Gusev <alex@flancer64.com>
+ * User: makhovdmitrii@inbox.ru
  */
 
-namespace Praxigento\Accounting\Service\Transaction;
+namespace Praxigento\Accounting\Service;
 
-use Praxigento\Accounting\Repo\Entity\Data\Transaction as Transaction;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction as ATransaction;
+use Praxigento\Accounting\Service\Transaction\Request as ARequest;
+use Praxigento\Accounting\Service\Transaction\Response as AResponse;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- */
-class Call
-    extends \Praxigento\Core\App\Service\Base\Call
-    implements \Praxigento\Accounting\Service\ITransaction
+
+class Transaction
 {
+
     /** @var  \Praxigento\Core\App\Transaction\Database\IManager */
     protected $_manTrans;
     /** @var  \Praxigento\Accounting\Repo\Entity\Account */
@@ -21,16 +20,14 @@ class Call
     /** @var  \Praxigento\Accounting\Repo\Entity\Transaction */
     protected $_repoTrans;
 
-    /**
-     * Call constructor.
-     */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\Account $repoAcc,
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTrans
-    ) {
+    )
+    {
         parent::__construct($logger, $manObj);
         $this->_manTrans = $manTrans;
         $this->_repoAcc = $repoAcc;
@@ -39,14 +36,12 @@ class Call
 
     /**
      * Add new transaction and update current balances.
-     *
-     * @param Request\Add $request
-     *
-     * @return Response\Add
+     * @param ARequest $request
+     * @return AResponse
      */
-    public function add(Request\Add $request)
+    public function exec($request)
     {
-        $result = new Response\Add();
+        $result = new AResponse();
         $debitAccId = $request->getDebitAccId();
         $creditAccId = $request->getCreditAccId();
         $operationId = $request->getOperationId();
@@ -68,14 +63,14 @@ class Call
             ) {
                 /* add transaction */
                 $toAdd = [
-                    Transaction::ATTR_OPERATION_ID => $operationId,
-                    Transaction::ATTR_DEBIT_ACC_ID => $debitAccId,
-                    Transaction::ATTR_CREDIT_ACC_ID => $creditAccId,
-                    Transaction::ATTR_VALUE => $value,
-                    Transaction::ATTR_DATE_APPLIED => $dateApplied
+                    ATransaction::ATTR_OPERATION_ID => $operationId,
+                    ATransaction::ATTR_DEBIT_ACC_ID => $debitAccId,
+                    ATransaction::ATTR_CREDIT_ACC_ID => $creditAccId,
+                    ATransaction::ATTR_VALUE => $value,
+                    ATransaction::ATTR_DATE_APPLIED => $dateApplied
                 ];
                 if (!is_null($note)) {
-                    $toAdd[Transaction::ATTR_NOTE] = $note;
+                    $toAdd[ATransaction::ATTR_NOTE] = $note;
                 }
                 $idCreated = $this->_repoTrans->create($toAdd);
                 $result->setTransactionId($idCreated);

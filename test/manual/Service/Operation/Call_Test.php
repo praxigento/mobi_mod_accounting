@@ -13,9 +13,9 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
 
     public function test_add() {
         $obm = \Magento\Framework\App\ObjectManager::getInstance();
-        /** @var  $call \Praxigento\Accounting\Service\Operation\Call */
-        $call = $obm->get('Praxigento\Accounting\Service\Operation\Call');
-        $req = new Request\Add();
+        /** @var  $call \Praxigento\Accounting\Service\Operation */
+        $call = $obm->get('\Praxigento\Accounting\Service\Operation');
+        $req = new \Praxigento\Accounting\Api\Service\Operation\Request();
         $req->operationTypeId = 1;
         $req->datePerformed = '2015-11-10 18:43:57';
         $req->transactions = [
@@ -33,8 +33,8 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
                 Transaction::ATTR_VALUE         => 15
             ]
         ];
-        /** @var  $resp Response\Add */
-        $resp = $call->add($req);
+        /** @var  $resp \Praxigento\Accounting\Api\Service\Operation\Response */
+        $resp = $call->exec($req);
         $this->assertTrue($resp->isSucceed());
     }
 }
