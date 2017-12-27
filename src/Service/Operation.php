@@ -15,17 +15,17 @@ class Operation
     implements \Praxigento\Accounting\Api\Service\Operation
 {
     /** @var  \Praxigento\Core\App\Transaction\Database\IManager */
-    protected $_manTrans;
+    private $_manTrans;
     /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Admin */
-    protected $_repoELogChangeAdmin;
+    private $_repoELogChangeAdmin;
     /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Customer */
-    protected $_repoELogChangeCust;
+    private $_repoELogChangeCust;
     /** @var  \Praxigento\Accounting\Repo\Entity\Operation */
-    protected $_repoOper;
+    private $_repoOper;
     /** @var  \Praxigento\Accounting\Repo\Entity\Type\Operation */
-    protected $_repoTypeOper;
+    private $_repoTypeOper;
     /** @var \Praxigento\Accounting\Service\Operation\Add */
-    protected $_subAdd;
+    private $_subAdd;
 
     public function __construct(
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,

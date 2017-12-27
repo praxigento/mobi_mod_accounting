@@ -14,11 +14,11 @@ class Transaction
 {
 
     /** @var  \Praxigento\Core\App\Transaction\Database\IManager */
-    protected $_manTrans;
+    private $_manTrans;
     /** @var  \Praxigento\Accounting\Repo\Entity\Account */
-    protected $_repoAcc;
+    private $_repoAcc;
     /** @var  \Praxigento\Accounting\Repo\Entity\Transaction */
-    protected $_repoTrans;
+    private $_repoTrans;
 
     public function __construct(
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
