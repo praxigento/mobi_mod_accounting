@@ -1,6 +1,6 @@
 <?php
 /**
- * External Service
+ * Internal Service
  */
 
 namespace Praxigento\Accounting\Api\Service;
