@@ -5,7 +5,7 @@
 
 namespace Praxigento\Accounting\Service;
 
-use Praxigento\Accounting\Repo\Entity\Data\Transaction as ATransaction;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction as ETransaction;
 use Praxigento\Accounting\Service\Transaction\Request as ARequest;
 use Praxigento\Accounting\Service\Transaction\Response as AResponse;
 
@@ -21,8 +21,6 @@ class Transaction
     protected $_repoTrans;
 
     public function __construct(
-        \Psr\Log\LoggerInterface $logger,
-        \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\Account $repoAcc,
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTrans
@@ -62,14 +60,14 @@ class Transaction
             ) {
                 /* add transaction */
                 $toAdd = [
-                    ATransaction::ATTR_OPERATION_ID => $operationId,
-                    ATransaction::ATTR_DEBIT_ACC_ID => $debitAccId,
-                    ATransaction::ATTR_CREDIT_ACC_ID => $creditAccId,
-                    ATransaction::ATTR_VALUE => $value,
-                    ATransaction::ATTR_DATE_APPLIED => $dateApplied
+                    ETransaction::ATTR_OPERATION_ID => $operationId,
+                    ETransaction::ATTR_DEBIT_ACC_ID => $debitAccId,
+                    ETransaction::ATTR_CREDIT_ACC_ID => $creditAccId,
+                    ETransaction::ATTR_VALUE => $value,
+                    ETransaction::ATTR_DATE_APPLIED => $dateApplied
                 ];
                 if (!is_null($note)) {
-                    $toAdd[ATransaction::ATTR_NOTE] = $note;
+                    $toAdd[ETransaction::ATTR_NOTE] = $note;
                 }
                 $idCreated = $this->_repoTrans->create($toAdd);
                 $result->setTransactionId($idCreated);

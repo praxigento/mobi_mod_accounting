@@ -28,8 +28,6 @@ class Operation
     protected $_subAdd;
 
     public function __construct(
-        \Psr\Log\LoggerInterface $logger,
-        \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\Operation $repoOper,
         \Praxigento\Accounting\Repo\Entity\Type\Operation $repoTypeOper,
