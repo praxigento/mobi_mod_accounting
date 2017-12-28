@@ -14,11 +14,11 @@ class Transaction
 {
 
     /** @var  \Praxigento\Core\App\Transaction\Database\IManager */
-    private $_manTrans;
+    private $manTrans;
     /** @var  \Praxigento\Accounting\Repo\Entity\Account */
-    private $_repoAcc;
+    private $repoAcc;
     /** @var  \Praxigento\Accounting\Repo\Entity\Transaction */
-    private $_repoTrans;
+    private $repoTrans;
 
     public function __construct(
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
@@ -26,15 +26,16 @@ class Transaction
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTrans
     )
     {
-        $this->_manTrans = $manTrans;
-        $this->_repoAcc = $repoAcc;
-        $this->_repoTrans = $repoTrans;
+        $this->manTrans = $manTrans;
+        $this->repoAcc = $repoAcc;
+        $this->repoTrans = $repoTrans;
     }
 
     /**
      * Add new transaction and update current balances.
      * @param ARequest $request
      * @return AResponse
+     * @throws \Exception
      */
     public function exec($request)
     {
@@ -45,13 +46,13 @@ class Transaction
         $dateApplied = $request->getDateApplied();
         $value = $request->getValue();
         $note = $request->getNote();
-        $def = $this->_manTrans->begin();
+        $def = $this->manTrans->begin();
         try {
             /* get account type for debit account */
-            $debitAcc = $this->_repoAcc->getById($debitAccId);
+            $debitAcc = $this->repoAcc->getById($debitAccId);
             $debitAssetTypeId = $debitAcc->getAssetTypeId();
             /* get account type for credit account */
-            $creditAcc = $this->_repoAcc->getById($creditAccId);
+            $creditAcc = $this->repoAcc->getById($creditAccId);
             $creditAssetTypeId = $creditAcc->getAssetTypeId();
             /* asset types should be equals */
             if (
@@ -69,16 +70,16 @@ class Transaction
                 if (!is_null($note)) {
                     $toAdd[ETransaction::ATTR_NOTE] = $note;
                 }
-                $idCreated = $this->_repoTrans->create($toAdd);
+                $idCreated = $this->repoTrans->create($toAdd);
                 $result->setTransactionId($idCreated);
             } else {
                 throw new \Exception("Asset type (#$debitAssetTypeId) for debit account #$debitAccId is not equal to "
                     . "asset type (#$creditAssetTypeId) for credit account $creditAccId.");
             }
-            $this->_manTrans->commit($def);
+            $this->manTrans->commit($def);
             $result->markSucceed();
         } finally {
-            $this->_manTrans->end($def);
+            $this->manTrans->end($def);
 
         }
         return $result;

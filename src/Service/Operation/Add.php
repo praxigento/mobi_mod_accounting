@@ -5,7 +5,7 @@
 
 namespace Praxigento\Accounting\Service\Operation;
 
-use Praxigento\Accounting\Repo\Entity\Data\Transaction;
+use Praxigento\Accounting\Repo\Entity\Data\Transaction as ETrans;
 use Praxigento\Accounting\Service\Transaction\Request as ARequest;
 use Praxigento\Accounting\Service\Transaction\Response as AResponse;
 
@@ -14,12 +14,12 @@ class Add
     /**
      * @var \Praxigento\Accounting\Service\Transaction
      */
-    protected $_callTransaction;
+    protected $servTrans;
 
     public function __construct(
-        \Praxigento\Accounting\Service\Transaction $callTransaction
+        \Praxigento\Accounting\Service\Transaction $servTrans
     ) {
-        $this->_callTransaction = $callTransaction;
+        $this->servTrans = $servTrans;
     }
 
     /**
@@ -37,8 +37,8 @@ class Add
     {
         $result = [];
         foreach ($trans as $one) {
-            if (!$one instanceof Transaction) {
-                $one = new Transaction($one);
+            if (!$one instanceof ETrans) {
+                $one = new ETrans($one);
             }
             $dateApplied = $one->getDateApplied();
             $dateApplied = $dateApplied ? $dateApplied : $datePerformed;
@@ -50,7 +50,7 @@ class Add
             $req->setNote($one->getNote());
             $req->setDateApplied($dateApplied);
             /** @var  $resp AResponse */
-            $resp = $this->_callTransaction->exec($req);
+            $resp = $this->servTrans->exec($req);
             if (!$resp->isSucceed()) {
                 throw new \Exception("Transaction (debit acc. #{$req->getDebitAccId()}, credit acc. "
                     . "#{$req->getCreditAccId()}) cannot be inserted . ");

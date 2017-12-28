@@ -15,17 +15,17 @@ class Operation
     implements \Praxigento\Accounting\Api\Service\Operation
 {
     /** @var  \Praxigento\Core\App\Transaction\Database\IManager */
-    private $_manTrans;
+    private $manTrans;
     /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Admin */
-    private $_repoELogChangeAdmin;
+    private $repoELogChangeAdmin;
     /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Customer */
-    private $_repoELogChangeCust;
+    private $repoELogChangeCust;
     /** @var  \Praxigento\Accounting\Repo\Entity\Operation */
-    private $_repoOper;
+    private $repoOper;
     /** @var  \Praxigento\Accounting\Repo\Entity\Type\Operation */
-    private $_repoTypeOper;
+    private $repoTypeOper;
     /** @var \Praxigento\Accounting\Service\Operation\Add */
-    private $_subAdd;
+    private $subAdd;
 
     public function __construct(
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
@@ -34,14 +34,13 @@ class Operation
         \Praxigento\Accounting\Repo\Entity\Log\Change\Admin $repoELogChangeAdmin,
         \Praxigento\Accounting\Repo\Entity\Log\Change\Customer $repoELogChangeCust,
         \Praxigento\Accounting\Service\Operation\Add $subAdd
-    )
-    {
-        $this->_manTrans = $manTrans;
-        $this->_repoTypeOper = $repoTypeOper;
-        $this->_repoOper = $repoOper;
-        $this->_repoELogChangeAdmin = $repoELogChangeAdmin;
-        $this->_repoELogChangeCust = $repoELogChangeCust;
-        $this->_subAdd = $subAdd;
+    ) {
+        $this->manTrans = $manTrans;
+        $this->repoTypeOper = $repoTypeOper;
+        $this->repoOper = $repoOper;
+        $this->repoELogChangeAdmin = $repoELogChangeAdmin;
+        $this->repoELogChangeCust = $repoELogChangeCust;
+        $this->subAdd = $subAdd;
     }
 
     /**
@@ -50,6 +49,7 @@ class Operation
      * @param ARequest $req
      *
      * @return AResponse
+     * @throws \Exception
      */
     public function exec(ARequest $req)
     {
@@ -62,11 +62,11 @@ class Operation
         $asRef = $req->getAsTransRef();
         $customerId = $req->getCustomerId();
         $adminUserId = $req->getAdminUserId();
-        $def = $this->_manTrans->begin();
+        $def = $this->manTrans->begin();
         try {
             /* add operation itself */
             if (!$operationTypeId) {
-                $operationTypeId = $this->_repoTypeOper->getIdByCode($operationTypeCode);
+                $operationTypeId = $this->repoTypeOper->getIdByCode($operationTypeCode);
             }
             $bindToAdd = [
                 EOperation::ATTR_TYPE_ID => $operationTypeId,
@@ -75,9 +75,9 @@ class Operation
             if (!is_null($note)) {
                 $bindToAdd[EOperation::ATTR_NOTE] = $note;
             }
-            $operId = $this->_repoOper->create($bindToAdd);
+            $operId = $this->repoOper->create($bindToAdd);
             if ($operId) {
-                $transIds = $this->_subAdd->exec($operId, $transactions, $datePerformed, $asRef);
+                $transIds = $this->subAdd->exec($operId, $transactions, $datePerformed, $asRef);
                 $result->setOperationId($operId);
                 $result->setTransactionsIds($transIds);
                 /* log customer link */
@@ -85,20 +85,20 @@ class Operation
                     $log = new \Praxigento\Accounting\Repo\Entity\Data\Log\Change\Customer();
                     $log->setCustomerRef($customerId);
                     $log->setOperationRef($operId);
-                    $this->_repoELogChangeCust->create($log);
+                    $this->repoELogChangeCust->create($log);
                 }
                 /* log admin link */
                 if ($adminUserId) {
                     $log = new \Praxigento\Accounting\Repo\Entity\Data\Log\Change\Admin();
                     $log->setUserRef($adminUserId);
                     $log->setOperationRef($operId);
-                    $this->_repoELogChangeAdmin->create($log);
+                    $this->repoELogChangeAdmin->create($log);
                 }
-                $this->_manTrans->commit($def);
+                $this->manTrans->commit($def);
                 $result->markSucceed();
             }
         } finally {
-            $this->_manTrans->end($def);
+            $this->manTrans->end($def);
         }
         return $result;
     }

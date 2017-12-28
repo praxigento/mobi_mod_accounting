@@ -18,13 +18,9 @@ class Simple
      */
     private $hlpPeriod;
 
-    /**
-     * Simple constructor.
-     */
     public function __construct(
         \Praxigento\Core\Tool\IPeriod $hlpPeriod
-    )
-    {
+    ) {
         $this->hlpPeriod = $hlpPeriod;
     }
 
