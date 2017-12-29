@@ -10,7 +10,7 @@ use Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder as Q
 
 class Turnover
     extends \Praxigento\Core\App\Service\Base\Call
-    implements \Praxigento\Accounting\Service\Balance\Get\ITurnover
+    implements \Praxigento\Accounting\Api\Service\Balance\Get\Turnover
 {
     /** @var \Magento\Framework\DB\Adapter\AdapterInterface */
     protected $conn;
@@ -40,9 +40,9 @@ class Turnover
 
     }
 
-    public function exec(\Praxigento\Accounting\Service\Balance\Get\Turnover\Request $request)
+    public function exec(\Praxigento\Accounting\Api\Service\Balance\Get\Turnover\Request $request)
     {
-        $result = new \Praxigento\Accounting\Service\Balance\Get\Turnover\Response();
+        $result = new \Praxigento\Accounting\Api\Service\Balance\Get\Turnover\Response();
         $assetTypeId = $request->assetTypeId;
         $assetTypeCode = $request->assetTypeCode;
         $dateFrom = $request->dateFrom;
@@ -80,7 +80,7 @@ class Turnover
             $customerId = $row[QBalanceClose::A_CUST_ID];
             $accId = $row[QBalanceClose::A_ACC_ID];
             $balanceClose = $row[QBalanceClose::A_BALANCE];
-            $data = new \Praxigento\Accounting\Service\Balance\Get\Turnover\Data\Entry();
+            $data = new \Praxigento\Accounting\Api\Service\Balance\Get\Turnover\Response\Entry();
             $data->accountId = $accId;
             $data->customerId = $customerId;
             $data->balanceClose = $balanceClose;
@@ -93,7 +93,7 @@ class Turnover
         foreach ($rowsBegin as $row) {
             $customerId = $row[QBalanceClose::A_CUST_ID];
             $balanceOpen = $row[QBalanceClose::A_BALANCE];
-            /** @var \Praxigento\Accounting\Service\Balance\Get\Turnover\Data\Entry $data */
+            /** @var \Praxigento\Accounting\Api\Service\Balance\Get\Turnover\Response\Entry $data */
             $data = $entries[$customerId];
             $balanceClose = $data->balanceClose;
             $turnover = ($balanceClose - $balanceOpen);

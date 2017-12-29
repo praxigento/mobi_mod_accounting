@@ -1,9 +1,9 @@
 <?php
 /**
- * User: Alex Gusev <alex@flancer64.com>
+ *
  */
 
-namespace Praxigento\Accounting\Service\Balance\Get;
+namespace Praxigento\Accounting\Api\Service\Balance\Get\Turnover;
 
 /**
  * @property string $dateFrom balance period begin ('20170101', including)
