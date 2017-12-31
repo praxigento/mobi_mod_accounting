@@ -51,6 +51,7 @@ class Change
      */
     public function exec($request)
     {
+        assert($request instanceof ARequest);
         $result = new AResponse();
         $accCustId = $request->getCustomerAccountId();
         $adminUserId = $request->getAdminUserId();

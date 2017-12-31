@@ -28,6 +28,7 @@ class Reset
      */
     public function exec($request)
     {
+        assert($request instanceof ARequest);
         $result = new AResponse();
         $dateFrom = $request->getDateFrom();
         $conn = $this->repoBalance->getConnection();

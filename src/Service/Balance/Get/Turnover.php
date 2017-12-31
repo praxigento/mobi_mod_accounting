@@ -5,6 +5,8 @@
 
 namespace Praxigento\Accounting\Service\Balance\Get;
 
+use Praxigento\Accounting\Api\Service\Balance\Get\Turnover\Request as ARequest;
+use Praxigento\Accounting\Api\Service\Balance\Get\Turnover\Response as AResponse;
 use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder as QBalanceClose;
 
@@ -12,37 +14,31 @@ class Turnover
     extends \Praxigento\Core\App\Service\Base\Call
     implements \Praxigento\Accounting\Api\Service\Balance\Get\Turnover
 {
-    /** @var \Magento\Framework\DB\Adapter\AdapterInterface */
-    protected $conn;
-    /** @var \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder */
-    protected $qbldBalClose;
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
-    protected $repoTypeAsset;
-    /** @var \Magento\Framework\App\ResourceConnection */
-    protected $resource;
     /** @var  \Praxigento\Core\Tool\IPeriod */
-    protected $toolPeriod;
+    private $hlpPeriod;
+    /** @var \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder */
+    private $qbBalClose;
+    /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
+    private $repoTypeAsset;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\Tool\IPeriod $toolPeriod,
-        \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder $qbldBalClose,
+        \Praxigento\Core\Tool\IPeriod $hlpPeriod,
+        \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder $qbBalClose,
         \Praxigento\Accounting\Repo\Entity\Type\Asset $repoTypeAsset
     ) {
         parent::__construct($logger, $manObj);
-        $this->resource = $resource;
-        $this->conn = $this->resource->getConnection();
-        $this->toolPeriod = $toolPeriod;
-        $this->qbldBalClose = $qbldBalClose;
+        $this->hlpPeriod = $hlpPeriod;
+        $this->qbBalClose = $qbBalClose;
         $this->repoTypeAsset = $repoTypeAsset;
 
     }
 
-    public function exec(\Praxigento\Accounting\Api\Service\Balance\Get\Turnover\Request $request)
+    public function exec($request)
     {
-        $result = new \Praxigento\Accounting\Api\Service\Balance\Get\Turnover\Response();
+        assert($request instanceof ARequest);
+        $result = new AResponse();
         $assetTypeId = $request->assetTypeId;
         $assetTypeCode = $request->assetTypeCode;
         $dateFrom = $request->dateFrom;
@@ -52,25 +48,26 @@ class Turnover
         if (is_null($assetTypeId)) {
             $assetTypeId = $this->repoTypeAsset->getIdByCode($assetTypeCode);
         }
-        $dateFromBefore = $this->toolPeriod->getPeriodPrev($dateFrom);
+        $dateFromBefore = $this->hlpPeriod->getPeriodPrev($dateFrom);
 
         /* perform action */
 
         /* get balances on the end of the previous period */
-        $qCloseBegin = $this->qbldBalClose->build();
+        $qCloseBegin = $this->qbBalClose->build();
+        $conn = $qCloseBegin->getConnection();
         $bind = [
             QBalanceClose::BIND_ASSET_TYPE_ID => $assetTypeId,
             QBalanceClose::BIND_MAX_DATE => $dateFromBefore
         ];
-        $rowsBegin = $this->conn->fetchAll($qCloseBegin, $bind);
+        $rowsBegin = $conn->fetchAll($qCloseBegin, $bind);
 
         /* get balances on the end of this period */
-        $qCloseBegin = $this->qbldBalClose->build();
+        $qCloseBegin = $this->qbBalClose->build();
         $bind = [
             QBalanceClose::BIND_ASSET_TYPE_ID => $assetTypeId,
             QBalanceClose::BIND_MAX_DATE => $dateTo
         ];
-        $rowsEnd = $this->conn->fetchAll($qCloseBegin, $bind);
+        $rowsEnd = $conn->fetchAll($qCloseBegin, $bind);
 
         /* compose asset delta for period */
         $entries = [];

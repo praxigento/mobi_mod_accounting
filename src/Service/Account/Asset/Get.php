@@ -29,13 +29,13 @@ class Get
     /**
      * Get asset data for a customer (available asset types, existing accounts & balances).
      *
-     * @param ARequest $req
+     * @param ARequest $request
      * @return AResponse
      */
-    public function exec($req) {
-        assert($req instanceof ARequest);
+    public function exec($request) {
+        assert($request instanceof ARequest);
         /** define local working data */
-        $customerId = $req->getCustomerId();
+        $customerId = $request->getCustomerId();
 
         /** perform processing */
         $items = $this->loadAssetsData($customerId);

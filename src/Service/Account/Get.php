@@ -57,18 +57,18 @@ class Get
     /**
      * Get account data or create new account if customer has no account for the requested asset.
      *
-     * @param ARequest $req
+     * @param ARequest $request
      *
      * @return AResponse
      */
-    public function exec($req)
+    public function exec($request)
     {
-        assert($req instanceof ARequest);
+        assert($request instanceof ARequest);
         /** define local working data */
-        $typeCode = $req->getAssetTypeCode();
-        $typeId = $req->getAssetTypeId();
-        $custId = $req->getCustomerId();
-        $isRepres = $req->getIsRepresentative();
+        $typeCode = $request->getAssetTypeCode();
+        $typeId = $request->getAssetTypeId();
+        $custId = $request->getCustomerId();
+        $isRepres = $request->getIsRepresentative();
 
         /** perform processing */
         if (is_null($typeId)) {

@@ -51,6 +51,7 @@ class Calc
      */
     public function exec($request)
     {
+        assert($request instanceof ARequest);
         $result = new AResponse();
         $assetTypeId = $request->getAssetTypeId();
         $assetTypeCode = $request->getAssetTypeCode();

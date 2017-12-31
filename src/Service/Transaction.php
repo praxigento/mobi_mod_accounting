@@ -24,8 +24,7 @@ class Transaction
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
         \Praxigento\Accounting\Repo\Entity\Account $repoAcc,
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTrans
-    )
-    {
+    ) {
         $this->manTrans = $manTrans;
         $this->repoAcc = $repoAcc;
         $this->repoTrans = $repoTrans;
@@ -39,6 +38,7 @@ class Transaction
      */
     public function exec($request)
     {
+        assert($request instanceof ARequest);
         $result = new AResponse();
         $debitAccId = $request->getDebitAccId();
         $creditAccId = $request->getCreditAccId();

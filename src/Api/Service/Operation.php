@@ -12,10 +12,10 @@ use Praxigento\Accounting\Api\Service\Operation\Response as AResponse;
 interface Operation
 {
     /**
-     * @param ARequest $req
+     * @param ARequest $request
      *
      * @return AResponse
      */
-    public function exec(ARequest $req);
+    public function exec($request);
 
 }

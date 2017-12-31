@@ -46,22 +46,23 @@ class Operation
     /**
      * Add operation with list of transactions and change account balances.
      *
-     * @param ARequest $req
+     * @param ARequest $request
      *
      * @return AResponse
      * @throws \Exception
      */
-    public function exec(ARequest $req)
+    public function exec($request)
     {
+        assert($request instanceof ARequest);
         $result = new AResponse();
-        $operationTypeId = $req->getOperationTypeId();
-        $operationTypeCode = $req->getOperationTypeCode();
-        $datePerformed = $req->getDatePerformed();
-        $note = $req->getOperationNote();
-        $transactions = $req->getTransactions();
-        $asRef = $req->getAsTransRef();
-        $customerId = $req->getCustomerId();
-        $adminUserId = $req->getAdminUserId();
+        $operationTypeId = $request->getOperationTypeId();
+        $operationTypeCode = $request->getOperationTypeCode();
+        $datePerformed = $request->getDatePerformed();
+        $note = $request->getOperationNote();
+        $transactions = $request->getTransactions();
+        $asRef = $request->getAsTransRef();
+        $customerId = $request->getCustomerId();
+        $adminUserId = $request->getAdminUserId();
         $def = $this->manTrans->begin();
         try {
             /* add operation itself */

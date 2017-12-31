@@ -14,5 +14,5 @@ interface Turnover
      * @param \Praxigento\Accounting\Api\Service\Balance\Get\Turnover\Request $request
      * @return \Praxigento\Accounting\Api\Service\Balance\Get\Turnover\Response
      */
-    public function exec(\Praxigento\Accounting\Api\Service\Balance\Get\Turnover\Request $request);
+    public function exec($request);
 }

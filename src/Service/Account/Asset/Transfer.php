@@ -27,15 +27,19 @@ class Transfer
         \Praxigento\Core\Tool\IDate $hlpData,
         \Praxigento\Accounting\Repo\Entity\Account $repoAcc,
         \Praxigento\Accounting\Api\Service\Operation $callOper
-    )
-    {
+    ) {
         $this->hlpData = $hlpData;
         $this->repoAcc = $repoAcc;
         $this->callOper = $callOper;
     }
 
+    /**
+     * @param ARequest $request
+     * @return AResponse
+     */
     public function exec(ARequest $request)
     {
+        assert($request instanceof ARequest);
         /* define local working data */
         $amount = $request->getAmount();
         $assetTypeId = $request->getAssetId();
