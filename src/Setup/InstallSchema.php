@@ -4,6 +4,7 @@
  *
  * User: Alex Gusev <alex@flancer64.com>
  */
+
 namespace Praxigento\Accounting\Setup;
 
 use Praxigento\Accounting\Repo\Entity\Data\Account as Account;
@@ -22,52 +23,44 @@ class InstallSchema
     extends \Praxigento\Core\App\Setup\Schema\Base
 {
 
-    protected function _setup()
+    protected function setup()
     {
         /** Read and parse JSON schema. */
         $pathToFile = __DIR__ . '/../etc/dem.json';
         $pathToNode = '/dBEAR/package/Praxigento/package/Accounting';
-        $demPackage = $this->_toolDem->readDemPackage($pathToFile, $pathToNode);
+        $demPackage = $this->toolDem->readDemPackage($pathToFile, $pathToNode);
 
         /* Type / Asset */
-        $entityAlias = TypeAsset::ENTITY_NAME;
         $demEntity = $demPackage->get('package/Type/entity/Asset');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
+        $this->toolDem->createEntity(TypeAsset::ENTITY_NAME, $demEntity);
 
         /* Type / Operation */
-        $entityAlias = TypeOperation::ENTITY_NAME;
         $demEntity = $demPackage->get('package/Type/entity/Operation');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
+        $this->toolDem->createEntity(TypeOperation::ENTITY_NAME, $demEntity);
 
         /* Account */
-        $entityAlias = Account::ENTITY_NAME;
         $demEntity = $demPackage->get('entity/Account');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
+        $this->toolDem->createEntity(Account::ENTITY_NAME, $demEntity);
 
         /* Operation */
-        $entityAlias = Operation::ENTITY_NAME;
         $demEntity = $demPackage->get('entity/Operation');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
+        $this->toolDem->createEntity(Operation::ENTITY_NAME, $demEntity);
 
         /* Transaction */
-        $entityAlias = Transaction::ENTITY_NAME;
         $demEntity = $demPackage->get('entity/Transaction');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
+        $this->toolDem->createEntity(Transaction::ENTITY_NAME, $demEntity);
 
         /* Balance */
-        $entityAlias = Balance::ENTITY_NAME;
         $demEntity = $demPackage->get('entity/Balance');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
+        $this->toolDem->createEntity(Balance::ENTITY_NAME, $demEntity);
 
         /* Log / Change / Admin  */
-        $entityAlias = LogChangeAdmin::ENTITY_NAME;
         $demEntity = $demPackage->get('package/Log/package/Change/entity/Admin');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
+        $this->toolDem->createEntity(LogChangeAdmin::ENTITY_NAME, $demEntity);
 
         /* Log / Change / Customer */
-        $entityAlias = LogChangeCustomer::ENTITY_NAME;
         $demEntity = $demPackage->get('package/Log/package/Change/entity/Customer');
-        $this->_toolDem->createEntity($entityAlias, $demEntity);
+        $this->toolDem->createEntity(LogChangeCustomer::ENTITY_NAME, $demEntity);
 
 
     }
