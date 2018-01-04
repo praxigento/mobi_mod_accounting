@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Cli\Cmd\Balance;
+namespace Praxigento\Accounting\Cli\Balance;
 
 /**
  * Reset accounts balances.

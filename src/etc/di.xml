@@ -25,8 +25,8 @@
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="prxgt_acc_cmd_balance_calc" xsi:type="object">\Praxigento\Accounting\Cli\Cmd\Balance\Calc</item>
-                <item name="prxgt_acc_cmd_balance_reset" xsi:type="object">\Praxigento\Accounting\Cli\Cmd\Balance\Reset</item>
+                <item name="prxgt_acc_cmd_balance_calc" xsi:type="object">\Praxigento\Accounting\Cli\Balance\Calc</item>
+                <item name="prxgt_acc_cmd_balance_reset" xsi:type="object">\Praxigento\Accounting\Cli\Balance\Reset</item>
             </argument>
         </arguments>
     </type>
