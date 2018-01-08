@@ -18,7 +18,7 @@ class Calc
 
     /** @var \Praxigento\Core\Tool\IDate */
     private $hlpDate;
-    /** @var  \Praxigento\Core\Tool\IPeriod */
+    /** @var  \Praxigento\Core\Api\Helper\Period */
     private $hlpPeriod;
     /** @var \Praxigento\Accounting\Repo\Entity\Balance */
     private $repoBalance;
@@ -33,7 +33,7 @@ class Calc
         \Praxigento\Accounting\Repo\Entity\Balance $repoBalance,
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTransaction,
         \Praxigento\Core\Tool\IDate $hlpDate,
-        \Praxigento\Core\Tool\IPeriod $hlpPeriod,
+        \Praxigento\Core\Api\Helper\Period $hlpPeriod,
         \Praxigento\Accounting\Service\Account\Balance\LastDate $servBalanceLastDate,
         \Praxigento\Accounting\Service\Account\Balance\Calc\Simple $servCalcSimple
     ) {

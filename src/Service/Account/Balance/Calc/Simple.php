@@ -14,12 +14,12 @@ use Praxigento\Accounting\Repo\Entity\Data\Transaction as ETransaction;
 class Simple
 {
     /**
-     * @var \Praxigento\Core\Tool\IPeriod
+     * @var \Praxigento\Core\Api\Helper\Period
      */
     private $hlpPeriod;
 
     public function __construct(
-        \Praxigento\Core\Tool\IPeriod $hlpPeriod
+        \Praxigento\Core\Api\Helper\Period $hlpPeriod
     ) {
         $this->hlpPeriod = $hlpPeriod;
     }

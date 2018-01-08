@@ -7,12 +7,12 @@ namespace Praxigento\Accounting\Service\Account\Balance;
 
 use Praxigento\Accounting\Service\Account\Balance\LastDate\Request as ARequest;
 use Praxigento\Accounting\Service\Account\Balance\LastDate\Response as AResponse;
-use Praxigento\Core\Tool\IPeriod;
+use Praxigento\Core\Api\Helper\Period as HPeriod;
 
 
 class LastDate
 {
-    /** @var  \Praxigento\Core\Tool\IPeriod */
+    /** @var  \Praxigento\Core\Api\Helper\Period */
     private $hlpPeriod;
     /** @var \Praxigento\Accounting\Repo\Entity\Balance */
     private $repoBalance;
@@ -25,7 +25,7 @@ class LastDate
         \Praxigento\Accounting\Repo\Entity\Balance $repoBalance,
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTransaction,
         \Praxigento\Accounting\Repo\Entity\Type\Asset $repoTypeAsset,
-        \Praxigento\Core\Tool\IPeriod $hlpPeriod
+        \Praxigento\Core\Api\Helper\Period $hlpPeriod
     ) {
         $this->repoBalance = $repoBalance;
         $this->repoTransaction = $repoTransaction;
@@ -52,7 +52,7 @@ class LastDate
         $balanceMaxDate = $this->repoBalance->getMaxDate($assetTypeId);
         if ($balanceMaxDate) {
             /* there is balance data */
-            //$dayBefore = $this->_toolPeriod->getPeriodPrev($balanceMaxDate, IPeriod::TYPE_DAY);
+            //$dayBefore = $this->_toolPeriod->getPeriodPrev($balanceMaxDate, HPeriod::TYPE_DAY);
             $result->set([AResponse::LAST_DATE => $balanceMaxDate]);
             $result->markSucceed();
         } else {
@@ -60,7 +60,7 @@ class LastDate
             $transactionMinDate = $this->repoTransaction->getMinDateApplied($assetTypeId);
             if ($transactionMinDate) {
                 $period = $this->hlpPeriod->getPeriodCurrent($transactionMinDate);
-                $dayBefore = $this->hlpPeriod->getPeriodPrev($period, IPeriod::TYPE_DAY);
+                $dayBefore = $this->hlpPeriod->getPeriodPrev($period, HPeriod::TYPE_DAY);
                 $result->set([AResponse::LAST_DATE => $dayBefore]);
                 $result->markSucceed();
             }

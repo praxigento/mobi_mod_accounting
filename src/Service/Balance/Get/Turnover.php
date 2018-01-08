@@ -14,7 +14,7 @@ class Turnover
     extends \Praxigento\Core\App\Service\Base\Call
     implements \Praxigento\Accounting\Api\Service\Balance\Get\Turnover
 {
-    /** @var  \Praxigento\Core\Tool\IPeriod */
+    /** @var  \Praxigento\Core\Api\Helper\Period */
     private $hlpPeriod;
     /** @var \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder */
     private $qbBalClose;
@@ -24,7 +24,7 @@ class Turnover
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Core\Tool\IPeriod $hlpPeriod,
+        \Praxigento\Core\Api\Helper\Period $hlpPeriod,
         \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder $qbBalClose,
         \Praxigento\Accounting\Repo\Entity\Type\Asset $repoTypeAsset
     ) {
