@@ -16,7 +16,7 @@ use Praxigento\Accounting\Service\Account\Balance\Calc\Response as AResponse;
 class Calc
 {
 
-    /** @var \Praxigento\Core\Tool\IDate */
+    /** @var \Praxigento\Core\Api\Helper\Date */
     private $hlpDate;
     /** @var  \Praxigento\Core\Api\Helper\Period */
     private $hlpPeriod;
@@ -32,7 +32,7 @@ class Calc
     public function __construct(
         \Praxigento\Accounting\Repo\Entity\Balance $repoBalance,
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTransaction,
-        \Praxigento\Core\Tool\IDate $hlpDate,
+        \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Core\Api\Helper\Period $hlpPeriod,
         \Praxigento\Accounting\Service\Account\Balance\LastDate $servBalanceLastDate,
         \Praxigento\Accounting\Service\Account\Balance\Calc\Simple $servCalcSimple

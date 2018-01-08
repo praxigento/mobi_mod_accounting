@@ -11,7 +11,7 @@ use Praxigento\Accounting\Service\Account\Balance\Change\Response as AResponse;
 
 class Change
 {
-    /** @var \Praxigento\Core\Tool\IDate */
+    /** @var \Praxigento\Core\Api\Helper\Date */
     private $hlpDate;
     /** @var \Praxigento\Core\App\Transaction\Database\IManager */
     private $manTrans;
@@ -29,7 +29,7 @@ class Change
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\App\Transaction\Database\IManager $manTrans,
-        \Praxigento\Core\Tool\IDate $hlpDate,
+        \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Accounting\Repo\Entity\Account $repoAccount,
         \Praxigento\Accounting\Repo\Entity\Operation $repoOperation,
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTransaction,

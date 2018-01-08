@@ -18,13 +18,13 @@ class Transfer
 {
     /** @var \Praxigento\Accounting\Api\Service\Operation */
     private $callOper;
-    /** @var \Praxigento\Core\Tool\IDate */
+    /** @var \Praxigento\Core\Api\Helper\Date */
     private $hlpData;
     /** @var \Praxigento\Accounting\Repo\Entity\Account */
     private $repoAcc;
 
     public function __construct(
-        \Praxigento\Core\Tool\IDate $hlpData,
+        \Praxigento\Core\Api\Helper\Date $hlpData,
         \Praxigento\Accounting\Repo\Entity\Account $repoAcc,
         \Praxigento\Accounting\Api\Service\Operation $callOper
     ) {
