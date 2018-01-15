@@ -8,6 +8,9 @@ namespace Praxigento\Accounting\Repo\Query\Asset;
 use Praxigento\Accounting\Repo\Entity\Data\Account as EAcc;
 use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as ETypeAss;
 
+/**
+ * TODO: check usage for this query builder (is not used??)
+ */
 class Get
     extends \Praxigento\Core\App\Repo\Query\Builder
 {
