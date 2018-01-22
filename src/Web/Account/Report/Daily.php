@@ -8,20 +8,19 @@ namespace Praxigento\Accounting\Web\Account\Report;
 use Praxigento\Accounting\Api\Web\Account\Asset\Transfer\Request as ARequest;
 use Praxigento\Accounting\Api\Web\Account\Asset\Transfer\Response as AResponse;
 
+/**
+ * API adapter for internal service to get account turnover summary by day & transaction type (Odoo replication).
+ */
 class Daily
     implements \Praxigento\Accounting\Api\Web\Account\Report\DailyInterface
 {
-    /** @var \Praxigento\Core\App\Api\Web\IAuthenticator */
-    private $auth;
-    /** @var \Praxigento\Accounting\Service\Account\Asset\Transfer */
-    private $servAssetTransfer;
+
+    private $servReportDaily;
 
     public function __construct(
-        \Praxigento\Core\App\Api\Web\Authenticator\Front $auth,
-        \Praxigento\Accounting\Service\Account\Asset\Transfer $servAssetTransfer
+        \Praxigento\Accounting\Service\Account\Report\Daily $servReportDaily
     ) {
-        $this->auth = $auth;
-        $this->servAssetTransfer = $servAssetTransfer;
+        $this->servReportDaily = $servReportDaily;
     }
 
 
@@ -29,28 +28,14 @@ class Daily
     {
         assert($request instanceof ARequest);
         /** define local working data */
-//        $data = $request->getData();
-//        $amount = $data->getAmount();
-//        $assetTypeId = $data->getAssetId();
-//        $counterPartyId = $data->getCounterPartyId();
-//
-//        /* input data filters */
-//        $amount = abs($amount); // customer cannot transfer TO his account
-//        $isDirect = false; // customer cannot initiate direct transfer
-//        $custId = $this->auth->getCurrentUserId($request); // customer can transfer FROM his account only
-//
-//        /** perform processing */
-//        $req = new \Praxigento\Accounting\Service\Account\Asset\Transfer\Request();
-//        $req->setAmount($amount);
-//        $req->setAssetId($assetTypeId);
-//        $req->setCounterPartyId($counterPartyId);
-//        $req->setCustomerId($custId);
-//        $req->setIsDirect($isDirect);
-//        $resp = $this->servAssetTransfer->exec($req);
+        $data = $request->getData();
+
+        /** perform processing */
+        $resp = $this->servReportDaily->exec($data);
 
         /** compose result */
         $result = new AResponse();
-//        $result->setData($resp);
+        $result->setData($resp);
         return $result;
     }
 

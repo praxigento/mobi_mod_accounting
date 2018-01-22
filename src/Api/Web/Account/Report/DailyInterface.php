@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Api\Web\Account\Report;
 
 /**
- * Get account turnover summary by day & transaction type (for Odoo).
+ * Get account turnover summary by day & transaction type (Odoo replication).
  */
 interface DailyInterface
 {

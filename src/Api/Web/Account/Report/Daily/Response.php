@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Api\Web\Account\Report\Daily;
 
 /**
- * Response to get account turnover summary by day & transaction type (for Odoo).
+ * Response to get account turnover summary by day & transaction type (Odoo replication).
  *
  * (Define getters explicitly to use with Swagger tool)
  *
