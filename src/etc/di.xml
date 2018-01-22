@@ -17,8 +17,7 @@
                 type="\Praxigento\Accounting\Web\Account\Asset\Get"/>
     <preference for="\Praxigento\Accounting\Api\Web\Account\Asset\TransferInterface"
                 type="\Praxigento\Accounting\Web\Account\Asset\Transfer"/>
-    <preference for="\Praxigento\Accounting\Api\Web\Account\Report\DailyInterface"
-                type="\Praxigento\Accounting\Web\Account\Report\Daily"/>
+
 
 
     <!-- ********************** -->

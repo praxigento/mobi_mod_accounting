@@ -16,11 +16,4 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route url="/V1/prxgt/account/report/daily" method="POST">
-        <!-- Get account turnover summary by day & transaction type (Odoo replication). -->
-        <service class="Praxigento\Accounting\Api\Web\Account\Report\DailyInterface" method="exec"/>
-        <resources>
-            <resource ref="Praxigento_Accounting::replicate"/>
-        </resources>
-    </route>
 </routes>
