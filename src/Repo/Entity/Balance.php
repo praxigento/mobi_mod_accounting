@@ -39,10 +39,6 @@ class Balance
     /**
      * Get maximal datestamp for existing balance by asset type id or null if no data is found.
      *
-     * @param int $assetTypeId
-     *
-     * @return string YYYYMMDD
-     *
      * SELECT
      * `b`.`date`
      * FROM `prxgt_acc_account` AS `a`
@@ -52,7 +48,6 @@ class Balance
      * ORDER BY `b`.`date` DESC
      *
      * @param int $assetTypeId
-     *
      * @return string YYYYMMDD
      */
     public function getMaxDate($assetTypeId = null)
@@ -74,7 +69,6 @@ class Balance
         /* order by */
         $query->order([$asBalance . '.' . \Praxigento\Accounting\Repo\Entity\Data\Balance::ATTR_DATE . ' DESC']);
         /* perform query */
-        // $sql = (string)$query;
         $result = $this->conn->fetchOne($query, $bind);
         return $result;
     }
