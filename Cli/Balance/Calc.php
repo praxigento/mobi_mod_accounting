@@ -14,11 +14,10 @@ class Calc
     const OPT_DATESTAMP_DEF = '31171231';
     const OPT_DATESTAMP_NAME = 'date';
     const OPT_DATESTAMP_SHORTCUT = 'd';
-
-    /** @var \Praxigento\Accounting\Service\Account\Balance\Calc */
-    protected $servBalance;
     /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
     protected $repoTypeAsset;
+    /** @var \Praxigento\Accounting\Service\Account\Balance\Calc */
+    protected $servBalance;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,

@@ -46,7 +46,7 @@ define([
                     } else {
                         msg.text('Done. Please, close the dialog.');
                     }
-                }
+                };
                 var opts = {
                     data: data,
                     // contentType: 'application/json',
@@ -54,7 +54,7 @@ define([
                     success: fnSuccess
                 };
                 $.ajax(url, opts);
-            }
+            };
 
             /* display modal dialog */
             var previewPopup = $('<div/>').html(modalHtml);

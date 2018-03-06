@@ -105,7 +105,7 @@ define([
                     }
                 }
             });
-        }
+        };
         /* success responses handlers for 2 requests */
         var fnGetCustSuccess = function (response) {
             customer = response.data;
@@ -114,7 +114,7 @@ define([
                 /* open slider */
                 fnModalOpen();
             }
-        }
+        };
         var fnGetAssetsSuccess = function (response) {
             assets = response.data.items;
             isAjaxGetAssetsDone = true;
@@ -122,7 +122,7 @@ define([
                 /* open slider */
                 fnModalOpen();
             }
-        }
+        };
 
         /**
          * Processing
@@ -150,7 +150,7 @@ define([
             success: fnGetAssetsSuccess
         };
         $.ajax(urlAssetGet, opts);
-    }
+    };
 
     /**
      * Search counterparty customers on the server and prepare data for UI.
@@ -187,7 +187,7 @@ define([
                 response(found);
             }
         });
-    }
+    };
 
     var fnAjaxProcessData = function () {
         var asset = viewModel.selectedAsset();
@@ -220,7 +220,7 @@ define([
             setTimeout(function () {
                 popup.closeModal();
             }, 3000);
-        }
+        };
 
         var opts = {
             data: json,
@@ -232,11 +232,11 @@ define([
         $.ajax(urlTransfer, opts);
         /* switch on ajax loader */
         $('body').trigger('processStart');
-    }
+    };
 
     var fnAutocompleteSelected = function (event, ui) {
         viewModel.selectedCounterparty = ui.item.data.id;
-    }
+    };
 
     /* bind modal opening to 'Accounting' button on the form */
     /* (see \Praxigento\Accounting\Block\Customer\Adminhtml\Edit\AccountingButton) */
