@@ -20,6 +20,7 @@ class Request
     const COUNTER_PARTY_ID = 'counterPartyId';
     const CUSTOMER_ID = 'customerId';
     const IS_DIRECT = 'isDirect';
+    const NOTE = 'note';
     const USER_ID = 'userId';
 
     /**
@@ -64,6 +65,15 @@ class Request
     public function getIsDirect()
     {
         $result = parent::get(self::IS_DIRECT);
+        return $result;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNote()
+    {
+        $result = parent::get(self::NOTE);
         return $result;
     }
 
@@ -114,6 +124,14 @@ class Request
     public function setIsDirect($data)
     {
         parent::set(self::IS_DIRECT, $data);
+    }
+
+    /**
+     * @param string $data
+     */
+    public function setNote($data)
+    {
+        parent::set(self::NOTE, $data);
     }
 
     /**

@@ -34,8 +34,9 @@ class Transfer
     }
 
     /**
-     * @param ARequest $request
-     * @return AResponse
+     * @param \Praxigento\Accounting\Service\Account\Asset\Transfer\Request $request
+     * @return \Praxigento\Accounting\Service\Account\Asset\Transfer\Response
+     * @throws \Exception
      */
     public function exec(ARequest $request)
     {
@@ -46,6 +47,7 @@ class Transfer
         $counterPartyId = $request->getCounterPartyId();
         $customerId = $request->getCustomerId();
         $isDirect = $request->getIsDirect();
+        $note = $request->getNote();
         $userId = $request->getUserId();
 
         /* perform processing */
@@ -78,8 +80,8 @@ class Transfer
             }
         }
         /* compose transaction and create operation */
-        $trans = $this->prepareTrans($amount, $accIdDebit, $accIdCredit);
-        $operId = $this->transfer($userId, $trans);
+        $trans = $this->prepareTrans($amount, $accIdDebit, $accIdCredit, $note);
+        $operId = $this->transfer($userId, $trans, $note);
 
         /* compose result */
         $result = new AResponse();
@@ -87,20 +89,21 @@ class Transfer
         return $result;
     }
 
-    private function prepareTrans($amount, $accIdDebit, $accIdCredit)
+    private function prepareTrans($amount, $accIdDebit, $accIdCredit, $note)
     {
         $tran = new \Praxigento\Accounting\Repo\Entity\Data\Transaction();
         $amountAbs = abs($amount);
         $tran->setDebitAccId($accIdDebit);
         $tran->setCreditAccId($accIdCredit);
         $tran->setValue($amountAbs);
+        $tran->setNote($note);
         $dateApplied = $this->hlpData->getUtcNowForDb();
         $tran->setDateApplied($dateApplied);
         $result[] = $tran;
         return $result;
     }
 
-    private function transfer($userId, $trans)
+    private function transfer($userId, $trans, $note)
     {
         $req = new \Praxigento\Accounting\Api\Service\Operation\Request();
         $req->setAdminUserId($userId);
@@ -111,6 +114,7 @@ class Transfer
             $req->setOperationNote("Asset transfer initiated by customer.");
         }
         $req->setTransactions($trans);
+        $req->setOperationNote($note);
         $datePerformed = $this->hlpData->getUtcNowForDb();
         $req->setDatePerformed($datePerformed);
         $resp = $this->callOper->exec($req);
