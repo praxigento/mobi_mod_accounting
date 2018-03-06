@@ -22,10 +22,6 @@ define([
     const urlCustomerGet = urlAdminBase + 'prxgt/customer/get_byId/' + formKey;
     const urlCustomerSearch = urlAdminBase + 'prxgt/customer/search_byKey/' + formKey;
     const urlTransfer = urlAdminBase + 'account/asset/transfer/' + formKey;
-    /* get current customer data from uiRegistry */
-    const customerDs = uiRegistry.get('customer_form.customer_form_data_source');
-    const customer = customerDs.data.customer;
-    const customerId = customer.entity_id;
     /* slider itself */
     var popup;
     /* View Model for slider */
@@ -40,6 +36,19 @@ define([
         transferType: ko.observable(TYPE_DIRECT)
     };
 
+    /**
+     * Get current customer ID data from uiRegistry (loaded asynchronously).
+     *
+     * @returns {*|Integer|string}
+     */
+    function getCustomerId() {
+        /* */
+        const customerDs = uiRegistry.get('customer_form.customer_form_data_source');
+        const customerData = customerDs.data;
+        const customer = customerData.customer;
+        const result = customer.entity_id;
+        return result;
+    }
 
     /**
      * Front-back communication functions
@@ -131,6 +140,7 @@ define([
         $('body').trigger('processStart');
 
         /* compose and perform ajax request to get customer data */
+        const customerId = getCustomerId();
         var request = {data: {customerId: customerId}};
         var json = JSON.stringify(request);
         var opts = {
@@ -141,6 +151,7 @@ define([
         };
         $.ajax(urlCustomerGet, opts);
         /* compose and perform ajax request to get assets data */
+        const customerId = getCustomerId();
         request = {data: {customerId: customerId}};
         json = JSON.stringify(request);
         opts = {
