@@ -27,7 +27,7 @@ class Change
     private $repoTypeOper;
 
     public function __construct(
-        \Psr\Log\LoggerInterface $logger,
+        \Praxigento\Core\App\Api\Logger\Main $logger,
         \Praxigento\Core\App\Api\Repo\Transaction\Manager $manTrans,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Accounting\Repo\Entity\Account $repoAccount,

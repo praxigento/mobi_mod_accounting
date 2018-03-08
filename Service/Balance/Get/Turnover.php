@@ -22,7 +22,7 @@ class Turnover
     private $repoTypeAsset;
 
     public function __construct(
-        \Psr\Log\LoggerInterface $logger,
+        \Praxigento\Core\App\Api\Logger\Main $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Api\Helper\Period $hlpPeriod,
         \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder $qbBalClose,
