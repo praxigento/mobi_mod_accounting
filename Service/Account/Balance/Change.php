@@ -13,7 +13,7 @@ class Change
 {
     /** @var \Praxigento\Core\Api\Helper\Date */
     private $hlpDate;
-    /** @var \Praxigento\Core\App\Api\Repo\Transaction\Manager */
+    /** @var \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     private $manTrans;
     /** @var \Praxigento\Accounting\Repo\Entity\Account */
     private $repoAccount;
@@ -27,8 +27,8 @@ class Change
     private $repoTypeOper;
 
     public function __construct(
-        \Praxigento\Core\App\Api\Logger\Main $logger,
-        \Praxigento\Core\App\Api\Repo\Transaction\Manager $manTrans,
+        \Praxigento\Core\Api\App\Logger\Main $logger,
+        \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Accounting\Repo\Entity\Account $repoAccount,
         \Praxigento\Accounting\Repo\Entity\Operation $repoOperation,

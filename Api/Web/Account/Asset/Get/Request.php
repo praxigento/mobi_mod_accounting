@@ -13,7 +13,7 @@ namespace Praxigento\Accounting\Api\Web\Account\Asset\Get;
  *
  */
 class Request
-    extends \Praxigento\Core\App\Api\Web\Request
+    extends \Praxigento\Core\Api\App\Web\Request
 {
     /**
      * @return \Praxigento\Accounting\Api\Web\Account\Asset\Get\Request\Data

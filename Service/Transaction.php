@@ -13,7 +13,7 @@ use Praxigento\Accounting\Service\Transaction\Response as AResponse;
 class Transaction
 {
 
-    /** @var  \Praxigento\Core\App\Api\Repo\Transaction\Manager */
+    /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     private $manTrans;
     /** @var  \Praxigento\Accounting\Repo\Entity\Account */
     private $repoAcc;
@@ -21,7 +21,7 @@ class Transaction
     private $repoTrans;
 
     public function __construct(
-        \Praxigento\Core\App\Api\Repo\Transaction\Manager $manTrans,
+        \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
         \Praxigento\Accounting\Repo\Entity\Account $repoAcc,
         \Praxigento\Accounting\Repo\Entity\Transaction $repoTrans
     ) {

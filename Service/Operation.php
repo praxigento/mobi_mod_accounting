@@ -14,7 +14,7 @@ use Praxigento\Accounting\Repo\Entity\Data\Operation as EOperation;
 class Operation
     implements \Praxigento\Accounting\Api\Service\Operation
 {
-    /** @var  \Praxigento\Core\App\Api\Repo\Transaction\Manager */
+    /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     private $manTrans;
     /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Admin */
     private $repoELogChangeAdmin;
@@ -28,7 +28,7 @@ class Operation
     private $subAdd;
 
     public function __construct(
-        \Praxigento\Core\App\Api\Repo\Transaction\Manager $manTrans,
+        \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
         \Praxigento\Accounting\Repo\Entity\Operation $repoOper,
         \Praxigento\Accounting\Repo\Entity\Type\Operation $repoTypeOper,
         \Praxigento\Accounting\Repo\Entity\Log\Change\Admin $repoELogChangeAdmin,

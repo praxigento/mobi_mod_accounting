@@ -11,13 +11,13 @@ use Praxigento\Accounting\Api\Web\Account\Asset\Get\Response as AResponse;
 class Get
     implements \Praxigento\Accounting\Api\Web\Account\Asset\GetInterface
 {
-    /** @var \Praxigento\Core\App\Api\Web\IAuthenticator */
+    /** @var \Praxigento\Core\Api\App\Web\Authenticator */
     private $auth;
     /** @var \Praxigento\Accounting\Service\Account\Asset\Get */
     private $servAssetGet;
 
     public function __construct(
-        \Praxigento\Core\App\Api\Web\Authenticator\Front $auth,
+        \Praxigento\Core\Api\App\Web\Authenticator\Front $auth,
         \Praxigento\Accounting\Service\Account\Asset\Get $servAssetGet
     ) {
         $this->auth = $auth;

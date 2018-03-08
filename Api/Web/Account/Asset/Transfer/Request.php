@@ -13,7 +13,7 @@ namespace Praxigento\Accounting\Api\Web\Account\Asset\Transfer;
  *
  */
 class Request
-    extends \Praxigento\Core\App\Api\Web\Request
+    extends \Praxigento\Core\Api\App\Web\Request
 {
     /**
      * @return \Praxigento\Accounting\Api\Web\Account\Asset\Transfer\Request\Data
