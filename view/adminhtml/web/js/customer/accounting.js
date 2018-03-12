@@ -139,27 +139,20 @@ define([
         /* switch on ajax loader */
         $('body').trigger('processStart');
 
-        /* compose and perform ajax request to get customer data */
+        /* compose common parts for async requests */
         const customerId = getCustomerId();
         var request = {data: {customerId: customerId}};
         var json = JSON.stringify(request);
         var opts = {
             data: json,
             contentType: 'application/json',
-            type: 'post',
-            success: fnGetCustSuccess
+            type: 'post'
         };
+        /* perform ajax request to get customer data */
+        opts.success = fnGetCustSuccess;
         $.ajax(urlCustomerGet, opts);
-        /* compose and perform ajax request to get assets data */
-        const customerId = getCustomerId();
-        request = {data: {customerId: customerId}};
-        json = JSON.stringify(request);
-        opts = {
-            data: json,
-            contentType: 'application/json',
-            type: 'post',
-            success: fnGetAssetsSuccess
-        };
+        /* perform ajax request to get assets data */
+        opts.success = fnGetAssetsSuccess;
         $.ajax(urlAssetGet, opts);
     };
 
