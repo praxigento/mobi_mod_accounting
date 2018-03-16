@@ -12,6 +12,8 @@
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">\Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider</argument>
             <argument name="name" xsi:type="string">prxgt_accounts_customer_modal_ds</argument>
+            <argument name="primaryFieldName" xsi:type="string">not_exist</argument>
+            <argument name="requestFieldName" xsi:type="string">not_exist</argument>
         </argument>
     </dataSource>
 </modal>
