@@ -26,5 +26,5 @@ class Config extends \Praxigento\Core\Config
     const MODULE = 'Praxigento_Accounting';
     const ROUTE_NAME_ADMIN_ACCOUNTS = 'account';
     const ROUTE_NAME_FRONT_ACCOUNTS = 'account';
-    const SYS_CUSTOMER_EMAIL = 'MOBI_SYSTEM';
+    const SYS_CUSTOMER_EMAIL = 'MOBI_SYS';
 }
