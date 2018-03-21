@@ -30,7 +30,7 @@ class Request
      * Is Reperesentative Request
      * @var bool
      */
-    const IS_REPRESENTATIVE = 'is_representative';
+    const IS_SYSTEM = 'is_system';
 
     /** @return string */
     public function getAssetTypeCode()
@@ -54,9 +54,9 @@ class Request
     }
 
     /** @return bool */
-    public function getIsRepresentative()
+    public function getIsSystem()
     {
-        return $this->get(self::IS_REPRESENTATIVE);
+        return $this->get(self::IS_SYSTEM);
     }
 
     /** @param string $data */
@@ -78,8 +78,8 @@ class Request
     }
 
     /** @param bool $data */
-    public function setIsRepresentative($data)
+    public function setIsSystem($data)
     {
-        $this->set(self::IS_REPRESENTATIVE, $data);
+        $this->set(self::IS_SYSTEM, $data);
     }
 }

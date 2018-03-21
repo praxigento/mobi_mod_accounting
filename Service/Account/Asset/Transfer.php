@@ -10,7 +10,7 @@ use Praxigento\Accounting\Service\Account\Asset\Transfer\Request as ARequest;
 use Praxigento\Accounting\Service\Account\Asset\Transfer\Response as AResponse;
 
 /**
- * Internal service to process asset transfer between accounts (customer or representative).
+ * Internal service to process asset transfer between accounts (customer or system).
  *
  * This service is not used outside this module.
  */
@@ -55,7 +55,7 @@ class Transfer
         $accCust = $this->repoAcc->getByCustomerId($customerId, $assetTypeId);
         $accIdCust = $accCust->getId();
         if ($isDirect) {
-            $accIdParty = $this->repoAcc->getRepresentativeAccountId($assetTypeId);
+            $accIdParty = $this->repoAcc->getSystemAccountId($assetTypeId);
             /* define transfer direction */
             if ($amount > 0) {
                 /* add funds to customer account */

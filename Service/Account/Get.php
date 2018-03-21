@@ -15,8 +15,8 @@ use Praxigento\Accounting\Repo\Entity\Data\Account as EAccount;
 class Get
     implements \Praxigento\Accounting\Api\Service\Account\Get
 {
-    /** @var array save accounts data for representative customer. */
-    private $cachedRepresentAccs = [];
+    /** @var array save accounts data for system customer. */
+    private $cachedSysAccs = [];
     /** @var  \Praxigento\Accounting\Repo\Entity\Account */
     private $repoAccount;
     /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
@@ -68,7 +68,7 @@ class Get
         $typeCode = $request->getAssetTypeCode();
         $typeId = $request->getAssetTypeId();
         $custId = $request->getCustomerId();
-        $isRepres = $request->getIsRepresentative();
+        $isSys = $request->getIsSystem();
 
         /** perform processing */
         if (is_null($typeId)) {
@@ -76,23 +76,23 @@ class Get
             $typeId = $this->repoTypeAsset->getIdByCode($typeCode);
         }
 
-        /* return cached data for representative customer if exists */
+        /* return cached data for system customer if exists */
         if (
-            $isRepres &&
-            isset($this->cachedRepresentAccs[$typeId])
+            $isSys &&
+            isset($this->cachedSysAccs[$typeId])
         ) {
-            $result = $this->cachedRepresentAccs[$typeId];
+            $result = $this->cachedSysAccs[$typeId];
         } else {
             /* ... or get data from DB */
-            if ($isRepres) {
-                /* get representative customer ID */
-                $custId = $this->repoAccount->getRepresentativeCustomerId();
+            if ($isSys) {
+                /* get system customer ID */
+                $custId = $this->repoAccount->getSystemCustomerId();
             }
             $account = $this->getAccount($custId, $typeId);
             $result = $this->composeResult($account);
-            /* cache data for representative customer */
-            if ($isRepres) {
-                $this->cachedRepresentAccs[$typeId] = $result;
+            /* cache data for system customer */
+            if ($isSys) {
+                $this->cachedSysAccs[$typeId] = $result;
             }
         }
 

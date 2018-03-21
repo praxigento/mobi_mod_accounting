@@ -60,8 +60,8 @@ class Change
         try {
             /* get account's asset type by ID */
             $assetTypeId = $this->repoAccount->getAssetTypeId($accCustId);
-            /* get representative account id for given asset type */
-            $accRepresId = $this->repoAccount->getRepresentativeAccountId($assetTypeId);
+            /* get system account id for given asset type */
+            $accSysId = $this->repoAccount->getSystemAccountId($assetTypeId);
             /* get operation type by code and date performed */
             $operTypeId = $this->repoTypeOper->getIdByCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
             $dateNow = $this->hlpDate->getUtcNowForDb();
@@ -75,11 +75,11 @@ class Change
             $trans->setOperationId($operId);
             $trans->setDateApplied($dateNow);
             if ($value > 0) {
-                $trans->setDebitAccId($accRepresId);
+                $trans->setDebitAccId($accSysId);
                 $trans->setCreditAccId($accCustId);
             } else {
                 $trans->setDebitAccId($accCustId);
-                $trans->setCreditAccId($accRepresId);
+                $trans->setCreditAccId($accSysId);
             }
             $trans->setValue(abs($value));
             $this->repoTransaction->create($trans);

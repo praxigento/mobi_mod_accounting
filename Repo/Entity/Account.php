@@ -14,12 +14,12 @@ class Account
 {
     const ADMIN_WEBSITE_ID = Cfg::DEF_WEBSITE_ID_ADMIN;
     const BIND_CODE = 'code';
-    const CUSTOMER_REPRESENTATIVE_EMAIL = Cfg::CUSTOMER_REPRESENTATIVE_EMAIL;
+    const SYS_CUSTOMER_EMAIL = Cfg::SYS_CUSTOMER_EMAIL;
     /**
-     * Cache for ID of the representative customer.
+     * Cache for ID of the system customer.
      * @var int
      */
-    protected $cachedRepresCustId;
+    protected $cachedSysCustId;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
@@ -31,7 +31,7 @@ class Account
 
     public function cacheReset()
     {
-        $this->cachedRepresCustId = null;
+        $this->cachedSysCustId = null;
     }
 
     /**
@@ -164,24 +164,24 @@ class Account
     }
 
     /**
-     * Return representative account ID for given asset type. Create new account if there is no yet representative
+     * Return system account ID for given asset type. Create new account if there is no yet system
      * account for this asset type.
      *
      * @param int $assetTypeId
      * @return int|null
      * @throws \Exception
      */
-    public function getRepresentativeAccountId($assetTypeId)
+    public function getSystemAccountId($assetTypeId)
     {
         /* TODO: add cache for accounts ids */
         $result = null;
-        $custId = $this->getRepresentativeCustomerId();
+        $custId = $this->getSystemCustomerId();
         if ($custId) {
             $found = $this->getByCustomerId($custId, $assetTypeId);
             if ($found) {
                 $result = $found->getId();
             } else {
-                /* there is no yet representative account for this asset type */
+                /* there is no yet system account for this asset type */
                 $account = new Entity();
                 $account->setAssetTypeId($assetTypeId);
                 $account->setCustomerId($custId);
@@ -192,34 +192,34 @@ class Account
     }
 
     /**
-     * Return MageID for customer that represents store owner in accounting. Create new representative customer
+     * Return MageID for customer that represents store owner in accounting. Create new system customer
      *if it is not exist yet.
      *
      * @return int
      */
-    public function getRepresentativeCustomerId()
+    public function getSystemCustomerId()
     {
-        if (is_null($this->cachedRepresCustId)) {
+        if (is_null($this->cachedSysCustId)) {
             $conn = $this->conn;
             /* there is no cached value for the customer ID, select data from DB */
-            $where = Cfg::E_CUSTOMER_A_EMAIL . '=' . $conn->quote(self::CUSTOMER_REPRESENTATIVE_EMAIL);
+            $where = Cfg::E_CUSTOMER_A_EMAIL . '=' . $conn->quote(self::SYS_CUSTOMER_EMAIL);
             $data = $this->repoGeneric->getEntities(Cfg::ENTITY_MAGE_CUSTOMER, Cfg::E_CUSTOMER_A_ENTITY_ID,
                 $where);
             if (count($data) == 0) {
                 $bind = [
                     Cfg::E_CUSTOMER_A_WEBSITE_ID => self::ADMIN_WEBSITE_ID,
-                    Cfg::E_CUSTOMER_A_EMAIL => self::CUSTOMER_REPRESENTATIVE_EMAIL
+                    Cfg::E_CUSTOMER_A_EMAIL => self::SYS_CUSTOMER_EMAIL
                 ];
                 $id = $this->repoGeneric->addEntity(Cfg::ENTITY_MAGE_CUSTOMER, $bind);
                 if ($id > 0) {
-                    $this->cachedRepresCustId = $id;
+                    $this->cachedSysCustId = $id;
                 }
             } else {
                 $first = reset($data);
-                $this->cachedRepresCustId = $first[Cfg::E_CUSTOMER_A_ENTITY_ID];
+                $this->cachedSysCustId = $first[Cfg::E_CUSTOMER_A_ENTITY_ID];
             }
         }
-        return $this->cachedRepresCustId;
+        return $this->cachedSysCustId;
     }
 
     /**

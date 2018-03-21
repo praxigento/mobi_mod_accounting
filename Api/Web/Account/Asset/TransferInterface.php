@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Api\Web\Account\Asset;
 
 /**
- * Process asset transfer between accounts (customer or representative).
+ * Process asset transfer between accounts (customer or system).
  */
 interface TransferInterface
 {
