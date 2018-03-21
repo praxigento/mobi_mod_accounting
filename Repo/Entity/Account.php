@@ -169,6 +169,7 @@ class Account
      *
      * @param int $assetTypeId
      * @return int|null
+     * @throws \Exception
      */
     public function getRepresentativeAccountId($assetTypeId)
     {
