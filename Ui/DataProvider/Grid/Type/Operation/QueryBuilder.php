@@ -2,7 +2,7 @@
 
 namespace Praxigento\Accounting\Ui\DataProvider\Grid\Type\Operation;
 
-use Praxigento\Accounting\Repo\Entity\Data\Type\Operation as ETypeOperation;
+use Praxigento\Accounting\Repo\Data\Type\Operation as ETypeOperation;
 
 class QueryBuilder
     extends \Praxigento\Core\App\Ui\DataProvider\Grid\Query\Builder

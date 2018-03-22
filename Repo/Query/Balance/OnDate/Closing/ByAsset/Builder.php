@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset;
 
 
-use Praxigento\Accounting\Repo\Entity\Data\Account as Account;
+use Praxigento\Accounting\Repo\Data\Account as Account;
 
 /**
  * Build query to get closing balance for all accounts of the given type on given date.

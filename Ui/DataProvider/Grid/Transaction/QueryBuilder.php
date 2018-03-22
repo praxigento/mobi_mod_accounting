@@ -3,9 +3,9 @@
 namespace Praxigento\Accounting\Ui\DataProvider\Grid\Transaction;
 
 use Praxigento\Accounting\Config as Cfg;
-use Praxigento\Accounting\Repo\Entity\Data\Account as EAccount;
-use Praxigento\Accounting\Repo\Entity\Data\Transaction as ETransaction;
-use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as ETypeAsset;
+use Praxigento\Accounting\Repo\Data\Account as EAccount;
+use Praxigento\Accounting\Repo\Data\Transaction as ETransaction;
+use Praxigento\Accounting\Repo\Data\Type\Asset as ETypeAsset;
 
 class QueryBuilder
     extends \Praxigento\Core\App\Ui\DataProvider\Grid\Query\Builder

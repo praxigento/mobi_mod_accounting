@@ -3,10 +3,10 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Repo\Entity;
+namespace Praxigento\Accounting\Repo\Dao;
 
 use Magento\Framework\App\ResourceConnection;
-use Praxigento\Accounting\Repo\Entity\Data\Operation as Entity;
+use Praxigento\Accounting\Repo\Data\Operation as Entity;
 use Praxigento\Core\App\Repo\Def\Entity as BaseEntityRepo;
 use Praxigento\Core\App\Repo\IGeneric as IRepoGeneric;
 
@@ -21,7 +21,7 @@ class Operation extends BaseEntityRepo
     }
 
     /**
-     * @param array|\Praxigento\Accounting\Repo\Entity\Data\Operation $data
+     * @param array|\Praxigento\Accounting\Repo\Data\Operation $data
      * @return int
      */
     public function create($data)

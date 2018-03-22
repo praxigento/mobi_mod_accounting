@@ -7,7 +7,7 @@ namespace Praxigento\Accounting\Service\Account;
 
 use Praxigento\Accounting\Api\Service\Account\Get\Request as ARequest;
 use Praxigento\Accounting\Api\Service\Account\Get\Response as AResponse;
-use Praxigento\Accounting\Repo\Entity\Data\Account as EAccount;
+use Praxigento\Accounting\Repo\Data\Account as EAccount;
 
 /**
  * Get account data or create new account if customer has no account for the requested asset.
@@ -17,14 +17,14 @@ class Get
 {
     /** @var array save accounts data for system customer. */
     private $cachedSysAccs = [];
-    /** @var  \Praxigento\Accounting\Repo\Entity\Account */
+    /** @var  \Praxigento\Accounting\Repo\Dao\Account */
     private $repoAccount;
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
+    /** @var \Praxigento\Accounting\Repo\Dao\Type\Asset */
     private $repoTypeAsset;
 
     public function __construct(
-        \Praxigento\Accounting\Repo\Entity\Account $repoAccount,
-        \Praxigento\Accounting\Repo\Entity\Type\Asset $repoTypeAsset
+        \Praxigento\Accounting\Repo\Dao\Account $repoAccount,
+        \Praxigento\Accounting\Repo\Dao\Type\Asset $repoTypeAsset
     )
     {
         $this->repoAccount = $repoAccount;
@@ -34,7 +34,7 @@ class Get
     /**
      * Perform DB to API data conversion directly.
      *
-     * @param \Praxigento\Accounting\Repo\Entity\Data\Account $acc
+     * @param \Praxigento\Accounting\Repo\Data\Account $acc
      * @return \Praxigento\Accounting\Api\Service\Account\Get\Response
      */
     private function composeResult(EAccount $acc)

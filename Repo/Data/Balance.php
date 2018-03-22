@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Repo\Entity\Data;
+namespace Praxigento\Accounting\Repo\Data;
 
 class Balance
     extends \Praxigento\Core\App\Repo\Data\Entity\Base

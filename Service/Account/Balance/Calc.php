@@ -20,9 +20,9 @@ class Calc
     private $hlpDate;
     /** @var  \Praxigento\Core\Api\Helper\Period */
     private $hlpPeriod;
-    /** @var \Praxigento\Accounting\Repo\Entity\Balance */
+    /** @var \Praxigento\Accounting\Repo\Dao\Balance */
     private $repoBalance;
-    /** @var \Praxigento\Accounting\Repo\Entity\Transaction */
+    /** @var \Praxigento\Accounting\Repo\Dao\Transaction */
     private $repoTransaction;
     /** @var \Praxigento\Accounting\Service\Account\Balance\LastDate */
     private $servBalanceLastDate;
@@ -30,8 +30,8 @@ class Calc
     private $servCalcSimple;
 
     public function __construct(
-        \Praxigento\Accounting\Repo\Entity\Balance $repoBalance,
-        \Praxigento\Accounting\Repo\Entity\Transaction $repoTransaction,
+        \Praxigento\Accounting\Repo\Dao\Balance $repoBalance,
+        \Praxigento\Accounting\Repo\Dao\Transaction $repoTransaction,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Core\Api\Helper\Period $hlpPeriod,
         \Praxigento\Accounting\Service\Account\Balance\LastDate $servBalanceLastDate,

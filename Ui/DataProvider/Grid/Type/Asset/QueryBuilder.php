@@ -2,7 +2,7 @@
 
 namespace Praxigento\Accounting\Ui\DataProvider\Grid\Type\Asset;
 
-use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as ETypeAsset;
+use Praxigento\Accounting\Repo\Data\Type\Asset as ETypeAsset;
 
 class QueryBuilder
     extends \Praxigento\Core\App\Ui\DataProvider\Grid\Query\Builder

@@ -15,26 +15,26 @@ class Change
     private $hlpDate;
     /** @var \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     private $manTrans;
-    /** @var \Praxigento\Accounting\Repo\Entity\Account */
+    /** @var \Praxigento\Accounting\Repo\Dao\Account */
     private $repoAccount;
-    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Admin */
+    /** @var \Praxigento\Accounting\Repo\Dao\Log\Change\Admin */
     private $repoLogChangeAdmin;
-    /** @var \Praxigento\Accounting\Repo\Entity\Operation */
+    /** @var \Praxigento\Accounting\Repo\Dao\Operation */
     private $repoOperation;
-    /** @var \Praxigento\Accounting\Repo\Entity\Transaction */
+    /** @var \Praxigento\Accounting\Repo\Dao\Transaction */
     private $repoTransaction;
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\Operation */
+    /** @var \Praxigento\Accounting\Repo\Dao\Type\Operation */
     private $repoTypeOper;
 
     public function __construct(
         \Praxigento\Core\Api\App\Logger\Main $logger,
         \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
-        \Praxigento\Accounting\Repo\Entity\Account $repoAccount,
-        \Praxigento\Accounting\Repo\Entity\Operation $repoOperation,
-        \Praxigento\Accounting\Repo\Entity\Transaction $repoTransaction,
-        \Praxigento\Accounting\Repo\Entity\Type\Operation $repoTypeOper,
-        \Praxigento\Accounting\Repo\Entity\Log\Change\Admin $repoLogChangeAdmin
+        \Praxigento\Accounting\Repo\Dao\Account $repoAccount,
+        \Praxigento\Accounting\Repo\Dao\Operation $repoOperation,
+        \Praxigento\Accounting\Repo\Dao\Transaction $repoTransaction,
+        \Praxigento\Accounting\Repo\Dao\Type\Operation $repoTypeOper,
+        \Praxigento\Accounting\Repo\Dao\Log\Change\Admin $repoLogChangeAdmin
     ) {
         $this->manTrans = $manTrans;
         $this->hlpDate = $hlpDate;
@@ -66,12 +66,12 @@ class Change
             $operTypeId = $this->repoTypeOper->getIdByCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
             $dateNow = $this->hlpDate->getUtcNowForDb();
             /* create operation */
-            $operation = new \Praxigento\Accounting\Repo\Entity\Data\Operation();
+            $operation = new \Praxigento\Accounting\Repo\Data\Operation();
             $operation->setTypeId($operTypeId);
             $operation->setDatePerformed($dateNow);
             $operId = $this->repoOperation->create($operation);
             /* create transaction */
-            $trans = new \Praxigento\Accounting\Repo\Entity\Data\Transaction();
+            $trans = new \Praxigento\Accounting\Repo\Data\Transaction();
             $trans->setOperationId($operId);
             $trans->setDateApplied($dateNow);
             if ($value > 0) {
@@ -84,7 +84,7 @@ class Change
             $trans->setValue(abs($value));
             $this->repoTransaction->create($trans);
             /* log details (operator name who performs the operation) */
-            $log = new \Praxigento\Accounting\Repo\Entity\Data\Log\Change\Admin();
+            $log = new \Praxigento\Accounting\Repo\Data\Log\Change\Admin();
             $log->setOperationRef($operId);
             $log->setUserRef($adminUserId);
             $this->repoLogChangeAdmin->create($log);

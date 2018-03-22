@@ -20,12 +20,12 @@ class Transfer
     private $callOper;
     /** @var \Praxigento\Core\Api\Helper\Date */
     private $hlpData;
-    /** @var \Praxigento\Accounting\Repo\Entity\Account */
+    /** @var \Praxigento\Accounting\Repo\Dao\Account */
     private $repoAcc;
 
     public function __construct(
         \Praxigento\Core\Api\Helper\Date $hlpData,
-        \Praxigento\Accounting\Repo\Entity\Account $repoAcc,
+        \Praxigento\Accounting\Repo\Dao\Account $repoAcc,
         \Praxigento\Accounting\Api\Service\Operation $callOper
     ) {
         $this->hlpData = $hlpData;
@@ -91,7 +91,7 @@ class Transfer
 
     private function prepareTrans($amount, $accIdDebit, $accIdCredit, $note)
     {
-        $tran = new \Praxigento\Accounting\Repo\Entity\Data\Transaction();
+        $tran = new \Praxigento\Accounting\Repo\Data\Transaction();
         $amountAbs = abs($amount);
         $tran->setDebitAccId($accIdDebit);
         $tran->setCreditAccId($accIdCredit);

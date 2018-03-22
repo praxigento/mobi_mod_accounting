@@ -5,7 +5,7 @@
 
 namespace Praxigento\Accounting\Service\Operation;
 
-use Praxigento\Accounting\Repo\Entity\Data\Transaction as ETrans;
+use Praxigento\Accounting\Repo\Data\Transaction as ETrans;
 use Praxigento\Accounting\Service\Transaction\Request as ARequest;
 use Praxigento\Accounting\Service\Transaction\Response as AResponse;
 

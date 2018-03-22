@@ -3,11 +3,11 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Repo\Entity;
+namespace Praxigento\Accounting\Repo\Dao;
 
 use Praxigento\Accounting\Config as Cfg;
-use Praxigento\Accounting\Repo\Entity\Data\Account as Entity;
-use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as TypeAsset;
+use Praxigento\Accounting\Repo\Data\Account as Entity;
+use Praxigento\Accounting\Repo\Data\Type\Asset as TypeAsset;
 
 class Account
     extends \Praxigento\Core\App\Repo\Def\Entity
@@ -35,7 +35,7 @@ class Account
     }
 
     /**
-     * @param \Praxigento\Accounting\Repo\Entity\Data\Account|array $data
+     * @param \Praxigento\Accounting\Repo\Data\Account|array $data
      * @return int
      */
     public function create($data)
@@ -48,7 +48,7 @@ class Account
      * Get all accounts by asset type code.
      *
      * @param string $assetTypeCode
-     * @return \Praxigento\Accounting\Repo\Entity\Data\Account[]|null
+     * @return \Praxigento\Accounting\Repo\Data\Account[]|null
      *
      * SELECT
      * paa.*
@@ -95,7 +95,7 @@ class Account
      * Get all customer accounts.
      *
      * @param int $customerId
-     * @return \Praxigento\Accounting\Repo\Entity\Data\Account[]|null
+     * @return \Praxigento\Accounting\Repo\Data\Account[]|null
      */
     public function getAllByCustomerId($customerId)
     {
@@ -132,7 +132,7 @@ class Account
      *
      * @param int $customerId
      * @param int $assetTypeId
-     * @return \Praxigento\Accounting\Repo\Entity\Data\Account|null
+     * @return \Praxigento\Accounting\Repo\Data\Account|null
      */
     public function getByCustomerId($customerId, $assetTypeId)
     {
@@ -155,7 +155,7 @@ class Account
 
     /**
      * @param int $id
-     * @return \Praxigento\Accounting\Repo\Entity\Data\Account|bool
+     * @return \Praxigento\Accounting\Repo\Data\Account|bool
      */
     public function getById($id)
     {

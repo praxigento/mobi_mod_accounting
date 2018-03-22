@@ -14,17 +14,17 @@ class LastDate
 {
     /** @var  \Praxigento\Core\Api\Helper\Period */
     private $hlpPeriod;
-    /** @var \Praxigento\Accounting\Repo\Entity\Balance */
+    /** @var \Praxigento\Accounting\Repo\Dao\Balance */
     private $repoBalance;
-    /** @var \Praxigento\Accounting\Repo\Entity\Transaction */
+    /** @var \Praxigento\Accounting\Repo\Dao\Transaction */
     private $repoTransaction;
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
+    /** @var \Praxigento\Accounting\Repo\Dao\Type\Asset */
     private $repoTypeAsset;
 
     public function __construct(
-        \Praxigento\Accounting\Repo\Entity\Balance $repoBalance,
-        \Praxigento\Accounting\Repo\Entity\Transaction $repoTransaction,
-        \Praxigento\Accounting\Repo\Entity\Type\Asset $repoTypeAsset,
+        \Praxigento\Accounting\Repo\Dao\Balance $repoBalance,
+        \Praxigento\Accounting\Repo\Dao\Transaction $repoTransaction,
+        \Praxigento\Accounting\Repo\Dao\Type\Asset $repoTypeAsset,
         \Praxigento\Core\Api\Helper\Period $hlpPeriod
     ) {
         $this->repoBalance = $repoBalance;

@@ -18,7 +18,7 @@ class Turnover
     private $hlpPeriod;
     /** @var \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder */
     private $qbBalClose;
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
+    /** @var \Praxigento\Accounting\Repo\Dao\Type\Asset */
     private $repoTypeAsset;
 
     public function __construct(
@@ -26,7 +26,7 @@ class Turnover
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Api\Helper\Period $hlpPeriod,
         \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder $qbBalClose,
-        \Praxigento\Accounting\Repo\Entity\Type\Asset $repoTypeAsset
+        \Praxigento\Accounting\Repo\Dao\Type\Asset $repoTypeAsset
     ) {
         parent::__construct($logger, $manObj);
         $this->hlpPeriod = $hlpPeriod;

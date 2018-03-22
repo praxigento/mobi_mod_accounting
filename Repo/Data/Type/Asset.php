@@ -5,7 +5,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Repo\Entity\Data\Type;
+namespace Praxigento\Accounting\Repo\Data\Type;
 
 class Asset
     extends \Praxigento\Core\App\Repo\Data\Entity\Type\Base

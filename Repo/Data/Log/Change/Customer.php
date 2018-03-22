@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Repo\Entity\Data\Log\Change;
+namespace Praxigento\Accounting\Repo\Data\Log\Change;
 
 /**
  * Log for change balance operations performed by customers.

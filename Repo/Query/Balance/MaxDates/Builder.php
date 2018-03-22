@@ -5,7 +5,7 @@
 
 namespace Praxigento\Accounting\Repo\Query\Balance\MaxDates;
 
-use Praxigento\Accounting\Repo\Entity\Data\Balance as Balance;
+use Praxigento\Accounting\Repo\Data\Balance as Balance;
 
 /**
  * Build query to get accounts & max date less or equal to given from balances.

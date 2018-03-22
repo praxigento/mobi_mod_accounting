@@ -5,7 +5,7 @@
 
 namespace Praxigento\Accounting\Api\Service\Account\Get;
 
-use Praxigento\Accounting\Repo\Entity\Data\Account as EAccount;
+use Praxigento\Accounting\Repo\Data\Account as EAccount;
 
 class Response
     extends \Praxigento\Core\Data

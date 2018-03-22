@@ -5,18 +5,18 @@
 
 namespace Praxigento\Accounting\Service\Account\Balance;
 
-use Praxigento\Accounting\Repo\Entity\Data\Balance as ABalance;
+use Praxigento\Accounting\Repo\Data\Balance as ABalance;
 use Praxigento\Accounting\Service\Account\Balance\Reset\Request as ARequest;
 use Praxigento\Accounting\Service\Account\Balance\Reset\Response as AResponse;
 
 
 class Reset
 {
-    /** @var \Praxigento\Accounting\Repo\Entity\Balance */
+    /** @var \Praxigento\Accounting\Repo\Dao\Balance */
     private $repoBalance;
 
     public function __construct(
-        \Praxigento\Accounting\Repo\Entity\Balance $repoBalance
+        \Praxigento\Accounting\Repo\Dao\Balance $repoBalance
     ) {
         $this->repoBalance = $repoBalance;
     }

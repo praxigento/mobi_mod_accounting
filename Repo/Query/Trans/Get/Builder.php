@@ -5,9 +5,9 @@
 
 namespace Praxigento\Accounting\Repo\Query\Trans\Get;
 
-use Praxigento\Accounting\Repo\Entity\Data\Account as Acc;
-use Praxigento\Accounting\Repo\Entity\Data\Operation as Oper;
-use Praxigento\Accounting\Repo\Entity\Data\Transaction as Trans;
+use Praxigento\Accounting\Repo\Data\Account as Acc;
+use Praxigento\Accounting\Repo\Data\Operation as Oper;
+use Praxigento\Accounting\Repo\Data\Transaction as Trans;
 
 /**
  * Build query to get transactions for the customer.

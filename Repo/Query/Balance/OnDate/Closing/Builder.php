@@ -5,8 +5,8 @@
 
 namespace Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing;
 
-use Praxigento\Accounting\Repo\Entity\Data\Account as Account;
-use Praxigento\Accounting\Repo\Entity\Data\Balance as Balance;
+use Praxigento\Accounting\Repo\Data\Account as Account;
+use Praxigento\Accounting\Repo\Data\Balance as Balance;
 use Praxigento\Accounting\Repo\Query\Balance\MaxDates\Builder as QMaxDates;
 
 /**

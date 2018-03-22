@@ -5,8 +5,8 @@
 
 namespace Praxigento\Accounting\Service\Account\Asset\Get\Db\Query;
 
-use Praxigento\Accounting\Repo\Entity\Data\Account as EAcc;
-use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as ETypeAss;
+use Praxigento\Accounting\Repo\Data\Account as EAcc;
+use Praxigento\Accounting\Repo\Data\Type\Asset as ETypeAss;
 
 class GetAssets
     extends \Praxigento\Core\App\Repo\Query\Builder

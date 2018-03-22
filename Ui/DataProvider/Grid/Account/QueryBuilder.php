@@ -3,8 +3,8 @@
 namespace Praxigento\Accounting\Ui\DataProvider\Grid\Account;
 
 use Praxigento\Accounting\Config as Cfg;
-use Praxigento\Accounting\Repo\Entity\Data\Account as EAccount;
-use Praxigento\Accounting\Repo\Entity\Data\Type\Asset as ETypeAsset;
+use Praxigento\Accounting\Repo\Data\Account as EAccount;
+use Praxigento\Accounting\Repo\Data\Type\Asset as ETypeAsset;
 
 
 class QueryBuilder

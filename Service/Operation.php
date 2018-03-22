@@ -8,7 +8,7 @@ namespace Praxigento\Accounting\Service;
 
 use Praxigento\Accounting\Api\Service\Operation\Request as ARequest;
 use Praxigento\Accounting\Api\Service\Operation\Response as AResponse;
-use Praxigento\Accounting\Repo\Entity\Data\Operation as EOperation;
+use Praxigento\Accounting\Repo\Data\Operation as EOperation;
 
 
 class Operation
@@ -16,23 +16,23 @@ class Operation
 {
     /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     private $manTrans;
-    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Admin */
+    /** @var \Praxigento\Accounting\Repo\Dao\Log\Change\Admin */
     private $repoELogChangeAdmin;
-    /** @var \Praxigento\Accounting\Repo\Entity\Log\Change\Customer */
+    /** @var \Praxigento\Accounting\Repo\Dao\Log\Change\Customer */
     private $repoELogChangeCust;
-    /** @var  \Praxigento\Accounting\Repo\Entity\Operation */
+    /** @var  \Praxigento\Accounting\Repo\Dao\Operation */
     private $repoOper;
-    /** @var  \Praxigento\Accounting\Repo\Entity\Type\Operation */
+    /** @var  \Praxigento\Accounting\Repo\Dao\Type\Operation */
     private $repoTypeOper;
     /** @var \Praxigento\Accounting\Service\Operation\Add */
     private $subAdd;
 
     public function __construct(
         \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
-        \Praxigento\Accounting\Repo\Entity\Operation $repoOper,
-        \Praxigento\Accounting\Repo\Entity\Type\Operation $repoTypeOper,
-        \Praxigento\Accounting\Repo\Entity\Log\Change\Admin $repoELogChangeAdmin,
-        \Praxigento\Accounting\Repo\Entity\Log\Change\Customer $repoELogChangeCust,
+        \Praxigento\Accounting\Repo\Dao\Operation $repoOper,
+        \Praxigento\Accounting\Repo\Dao\Type\Operation $repoTypeOper,
+        \Praxigento\Accounting\Repo\Dao\Log\Change\Admin $repoELogChangeAdmin,
+        \Praxigento\Accounting\Repo\Dao\Log\Change\Customer $repoELogChangeCust,
         \Praxigento\Accounting\Service\Operation\Add $subAdd
     ) {
         $this->manTrans = $manTrans;
@@ -83,14 +83,14 @@ class Operation
                 $result->setTransactionsIds($transIds);
                 /* log customer link */
                 if ($customerId) {
-                    $log = new \Praxigento\Accounting\Repo\Entity\Data\Log\Change\Customer();
+                    $log = new \Praxigento\Accounting\Repo\Data\Log\Change\Customer();
                     $log->setCustomerRef($customerId);
                     $log->setOperationRef($operId);
                     $this->repoELogChangeCust->create($log);
                 }
                 /* log admin link */
                 if ($adminUserId) {
-                    $log = new \Praxigento\Accounting\Repo\Entity\Data\Log\Change\Admin();
+                    $log = new \Praxigento\Accounting\Repo\Data\Log\Change\Admin();
                     $log->setUserRef($adminUserId);
                     $log->setOperationRef($operId);
                     $this->repoELogChangeAdmin->create($log);

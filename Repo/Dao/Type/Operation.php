@@ -3,9 +3,9 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Repo\Entity\Log\Change;
+namespace Praxigento\Accounting\Repo\Dao\Type;
 
-class Admin
+class Operation
     extends \Praxigento\Core\App\Repo\Entity\Type
 {
     public function __construct(
@@ -15,7 +15,8 @@ class Admin
         parent::__construct(
             $resource,
             $repoGeneric,
-            \Praxigento\Accounting\Repo\Entity\Data\Log\Change\Admin::class
+            \Praxigento\Accounting\Repo\Data\Type\Operation::class
         );
     }
+
 }

@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Repo\Entity\Type;
+namespace Praxigento\Accounting\Repo\Dao\Type;
 
 class Asset
     extends \Praxigento\Core\App\Repo\Entity\Type
@@ -15,7 +15,7 @@ class Asset
         parent::__construct(
             $resource,
             $repoGeneric,
-            \Praxigento\Accounting\Repo\Entity\Data\Type\Asset::class
+            \Praxigento\Accounting\Repo\Data\Type\Asset::class
         );
     }
 }

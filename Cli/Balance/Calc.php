@@ -14,14 +14,14 @@ class Calc
     const OPT_DATESTAMP_DEF = '31171231';
     const OPT_DATESTAMP_NAME = 'date';
     const OPT_DATESTAMP_SHORTCUT = 'd';
-    /** @var \Praxigento\Accounting\Repo\Entity\Type\Asset */
+    /** @var \Praxigento\Accounting\Repo\Dao\Type\Asset */
     protected $repoTypeAsset;
     /** @var \Praxigento\Accounting\Service\Account\Balance\Calc */
     protected $servBalance;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Accounting\Repo\Entity\Type\Asset $repoTypeAsset,
+        \Praxigento\Accounting\Repo\Dao\Type\Asset $repoTypeAsset,
         \Praxigento\Accounting\Service\Account\Balance\Calc $servBalance
     ) {
         parent::__construct(
@@ -79,8 +79,8 @@ class Calc
         $types = $this->repoTypeAsset->get();
         foreach ($types as $type) {
             /* convert to DataObject if repo response is array */
-            /** @var \Praxigento\Accounting\Repo\Entity\Data\Type\Asset $obj */
-            $obj = (is_array($type)) ? new \Praxigento\Accounting\Repo\Entity\Data\Type\Asset($type) : $type;
+            /** @var \Praxigento\Accounting\Repo\Data\Type\Asset $obj */
+            $obj = (is_array($type)) ? new \Praxigento\Accounting\Repo\Data\Type\Asset($type) : $type;
             $typeId = $obj->getId();
             $typeCode = $obj->getCode();
             $result[$typeId] = $typeCode;

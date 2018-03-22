@@ -5,7 +5,7 @@
 
 namespace Praxigento\Accounting\Service;
 
-use Praxigento\Accounting\Repo\Entity\Data\Transaction as ETransaction;
+use Praxigento\Accounting\Repo\Data\Transaction as ETransaction;
 use Praxigento\Accounting\Service\Transaction\Request as ARequest;
 use Praxigento\Accounting\Service\Transaction\Response as AResponse;
 
@@ -15,15 +15,15 @@ class Transaction
 
     /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     private $manTrans;
-    /** @var  \Praxigento\Accounting\Repo\Entity\Account */
+    /** @var  \Praxigento\Accounting\Repo\Dao\Account */
     private $repoAcc;
-    /** @var  \Praxigento\Accounting\Repo\Entity\Transaction */
+    /** @var  \Praxigento\Accounting\Repo\Dao\Transaction */
     private $repoTrans;
 
     public function __construct(
         \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
-        \Praxigento\Accounting\Repo\Entity\Account $repoAcc,
-        \Praxigento\Accounting\Repo\Entity\Transaction $repoTrans
+        \Praxigento\Accounting\Repo\Dao\Account $repoAcc,
+        \Praxigento\Accounting\Repo\Dao\Transaction $repoTrans
     ) {
         $this->manTrans = $manTrans;
         $this->repoAcc = $repoAcc;
