@@ -10,10 +10,10 @@ use Praxigento\Accounting\Repo\Data\Account as EAccount;
 class Response
     extends \Praxigento\Core\Data
 {
-    const ASSET_TYPE_ID = EAccount::ATTR_ASSET_TYPE_ID;
-    const BALANCE = EAccount::ATTR_BALANCE;
-    const CUSTOMER_ID = EAccount::ATTR_CUST_ID;
-    const ID = EAccount::ATTR_ID;
+    const ASSET_TYPE_ID = EAccount::A_ASSET_TYPE_ID;
+    const BALANCE = EAccount::A_BALANCE;
+    const CUSTOMER_ID = EAccount::A_CUST_ID;
+    const ID = EAccount::A_ID;
 
     /** @return int */
     public function getAssetTypeId()

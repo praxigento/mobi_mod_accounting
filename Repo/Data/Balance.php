@@ -8,12 +8,12 @@ namespace Praxigento\Accounting\Repo\Data;
 class Balance
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
-    const ATTR_ACCOUNT_ID = 'account_id';
-    const ATTR_BALANCE_CLOSE = 'closing_balance';
-    const ATTR_BALANCE_OPEN = 'opening_balance';
-    const ATTR_DATE = 'date';
-    const ATTR_TOTAL_CREDIT = 'total_credit';
-    const ATTR_TOTAL_DEBIT = 'total_debit';
+    const A_ACCOUNT_ID = 'account_id';
+    const A_BALANCE_CLOSE = 'closing_balance';
+    const A_BALANCE_OPEN = 'opening_balance';
+    const A_DATE = 'date';
+    const A_TOTAL_CREDIT = 'total_credit';
+    const A_TOTAL_DEBIT = 'total_debit';
     const ENTITY_NAME = 'prxgt_acc_balance';
 
     /**
@@ -21,7 +21,7 @@ class Balance
      */
     public function getAccountId()
     {
-        $result = parent::get(self::ATTR_ACCOUNT_ID);
+        $result = parent::get(self::A_ACCOUNT_ID);
         return $result;
     }
 
@@ -30,7 +30,7 @@ class Balance
      */
     public function getBalanceClose()
     {
-        $result = parent::get(self::ATTR_BALANCE_CLOSE);
+        $result = parent::get(self::A_BALANCE_CLOSE);
         return $result;
     }
 
@@ -39,7 +39,7 @@ class Balance
      */
     public function getBalanceOpen()
     {
-        $result = parent::get(self::ATTR_BALANCE_OPEN);
+        $result = parent::get(self::A_BALANCE_OPEN);
         return $result;
     }
 
@@ -48,14 +48,14 @@ class Balance
      */
     public function getDate()
     {
-        $result = parent::get(self::ATTR_DATE);
+        $result = parent::get(self::A_DATE);
         return $result;
     }
 
     /** @inheritdoc */
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_ACCOUNT_ID, self::ATTR_DATE];
+        return [self::A_ACCOUNT_ID, self::A_DATE];
     }
 
     /**
@@ -63,7 +63,7 @@ class Balance
      */
     public function getTotalCredit()
     {
-        $result = parent::get(self::ATTR_TOTAL_CREDIT);
+        $result = parent::get(self::A_TOTAL_CREDIT);
         return $result;
     }
 
@@ -72,7 +72,7 @@ class Balance
      */
     public function getTotalDebit()
     {
-        $result = parent::get(self::ATTR_TOTAL_DEBIT);
+        $result = parent::get(self::A_TOTAL_DEBIT);
         return $result;
     }
 
@@ -81,7 +81,7 @@ class Balance
      */
     public function setAccountId($data)
     {
-        parent::set(self::ATTR_ACCOUNT_ID, $data);
+        parent::set(self::A_ACCOUNT_ID, $data);
     }
 
     /**
@@ -89,7 +89,7 @@ class Balance
      */
     public function setBalanceClose($data)
     {
-        parent::set(self::ATTR_BALANCE_CLOSE, $data);
+        parent::set(self::A_BALANCE_CLOSE, $data);
     }
 
     /**
@@ -97,7 +97,7 @@ class Balance
      */
     public function setBalanceOpen($data)
     {
-        parent::set(self::ATTR_BALANCE_OPEN, $data);
+        parent::set(self::A_BALANCE_OPEN, $data);
     }
 
     /**
@@ -105,7 +105,7 @@ class Balance
      */
     public function setDate($data)
     {
-        parent::set(self::ATTR_DATE, $data);
+        parent::set(self::A_DATE, $data);
     }
 
     /**
@@ -113,7 +113,7 @@ class Balance
      */
     public function setTotalCredit($data)
     {
-        parent::set(self::ATTR_TOTAL_CREDIT, $data);
+        parent::set(self::A_TOTAL_CREDIT, $data);
     }
 
     /**
@@ -121,6 +121,6 @@ class Balance
      */
     public function setTotalDebit($data)
     {
-        parent::set(self::ATTR_TOTAL_DEBIT, $data);
+        parent::set(self::A_TOTAL_DEBIT, $data);
     }
 }

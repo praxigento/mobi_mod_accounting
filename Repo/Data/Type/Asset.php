@@ -10,7 +10,7 @@ namespace Praxigento\Accounting\Repo\Data\Type;
 class Asset
     extends \Praxigento\Core\App\Repo\Data\Entity\Type\Base
 {
-    const ATTR_IS_VISIBLE = 'is_visible';
+    const A_IS_VISIBLE = 'is_visible';
     const ENTITY_NAME = 'prxgt_acc_type_asset';
 
     /**
@@ -18,7 +18,7 @@ class Asset
      */
     public function getIsVisible()
     {
-        $result = parent::get(self::ATTR_IS_VISIBLE);
+        $result = parent::get(self::A_IS_VISIBLE);
         return $result;
     }
 
@@ -27,6 +27,6 @@ class Asset
      */
     public function setIsVisible($data)
     {
-        parent::set(self::ATTR_IS_VISIBLE, $data);
+        parent::set(self::A_IS_VISIBLE, $data);
     }
 }

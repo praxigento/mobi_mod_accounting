@@ -81,15 +81,15 @@ class Transaction
         $query = $this->conn->select();
         $query->from([$asAccount => $tblAccount], []);
         /* join prxgt_acc_transaction  */
-        $on = $asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::ATTR_ID . '='
-            . $asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::ATTR_DEBIT_ACC_ID;
+        $on = $asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::A_ID . '='
+            . $asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::A_DEBIT_ACC_ID;
         $query->join([$asTrans => $tblTrans], $on);
         /* where */
-        $query->where($asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::ATTR_ASSET_TYPE_ID . '=:asset_type_id');
-        $query->where($asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::ATTR_ID . ' IS NOT NULL');
-        $query->where($asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::ATTR_DATE_APPLIED
+        $query->where($asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::A_ASSET_TYPE_ID . '=:asset_type_id');
+        $query->where($asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::A_ID . ' IS NOT NULL');
+        $query->where($asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::A_DATE_APPLIED
             . '>=:date_from');
-        $query->where($asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::ATTR_DATE_APPLIED
+        $query->where($asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::A_DATE_APPLIED
             . '<:date_to');
         $bind = [
             'asset_type_id' => $paramAssetType,
@@ -97,7 +97,7 @@ class Transaction
             'date_to' => $timestampTo
         ];
         /* order by */
-        $query->order($asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::ATTR_DATE_APPLIED . ' ASC');
+        $query->order($asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::A_DATE_APPLIED . ' ASC');
         // $sql = (string)$query;
         $result = $this->conn->fetchAll($query, $bind);
         return $result;
@@ -133,20 +133,20 @@ class Transaction
         $query = $this->conn->select();
         $query->from([$asAccount => $tblAccount], []);
         /* join transactions on debit account */
-        $on = $asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::ATTR_ID . '='
-            . $asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::ATTR_DEBIT_ACC_ID;
+        $on = $asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::A_ID . '='
+            . $asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::A_DEBIT_ACC_ID;
         $query->joinLeft(
             [$asTrans => $tblTrans],
             $on,
-            [\Praxigento\Accounting\Repo\Data\Transaction::ATTR_DATE_APPLIED]
+            [\Praxigento\Accounting\Repo\Data\Transaction::A_DATE_APPLIED]
         );
         /* where */
-        $query->where($asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::ATTR_ASSET_TYPE_ID . '=:typeId');
+        $query->where($asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::A_ASSET_TYPE_ID . '=:typeId');
         $bind = ['typeId' => $assetTypeId];
-        $query->where($asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::ATTR_DATE_APPLIED
+        $query->where($asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::A_DATE_APPLIED
             . ' IS NOT NULL');
         /* order by */
-        $query->order([$asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::ATTR_DATE_APPLIED . ' ASC']);
+        $query->order([$asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::A_DATE_APPLIED . ' ASC']);
         /* perform query */
         // $sql = (string)$query;
         $result = $this->conn->fetchOne($query, $bind);

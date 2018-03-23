@@ -27,10 +27,10 @@ class QueryBuilder
     {
         if (is_null($this->mapper)) {
             $map = [
-                self::A_DATE_PERFORMED => self::AS_OPER . '.' . EOperation::ATTR_DATE_PREFORMED,
-                self::A_ID => self::AS_OPER . '.' . EOperation::ATTR_ID,
-                self::A_NOTE => self::AS_OPER . '.' . EOperation::ATTR_NOTE,
-                self::A_TYPE => self::AS_TYPE . '.' . ETypeOper::ATTR_CODE
+                self::A_DATE_PERFORMED => self::AS_OPER . '.' . EOperation::A_DATE_PREFORMED,
+                self::A_ID => self::AS_OPER . '.' . EOperation::A_ID,
+                self::A_NOTE => self::AS_OPER . '.' . EOperation::A_NOTE,
+                self::A_TYPE => self::AS_TYPE . '.' . ETypeOper::A_CODE
             ];
             $this->mapper = new \Praxigento\Core\App\Repo\Query\Criteria\Def\Mapper($map);
         }
@@ -50,18 +50,18 @@ class QueryBuilder
         $tbl = $this->resource->getTableName(EOperation::ENTITY_NAME);
         $as = $asOper;
         $cols = [
-            self::A_ID => EOperation::ATTR_ID,
-            self::A_DATE_PERFORMED => EOperation::ATTR_DATE_PREFORMED,
-            self::A_NOTE => EOperation::ATTR_NOTE
+            self::A_ID => EOperation::A_ID,
+            self::A_DATE_PERFORMED => EOperation::A_DATE_PREFORMED,
+            self::A_NOTE => EOperation::A_NOTE
         ];
         $result->from([$as => $tbl], $cols);
 
         /* LEFT JOIN prxgt_acc_type_operation */
         $tbl = $this->resource->getTableName(ETypeOper::ENTITY_NAME);
         $as = $asType;
-        $cond = $asType . '.' . ETypeOper::ATTR_ID . '=' . $asOper . '.' . EOperation::ATTR_TYPE_ID;
+        $cond = $asType . '.' . ETypeOper::A_ID . '=' . $asOper . '.' . EOperation::A_TYPE_ID;
         $cols = [
-            self::A_TYPE => ETypeOper::ATTR_CODE
+            self::A_TYPE => ETypeOper::A_CODE
         ];
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
@@ -75,7 +75,7 @@ class QueryBuilder
         /** @var \Magento\Framework\DB\Select $result */
         $result = $this->getQueryItems();
         /* ... then replace "columns" part with own expression */
-        $value = 'COUNT(' . self::AS_OPER . '.' . EOperation::ATTR_ID . ')';
+        $value = 'COUNT(' . self::AS_OPER . '.' . EOperation::A_ID . ')';
 
         /**
          * See method \Magento\Framework\DB\Select\ColumnsRenderer::render:

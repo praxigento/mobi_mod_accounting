@@ -60,14 +60,14 @@ class Balance
         $query = $this->conn->select();
         $query->from([$asAccount => $tblAccount], []);
         /* join balance */
-        $on = $asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::ATTR_ID . '='
-            . $asBalance . '.' . \Praxigento\Accounting\Repo\Data\Balance::ATTR_ACCOUNT_ID;
-        $query->joinLeft([$asBalance => $tblBalance], $on, [\Praxigento\Accounting\Repo\Data\Balance::ATTR_DATE]);
+        $on = $asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::A_ID . '='
+            . $asBalance . '.' . \Praxigento\Accounting\Repo\Data\Balance::A_ACCOUNT_ID;
+        $query->joinLeft([$asBalance => $tblBalance], $on, [\Praxigento\Accounting\Repo\Data\Balance::A_DATE]);
         /* where */
-        $query->where($asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::ATTR_ASSET_TYPE_ID . '=:typeId');
+        $query->where($asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::A_ASSET_TYPE_ID . '=:typeId');
         $bind = ['typeId' => $assetTypeId];
         /* order by */
-        $query->order([$asBalance . '.' . \Praxigento\Accounting\Repo\Data\Balance::ATTR_DATE . ' DESC']);
+        $query->order([$asBalance . '.' . \Praxigento\Accounting\Repo\Data\Balance::A_DATE . ' DESC']);
         /* perform query */
         $result = $this->conn->fetchOne($query, $bind);
         return $result;
@@ -123,14 +123,14 @@ class Balance
         /* select MAX(date) from prxgt_acc_balance (internal select) */
         $q4Max = $conn->select();
         $colDateMax = 'date_max';
-        $expMaxDate = 'MAX(`' . $asBal4Max . '`.`' . \Praxigento\Accounting\Repo\Data\Balance::ATTR_DATE
+        $expMaxDate = 'MAX(`' . $asBal4Max . '`.`' . \Praxigento\Accounting\Repo\Data\Balance::A_DATE
             . '`) as ' . $colDateMax;
         $q4Max->from(
             [$asBal4Max => $tblBalance],
-            [\Praxigento\Accounting\Repo\Data\Balance::ATTR_ACCOUNT_ID, $expMaxDate]
+            [\Praxigento\Accounting\Repo\Data\Balance::A_ACCOUNT_ID, $expMaxDate]
         );
-        $q4Max->group($asBal4Max . '.' . \Praxigento\Accounting\Repo\Data\Balance::ATTR_ACCOUNT_ID);
-        $q4Max->where($asBal4Max . '.' . \Praxigento\Accounting\Repo\Data\Balance::ATTR_DATE . '<=:date');
+        $q4Max->group($asBal4Max . '.' . \Praxigento\Accounting\Repo\Data\Balance::A_ACCOUNT_ID);
+        $q4Max->where($asBal4Max . '.' . \Praxigento\Accounting\Repo\Data\Balance::A_DATE . '<=:date');
         $bind['date'] = $yyyymmdd;
         //        $sql4Max = (string)$q4Max;
         /* select from prxgt_acc_account */
@@ -138,38 +138,38 @@ class Balance
         $query->from(
             [$asAccount => $tblAccount],
             [
-                \Praxigento\Accounting\Repo\Data\Account::ATTR_ID,
-                \Praxigento\Accounting\Repo\Data\Account::ATTR_CUST_ID
+                \Praxigento\Accounting\Repo\Data\Account::A_ID,
+                \Praxigento\Accounting\Repo\Data\Account::A_CUST_ID
             ]
         );
         /* left join $q4Max */
-        $on = $asMax . '.' . \Praxigento\Accounting\Repo\Data\Balance::ATTR_ACCOUNT_ID . '='
-            . $asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::ATTR_ID;
+        $on = $asMax . '.' . \Praxigento\Accounting\Repo\Data\Balance::A_ACCOUNT_ID . '='
+            . $asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::A_ID;
         $cols = [];
         $query->joinLeft([$asMax => $q4Max], $on, $cols);
         /* MOBI-688: join prxgt_acc_balance again (ON pab.account_id = m.account_id AND pab.date = m.date_max) */
-        $on = $asBal . '.' . \Praxigento\Accounting\Repo\Data\Balance::ATTR_ACCOUNT_ID . '='
-            . $asMax . '.' . \Praxigento\Accounting\Repo\Data\Balance::ATTR_ACCOUNT_ID;
-        $on .= ' AND ' . $asBal . '.' . \Praxigento\Accounting\Repo\Data\Balance::ATTR_DATE . '='
+        $on = $asBal . '.' . \Praxigento\Accounting\Repo\Data\Balance::A_ACCOUNT_ID . '='
+            . $asMax . '.' . \Praxigento\Accounting\Repo\Data\Balance::A_ACCOUNT_ID;
+        $on .= ' AND ' . $asBal . '.' . \Praxigento\Accounting\Repo\Data\Balance::A_DATE . '='
             . $asMax . '.' . $colDateMax;
         $cols = [
-            \Praxigento\Accounting\Repo\Data\Balance::ATTR_DATE,
-            \Praxigento\Accounting\Repo\Data\Balance::ATTR_BALANCE_OPEN,
-            \Praxigento\Accounting\Repo\Data\Balance::ATTR_TOTAL_DEBIT,
-            \Praxigento\Accounting\Repo\Data\Balance::ATTR_TOTAL_CREDIT,
-            \Praxigento\Accounting\Repo\Data\Balance::ATTR_BALANCE_CLOSE
+            \Praxigento\Accounting\Repo\Data\Balance::A_DATE,
+            \Praxigento\Accounting\Repo\Data\Balance::A_BALANCE_OPEN,
+            \Praxigento\Accounting\Repo\Data\Balance::A_TOTAL_DEBIT,
+            \Praxigento\Accounting\Repo\Data\Balance::A_TOTAL_CREDIT,
+            \Praxigento\Accounting\Repo\Data\Balance::A_BALANCE_CLOSE
         ];
         $query->joinLeft([$asBal => $tblBalance], $on, $cols);
         /* where */
-        $whereByAssetType = $asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::ATTR_ASSET_TYPE_ID
+        $whereByAssetType = $asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::A_ASSET_TYPE_ID
             . '=:asset_type_id';
-        $whereByDate = $asBal . '.' . \Praxigento\Accounting\Repo\Data\Balance::ATTR_DATE . ' IS NOT NULL';
+        $whereByDate = $asBal . '.' . \Praxigento\Accounting\Repo\Data\Balance::A_DATE . ' IS NOT NULL';
         $query->where("$whereByAssetType AND $whereByDate");
         $bind['asset_type_id'] = (int)$assetTypeId;
         // $sql = (string)$qMain;
         $rows = $conn->fetchAll($query, $bind);
         foreach ($rows as $one) {
-            $result[$one[\Praxigento\Accounting\Repo\Data\Account::ATTR_ID]] = $one;
+            $result[$one[\Praxigento\Accounting\Repo\Data\Account::A_ID]] = $one;
         }
         return $result;
     }

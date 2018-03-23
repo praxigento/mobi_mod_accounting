@@ -8,66 +8,66 @@ namespace Praxigento\Accounting\Repo\Data;
 class Operation
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
-    const ATTR_DATE_PREFORMED = 'date_performed';
-    const ATTR_ID = 'id';
-    const ATTR_NOTE = 'note';
-    const ATTR_TYPE_ID = 'type_id';
+    const A_DATE_PREFORMED = 'date_performed';
+    const A_ID = 'id';
+    const A_NOTE = 'note';
+    const A_TYPE_ID = 'type_id';
     const ENTITY_NAME = 'prxgt_acc_operation';
 
     /** @return string */
     public function getDatePerformed()
     {
-        $result = parent::get(self::ATTR_DATE_PREFORMED);
+        $result = parent::get(self::A_DATE_PREFORMED);
         return $result;
     }
 
     /** @return int */
     public function getId()
     {
-        $result = parent::get(self::ATTR_ID);
+        $result = parent::get(self::A_ID);
         return $result;
     }
 
     /** @return string */
     public function getNote()
     {
-        $result = parent::get(self::ATTR_NOTE);
+        $result = parent::get(self::A_NOTE);
         return $result;
     }
 
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_ID];
+        return [self::A_ID];
     }
 
     /** @return int */
     public function getTypeId()
     {
-        $result = parent::get(self::ATTR_TYPE_ID);
+        $result = parent::get(self::A_TYPE_ID);
         return $result;
     }
 
     /** @param string $data */
     public function setDatePerformed($data)
     {
-        parent::set(self::ATTR_DATE_PREFORMED, $data);
+        parent::set(self::A_DATE_PREFORMED, $data);
     }
 
     /** @param int $data */
     public function setId($data)
     {
-        parent::set(self::ATTR_ID, $data);
+        parent::set(self::A_ID, $data);
     }
 
     /** @param string $data */
     public function setNote($data)
     {
-        parent::set(self::ATTR_NOTE, $data);
+        parent::set(self::A_NOTE, $data);
     }
 
     /** @param int $data */
     public function setTypeId($data)
     {
-        parent::set(self::ATTR_TYPE_ID, $data);
+        parent::set(self::A_TYPE_ID, $data);
     }
 }

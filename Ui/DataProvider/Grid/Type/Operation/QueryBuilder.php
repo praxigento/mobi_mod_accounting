@@ -23,9 +23,9 @@ class QueryBuilder
     {
         if (is_null($this->mapper)) {
             $map = [
-                self::A_ID_ASSET => self::AS_TYP_OPERATION . '.' . ETypeOperation::ATTR_ID,
-                self::A_CODE => self::AS_TYP_OPERATION . '.' . ETypeOperation::ATTR_CODE,
-                self::A_NOTE => self::AS_TYP_OPERATION . '.' . ETypeOperation::ATTR_NOTE
+                self::A_ID_ASSET => self::AS_TYP_OPERATION . '.' . ETypeOperation::A_ID,
+                self::A_CODE => self::AS_TYP_OPERATION . '.' . ETypeOperation::A_CODE,
+                self::A_NOTE => self::AS_TYP_OPERATION . '.' . ETypeOperation::A_NOTE
             ];
             $this->mapper = new \Praxigento\Core\App\Repo\Query\Criteria\Def\Mapper($map);
         }
@@ -43,9 +43,9 @@ class QueryBuilder
         $tbl = $this->resource->getTableName(ETypeOperation::ENTITY_NAME);
         $as = $asTypAsset;
         $cols = [
-            self::A_ID_ASSET => ETypeOperation::ATTR_ID,
-            self::A_CODE => ETypeOperation::ATTR_CODE,
-            self::A_NOTE => ETypeOperation::ATTR_NOTE
+            self::A_ID_ASSET => ETypeOperation::A_ID,
+            self::A_CODE => ETypeOperation::A_CODE,
+            self::A_NOTE => ETypeOperation::A_NOTE
         ];
         $result->from([$as => $tbl], $cols);
         return $result;
@@ -57,7 +57,7 @@ class QueryBuilder
         /** @var \Magento\Framework\DB\Select $result */
         $result = $this->getQueryItems();
         /* ... then replace "columns" part with own expression */
-        $value = 'COUNT(' . self::AS_TYP_OPERATION . '.' . ETypeOperation::ATTR_ID . ')';
+        $value = 'COUNT(' . self::AS_TYP_OPERATION . '.' . ETypeOperation::A_ID . ')';
 
         /**
          * See method \Magento\Framework\DB\Select\ColumnsRenderer::render:

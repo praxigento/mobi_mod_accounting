@@ -11,39 +11,39 @@ namespace Praxigento\Accounting\Repo\Data\Log\Change;
 class Customer
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
-    const ATTR_CUST_REF = 'customer_ref';
-    const ATTR_OPER_REF = 'operation_ref';
+    const A_CUST_REF = 'customer_ref';
+    const A_OPER_REF = 'operation_ref';
     const ENTITY_NAME = 'prxgt_acc_log_change_customer';
 
     /** @return int */
     public function getCustomerRef()
     {
-        $result = parent::get(self::ATTR_CUST_REF);
+        $result = parent::get(self::A_CUST_REF);
         return $result;
     }
 
     /** @return int */
     public function getOperationRef()
     {
-        $result = parent::get(self::ATTR_OPER_REF);
+        $result = parent::get(self::A_OPER_REF);
         return $result;
     }
 
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_OPER_REF];
+        return [self::A_OPER_REF];
     }
 
     /** @param int $data */
     public function setCustomerRef($data)
     {
-        parent::set(self::ATTR_CUST_REF, $data);
+        parent::set(self::A_CUST_REF, $data);
     }
 
     /** @param int $data */
     public function setOperationRef($data)
     {
-        parent::set(self::ATTR_OPER_REF, $data);
+        parent::set(self::A_OPER_REF, $data);
     }
 
 }

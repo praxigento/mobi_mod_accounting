@@ -69,16 +69,16 @@ class Account
         $query->from([$asType => $tbl], $cols);
         /* LEFT JOIN prxgt_acc_account */
         $tbl = $this->resource->getTableName(Entity::ENTITY_NAME);
-        $on = $asAcc . '.' . Entity::ATTR_ASSET_TYPE_ID . '=' . $asType . '.' . TypeAsset::ATTR_ID;
+        $on = $asAcc . '.' . Entity::A_ASSET_TYPE_ID . '=' . $asType . '.' . TypeAsset::A_ID;
         $cols = [
-            Entity::ATTR_ID,
-            Entity::ATTR_ASSET_TYPE_ID,
-            Entity::ATTR_BALANCE,
-            Entity::ATTR_CUST_ID
+            Entity::A_ID,
+            Entity::A_ASSET_TYPE_ID,
+            Entity::A_BALANCE,
+            Entity::A_CUST_ID
         ];
         $query->joinLeft([$asAcc => $tbl], $on, $cols);
         /* WHERE */
-        $where = $asType . '.' . TypeAsset::ATTR_CODE . '=:' . self::BIND_CODE;
+        $where = $asType . '.' . TypeAsset::A_CODE . '=:' . self::BIND_CODE;
         $query->where($where);
         /* bind vars and fetch results */
         $bind = [self::BIND_CODE => $assetTypeCode];
@@ -100,7 +100,7 @@ class Account
     public function getAllByCustomerId($customerId)
     {
         $result = null;
-        $where = '(' . Entity::ATTR_CUST_ID . '=' . (int)$customerId . ')';
+        $where = '(' . Entity::A_CUST_ID . '=' . (int)$customerId . ')';
         $found = $this->get($where);
         if ($found) {
             /* TODO: use equal approach - '[]' instead of 'null' if not found */
@@ -137,8 +137,8 @@ class Account
     public function getByCustomerId($customerId, $assetTypeId)
     {
         $result = null;
-        $where = '(' . Entity::ATTR_CUST_ID . '=' . (int)$customerId . ')';
-        $where = "$where AND (" . Entity::ATTR_ASSET_TYPE_ID . '=' . (int)$assetTypeId . ')';
+        $where = '(' . Entity::A_CUST_ID . '=' . (int)$customerId . ')';
+        $where = "$where AND (" . Entity::A_ASSET_TYPE_ID . '=' . (int)$assetTypeId . ')';
         $found = $this->get($where);
         if ($found && count($found)) {
             $result = reset($found);
@@ -232,12 +232,12 @@ class Account
     public function updateBalance($accountId, $delta)
     {
         if ($delta < 0) {
-            $exp = '(`' . Entity::ATTR_BALANCE . '`-' . abs($delta) . ')';
+            $exp = '(`' . Entity::A_BALANCE . '`-' . abs($delta) . ')';
         } else {
-            $exp = '(`' . Entity::ATTR_BALANCE . '`+' . abs($delta) . ')';
+            $exp = '(`' . Entity::A_BALANCE . '`+' . abs($delta) . ')';
         }
         $exp = new \Praxigento\Core\App\Repo\Query\Expression($exp);
-        $bind = [Entity::ATTR_BALANCE => $exp];
+        $bind = [Entity::A_BALANCE => $exp];
         $rowsUpdated = $this->updateById($accountId, $bind);
         return $rowsUpdated;
     }

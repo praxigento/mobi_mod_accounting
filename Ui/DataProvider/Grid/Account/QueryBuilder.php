@@ -40,11 +40,11 @@ class QueryBuilder
     {
         if (is_null($this->mapper)) {
             $map = [
-                self::A_ASSET => self::AS_TYPE_ASSET . '.' . ETypeAsset::ATTR_CODE,
+                self::A_ASSET => self::AS_TYPE_ASSET . '.' . ETypeAsset::A_CODE,
                 self::A_CUST_NAME => $this->getExpForCustName(),
                 self::A_CUST_EMAIL => self::AS_CUSTOMER . '.' . Cfg::E_CUSTOMER_A_EMAIL,
-                self::A_BALANCE => self::AS_ACCOUNT . '.' . EAccount::ATTR_BALANCE,
-                self::A_ID => self::AS_ACCOUNT . '.' . EAccount::ATTR_ID
+                self::A_BALANCE => self::AS_ACCOUNT . '.' . EAccount::A_BALANCE,
+                self::A_ID => self::AS_ACCOUNT . '.' . EAccount::A_ID
             ];
             $this->mapper = new \Praxigento\Core\App\Repo\Query\Criteria\Def\Mapper($map);
         }
@@ -80,8 +80,8 @@ class QueryBuilder
         $tbl = $this->resource->getTableName(EAccount::ENTITY_NAME);
         $as = $asAcc;
         $cols = [
-            self::A_ID => EAccount::ATTR_ID,
-            self::A_BALANCE => EAccount::ATTR_BALANCE
+            self::A_ID => EAccount::A_ID,
+            self::A_BALANCE => EAccount::A_BALANCE
         ];
         $result->from([$as => $tbl], $cols);
 
@@ -89,9 +89,9 @@ class QueryBuilder
         $tbl = $this->resource->getTableName(ETypeAsset::ENTITY_NAME);
         $as = $asAsset;
         $cols = [
-            self::A_ASSET => ETypeAsset::ATTR_CODE
+            self::A_ASSET => ETypeAsset::A_CODE
         ];
-        $cond = $as . '.' . ETypeAsset::ATTR_ID . '=' . $asAcc . '.' . EAccount::ATTR_ASSET_TYPE_ID;
+        $cond = $as . '.' . ETypeAsset::A_ID . '=' . $asAcc . '.' . EAccount::A_ASSET_TYPE_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN customer_entity */
@@ -102,7 +102,7 @@ class QueryBuilder
             self::A_CUST_NAME => $exp,
             self::A_CUST_EMAIL => Cfg::E_CUSTOMER_A_EMAIL
         ];
-        $cond = $as . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAcc . '.' . EAccount::ATTR_CUST_ID;
+        $cond = $as . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAcc . '.' . EAccount::A_CUST_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* return  result */
@@ -115,7 +115,7 @@ class QueryBuilder
         /** @var \Magento\Framework\DB\Select $result */
         $result = $this->getQueryItems();
         /* ... then replace "columns" part with own expression */
-        $value = 'COUNT(' . self::AS_ACCOUNT . '.' . EAccount::ATTR_ID . ')';
+        $value = 'COUNT(' . self::AS_ACCOUNT . '.' . EAccount::A_ID . ')';
 
         /**
          * See method \Magento\Framework\DB\Select\ColumnsRenderer::render:

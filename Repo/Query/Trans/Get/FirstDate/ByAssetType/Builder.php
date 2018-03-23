@@ -39,7 +39,7 @@ class Builder
         $tbl = $this->resource->getTableName(ETrans::ENTITY_NAME);    // name with prefix
         $as = $asTrans;    // alias for 'current table' (currently processed in this block of code)
         $cols = [
-            self::A_DATE_APPLIED => ETrans::ATTR_DATE_APPLIED
+            self::A_DATE_APPLIED => ETrans::A_DATE_APPLIED
         ];
         $result->from([$as => $tbl], $cols);
 
@@ -47,23 +47,23 @@ class Builder
         $tbl = $this->resource->getTableName(EAccount::ENTITY_NAME);
         $as = $asAcc;
         $cols = [];
-        $cond = $as . '.' . EAccount::ATTR_ID . '=' . $asTrans . '.' . ETrans::ATTR_DEBIT_ACC_ID;
+        $cond = $as . '.' . EAccount::A_ID . '=' . $asTrans . '.' . ETrans::A_DEBIT_ACC_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN prxgt_acc_type_asset pata */
         $tbl = $this->resource->getTableName(ETypeAsset::ENTITY_NAME);
         $as = $asType;
         $cols = [];
-        $cond = $as . '.' . ETypeAsset::ATTR_ID . '=' . $asAcc . '.' . EAccount::ATTR_ASSET_TYPE_ID;
+        $cond = $as . '.' . ETypeAsset::A_ID . '=' . $asAcc . '.' . EAccount::A_ASSET_TYPE_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
 
         /* WHERE */
-        $where = $asType . '.' . ETypeAsset::ATTR_CODE . '=:' . self::BND_ASSET_TYPE_CODE;
+        $where = $asType . '.' . ETypeAsset::A_CODE . '=:' . self::BND_ASSET_TYPE_CODE;
         $result->where($where);
 
         /* ORDER & LIMIT */
-        $result->order($asTrans . '.' . ETrans::ATTR_DATE_APPLIED . ' ASC');
+        $result->order($asTrans . '.' . ETrans::A_DATE_APPLIED . ' ASC');
         $result->limit(1);
 
         return $result;

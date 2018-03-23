@@ -70,11 +70,11 @@ class Operation
                 $operationTypeId = $this->repoTypeOper->getIdByCode($operationTypeCode);
             }
             $bindToAdd = [
-                EOperation::ATTR_TYPE_ID => $operationTypeId,
-                EOperation::ATTR_DATE_PREFORMED => $datePerformed
+                EOperation::A_TYPE_ID => $operationTypeId,
+                EOperation::A_DATE_PREFORMED => $datePerformed
             ];
             if (!is_null($note)) {
-                $bindToAdd[EOperation::ATTR_NOTE] = $note;
+                $bindToAdd[EOperation::A_NOTE] = $note;
             }
             $operId = $this->repoOper->create($bindToAdd);
             if ($operId) {

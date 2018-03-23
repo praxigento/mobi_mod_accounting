@@ -27,8 +27,8 @@ class Account_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
     public function test_create()
     {
         $bind = [
-            Entity::ATTR_CUST_ID => static::DEF_CUSTOMER_ID,
-            Entity::ATTR_ASSET_TYPE_ID => static::DEF_ASSET_TYPE_ID
+            Entity::A_CUST_ID => static::DEF_CUSTOMER_ID,
+            Entity::A_ASSET_TYPE_ID => static::DEF_ASSET_TYPE_ID
         ];
         $res = $this->_obj->create($bind);
         $this->assertTrue($res > 0);

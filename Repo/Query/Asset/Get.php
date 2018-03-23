@@ -45,9 +45,9 @@ class Get
         $tbl = $this->resource->getTableName(ETypeAss::ENTITY_NAME);
         $as = $asType;
         $cols = [
-            self::A_ASSET_ID => ETypeAss::ATTR_ID,
-            self::A_ASSET_CODE => ETypeAss::ATTR_CODE,
-            self::A_IS_VISIBLE => ETypeAss::ATTR_IS_VISIBLE
+            self::A_ASSET_ID => ETypeAss::A_ID,
+            self::A_ASSET_CODE => ETypeAss::A_CODE,
+            self::A_IS_VISIBLE => ETypeAss::A_IS_VISIBLE
         ];
         $result->from([$as => $tbl], $cols);
 
@@ -55,11 +55,11 @@ class Get
         $tbl = $this->resource->getTableName(EAcc::ENTITY_NAME);
         $as = $asAcc;
         $cols = [
-            self::A_ACC_ID => EAcc::ATTR_ID,
-            self::A_ACC_BALANCE => EAcc::ATTR_BALANCE
+            self::A_ACC_ID => EAcc::A_ID,
+            self::A_ACC_BALANCE => EAcc::A_BALANCE
         ];
-        $onTypeId = $as . '.' . EAcc::ATTR_ASSET_TYPE_ID . '=' . $asType . '.' . ETypeAss::ATTR_ID;
-        $onCustId = $as . '.' . EAcc::ATTR_CUST_ID . '=:' . self::BND_CUST_ID;
+        $onTypeId = $as . '.' . EAcc::A_ASSET_TYPE_ID . '=' . $asType . '.' . ETypeAss::A_ID;
+        $onCustId = $as . '.' . EAcc::A_CUST_ID . '=:' . self::BND_CUST_ID;
         $cond = "($onTypeId) AND ($onCustId)";
         $result->joinLeft([$as => $tbl], $cond, $cols);
 

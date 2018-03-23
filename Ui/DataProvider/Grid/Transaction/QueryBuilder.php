@@ -37,14 +37,14 @@ class QueryBuilder
     {
         if (is_null($this->mapper)) {
             $map = [
-                self::A_ASSET => self::AS_ASSET . '.' . ETypeAsset::ATTR_CODE,
+                self::A_ASSET => self::AS_ASSET . '.' . ETypeAsset::A_CODE,
                 self::A_CREDIT => self::AS_CUST_CREDIT . '.' . Cfg::E_CUSTOMER_A_EMAIL,
-                self::A_DATE_APPLIED => self::AS_TRANS . '.' . ETransaction::ATTR_DATE_APPLIED,
+                self::A_DATE_APPLIED => self::AS_TRANS . '.' . ETransaction::A_DATE_APPLIED,
                 self::A_DEBIT => self::AS_CUST_DEBIT . '.' . Cfg::E_CUSTOMER_A_EMAIL,
-                self::A_ID_OPER => self::AS_TRANS . '.' . ETransaction::ATTR_OPERATION_ID,
-                self::A_ID_TRANS => self::AS_TRANS . '.' . ETransaction::ATTR_ID,
-                self::A_NOTE => self::AS_TRANS . '.' . ETransaction::ATTR_NOTE,
-                self::A_VALUE => self::AS_TRANS . '.' . ETransaction::ATTR_VALUE
+                self::A_ID_OPER => self::AS_TRANS . '.' . ETransaction::A_OPERATION_ID,
+                self::A_ID_TRANS => self::AS_TRANS . '.' . ETransaction::A_ID,
+                self::A_NOTE => self::AS_TRANS . '.' . ETransaction::A_NOTE,
+                self::A_VALUE => self::AS_TRANS . '.' . ETransaction::A_VALUE
             ];
             $this->mapper = new \Praxigento\Core\App\Repo\Query\Criteria\Def\Mapper($map);
         }
@@ -67,25 +67,25 @@ class QueryBuilder
         $tbl = $this->resource->getTableName(ETransaction::ENTITY_NAME);
         $as = $asTrans;
         $cols = [
-            self::A_ID_TRANS => ETransaction::ATTR_ID,
-            self::A_ID_OPER => ETransaction::ATTR_OPERATION_ID,
-            self::A_DATE_APPLIED => ETransaction::ATTR_DATE_APPLIED,
-            self::A_VALUE => ETransaction::ATTR_VALUE,
-            self::A_NOTE => ETransaction::ATTR_NOTE
+            self::A_ID_TRANS => ETransaction::A_ID,
+            self::A_ID_OPER => ETransaction::A_OPERATION_ID,
+            self::A_DATE_APPLIED => ETransaction::A_DATE_APPLIED,
+            self::A_VALUE => ETransaction::A_VALUE,
+            self::A_NOTE => ETransaction::A_NOTE
         ];
         $result->from([$as => $tbl], $cols);
 
         /* LEFT JOIN prxgt_acc_account DEBIT */
         $tbl = $this->resource->getTableName(EAccount::ENTITY_NAME);
         $as = $asAccDebit;
-        $cond = $asAccDebit . '.' . EAccount::ATTR_ID . '=' . $asTrans . '.' . ETransaction::ATTR_DEBIT_ACC_ID;
+        $cond = $asAccDebit . '.' . EAccount::A_ID . '=' . $asTrans . '.' . ETransaction::A_DEBIT_ACC_ID;
         $cols = [];
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN customer_entity */
         $tbl = $this->resource->getTableName(Cfg::ENTITY_MAGE_CUSTOMER);
         $as = $asCustDebit;
-        $cond = $asCustDebit . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAccDebit . '.' . EAccount::ATTR_CUST_ID;
+        $cond = $asCustDebit . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAccDebit . '.' . EAccount::A_CUST_ID;
         $cols = [
             self::A_DEBIT => Cfg::E_CUSTOMER_A_EMAIL
         ];
@@ -94,14 +94,14 @@ class QueryBuilder
         /* LEFT JOIN prxgt_acc_account CREDIT */
         $tbl = $this->resource->getTableName(EAccount::ENTITY_NAME);
         $as = $asAccCredit;
-        $cond = $asAccCredit . '.' . EAccount::ATTR_ID . '=' . $asTrans . '.' . ETransaction::ATTR_CREDIT_ACC_ID;
+        $cond = $asAccCredit . '.' . EAccount::A_ID . '=' . $asTrans . '.' . ETransaction::A_CREDIT_ACC_ID;
         $cols = [];
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* LEFT JOIN customer_entity */
         $tbl = $this->resource->getTableName(Cfg::ENTITY_MAGE_CUSTOMER);
         $as = $asCustCredit;
-        $cond = $asCustCredit . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAccCredit . '.' . EAccount::ATTR_CUST_ID;
+        $cond = $asCustCredit . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAccCredit . '.' . EAccount::A_CUST_ID;
         $cols = [
             self::A_CREDIT => Cfg::E_CUSTOMER_A_EMAIL
         ];
@@ -110,9 +110,9 @@ class QueryBuilder
         /* LEFT JOIN prxgt_acc_type_asset */
         $tbl = $this->resource->getTableName(ETypeAsset::ENTITY_NAME);
         $as = $asAsset;
-        $cond = $asAsset . '.' . ETypeAsset::ATTR_ID . '=' . $asAccDebit . '.' . EAccount::ATTR_ASSET_TYPE_ID;
+        $cond = $asAsset . '.' . ETypeAsset::A_ID . '=' . $asAccDebit . '.' . EAccount::A_ASSET_TYPE_ID;
         $cols = [
-            self::A_ASSET => ETypeAsset::ATTR_CODE
+            self::A_ASSET => ETypeAsset::A_CODE
         ];
         $result->joinLeft([$as => $tbl], $cond, $cols);
         return $result;
@@ -124,7 +124,7 @@ class QueryBuilder
         /** @var \Magento\Framework\DB\Select $result */
         $result = $this->getQueryItems();
         /* ... then replace "columns" part with own expression */
-        $value = 'COUNT(' . self::AS_TRANS . '.' . ETransaction::ATTR_ID . ')';
+        $value = 'COUNT(' . self::AS_TRANS . '.' . ETransaction::A_ID . ')';
 
         /**
          * See method \Magento\Framework\DB\Select\ColumnsRenderer::render:

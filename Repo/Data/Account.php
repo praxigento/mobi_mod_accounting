@@ -8,10 +8,10 @@ namespace Praxigento\Accounting\Repo\Data;
 class Account
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
-    const ATTR_ASSET_TYPE_ID = 'asset_type_id';
-    const ATTR_BALANCE = 'balance';
-    const ATTR_CUST_ID = 'customer_id';
-    const ATTR_ID = 'id';
+    const A_ASSET_TYPE_ID = 'asset_type_id';
+    const A_BALANCE = 'balance';
+    const A_CUST_ID = 'customer_id';
+    const A_ID = 'id';
     const ENTITY_NAME = 'prxgt_acc_account';
 
     /**
@@ -19,7 +19,7 @@ class Account
      */
     public function getAssetTypeId()
     {
-        $result = parent::get(self::ATTR_ASSET_TYPE_ID);
+        $result = parent::get(self::A_ASSET_TYPE_ID);
         return $result;
     }
 
@@ -28,7 +28,7 @@ class Account
      */
     public function getBalance()
     {
-        $result = parent::get(self::ATTR_BALANCE);
+        $result = parent::get(self::A_BALANCE);
         return $result;
     }
 
@@ -37,7 +37,7 @@ class Account
      */
     public function getCustomerId()
     {
-        $result = parent::get(self::ATTR_CUST_ID);
+        $result = parent::get(self::A_CUST_ID);
         return $result;
     }
 
@@ -46,7 +46,7 @@ class Account
      */
     public function getId()
     {
-        $result = parent::get(self::ATTR_ID);
+        $result = parent::get(self::A_ID);
         return $result;
     }
 
@@ -55,7 +55,7 @@ class Account
      */
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_ID];
+        return [self::A_ID];
     }
 
     /**
@@ -63,7 +63,7 @@ class Account
      */
     public function setAssetTypeId($data)
     {
-        parent::set(self::ATTR_ASSET_TYPE_ID, $data);
+        parent::set(self::A_ASSET_TYPE_ID, $data);
     }
 
     /**
@@ -71,7 +71,7 @@ class Account
      */
     public function setBalance($data)
     {
-        parent::set(self::ATTR_BALANCE, $data);
+        parent::set(self::A_BALANCE, $data);
     }
 
     /**
@@ -79,7 +79,7 @@ class Account
      */
     public function setCustomerId($data)
     {
-        parent::set(self::ATTR_CUST_ID, $data);
+        parent::set(self::A_CUST_ID, $data);
     }
 
     /**
@@ -87,7 +87,7 @@ class Account
      */
     public function setId($data)
     {
-        parent::set(self::ATTR_ID, $data);
+        parent::set(self::A_ID, $data);
     }
 
 }

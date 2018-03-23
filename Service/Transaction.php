@@ -61,14 +61,14 @@ class Transaction
             ) {
                 /* add transaction */
                 $toAdd = [
-                    ETransaction::ATTR_OPERATION_ID => $operationId,
-                    ETransaction::ATTR_DEBIT_ACC_ID => $debitAccId,
-                    ETransaction::ATTR_CREDIT_ACC_ID => $creditAccId,
-                    ETransaction::ATTR_VALUE => $value,
-                    ETransaction::ATTR_DATE_APPLIED => $dateApplied
+                    ETransaction::A_OPERATION_ID => $operationId,
+                    ETransaction::A_DEBIT_ACC_ID => $debitAccId,
+                    ETransaction::A_CREDIT_ACC_ID => $creditAccId,
+                    ETransaction::A_VALUE => $value,
+                    ETransaction::A_DATE_APPLIED => $dateApplied
                 ];
                 if (!is_null($note)) {
-                    $toAdd[ETransaction::ATTR_NOTE] = $note;
+                    $toAdd[ETransaction::A_NOTE] = $note;
                 }
                 $idCreated = $this->repoTrans->create($toAdd);
                 $result->setTransactionId($idCreated);

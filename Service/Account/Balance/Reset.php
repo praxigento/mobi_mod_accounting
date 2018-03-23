@@ -33,7 +33,7 @@ class Reset
         $dateFrom = $request->getDateFrom();
         $conn = $this->repoBalance->getConnection();
         $quoted = $conn->quote($dateFrom);
-        $where = ABalance::ATTR_DATE . '>=' . $quoted;
+        $where = ABalance::A_DATE . '>=' . $quoted;
         $rows = $this->repoBalance->delete($where);
         if ($rows !== false) {
             $result->setRowsDeleted($rows);

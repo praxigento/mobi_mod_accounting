@@ -23,7 +23,7 @@ class Builder
         $result = parent::build();    // this is independent query, ignore input query builder
 
         /* WHERE */
-        $where = self::AS_ACC . '.' . Account::ATTR_ASSET_TYPE_ID . '=:' . self::BIND_ASSET_TYPE_ID;
+        $where = self::AS_ACC . '.' . Account::A_ASSET_TYPE_ID . '=:' . self::BIND_ASSET_TYPE_ID;
         $result->where($where);
 
         /* result */

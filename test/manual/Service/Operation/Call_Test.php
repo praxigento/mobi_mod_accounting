@@ -20,17 +20,17 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         $req->datePerformed = '2015-11-10 18:43:57';
         $req->transactions = [
             [
-                Transaction::ATTR_DEBIT_ACC_ID  => 1,
-                Transaction::ATTR_CREDIT_ACC_ID => 2,
-                Transaction::ATTR_VALUE         => 5
+                Transaction::A_DEBIT_ACC_ID  => 1,
+                Transaction::A_CREDIT_ACC_ID => 2,
+                Transaction::A_VALUE         => 5
             ], [
-                Transaction::ATTR_DEBIT_ACC_ID  => 1,
-                Transaction::ATTR_CREDIT_ACC_ID => 2,
-                Transaction::ATTR_VALUE         => 10
+                Transaction::A_DEBIT_ACC_ID  => 1,
+                Transaction::A_CREDIT_ACC_ID => 2,
+                Transaction::A_VALUE         => 10
             ], [
-                Transaction::ATTR_DEBIT_ACC_ID  => 1,
-                Transaction::ATTR_CREDIT_ACC_ID => 2,
-                Transaction::ATTR_VALUE         => 15
+                Transaction::A_DEBIT_ACC_ID  => 1,
+                Transaction::A_CREDIT_ACC_ID => 2,
+                Transaction::A_VALUE         => 15
             ]
         ];
         /** @var  $resp \Praxigento\Accounting\Api\Service\Operation\Response */

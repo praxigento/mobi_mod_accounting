@@ -56,8 +56,8 @@ class Builder
         $tbl = $this->resource->getTableName(Account::ENTITY_NAME);
         $as = $asAcc;
         $cols = [
-            self::A_ACC_ID => Account::ATTR_ID,
-            self::A_CUST_ID => Account::ATTR_CUST_ID
+            self::A_ACC_ID => Account::A_ID,
+            self::A_CUST_ID => Account::A_CUST_ID
         ];
         $result->from([$as => $tbl], $cols);
 
@@ -67,21 +67,21 @@ class Builder
         $as = $asMax;
         $cols = [];
         $on = $asMax . '.' . QMaxDates::A_ACC_ID . '='
-            . $asAcc . '.' . Account::ATTR_ID;
+            . $asAcc . '.' . Account::A_ID;
         $result->joinLeft([$as => $tbl], $on, $cols);
 
         /* LEFT JOIN prxgt_acc_balance (to get closing balances on found max dates) */
         $tbl = $this->resource->getTableName(Balance::ENTITY_NAME);
         $as = $asBal;
         $cols = [
-            self::A_BALANCE => Balance::ATTR_BALANCE_CLOSE
+            self::A_BALANCE => Balance::A_BALANCE_CLOSE
         ];
-        $on = $asBal . '.' . Balance::ATTR_ACCOUNT_ID . "=$asMax." . QMaxDates::A_ACC_ID;
-        $on .= " AND $asBal." . Balance::ATTR_DATE . "=$asMax." . QMaxDates::A_DATE_MAX;
+        $on = $asBal . '.' . Balance::A_ACCOUNT_ID . "=$asMax." . QMaxDates::A_ACC_ID;
+        $on .= " AND $asBal." . Balance::A_DATE . "=$asMax." . QMaxDates::A_DATE_MAX;
         $result->joinLeft([$as => $tbl], $on, $cols);
 
         /* WHERE */
-        $expValue = "$asBal." . Balance::ATTR_DATE . " IS NOT NULL";
+        $expValue = "$asBal." . Balance::A_DATE . " IS NOT NULL";
         $exp = new \Praxigento\Core\App\Repo\Query\Expression($expValue);
         $result->where($exp);
 
