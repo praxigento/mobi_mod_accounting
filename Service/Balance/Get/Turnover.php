@@ -19,19 +19,19 @@ class Turnover
     /** @var \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder */
     private $qbBalClose;
     /** @var \Praxigento\Accounting\Repo\Dao\Type\Asset */
-    private $repoTypeAsset;
+    private $daoTypeAsset;
 
     public function __construct(
         \Praxigento\Core\Api\App\Logger\Main $logger,
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Api\Helper\Period $hlpPeriod,
         \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder $qbBalClose,
-        \Praxigento\Accounting\Repo\Dao\Type\Asset $repoTypeAsset
+        \Praxigento\Accounting\Repo\Dao\Type\Asset $daoTypeAsset
     ) {
         parent::__construct($logger, $manObj);
         $this->hlpPeriod = $hlpPeriod;
         $this->qbBalClose = $qbBalClose;
-        $this->repoTypeAsset = $repoTypeAsset;
+        $this->daoTypeAsset = $daoTypeAsset;
 
     }
 
@@ -46,7 +46,7 @@ class Turnover
 
         /* analyze conditions */
         if (is_null($assetTypeId)) {
-            $assetTypeId = $this->repoTypeAsset->getIdByCode($assetTypeCode);
+            $assetTypeId = $this->daoTypeAsset->getIdByCode($assetTypeCode);
         }
         $dateFromBefore = $this->hlpPeriod->getPeriodPrev($dateFrom);
 

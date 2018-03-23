@@ -16,33 +16,33 @@ class Change
     /** @var \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     private $manTrans;
     /** @var \Praxigento\Accounting\Repo\Dao\Account */
-    private $repoAccount;
+    private $daoAccount;
     /** @var \Praxigento\Accounting\Repo\Dao\Log\Change\Admin */
-    private $repoLogChangeAdmin;
+    private $daoLogChangeAdmin;
     /** @var \Praxigento\Accounting\Repo\Dao\Operation */
-    private $repoOperation;
+    private $daoOperation;
     /** @var \Praxigento\Accounting\Repo\Dao\Transaction */
-    private $repoTransaction;
+    private $daoTransaction;
     /** @var \Praxigento\Accounting\Repo\Dao\Type\Operation */
-    private $repoTypeOper;
+    private $daoTypeOper;
 
     public function __construct(
         \Praxigento\Core\Api\App\Logger\Main $logger,
         \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
-        \Praxigento\Accounting\Repo\Dao\Account $repoAccount,
-        \Praxigento\Accounting\Repo\Dao\Operation $repoOperation,
-        \Praxigento\Accounting\Repo\Dao\Transaction $repoTransaction,
-        \Praxigento\Accounting\Repo\Dao\Type\Operation $repoTypeOper,
-        \Praxigento\Accounting\Repo\Dao\Log\Change\Admin $repoLogChangeAdmin
+        \Praxigento\Accounting\Repo\Dao\Account $daoAccount,
+        \Praxigento\Accounting\Repo\Dao\Operation $daoOperation,
+        \Praxigento\Accounting\Repo\Dao\Transaction $daoTransaction,
+        \Praxigento\Accounting\Repo\Dao\Type\Operation $daoTypeOper,
+        \Praxigento\Accounting\Repo\Dao\Log\Change\Admin $daoLogChangeAdmin
     ) {
         $this->manTrans = $manTrans;
         $this->hlpDate = $hlpDate;
-        $this->repoAccount = $repoAccount;
-        $this->repoOperation = $repoOperation;
-        $this->repoTransaction = $repoTransaction;
-        $this->repoTypeOper = $repoTypeOper;
-        $this->repoLogChangeAdmin = $repoLogChangeAdmin;
+        $this->daoAccount = $daoAccount;
+        $this->daoOperation = $daoOperation;
+        $this->daoTransaction = $daoTransaction;
+        $this->daoTypeOper = $daoTypeOper;
+        $this->daoLogChangeAdmin = $daoLogChangeAdmin;
     }
 
     /**
@@ -59,17 +59,17 @@ class Change
         $def = $this->manTrans->begin();
         try {
             /* get account's asset type by ID */
-            $assetTypeId = $this->repoAccount->getAssetTypeId($accCustId);
+            $assetTypeId = $this->daoAccount->getAssetTypeId($accCustId);
             /* get system account id for given asset type */
-            $accSysId = $this->repoAccount->getSystemAccountId($assetTypeId);
+            $accSysId = $this->daoAccount->getSystemAccountId($assetTypeId);
             /* get operation type by code and date performed */
-            $operTypeId = $this->repoTypeOper->getIdByCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
+            $operTypeId = $this->daoTypeOper->getIdByCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
             $dateNow = $this->hlpDate->getUtcNowForDb();
             /* create operation */
             $operation = new \Praxigento\Accounting\Repo\Data\Operation();
             $operation->setTypeId($operTypeId);
             $operation->setDatePerformed($dateNow);
-            $operId = $this->repoOperation->create($operation);
+            $operId = $this->daoOperation->create($operation);
             /* create transaction */
             $trans = new \Praxigento\Accounting\Repo\Data\Transaction();
             $trans->setOperationId($operId);
@@ -82,12 +82,12 @@ class Change
                 $trans->setCreditAccId($accSysId);
             }
             $trans->setValue(abs($value));
-            $this->repoTransaction->create($trans);
+            $this->daoTransaction->create($trans);
             /* log details (operator name who performs the operation) */
             $log = new \Praxigento\Accounting\Repo\Data\Log\Change\Admin();
             $log->setOperationRef($operId);
             $log->setUserRef($adminUserId);
-            $this->repoLogChangeAdmin->create($log);
+            $this->daoLogChangeAdmin->create($log);
             $this->manTrans->commit($def);
             $result->markSucceed();
         } finally {

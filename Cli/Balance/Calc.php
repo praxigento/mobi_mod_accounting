@@ -15,13 +15,13 @@ class Calc
     const OPT_DATESTAMP_NAME = 'date';
     const OPT_DATESTAMP_SHORTCUT = 'd';
     /** @var \Praxigento\Accounting\Repo\Dao\Type\Asset */
-    protected $repoTypeAsset;
+    protected $daoTypeAsset;
     /** @var \Praxigento\Accounting\Service\Account\Balance\Calc */
     protected $servBalance;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Praxigento\Accounting\Repo\Dao\Type\Asset $repoTypeAsset,
+        \Praxigento\Accounting\Repo\Dao\Type\Asset $daoTypeAsset,
         \Praxigento\Accounting\Service\Account\Balance\Calc $servBalance
     ) {
         parent::__construct(
@@ -29,7 +29,7 @@ class Calc
             'prxgt:acc:balance:calc',
             'Calculate accounts balances.'
         );
-        $this->repoTypeAsset = $repoTypeAsset;
+        $this->daoTypeAsset = $daoTypeAsset;
         $this->servBalance = $servBalance;
     }
 
@@ -76,7 +76,7 @@ class Calc
     protected function getAssetTypesIds()
     {
         $result = [];
-        $types = $this->repoTypeAsset->get();
+        $types = $this->daoTypeAsset->get();
         foreach ($types as $type) {
             /* convert to DataObject if repo response is array */
             /** @var \Praxigento\Accounting\Repo\Data\Type\Asset $obj */

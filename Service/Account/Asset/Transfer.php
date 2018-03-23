@@ -21,15 +21,15 @@ class Transfer
     /** @var \Praxigento\Core\Api\Helper\Date */
     private $hlpData;
     /** @var \Praxigento\Accounting\Repo\Dao\Account */
-    private $repoAcc;
+    private $daoAcc;
 
     public function __construct(
         \Praxigento\Core\Api\Helper\Date $hlpData,
-        \Praxigento\Accounting\Repo\Dao\Account $repoAcc,
+        \Praxigento\Accounting\Repo\Dao\Account $daoAcc,
         \Praxigento\Accounting\Api\Service\Operation $callOper
     ) {
         $this->hlpData = $hlpData;
-        $this->repoAcc = $repoAcc;
+        $this->daoAcc = $daoAcc;
         $this->callOper = $callOper;
     }
 
@@ -52,10 +52,10 @@ class Transfer
 
         /* perform processing */
         /* find accounts */
-        $accCust = $this->repoAcc->getByCustomerId($customerId, $assetTypeId);
+        $accCust = $this->daoAcc->getByCustomerId($customerId, $assetTypeId);
         $accIdCust = $accCust->getId();
         if ($isDirect) {
-            $accIdParty = $this->repoAcc->getSystemAccountId($assetTypeId);
+            $accIdParty = $this->daoAcc->getSystemAccountId($assetTypeId);
             /* define transfer direction */
             if ($amount > 0) {
                 /* add funds to customer account */
@@ -67,7 +67,7 @@ class Transfer
                 $accIdCredit = $accIdParty;
             }
         } else {
-            $accParty = $this->repoAcc->getByCustomerId($counterPartyId, $assetTypeId);
+            $accParty = $this->daoAcc->getByCustomerId($counterPartyId, $assetTypeId);
             $accIdParty = $accParty->getId();
             if ($amount > 0) {
                 /* move funds from customer account to party account */

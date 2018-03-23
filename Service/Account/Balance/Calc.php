@@ -21,24 +21,24 @@ class Calc
     /** @var  \Praxigento\Core\Api\Helper\Period */
     private $hlpPeriod;
     /** @var \Praxigento\Accounting\Repo\Dao\Balance */
-    private $repoBalance;
+    private $daoBalance;
     /** @var \Praxigento\Accounting\Repo\Dao\Transaction */
-    private $repoTransaction;
+    private $daoTransaction;
     /** @var \Praxigento\Accounting\Service\Account\Balance\LastDate */
     private $servBalanceLastDate;
     /** @var \Praxigento\Accounting\Service\Account\Balance\Calc\Simple Simple balance calculator. */
     private $servCalcSimple;
 
     public function __construct(
-        \Praxigento\Accounting\Repo\Dao\Balance $repoBalance,
-        \Praxigento\Accounting\Repo\Dao\Transaction $repoTransaction,
+        \Praxigento\Accounting\Repo\Dao\Balance $daoBalance,
+        \Praxigento\Accounting\Repo\Dao\Transaction $daoTransaction,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Core\Api\Helper\Period $hlpPeriod,
         \Praxigento\Accounting\Service\Account\Balance\LastDate $servBalanceLastDate,
         \Praxigento\Accounting\Service\Account\Balance\Calc\Simple $servCalcSimple
     ) {
-        $this->repoBalance = $repoBalance;
-        $this->repoTransaction = $repoTransaction;
+        $this->daoBalance = $daoBalance;
+        $this->daoTransaction = $daoTransaction;
         $this->hlpDate = $hlpDate;
         $this->hlpPeriod = $hlpPeriod;
         $this->servBalanceLastDate = $servBalanceLastDate;
@@ -62,7 +62,7 @@ class Calc
         $reqLastDate->setAssetTypeCode($assetTypeCode);
         $respLastDate = $this->servBalanceLastDate->exec($reqLastDate);
         $lastDate = $respLastDate->getLastDate();
-        $balances = $this->repoBalance->getOnDate($assetTypeId, $lastDate);
+        $balances = $this->daoBalance->getOnDate($assetTypeId, $lastDate);
         /* check date to */
         if (is_null($dateTo)) {
             /* use 'yesterday' */
@@ -75,9 +75,9 @@ class Calc
             /* first date should be after balance last date */
             $dtFrom = $this->hlpPeriod->getTimestampNextFrom($lastDate);
             $dtTo = $this->hlpPeriod->getTimestampTo($dateTo);
-            $trans = $this->repoTransaction->getForPeriod($assetTypeId, $dtFrom, $dtTo);
+            $trans = $this->daoTransaction->getForPeriod($assetTypeId, $dtFrom, $dtTo);
             $updates = $this->servCalcSimple->exec($balances, $trans);
-            $this->repoBalance->updateBalances($updates);
+            $this->daoBalance->updateBalances($updates);
             $result->markSucceed();
         }
         return $result;

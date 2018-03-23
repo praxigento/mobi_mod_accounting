@@ -14,10 +14,10 @@ class Operation extends BaseEntityRepo
 {
     public function __construct(
         ResourceConnection $resource,
-        IRepoGeneric $repoGeneric
+        IRepoGeneric $daoGeneric
     )
     {
-        parent::__construct($resource, $repoGeneric, Entity::class);
+        parent::__construct($resource, $daoGeneric, Entity::class);
     }
 
     /**

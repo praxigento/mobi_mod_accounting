@@ -10,10 +10,10 @@ class Balance
 {
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\App\Repo\IGeneric $repoGeneric
+        \Praxigento\Core\App\Repo\IGeneric $daoGeneric
     )
     {
-        parent::__construct($resource, $repoGeneric, \Praxigento\Accounting\Repo\Data\Balance::class);
+        parent::__construct($resource, $daoGeneric, \Praxigento\Accounting\Repo\Data\Balance::class);
     }
 
     /**

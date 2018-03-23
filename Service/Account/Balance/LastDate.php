@@ -15,21 +15,21 @@ class LastDate
     /** @var  \Praxigento\Core\Api\Helper\Period */
     private $hlpPeriod;
     /** @var \Praxigento\Accounting\Repo\Dao\Balance */
-    private $repoBalance;
+    private $daoBalance;
     /** @var \Praxigento\Accounting\Repo\Dao\Transaction */
-    private $repoTransaction;
+    private $daoTransaction;
     /** @var \Praxigento\Accounting\Repo\Dao\Type\Asset */
-    private $repoTypeAsset;
+    private $daoTypeAsset;
 
     public function __construct(
-        \Praxigento\Accounting\Repo\Dao\Balance $repoBalance,
-        \Praxigento\Accounting\Repo\Dao\Transaction $repoTransaction,
-        \Praxigento\Accounting\Repo\Dao\Type\Asset $repoTypeAsset,
+        \Praxigento\Accounting\Repo\Dao\Balance $daoBalance,
+        \Praxigento\Accounting\Repo\Dao\Transaction $daoTransaction,
+        \Praxigento\Accounting\Repo\Dao\Type\Asset $daoTypeAsset,
         \Praxigento\Core\Api\Helper\Period $hlpPeriod
     ) {
-        $this->repoBalance = $repoBalance;
-        $this->repoTransaction = $repoTransaction;
-        $this->repoTypeAsset = $repoTypeAsset;
+        $this->daoBalance = $daoBalance;
+        $this->daoTransaction = $daoTransaction;
+        $this->daoTypeAsset = $daoTypeAsset;
         $this->hlpPeriod = $hlpPeriod;
     }
 
@@ -46,10 +46,10 @@ class LastDate
         $assetTypeId = $request->getAssetTypeId();
         $assetTypeCode = $request->getAssetTypeCode();
         if (is_null($assetTypeId)) {
-            $assetTypeId = $this->repoTypeAsset->getIdByCode($assetTypeCode);
+            $assetTypeId = $this->daoTypeAsset->getIdByCode($assetTypeCode);
         }
         /* get the maximal date for balance */
-        $balanceMaxDate = $this->repoBalance->getMaxDate($assetTypeId);
+        $balanceMaxDate = $this->daoBalance->getMaxDate($assetTypeId);
         if ($balanceMaxDate) {
             /* there is balance data */
             //$dayBefore = $this->_toolPeriod->getPeriodPrev($balanceMaxDate, HPeriod::TYPE_DAY);
@@ -57,7 +57,7 @@ class LastDate
             $result->markSucceed();
         } else {
             /* there is no balance data yet, get transaction with minimal date */
-            $transactionMinDate = $this->repoTransaction->getMinDateApplied($assetTypeId);
+            $transactionMinDate = $this->daoTransaction->getMinDateApplied($assetTypeId);
             if ($transactionMinDate) {
                 $period = $this->hlpPeriod->getPeriodCurrent($transactionMinDate);
                 $dayBefore = $this->hlpPeriod->getPeriodPrev($period, HPeriod::TYPE_DAY);

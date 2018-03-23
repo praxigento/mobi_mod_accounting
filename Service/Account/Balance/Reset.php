@@ -13,12 +13,12 @@ use Praxigento\Accounting\Service\Account\Balance\Reset\Response as AResponse;
 class Reset
 {
     /** @var \Praxigento\Accounting\Repo\Dao\Balance */
-    private $repoBalance;
+    private $daoBalance;
 
     public function __construct(
-        \Praxigento\Accounting\Repo\Dao\Balance $repoBalance
+        \Praxigento\Accounting\Repo\Dao\Balance $daoBalance
     ) {
-        $this->repoBalance = $repoBalance;
+        $this->daoBalance = $daoBalance;
     }
 
     /**
@@ -31,10 +31,10 @@ class Reset
         assert($request instanceof ARequest);
         $result = new AResponse();
         $dateFrom = $request->getDateFrom();
-        $conn = $this->repoBalance->getConnection();
+        $conn = $this->daoBalance->getConnection();
         $quoted = $conn->quote($dateFrom);
         $where = ABalance::A_DATE . '>=' . $quoted;
-        $rows = $this->repoBalance->delete($where);
+        $rows = $this->daoBalance->delete($where);
         if ($rows !== false) {
             $result->setRowsDeleted($rows);
             $result->markSucceed();

@@ -23,10 +23,10 @@ class Account
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\App\Repo\IGeneric $repoGeneric
+        \Praxigento\Core\App\Repo\IGeneric $daoGeneric
     )
     {
-        parent::__construct($resource, $repoGeneric, Entity::class);
+        parent::__construct($resource, $daoGeneric, Entity::class);
     }
 
     public function cacheReset()
@@ -203,14 +203,14 @@ class Account
             $conn = $this->conn;
             /* there is no cached value for the customer ID, select data from DB */
             $where = Cfg::E_CUSTOMER_A_EMAIL . '=' . $conn->quote(self::SYS_CUSTOMER_EMAIL);
-            $data = $this->repoGeneric->getEntities(Cfg::ENTITY_MAGE_CUSTOMER, Cfg::E_CUSTOMER_A_ENTITY_ID,
+            $data = $this->daoGeneric->getEntities(Cfg::ENTITY_MAGE_CUSTOMER, Cfg::E_CUSTOMER_A_ENTITY_ID,
                 $where);
             if (count($data) == 0) {
                 $bind = [
                     Cfg::E_CUSTOMER_A_WEBSITE_ID => self::ADMIN_WEBSITE_ID,
                     Cfg::E_CUSTOMER_A_EMAIL => self::SYS_CUSTOMER_EMAIL
                 ];
-                $id = $this->repoGeneric->addEntity(Cfg::ENTITY_MAGE_CUSTOMER, $bind);
+                $id = $this->daoGeneric->addEntity(Cfg::ENTITY_MAGE_CUSTOMER, $bind);
                 if ($id > 0) {
                     $this->cachedSysCustId = $id;
                 }

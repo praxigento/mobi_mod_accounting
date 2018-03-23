@@ -17,29 +17,29 @@ class Operation
     /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     private $manTrans;
     /** @var \Praxigento\Accounting\Repo\Dao\Log\Change\Admin */
-    private $repoELogChangeAdmin;
+    private $daoELogChangeAdmin;
     /** @var \Praxigento\Accounting\Repo\Dao\Log\Change\Customer */
-    private $repoELogChangeCust;
+    private $daoELogChangeCust;
     /** @var  \Praxigento\Accounting\Repo\Dao\Operation */
-    private $repoOper;
+    private $daoOper;
     /** @var  \Praxigento\Accounting\Repo\Dao\Type\Operation */
-    private $repoTypeOper;
+    private $daoTypeOper;
     /** @var \Praxigento\Accounting\Service\Operation\Add */
     private $subAdd;
 
     public function __construct(
         \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
-        \Praxigento\Accounting\Repo\Dao\Operation $repoOper,
-        \Praxigento\Accounting\Repo\Dao\Type\Operation $repoTypeOper,
-        \Praxigento\Accounting\Repo\Dao\Log\Change\Admin $repoELogChangeAdmin,
-        \Praxigento\Accounting\Repo\Dao\Log\Change\Customer $repoELogChangeCust,
+        \Praxigento\Accounting\Repo\Dao\Operation $daoOper,
+        \Praxigento\Accounting\Repo\Dao\Type\Operation $daoTypeOper,
+        \Praxigento\Accounting\Repo\Dao\Log\Change\Admin $daoELogChangeAdmin,
+        \Praxigento\Accounting\Repo\Dao\Log\Change\Customer $daoELogChangeCust,
         \Praxigento\Accounting\Service\Operation\Add $subAdd
     ) {
         $this->manTrans = $manTrans;
-        $this->repoTypeOper = $repoTypeOper;
-        $this->repoOper = $repoOper;
-        $this->repoELogChangeAdmin = $repoELogChangeAdmin;
-        $this->repoELogChangeCust = $repoELogChangeCust;
+        $this->daoTypeOper = $daoTypeOper;
+        $this->daoOper = $daoOper;
+        $this->daoELogChangeAdmin = $daoELogChangeAdmin;
+        $this->daoELogChangeCust = $daoELogChangeCust;
         $this->subAdd = $subAdd;
     }
 
@@ -67,7 +67,7 @@ class Operation
         try {
             /* add operation itself */
             if (!$operationTypeId) {
-                $operationTypeId = $this->repoTypeOper->getIdByCode($operationTypeCode);
+                $operationTypeId = $this->daoTypeOper->getIdByCode($operationTypeCode);
             }
             $bindToAdd = [
                 EOperation::A_TYPE_ID => $operationTypeId,
@@ -76,7 +76,7 @@ class Operation
             if (!is_null($note)) {
                 $bindToAdd[EOperation::A_NOTE] = $note;
             }
-            $operId = $this->repoOper->create($bindToAdd);
+            $operId = $this->daoOper->create($bindToAdd);
             if ($operId) {
                 $transIds = $this->subAdd->exec($operId, $transactions, $datePerformed, $asRef);
                 $result->setOperationId($operId);
@@ -86,14 +86,14 @@ class Operation
                     $log = new \Praxigento\Accounting\Repo\Data\Log\Change\Customer();
                     $log->setCustomerRef($customerId);
                     $log->setOperationRef($operId);
-                    $this->repoELogChangeCust->create($log);
+                    $this->daoELogChangeCust->create($log);
                 }
                 /* log admin link */
                 if ($adminUserId) {
                     $log = new \Praxigento\Accounting\Repo\Data\Log\Change\Admin();
                     $log->setUserRef($adminUserId);
                     $log->setOperationRef($operId);
-                    $this->repoELogChangeAdmin->create($log);
+                    $this->daoELogChangeAdmin->create($log);
                 }
                 $this->manTrans->commit($def);
                 $result->markSucceed();

@@ -18,17 +18,17 @@ class Get
     /** @var array save accounts data for system customer. */
     private $cachedSysAccs = [];
     /** @var  \Praxigento\Accounting\Repo\Dao\Account */
-    private $repoAccount;
+    private $daoAccount;
     /** @var \Praxigento\Accounting\Repo\Dao\Type\Asset */
-    private $repoTypeAsset;
+    private $daoTypeAsset;
 
     public function __construct(
-        \Praxigento\Accounting\Repo\Dao\Account $repoAccount,
-        \Praxigento\Accounting\Repo\Dao\Type\Asset $repoTypeAsset
+        \Praxigento\Accounting\Repo\Dao\Account $daoAccount,
+        \Praxigento\Accounting\Repo\Dao\Type\Asset $daoTypeAsset
     )
     {
-        $this->repoAccount = $repoAccount;
-        $this->repoTypeAsset = $repoTypeAsset;
+        $this->daoAccount = $daoAccount;
+        $this->daoTypeAsset = $daoTypeAsset;
     }
 
     /**
@@ -73,7 +73,7 @@ class Get
         /** perform processing */
         if (is_null($typeId)) {
             /* get type ID by code if missed */
-            $typeId = $this->repoTypeAsset->getIdByCode($typeCode);
+            $typeId = $this->daoTypeAsset->getIdByCode($typeCode);
         }
 
         /* return cached data for system customer if exists */
@@ -86,7 +86,7 @@ class Get
             /* ... or get data from DB */
             if ($isSys) {
                 /* get system customer ID */
-                $custId = $this->repoAccount->getSystemCustomerId();
+                $custId = $this->daoAccount->getSystemCustomerId();
             }
             $account = $this->getAccount($custId, $typeId);
             $result = $this->composeResult($account);
@@ -111,14 +111,14 @@ class Get
     {
         /** perform processing & compose result */
         /* get account by customerId & assetTypeId */
-        $result = $this->repoAccount->getByCustomerId($custId, $typeId);
+        $result = $this->daoAccount->getByCustomerId($custId, $typeId);
         if (!$result) {
             /* create new account */
             $result = new EAccount();
             $result->setCustomerId($custId);
             $result->setAssetTypeId($typeId);
             $result->setBalance(0);
-            $accId = $this->repoAccount->create($result);
+            $accId = $this->daoAccount->create($result);
             $result->setId($accId);
         }
         return $result;

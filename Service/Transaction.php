@@ -16,18 +16,18 @@ class Transaction
     /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     private $manTrans;
     /** @var  \Praxigento\Accounting\Repo\Dao\Account */
-    private $repoAcc;
+    private $daoAcc;
     /** @var  \Praxigento\Accounting\Repo\Dao\Transaction */
-    private $repoTrans;
+    private $daoTrans;
 
     public function __construct(
         \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
-        \Praxigento\Accounting\Repo\Dao\Account $repoAcc,
-        \Praxigento\Accounting\Repo\Dao\Transaction $repoTrans
+        \Praxigento\Accounting\Repo\Dao\Account $daoAcc,
+        \Praxigento\Accounting\Repo\Dao\Transaction $daoTrans
     ) {
         $this->manTrans = $manTrans;
-        $this->repoAcc = $repoAcc;
-        $this->repoTrans = $repoTrans;
+        $this->daoAcc = $daoAcc;
+        $this->daoTrans = $daoTrans;
     }
 
     /**
@@ -49,10 +49,10 @@ class Transaction
         $def = $this->manTrans->begin();
         try {
             /* get account type for debit account */
-            $debitAcc = $this->repoAcc->getById($debitAccId);
+            $debitAcc = $this->daoAcc->getById($debitAccId);
             $debitAssetTypeId = $debitAcc->getAssetTypeId();
             /* get account type for credit account */
-            $creditAcc = $this->repoAcc->getById($creditAccId);
+            $creditAcc = $this->daoAcc->getById($creditAccId);
             $creditAssetTypeId = $creditAcc->getAssetTypeId();
             /* asset types should be equals */
             if (
@@ -70,7 +70,7 @@ class Transaction
                 if (!is_null($note)) {
                     $toAdd[ETransaction::A_NOTE] = $note;
                 }
-                $idCreated = $this->repoTrans->create($toAdd);
+                $idCreated = $this->daoTrans->create($toAdd);
                 $result->setTransactionId($idCreated);
             } else {
                 throw new \Exception("Asset type (#$debitAssetTypeId) for debit account #$debitAccId is not equal to "

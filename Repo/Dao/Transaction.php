@@ -15,12 +15,12 @@ class Transaction
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\App\Repo\IGeneric $repoGeneric,
-        \Praxigento\Accounting\Repo\Dao\Account $repoAccount
+        \Praxigento\Core\App\Repo\IGeneric $daoGeneric,
+        \Praxigento\Accounting\Repo\Dao\Account $daoAccount
     )
     {
-        parent::__construct($resource, $repoGeneric, Entity::class);
-        $this->_repoAccount = $repoAccount;
+        parent::__construct($resource, $daoGeneric, Entity::class);
+        $this->_repoAccount = $daoAccount;
     }
 
     /**
