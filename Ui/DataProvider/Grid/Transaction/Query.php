@@ -7,7 +7,7 @@ use Praxigento\Accounting\Repo\Data\Account as EAccount;
 use Praxigento\Accounting\Repo\Data\Transaction as ETransaction;
 use Praxigento\Accounting\Repo\Data\Type\Asset as ETypeAsset;
 
-class QueryBuilder
+class Query
     extends \Praxigento\Core\App\Ui\DataProvider\Grid\Query\Builder
 {
 

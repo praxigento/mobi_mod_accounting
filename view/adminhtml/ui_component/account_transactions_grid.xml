@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
 
     <!-- **************************************************** -->
     <!-- Data loader (???) -->
@@ -19,7 +20,7 @@
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">\Praxigento\Core\App\Ui\DataProvider\Grid\Base</argument>
             <argument name="name" xsi:type="string">account_transactions_grid_data_source</argument>
-            <argument name="gridQueryBuilder" xsi:type="object">\Praxigento\Accounting\Ui\DataProvider\Grid\Transaction\QueryBuilder</argument>
+            <argument name="gridQueryBuilder" xsi:type="object">\Praxigento\Accounting\Ui\DataProvider\Grid\Transaction\Query</argument>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">

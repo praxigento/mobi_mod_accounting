@@ -1,14 +1,14 @@
 <?php
 
-namespace Praxigento\Accounting\Ui\DataProvider\Grid\Type\Asset;
+namespace Praxigento\Accounting\Ui\DataProvider\Grid\Type\Operation;
 
-use Praxigento\Accounting\Repo\Data\Type\Asset as ETypeAsset;
+use Praxigento\Accounting\Repo\Data\Type\Operation as ETypeOperation;
 
-class QueryBuilder
+class Query
     extends \Praxigento\Core\App\Ui\DataProvider\Grid\Query\Builder
 {
     /**#@+ Tables aliases for external usage ('camelCase' naming) */
-    const AS_TYP_ASSET = 'tas';
+    const AS_TYP_OPERATION = 'top';
     /**#@- */
     const A_CODE = 'code';
     /**#@+
@@ -23,9 +23,9 @@ class QueryBuilder
     {
         if (is_null($this->mapper)) {
             $map = [
-                self::A_ID_ASSET => self::AS_TYP_ASSET . '.' . ETypeAsset::A_ID,
-                self::A_CODE => self::AS_TYP_ASSET . '.' . ETypeAsset::A_CODE,
-                self::A_NOTE => self::AS_TYP_ASSET . '.' . ETypeAsset::A_NOTE
+                self::A_ID_ASSET => self::AS_TYP_OPERATION . '.' . ETypeOperation::A_ID,
+                self::A_CODE => self::AS_TYP_OPERATION . '.' . ETypeOperation::A_CODE,
+                self::A_NOTE => self::AS_TYP_OPERATION . '.' . ETypeOperation::A_NOTE
             ];
             $this->mapper = new \Praxigento\Core\App\Repo\Query\Criteria\Def\Mapper($map);
         }
@@ -37,15 +37,15 @@ class QueryBuilder
     {
         $result = $this->conn->select();
         /* define tables aliases for internal usage (in this method) */
-        $asTypAsset = self::AS_TYP_ASSET;
+        $asTypAsset = self::AS_TYP_OPERATION;
 
         /* SELECT FROM prxgt_acc_type_asset */
-        $tbl = $this->resource->getTableName(ETypeAsset::ENTITY_NAME);
+        $tbl = $this->resource->getTableName(ETypeOperation::ENTITY_NAME);
         $as = $asTypAsset;
         $cols = [
-            self::A_ID_ASSET => ETypeAsset::A_ID,
-            self::A_CODE => ETypeAsset::A_CODE,
-            self::A_NOTE => ETypeAsset::A_NOTE
+            self::A_ID_ASSET => ETypeOperation::A_ID,
+            self::A_CODE => ETypeOperation::A_CODE,
+            self::A_NOTE => ETypeOperation::A_NOTE
         ];
         $result->from([$as => $tbl], $cols);
         return $result;
@@ -57,7 +57,7 @@ class QueryBuilder
         /** @var \Magento\Framework\DB\Select $result */
         $result = $this->getQueryItems();
         /* ... then replace "columns" part with own expression */
-        $value = 'COUNT(' . self::AS_TYP_ASSET . '.' . ETypeAsset::A_ID . ')';
+        $value = 'COUNT(' . self::AS_TYP_OPERATION . '.' . ETypeOperation::A_ID . ')';
 
         /**
          * See method \Magento\Framework\DB\Select\ColumnsRenderer::render:
@@ -74,4 +74,5 @@ class QueryBuilder
         $result->setPart('columns', $cols);
         return $result;
     }
+
 }
