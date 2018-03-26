@@ -13,8 +13,8 @@ class Builder_ManualTest
 
     public function test_getTotal()
     {
-        /** @var \Praxigento\Accounting\Ui\DataProvider\Grid\Account\QueryBuilder $obj */
-        $obj = $this->manObj->get(\Praxigento\Accounting\Ui\DataProvider\Grid\Account\QueryBuilder::class);
+        /** @var \Praxigento\Accounting\Ui\DataProvider\Grid\Account\Query $obj */
+        $obj = $this->manObj->get(\Praxigento\Accounting\Ui\DataProvider\Grid\Account\Query::class);
         /** @var \Magento\Framework\Api\Search\SearchCriteriaInterface $search */
         $search = $this->manObj->get(\Magento\Framework\Api\Search\SearchCriteriaInterface::class);
         $res = $obj->getTotal($search);
@@ -23,8 +23,8 @@ class Builder_ManualTest
 
     public function test_getItems()
     {
-        /** @var \Praxigento\Accounting\Ui\DataProvider\Grid\Account\QueryBuilder $obj */
-        $obj = $this->manObj->get(\Praxigento\Accounting\Ui\DataProvider\Grid\Account\QueryBuilder::class);
+        /** @var \Praxigento\Accounting\Ui\DataProvider\Grid\Account\Query $obj */
+        $obj = $this->manObj->get(\Praxigento\Accounting\Ui\DataProvider\Grid\Account\Query::class);
         /** @var \Magento\Framework\Api\Search\SearchCriteriaInterface $search */
         $search = $this->manObj->get(\Magento\Framework\Api\Search\SearchCriteriaInterface::class);
         $res = $obj->getItems($search);
