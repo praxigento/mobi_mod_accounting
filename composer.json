@@ -1,8 +1,8 @@
 {
-  "name": "praxigento/mobi_mod_mage2_accounting",
+  "name": "praxigento/mobi_mod_accounting",
   "description": "MOBI: Praxigento_Accounting module.",
   "type": "magento2-module",
-  "homepage": "https://github.com/praxigento/mobi_mod_mage2_accounting",
+  "homepage": "https://github.com/praxigento/mobi_mod_accounting",
   "license": "MIT",
   "authors": [
     {
@@ -19,6 +19,6 @@
     }
   },
   "require": {
-    "praxigento/mobi_mod_mage2_core": "dev-master"
+    "praxigento/mobi_mod_core": "dev-master"
   }
 }
