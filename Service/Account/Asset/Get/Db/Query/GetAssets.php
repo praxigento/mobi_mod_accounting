@@ -42,7 +42,7 @@ class GetAssets
         $cols = [
             self::A_ASSET_ID => ETypeAss::A_ID,
             self::A_ASSET_CODE => ETypeAss::A_CODE,
-            self::A_IS_VISIBLE => ETypeAss::A_IS_VISIBLE
+            self::A_IS_VISIBLE => ETypeAss::A_IS_TRANSFERABLE
         ];
         $result->from([$as => $tbl], $cols);
 

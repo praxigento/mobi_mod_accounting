@@ -10,23 +10,33 @@ namespace Praxigento\Accounting\Repo\Data\Type;
 class Asset
     extends \Praxigento\Core\App\Repo\Data\Entity\Type\Base
 {
-    const A_IS_VISIBLE = 'is_visible';
+    const A_CURRENCY = 'currency';
+    const A_IS_TRANSFERABLE = 'is_transferable';
     const ENTITY_NAME = 'prxgt_acc_type_asset';
 
-    /**
-     * @return bool
-     */
-    public function getIsVisible()
+    /** @return string Currency code */
+    public function getCurrency()
     {
-        $result = parent::get(self::A_IS_VISIBLE);
+        $result = parent::get(self::A_CURRENCY);
         return $result;
     }
 
-    /**
-     * @param bool $data
-     */
-    public function setIsVisible($data)
+    /** @return bool */
+    public function getIsTransferable()
     {
-        parent::set(self::A_IS_VISIBLE, $data);
+        $result = parent::get(self::A_IS_TRANSFERABLE);
+        return $result;
+    }
+
+    /** @param string $data */
+    public function setCurrency($data)
+    {
+        parent::set(self::A_CURRENCY, $data);
+    }
+
+    /** @param bool $data */
+    public function setIsTransferable($data)
+    {
+        parent::set(self::A_IS_TRANSFERABLE, $data);
     }
 }

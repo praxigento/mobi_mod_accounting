@@ -119,15 +119,21 @@
                         "nullable": false,
                         "type": {"text": {"length": 32}}
                       },
+                      "Currency": {
+                        "alias": "currency",
+                        "comment": "Currency code if asset is nominated in some currency.",
+                        "nullable": true,
+                        "type": {"text": {"length": 3}}
+                      },
                       "Note": {
                         "alias": "note",
                         "comment": "Description of the asset (PV, internal money, ...).",
                         "nullable": false,
                         "type": {"text": {}}
                       },
-                      "IsVisible": {
-                        "alias": "is_visible",
-                        "comment": "Is this asset visible for manual transfer by customers/managers.",
+                      "IsTransferable": {
+                        "alias": "is_transferable",
+                        "comment": "Is this asset available for manual transfer by customers/managers.",
                         "nullable": false,
                         "default": true,
                         "type": {"boolean": {}}
