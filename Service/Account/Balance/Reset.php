@@ -14,10 +14,14 @@ class Reset
 {
     /** @var \Praxigento\Accounting\Repo\Dao\Balance */
     private $daoBalance;
+    /** @var \Magento\Framework\App\ResourceConnection */
+    private $resource;
 
     public function __construct(
+        \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Accounting\Repo\Dao\Balance $daoBalance
     ) {
+        $this->resource = $resource;
         $this->daoBalance = $daoBalance;
     }
 
@@ -31,7 +35,7 @@ class Reset
         assert($request instanceof ARequest);
         $result = new AResponse();
         $dateFrom = $request->getDateFrom();
-        $conn = $this->daoBalance->getConnection();
+        $conn = $this->resource->getConnection();
         $quoted = $conn->quote($dateFrom);
         $where = ABalance::A_DATE . '>=' . $quoted;
         $rows = $this->daoBalance->delete($where);

@@ -8,14 +8,14 @@ namespace Praxigento\Accounting\Repo\Dao;
 use Praxigento\Accounting\Repo\Data\Transaction as Entity;
 
 class Transaction
-    extends \Praxigento\Core\App\Repo\Def\Entity
+    extends \Praxigento\Core\App\Repo\Dao
 {
     /** @var \Praxigento\Accounting\Repo\Dao\Account */
     protected $_repoAccount;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\App\Repo\IGeneric $daoGeneric,
+        \Praxigento\Core\Api\App\Repo\Generic $daoGeneric,
         \Praxigento\Accounting\Repo\Dao\Account $daoAccount
     )
     {

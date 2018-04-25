@@ -10,7 +10,7 @@ use Praxigento\Accounting\Repo\Data\Account as Entity;
 use Praxigento\Accounting\Repo\Data\Type\Asset as TypeAsset;
 
 class Account
-    extends \Praxigento\Core\App\Repo\Def\Entity
+    extends \Praxigento\Core\App\Repo\Dao
 {
     const ADMIN_WEBSITE_ID = Cfg::DEF_WEBSITE_ID_ADMIN;
     const BIND_CODE = 'code';
@@ -23,7 +23,7 @@ class Account
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\App\Repo\IGeneric $daoGeneric
+        \Praxigento\Core\Api\App\Repo\Generic $daoGeneric
     )
     {
         parent::__construct($resource, $daoGeneric, Entity::class);
