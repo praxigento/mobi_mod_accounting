@@ -11,7 +11,6 @@ use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder as QBalanceClose;
 
 class Turnover
-    extends \Praxigento\Core\App\Service\Base\Call
     implements \Praxigento\Accounting\Api\Service\Balance\Get\Turnover
 {
     /** @var  \Praxigento\Core\Api\Helper\Period */
@@ -22,13 +21,10 @@ class Turnover
     private $daoTypeAsset;
 
     public function __construct(
-        \Praxigento\Core\Api\App\Logger\Main $logger,
-        \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Api\Helper\Period $hlpPeriod,
         \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder $qbBalClose,
         \Praxigento\Accounting\Repo\Dao\Type\Asset $daoTypeAsset
     ) {
-        parent::__construct($logger, $manObj);
         $this->hlpPeriod = $hlpPeriod;
         $this->qbBalClose = $qbBalClose;
         $this->daoTypeAsset = $daoTypeAsset;
