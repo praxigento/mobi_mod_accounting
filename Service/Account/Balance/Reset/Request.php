@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Service\Account\Balance\Reset;
 
 class Request
-    extends \Praxigento\Core\App\Service\Base\Request
+    extends \Praxigento\Core\App\Service\Request
 {
     /**
      * Reset balance starting from this date (including, Magento time).

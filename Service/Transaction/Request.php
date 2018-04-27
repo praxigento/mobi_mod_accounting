@@ -20,7 +20,7 @@ namespace Praxigento\Accounting\Service\Transaction;
  * @method void setValue(number $data)
  */
 class Request
-    extends \Praxigento\Core\App\Service\Base\Request
+    extends \Praxigento\Core\App\Service\Request
 {
 
 }

@@ -6,7 +6,7 @@
 namespace Praxigento\Accounting\Service\Account\Balance\Calc;
 
 class Request
-    extends \Praxigento\Core\App\Service\Base\Request
+    extends \Praxigento\Core\App\Service\Request
 {
     /**
      * Code of the account's asset type. Use $accountTypeId or $assetTypeCode to set asset type. $assetTypeId is more

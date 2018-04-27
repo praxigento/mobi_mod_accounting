@@ -12,7 +12,7 @@ namespace Praxigento\Accounting\Api\Service\Balance\Get\Turnover;
  * @property string $assetTypeCode
  */
 class Request
-    extends \Praxigento\Core\App\Service\Base\Request
+    extends \Praxigento\Core\App\Service\Request
 {
 
 }

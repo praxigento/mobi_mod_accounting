@@ -12,7 +12,7 @@ namespace Praxigento\Accounting\Api\Service\Operation;
  * @method void setTransactionsIds(array $data)
  */
 class Response
-    extends \Praxigento\Core\App\Service\Base\Response
+    extends \Praxigento\Core\App\Service\Response
 {
 
 }

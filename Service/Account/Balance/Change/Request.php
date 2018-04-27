@@ -7,7 +7,7 @@ namespace Praxigento\Accounting\Service\Account\Balance\Change;
 
 
 class Request
-    extends \Praxigento\Core\App\Service\Base\Request
+    extends \Praxigento\Core\App\Service\Request
 {
     const ADMIN_USER_ID = 'adminUserId';
     const CHANGE_VALUE = 'changeValue';
