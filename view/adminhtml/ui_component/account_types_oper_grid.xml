@@ -17,10 +17,10 @@
     <!-- **************************************************** -->
     <dataSource name="account_types_oper_grid_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">\Praxigento\Core\App\Ui\DataProvider\Grid\Base</argument>
+            <argument name="class" xsi:type="string">Praxigento\Core\App\Ui\DataProvider\Grid\Base</argument>
             <argument name="name" xsi:type="string">account_types_oper_grid_data_source</argument>
             <argument name="gridQueryBuilder"
-                      xsi:type="object">\Praxigento\Accounting\Ui\DataProvider\Grid\Type\Operation\Query</argument>
+                      xsi:type="object">Praxigento\Accounting\Ui\DataProvider\Grid\Type\Operation\Query</argument>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">

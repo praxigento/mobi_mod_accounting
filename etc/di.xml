@@ -5,18 +5,18 @@
     <!-- *********** -->
     <!-- API Service -->
     <!-- *********** -->
-    <preference for="\Praxigento\Accounting\Api\Service\Account\Get"
-                type="\Praxigento\Accounting\Service\Account\Get"/>
+    <preference for="Praxigento\Accounting\Api\Service\Account\Get"
+                type="Praxigento\Accounting\Service\Account\Get"/>
 
 
 
     <!-- ******* -->
     <!-- API Web -->
     <!-- ******* -->
-    <preference for="\Praxigento\Accounting\Api\Web\Account\Asset\GetInterface"
-                type="\Praxigento\Accounting\Web\Account\Asset\Get"/>
-    <preference for="\Praxigento\Accounting\Api\Web\Account\Asset\TransferInterface"
-                type="\Praxigento\Accounting\Web\Account\Asset\Transfer"/>
+    <preference for="Praxigento\Accounting\Api\Web\Account\Asset\GetInterface"
+                type="Praxigento\Accounting\Web\Account\Asset\Get"/>
+    <preference for="Praxigento\Accounting\Api\Web\Account\Asset\TransferInterface"
+                type="Praxigento\Accounting\Web\Account\Asset\Transfer"/>
 
 
 
@@ -26,8 +26,8 @@
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="prxgt:acc:balance:calc" xsi:type="object">\Praxigento\Accounting\Cli\Balance\Calc</item>
-                <item name="prxgt:acc:balance:reset" xsi:type="object">\Praxigento\Accounting\Cli\Balance\Reset</item>
+                <item name="prxgt:acc:balance:calc" xsi:type="object">Praxigento\Accounting\Cli\Balance\Calc</item>
+                <item name="prxgt:acc:balance:reset" xsi:type="object">Praxigento\Accounting\Cli\Balance\Reset</item>
             </argument>
         </arguments>
     </type>
@@ -35,9 +35,9 @@
     <!-- ******** -->
     <!-- Services -->
     <!-- ******** -->
-    <preference for="\Praxigento\Accounting\Api\Service\Balance\Get\Turnover"
-                type="\Praxigento\Accounting\Service\Balance\Get\Turnover"/>
-    <preference for="\Praxigento\Accounting\Api\Service\Operation"
-                type="\Praxigento\Accounting\Service\Operation"/>
+    <preference for="Praxigento\Accounting\Api\Service\Balance\Get\Turnover"
+                type="Praxigento\Accounting\Service\Balance\Get\Turnover"/>
+    <preference for="Praxigento\Accounting\Api\Service\Operation"
+                type="Praxigento\Accounting\Service\Operation"/>
 
 </config>
