@@ -52,16 +52,16 @@ class Turnover
         $qCloseBegin = $this->qbBalClose->build();
         $conn = $qCloseBegin->getConnection();
         $bind = [
-            QBalanceClose::BIND_ASSET_TYPE_ID => $assetTypeId,
-            QBalanceClose::BIND_MAX_DATE => $dateFromBefore
+            QBalanceClose::BND_ASSET_TYPE_ID => $assetTypeId,
+            QBalanceClose::BND_MAX_DATE => $dateFromBefore
         ];
         $rowsBegin = $conn->fetchAll($qCloseBegin, $bind);
 
         /* get balances on the end of this period */
         $qCloseBegin = $this->qbBalClose->build();
         $bind = [
-            QBalanceClose::BIND_ASSET_TYPE_ID => $assetTypeId,
-            QBalanceClose::BIND_MAX_DATE => $dateTo
+            QBalanceClose::BND_ASSET_TYPE_ID => $assetTypeId,
+            QBalanceClose::BND_MAX_DATE => $dateTo
         ];
         $rowsEnd = $conn->fetchAll($qCloseBegin, $bind);
 

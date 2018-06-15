@@ -27,7 +27,7 @@ class Builder
     const A_DATE_MAX = 'balMaxDate';
 
     /** Bound variables names */
-    const BIND_MAX_DATE = 'balanceDateMax';
+    const BND_MAX_DATE = 'balanceDateMax';
 
     public function build(\Magento\Framework\DB\Select $source = null)
     {
@@ -47,7 +47,7 @@ class Builder
         $result->from([$as => $tbl], $cols);
 
         /* WHERE */
-        $result->where($asBal . '.' . Balance::A_DATE . '<=:' . self::BIND_MAX_DATE);
+        $result->where($asBal . '.' . Balance::A_DATE . '<=:' . self::BND_MAX_DATE);
 
         /* GROUP */
         $result->group($asBal . '.' . Balance::A_ACCOUNT_ID);

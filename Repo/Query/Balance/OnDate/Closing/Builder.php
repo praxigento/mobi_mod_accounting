@@ -31,7 +31,7 @@ class Builder
     const A_DATE_MAX = 'dateMax';
 
     /** Bound variables names */
-    const BIND_MAX_DATE = QMaxDates::BIND_MAX_DATE;
+    const BND_MAX_DATE = QMaxDates::BND_MAX_DATE;
 
     /** @var \Praxigento\Accounting\Repo\Query\Balance\MaxDates\Builder */
     protected $qbldMaxDates;

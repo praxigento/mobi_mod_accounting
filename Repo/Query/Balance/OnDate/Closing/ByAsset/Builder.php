@@ -16,14 +16,14 @@ class Builder
 {
 
     /** Bound variables names */
-    const BIND_ASSET_TYPE_ID = 'assetTypeId';
+    const BND_ASSET_TYPE_ID = 'assetTypeId';
 
     public function build(\Magento\Framework\DB\Select $source = null)
     {
         $result = parent::build();    // this is independent query, ignore input query builder
 
         /* WHERE */
-        $where = self::AS_ACC . '.' . Account::A_ASSET_TYPE_ID . '=:' . self::BIND_ASSET_TYPE_ID;
+        $where = self::AS_ACC . '.' . Account::A_ASSET_TYPE_ID . '=:' . self::BND_ASSET_TYPE_ID;
         $result->where($where);
 
         /* result */
