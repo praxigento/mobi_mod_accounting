@@ -19,14 +19,18 @@ class Account
      * Cache for ID of the system customer.
      * @var int
      */
-    protected $cachedSysCustId;
+    private $cachedSysCustId;
+    /** @var \Praxigento\Accounting\Repo\Dao\Type\Asset */
+    private $daoTypeAsset;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\Api\App\Repo\Generic $daoGeneric
+        \Praxigento\Core\Api\App\Repo\Generic $daoGeneric,
+        \Praxigento\Accounting\Repo\Dao\Type\Asset $daoTypeAsset
     )
     {
         parent::__construct($resource, $daoGeneric, Entity::class);
+        $this->daoTypeAsset = $daoTypeAsset;
     }
 
     public function cacheReset()
@@ -188,6 +192,23 @@ class Account
                 $result = $this->create($account);
             }
         }
+        return $result;
+    }
+
+    /**
+     * Return system account ID for given asset type. Create new account if there is no yet system
+     * account for this asset type.
+     *
+     * TODO: should we use this method or "\Praxigento\Accounting\Api\Service\Account\Get" service?
+     *
+     * @param string $assetTypeCode
+     * @return int|null
+     * @throws \Exception
+     */
+    public function getSystemAccountIdByAssetCode($assetTypeCode)
+    {
+        $assetTypeId = $this->daoTypeAsset->getIdByCode($assetTypeCode);
+        $result = $this->getSystemAccountId($assetTypeId);
         return $result;
     }
 

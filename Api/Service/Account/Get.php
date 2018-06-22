@@ -5,7 +5,9 @@
 
 namespace Praxigento\Accounting\Api\Service\Account;
 
-
+/**
+ * * TODO: should we use this method or "\Praxigento\Accounting\Api\Service\Account\Get" service?
+ */
 interface Get
 {
     /**
