@@ -27,7 +27,8 @@ class Request
      */
     const CUSTOMER_ID = 'customer_id';
     /**
-     * Is Reperesentative Request
+     * Request to get System Accounts data.
+     *
      * @var bool
      */
     const IS_SYSTEM = 'is_system';

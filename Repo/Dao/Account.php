@@ -168,6 +168,20 @@ class Account
     }
 
     /**
+     * Get account data by customer ID & asset type code.
+     *
+     * @param int $customerId
+     * @param string $assetTypeCode
+     * @return Entity account ID
+     */
+    public function getCustomerAccByAssetCode($customerId, $assetTypeCode)
+    {
+        $assetTypeId = $this->daoTypeAsset->getIdByCode($assetTypeCode);
+        $result = $this->getByCustomerId($customerId, $assetTypeId);
+        return $result;
+    }
+
+    /**
      * Return system account ID for given asset type. Create new account if there is no yet system
      * account for this asset type.
      *
