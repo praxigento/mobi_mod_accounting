@@ -38,6 +38,7 @@ class Transfer
         /** define local working data */
         $data = $request->getData();
         $amount = $data->getAmount();
+        $comment = $data->getComment();
         $assetTypeId = $data->getAssetId();
         $counterPartyId = $data->getCounterPartyId();
         $custId = $data->getCustomerId();
@@ -57,6 +58,7 @@ class Transfer
         $req->setCustomerId($custId);
         $req->setIsDirect($isDirect);
         $req->setUserId($userId);
+        $req->setNote($comment);
         $resp = $this->servAssetTransfer->exec($req);
 
         /** compose result */

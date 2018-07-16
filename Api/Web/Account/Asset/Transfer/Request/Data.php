@@ -11,6 +11,7 @@ class Data
 {
     const AMOUNT = 'amount';
     const ASSET_ID = 'assetId';
+    const COMMENT = 'comment';
     const COUNTER_PARTY_ID = 'counterPartyId';
     const CUSTOMER_ID = 'customerId';
     const IS_DIRECT = 'isDirect';
@@ -28,6 +29,15 @@ class Data
      */
     public function getAssetId() {
         $result = parent::get(self::ASSET_ID);
+        return $result;
+    }
+
+    /**
+     * @return string
+     */
+    public function getComment()
+    {
+        $result = parent::get(self::COMMENT);
         return $result;
     }
 
@@ -67,6 +77,14 @@ class Data
      */
     public function setAssetId($data) {
         parent::set(self::ASSET_ID, $data);
+    }
+
+    /**
+     * @param string $data
+     */
+    public function setComment($data)
+    {
+        parent::set(self::COMMENT, $data);
     }
 
     /**
