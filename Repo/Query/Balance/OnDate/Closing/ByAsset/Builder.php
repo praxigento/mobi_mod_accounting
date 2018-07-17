@@ -10,6 +10,7 @@ use Praxigento\Accounting\Repo\Data\Account as Account;
 
 /**
  * Build query to get closing balance for all accounts of the given type on given date.
+ * TODO: do we need to create service for the query?
  */
 class Builder
     extends \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\Builder

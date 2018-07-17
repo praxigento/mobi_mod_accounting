@@ -46,6 +46,7 @@ class Transfer
         $assetTypeId = $request->getAssetId();
         $counterPartyId = $request->getCounterPartyId();
         $customerId = $request->getCustomerId();
+        $dateApplied = $request->getDateApplied();
         $isDirect = $request->getIsDirect();
         $note = $request->getNote();
         $userId = $request->getUserId();
@@ -80,7 +81,7 @@ class Transfer
             }
         }
         /* compose transaction and create operation */
-        $trans = $this->prepareTrans($amount, $accIdDebit, $accIdCredit, $note);
+        $trans = $this->prepareTrans($amount, $accIdDebit, $accIdCredit, $dateApplied, $note);
         $operId = $this->transfer($userId, $trans, $note);
 
         /* compose result */
@@ -89,7 +90,7 @@ class Transfer
         return $result;
     }
 
-    private function prepareTrans($amount, $accIdDebit, $accIdCredit, $note)
+    private function prepareTrans($amount, $accIdDebit, $accIdCredit, $dateApplied, $note)
     {
         $tran = new \Praxigento\Accounting\Repo\Data\Transaction();
         $amountAbs = abs($amount);
@@ -97,7 +98,7 @@ class Transfer
         $tran->setCreditAccId($accIdCredit);
         $tran->setValue($amountAbs);
         $tran->setNote($note);
-        $dateApplied = $this->hlpData->getUtcNowForDb();
+        if(!$dateApplied) $dateApplied = $this->hlpData->getUtcNowForDb();
         $tran->setDateApplied($dateApplied);
         $result[] = $tran;
         return $result;

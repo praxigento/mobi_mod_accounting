@@ -19,6 +19,7 @@ class Request
     const ASSET_ID = 'assetId';
     const COUNTER_PARTY_ID = 'counterPartyId';
     const CUSTOMER_ID = 'customerId';
+    const DATE_APPLIED = 'dateApplied';
     const IS_DIRECT = 'isDirect';
     const NOTE = 'note';
     const USER_ID = 'userId';
@@ -56,6 +57,15 @@ class Request
     public function getCustomerId()
     {
         $result = parent::get(self::CUSTOMER_ID);
+        return $result;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateApplied()
+    {
+        $result = parent::get(self::DATE_APPLIED);
         return $result;
     }
 
@@ -116,6 +126,14 @@ class Request
     public function setCustomerId($data)
     {
         parent::set(self::CUSTOMER_ID, $data);
+    }
+
+    /**
+     * @param string $data
+     */
+    public function setDateApplied($data)
+    {
+        parent::set(self::DATE_APPLIED, $data);
     }
 
     /**
