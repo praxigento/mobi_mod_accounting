@@ -10,9 +10,9 @@ use Praxigento\Accounting\Service\Account\Asset\Transfer\Request as ARequest;
 use Praxigento\Accounting\Service\Account\Asset\Transfer\Response as AResponse;
 
 /**
- * Internal service to process asset transfer between accounts (customer or system).
+ * Service to process asset transfer between accounts (customer or system).
  *
- * This service is not used outside this module.
+ * TODO: This service is used outside this module, add interface for the service.
  */
 class Transfer
 {
