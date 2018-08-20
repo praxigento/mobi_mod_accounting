@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Service\Account\Asset\Transfer;
+namespace Praxigento\Accounting\Api\Service\Account\Asset\Transfer;
 
 /**
  * Response to process asset transfer between accounts.

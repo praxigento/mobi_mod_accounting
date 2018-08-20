@@ -11,12 +11,12 @@ use Praxigento\Accounting\Api\Web\Account\Asset\Transfer\Response as AResponse;
 class Transfer
     extends \Praxigento\Core\App\Action\Back\Api\Base
 {
-    /** @var \Praxigento\Accounting\Service\Account\Asset\Transfer */
+    /** @var \Praxigento\Accounting\Api\Service\Account\Asset\Transfer */
     private $servAssetTransfer;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Praxigento\Accounting\Service\Account\Asset\Transfer $servAssetTransfer
+        \Praxigento\Accounting\Api\Service\Account\Asset\Transfer $servAssetTransfer
     ) {
         parent::__construct($context);
         $this->servAssetTransfer = $servAssetTransfer;
@@ -51,7 +51,7 @@ class Transfer
         /* analyze logged in users */
 
         /** perform processing */
-        $req = new \Praxigento\Accounting\Service\Account\Asset\Transfer\Request();
+        $req = new \Praxigento\Accounting\Api\Service\Account\Asset\Transfer\Request();
         $req->setAmount($amount);
         $req->setAssetId($assetTypeId);
         $req->setCounterPartyId($counterPartyId);

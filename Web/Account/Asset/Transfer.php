@@ -13,12 +13,12 @@ class Transfer
 {
     /** @var \Praxigento\Core\Api\App\Web\Authenticator */
     private $auth;
-    /** @var \Praxigento\Accounting\Service\Account\Asset\Transfer */
+    /** @var \Praxigento\Accounting\Api\Service\Account\Asset\Transfer */
     private $servAssetTransfer;
 
     public function __construct(
         \Praxigento\Core\Api\App\Web\Authenticator\Front $auth,
-        \Praxigento\Accounting\Service\Account\Asset\Transfer $servAssetTransfer
+        \Praxigento\Accounting\Api\Service\Account\Asset\Transfer $servAssetTransfer
     ) {
         $this->auth = $auth;
         $this->servAssetTransfer = $servAssetTransfer;
@@ -40,7 +40,7 @@ class Transfer
         $custId = $this->auth->getCurrentUserId($request); // customer can transfer FROM his account only
 
         /** perform processing */
-        $req = new \Praxigento\Accounting\Service\Account\Asset\Transfer\Request();
+        $req = new \Praxigento\Accounting\Api\Service\Account\Asset\Transfer\Request();
         $req->setAmount($amount);
         $req->setAssetId($assetTypeId);
         $req->setCounterPartyId($counterPartyId);

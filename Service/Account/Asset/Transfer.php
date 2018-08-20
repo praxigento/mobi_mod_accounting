@@ -5,23 +5,23 @@
 
 namespace Praxigento\Accounting\Service\Account\Asset;
 
+use Praxigento\Accounting\Api\Service\Account\Asset\Transfer\Request as ARequest;
+use Praxigento\Accounting\Api\Service\Account\Asset\Transfer\Response as AResponse;
 use Praxigento\Accounting\Config as Cfg;
-use Praxigento\Accounting\Service\Account\Asset\Transfer\Request as ARequest;
-use Praxigento\Accounting\Service\Account\Asset\Transfer\Response as AResponse;
 
 /**
- * Service to process asset transfer between accounts (customer or system).
- *
- * TODO: This service is used outside this module, add interface for the service.
+ * Service to process asset transfer between accounts (customer or system) initiated by customer itself or by backend
+ * operator. All validations and restrictions should be performed before this service call (WebAPI or controller level).
  */
 class Transfer
+    implements \Praxigento\Accounting\Api\Service\Account\Asset\Transfer
 {
-    /** @var \Praxigento\Accounting\Api\Service\Operation */
-    private $callOper;
-    /** @var \Praxigento\Core\Api\Helper\Date */
-    private $hlpData;
     /** @var \Praxigento\Accounting\Repo\Dao\Account */
     private $daoAcc;
+    /** @var \Praxigento\Core\Api\Helper\Date */
+    private $hlpData;
+    /** @var \Praxigento\Accounting\Api\Service\Operation */
+    private $servOper;
 
     public function __construct(
         \Praxigento\Core\Api\Helper\Date $hlpData,
@@ -30,15 +30,15 @@ class Transfer
     ) {
         $this->hlpData = $hlpData;
         $this->daoAcc = $daoAcc;
-        $this->callOper = $callOper;
+        $this->servOper = $callOper;
     }
 
     /**
-     * @param \Praxigento\Accounting\Service\Account\Asset\Transfer\Request $request
-     * @return \Praxigento\Accounting\Service\Account\Asset\Transfer\Response
+     * @param \Praxigento\Accounting\Api\Service\Account\Asset\Transfer\Request $request
+     * @return \Praxigento\Accounting\Api\Service\Account\Asset\Transfer\Response
      * @throws \Exception
      */
-    public function exec(ARequest $request)
+    public function exec($request)
     {
         assert($request instanceof ARequest);
         /* define local working data */
@@ -109,16 +109,19 @@ class Transfer
         $req = new \Praxigento\Accounting\Api\Service\Operation\Request();
         $req->setAdminUserId($userId);
         $req->setOperationTypeCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
-        if ($userId) {
-            $req->setOperationNote("Asset transfer initiated by manager #$userId.");
-        } else {
-            $req->setOperationNote("Asset transfer initiated by customer.");
+        if (!$note) {
+            /* add default operation note */
+            if ($userId) {
+                $note = "Asset transfer initiated by manager #$userId.";
+            } else {
+                $note = "Asset transfer initiated by customer.";
+            }
         }
         $req->setTransactions($trans);
         $req->setOperationNote($note);
         $datePerformed = $this->hlpData->getUtcNowForDb();
         $req->setDatePerformed($datePerformed);
-        $resp = $this->callOper->exec($req);
+        $resp = $this->servOper->exec($req);
         $result = $resp->getOperationId();
         return $result;
     }
