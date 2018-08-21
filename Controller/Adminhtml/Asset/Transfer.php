@@ -8,6 +8,10 @@ namespace Praxigento\Accounting\Controller\Adminhtml\Asset;
 use Praxigento\Accounting\Api\Web\Account\Asset\Transfer\Request as ARequest;
 use Praxigento\Accounting\Api\Web\Account\Asset\Transfer\Response as AResponse;
 
+/**
+ * This is controller to transfer assets from adminhtml.
+ * See "\Praxigento\Accounting\Api\Web\Account\Asset\TransferInterface" for frontend.
+ */
 class Transfer
     extends \Praxigento\Core\App\Action\Back\Api\Base
 {
