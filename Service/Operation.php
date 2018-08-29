@@ -14,8 +14,6 @@ use Praxigento\Accounting\Repo\Data\Operation as EOperation;
 class Operation
     implements \Praxigento\Accounting\Api\Service\Operation
 {
-    /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
-    private $manTrans;
     /** @var \Praxigento\Accounting\Repo\Dao\Log\Change\Admin */
     private $daoELogChangeAdmin;
     /** @var \Praxigento\Accounting\Repo\Dao\Log\Change\Customer */
@@ -24,6 +22,10 @@ class Operation
     private $daoOper;
     /** @var  \Praxigento\Accounting\Repo\Dao\Type\Operation */
     private $daoTypeOper;
+    /** @var \Praxigento\Core\Api\Helper\Date */
+    private $hlpDate;
+    /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
+    private $manTrans;
     /** @var \Praxigento\Accounting\Service\Operation\Add */
     private $subAdd;
 
@@ -33,6 +35,7 @@ class Operation
         \Praxigento\Accounting\Repo\Dao\Type\Operation $daoTypeOper,
         \Praxigento\Accounting\Repo\Dao\Log\Change\Admin $daoELogChangeAdmin,
         \Praxigento\Accounting\Repo\Dao\Log\Change\Customer $daoELogChangeCust,
+        \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Accounting\Service\Operation\Add $subAdd
     ) {
         $this->manTrans = $manTrans;
@@ -40,6 +43,7 @@ class Operation
         $this->daoOper = $daoOper;
         $this->daoELogChangeAdmin = $daoELogChangeAdmin;
         $this->daoELogChangeCust = $daoELogChangeCust;
+        $this->hlpDate = $hlpDate;
         $this->subAdd = $subAdd;
     }
 
@@ -63,8 +67,12 @@ class Operation
         $asRef = $request->getAsTransRef();
         $customerId = $request->getCustomerId();
         $adminUserId = $request->getAdminUserId();
+        /* Better this nested transaction will break outer transaction than we will clean up data manually */
         $def = $this->manTrans->begin();
         try {
+            if (empty($datePerformed)) {
+                $datePerformed = $this->hlpDate->getUtcNowForDb();
+            }
             /* add operation itself */
             if (!$operationTypeId) {
                 $operationTypeId = $this->daoTypeOper->getIdByCode($operationTypeCode);
