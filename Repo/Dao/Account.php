@@ -12,9 +12,7 @@ use Praxigento\Accounting\Repo\Data\Type\Asset as TypeAsset;
 class Account
     extends \Praxigento\Core\App\Repo\Dao
 {
-    const ADMIN_WEBSITE_ID = Cfg::DEF_WEBSITE_ID_ADMIN;
     const BIND_CODE = 'code';
-    const SYS_CUSTOMER_EMAIL = Cfg::SYS_CUSTOMER_EMAIL;
     /**
      * Cache for ID of the system customer.
      * @var int
@@ -237,13 +235,13 @@ class Account
         if (is_null($this->cachedSysCustId)) {
             $conn = $this->conn;
             /* there is no cached value for the customer ID, select data from DB */
-            $where = Cfg::E_CUSTOMER_A_EMAIL . '=' . $conn->quote(self::SYS_CUSTOMER_EMAIL);
+            $where = Cfg::E_CUSTOMER_A_EMAIL . '=' . $conn->quote(Cfg::SYS_CUSTOMER_EMAIL);
             $data = $this->daoGeneric->getEntities(Cfg::ENTITY_MAGE_CUSTOMER, Cfg::E_CUSTOMER_A_ENTITY_ID,
                 $where);
             if (count($data) == 0) {
                 $bind = [
-                    Cfg::E_CUSTOMER_A_WEBSITE_ID => self::ADMIN_WEBSITE_ID,
-                    Cfg::E_CUSTOMER_A_EMAIL => self::SYS_CUSTOMER_EMAIL
+                    Cfg::E_CUSTOMER_A_WEBSITE_ID => Cfg::DEF_WEBSITE_ID_ADMIN,
+                    Cfg::E_CUSTOMER_A_EMAIL => Cfg::SYS_CUSTOMER_EMAIL
                 ];
                 $id = $this->daoGeneric->addEntity(Cfg::ENTITY_MAGE_CUSTOMER, $bind);
                 if ($id > 0) {
