@@ -28,7 +28,7 @@ class Response
     /**
      *
      * @param int $data
-     * @return null
+     * @return void
      */
     public function setOperId($data)
     {

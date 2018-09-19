@@ -25,7 +25,7 @@ class Request
 
     /**
      * @param \Praxigento\Accounting\Api\Web\Account\Asset\Transfer\Request\Data $data
-     * @return null
+     * @return void
      */
     public function setData($data) {
         parent::set(self::DATA, $data);

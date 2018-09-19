@@ -26,7 +26,7 @@ class Response
 
     /**
      * @param \Praxigento\Accounting\Service\Account\Asset\Get\Response\Item[] $data
-     * @return null
+     * @return void
      */
     public function setItems($data) {
         parent::set(self::ITEMS, $data);

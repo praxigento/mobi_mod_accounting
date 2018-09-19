@@ -25,7 +25,7 @@ class Response
 
     /**
      * @param \Praxigento\Accounting\Api\Web\Account\Asset\Transfer\Response\Data $data
-     * @return null
+     * @return void
      */
     public function setData($data)
     {
