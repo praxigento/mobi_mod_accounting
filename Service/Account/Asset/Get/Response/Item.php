@@ -47,6 +47,7 @@ class Item
 
     /**
      * @param float $data
+     * @return null
      */
     public function setAccBalance($data) {
         parent::set(self::ACC_BALANCE, $data);
@@ -54,6 +55,7 @@ class Item
 
     /**
      * @param int $data
+     * @return null
      */
     public function setAccId($data) {
         parent::set(self::ACC_ID, $data);
@@ -61,6 +63,7 @@ class Item
 
     /**
      * @param string $data
+     * @return null
      */
     public function setAssetCode($data) {
         parent::set(self::ASSET_CODE, $data);
@@ -68,6 +71,7 @@ class Item
 
     /**
      * @param int $data
+     * @return null
      */
     public function setAssetId($data) {
         parent::set(self::ASSET_ID, $data);

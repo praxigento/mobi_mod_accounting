@@ -67,6 +67,7 @@ class Data
 
     /**
      * @param float $data
+     * @return null
      */
     public function setAmount($data) {
         parent::set(self::AMOUNT, $data);
@@ -74,6 +75,7 @@ class Data
 
     /**
      * @param int $data
+     * @return null
      */
     public function setAssetId($data) {
         parent::set(self::ASSET_ID, $data);
@@ -81,6 +83,7 @@ class Data
 
     /**
      * @param string $data
+     * @return null
      */
     public function setComment($data)
     {
@@ -89,6 +92,7 @@ class Data
 
     /**
      * @param int $data
+     * @return null
      */
     public function setCounterPartyId($data) {
         parent::set(self::COUNTER_PARTY_ID, $data);
@@ -103,6 +107,7 @@ class Data
 
     /**
      * @param bool $data
+     * @return null
      */
     public function setIsDirect($data) {
         parent::set(self::IS_DIRECT, $data);

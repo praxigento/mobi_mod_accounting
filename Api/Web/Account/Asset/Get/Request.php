@@ -25,6 +25,7 @@ class Request
 
     /**
      * @param \Praxigento\Accounting\Api\Web\Account\Asset\Get\Request\Data $data
+     * @return null
      */
     public function setData($data) {
         parent::set(self::DATA, $data);
