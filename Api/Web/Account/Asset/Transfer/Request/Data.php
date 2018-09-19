@@ -100,6 +100,7 @@ class Data
 
     /**
      * @param int $data
+     * @return null
      */
     public function setCustomerId($data) {
         parent::set(self::CUSTOMER_ID, $data);
