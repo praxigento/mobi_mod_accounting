@@ -20,7 +20,9 @@
     <preference for="Praxigento\Accounting\Api\Service\Balance\Get\Turnover"
                 type="Praxigento\Accounting\Service\Balance\Get\Turnover"/>
     <preference for="Praxigento\Accounting\Api\Service\Operation\Create"
-                type="Praxigento\Accounting\Service\Operation"/>
+                type="Praxigento\Accounting\Service\Operation\Create"/>
+    <preference for="Praxigento\Accounting\Api\Service\Transaction\Get"
+                type="Praxigento\Accounting\Service\Transaction\Get"/>
 
 
     <!-- ******* -->

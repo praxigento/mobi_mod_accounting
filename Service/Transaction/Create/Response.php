@@ -3,7 +3,7 @@
  *
  */
 
-namespace Praxigento\Accounting\Service\Transaction;
+namespace Praxigento\Accounting\Service\Transaction\Create;
 
 /**
  * @method int getTransactionId()

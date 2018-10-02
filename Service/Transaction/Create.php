@@ -3,14 +3,14 @@
  * User: makhovdmitrii@inbox.ru
  */
 
-namespace Praxigento\Accounting\Service;
+namespace Praxigento\Accounting\Service\Transaction;
 
 use Praxigento\Accounting\Repo\Data\Transaction as ETransaction;
-use Praxigento\Accounting\Service\Transaction\Request as ARequest;
-use Praxigento\Accounting\Service\Transaction\Response as AResponse;
+use Praxigento\Accounting\Service\Transaction\Create\Request as ARequest;
+use Praxigento\Accounting\Service\Transaction\Create\Response as AResponse;
 
 
-class Transaction
+class Create
 {
 
     /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */

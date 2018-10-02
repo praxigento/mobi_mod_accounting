@@ -3,23 +3,23 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Service\Operation;
+namespace Praxigento\Accounting\Service\Operation\Create\A;
 
 use Praxigento\Accounting\Repo\Data\Transaction as ETrans;
-use Praxigento\Accounting\Service\Transaction\Request as ARequest;
-use Praxigento\Accounting\Service\Transaction\Response as AResponse;
+use Praxigento\Accounting\Service\Transaction\Create\Request as ARequest;
+use Praxigento\Accounting\Service\Transaction\Create\Response as AResponse;
 
 class Add
 {
     /**
-     * @var \Praxigento\Accounting\Service\Transaction
+     * @var \Praxigento\Accounting\Service\Transaction\Create
      */
-    protected $servTrans;
+    private $srvTrans;
 
     public function __construct(
-        \Praxigento\Accounting\Service\Transaction $servTrans
+        \Praxigento\Accounting\Service\Transaction\Create $srvTrans
     ) {
-        $this->servTrans = $servTrans;
+        $this->srvTrans = $srvTrans;
     }
 
     /**
@@ -50,7 +50,7 @@ class Add
             $req->setNote($one->getNote());
             $req->setDateApplied($dateApplied);
             /** @var  $resp AResponse */
-            $resp = $this->servTrans->exec($req);
+            $resp = $this->srvTrans->exec($req);
             if (!$resp->isSucceed()) {
                 throw new \Exception("Transaction (debit acc. #{$req->getDebitAccId()}, credit acc. "
                     . "#{$req->getCreditAccId()}) cannot be inserted . ");

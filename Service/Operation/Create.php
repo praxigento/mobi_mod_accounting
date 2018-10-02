@@ -3,7 +3,7 @@
  * User: makhovdmitrii@inbox.ru
  */
 
-namespace Praxigento\Accounting\Service;
+namespace Praxigento\Accounting\Service\Operation;
 
 
 use Praxigento\Accounting\Api\Service\Operation\Create\Request as ARequest;
@@ -11,7 +11,7 @@ use Praxigento\Accounting\Api\Service\Operation\Create\Response as AResponse;
 use Praxigento\Accounting\Repo\Data\Operation as EOperation;
 
 
-class Operation
+class Create
     implements \Praxigento\Accounting\Api\Service\Operation\Create
 {
     /** @var \Praxigento\Accounting\Repo\Dao\Log\Change\Admin */
@@ -26,8 +26,8 @@ class Operation
     private $hlpDate;
     /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     private $manTrans;
-    /** @var \Praxigento\Accounting\Service\Operation\Add */
-    private $subAdd;
+    /** @var \Praxigento\Accounting\Service\Operation\Create\A\Add */
+    private $ownAdd;
 
     public function __construct(
         \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
@@ -36,7 +36,7 @@ class Operation
         \Praxigento\Accounting\Repo\Dao\Log\Change\Admin $daoELogChangeAdmin,
         \Praxigento\Accounting\Repo\Dao\Log\Change\Customer $daoELogChangeCust,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
-        \Praxigento\Accounting\Service\Operation\Add $subAdd
+        \Praxigento\Accounting\Service\Operation\Create\A\Add $ownAdd
     ) {
         $this->manTrans = $manTrans;
         $this->daoTypeOper = $daoTypeOper;
@@ -44,7 +44,7 @@ class Operation
         $this->daoELogChangeAdmin = $daoELogChangeAdmin;
         $this->daoELogChangeCust = $daoELogChangeCust;
         $this->hlpDate = $hlpDate;
-        $this->subAdd = $subAdd;
+        $this->ownAdd = $ownAdd;
     }
 
     /**
@@ -86,7 +86,7 @@ class Operation
             }
             $operId = $this->daoOper->create($bindToAdd);
             if ($operId) {
-                $transIds = $this->subAdd->exec($operId, $transactions, $datePerformed, $asRef);
+                $transIds = $this->ownAdd->exec($operId, $transactions, $datePerformed, $asRef);
                 $result->setOperationId($operId);
                 $result->setTransactionsIds($transIds);
                 /* log customer link */
