@@ -11,8 +11,9 @@ use Praxigento\Accounting\Repo\Data\Transaction as Trans;
 
 /**
  * Build query to get transactions for the customer.
+ * @deprecated use \Praxigento\Accounting\Repo\Query\Trans\Get if it possible or remove this mark
  */
-class Builder
+class ForCustomer
     extends \Praxigento\Core\App\Repo\Query\Builder
 {
     /**
