@@ -4,15 +4,15 @@
  * Since: 2018
  */
 
-namespace Praxigento\Accounting\Api\Service;
+namespace Praxigento\Accounting\Api\Service\Operation;
 
-use Praxigento\Accounting\Api\Service\Operation\Request as ARequest;
-use Praxigento\Accounting\Api\Service\Operation\Response as AResponse;
+use Praxigento\Accounting\Api\Service\Operation\Create\Request as ARequest;
+use Praxigento\Accounting\Api\Service\Operation\Create\Response as AResponse;
 
 /**
  * Create new operation (with nested transactions & balances changes).
  */
-interface Operation
+interface Create
 {
     /**
      * @param ARequest $request

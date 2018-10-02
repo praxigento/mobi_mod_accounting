@@ -6,13 +6,13 @@
 namespace Praxigento\Accounting\Service;
 
 
-use Praxigento\Accounting\Api\Service\Operation\Request as ARequest;
-use Praxigento\Accounting\Api\Service\Operation\Response as AResponse;
+use Praxigento\Accounting\Api\Service\Operation\Create\Request as ARequest;
+use Praxigento\Accounting\Api\Service\Operation\Create\Response as AResponse;
 use Praxigento\Accounting\Repo\Data\Operation as EOperation;
 
 
 class Operation
-    implements \Praxigento\Accounting\Api\Service\Operation
+    implements \Praxigento\Accounting\Api\Service\Operation\Create
 {
     /** @var \Praxigento\Accounting\Repo\Dao\Log\Change\Admin */
     private $daoELogChangeAdmin;

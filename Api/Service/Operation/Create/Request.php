@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Accounting\Api\Service\Operation;
+namespace Praxigento\Accounting\Api\Service\Operation\Create;
 
 /**
  * @method string getDatePerformed()

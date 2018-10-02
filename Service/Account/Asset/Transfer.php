@@ -20,13 +20,13 @@ class Transfer
     private $daoAcc;
     /** @var \Praxigento\Core\Api\Helper\Date */
     private $hlpData;
-    /** @var \Praxigento\Accounting\Api\Service\Operation */
+    /** @var \Praxigento\Accounting\Api\Service\Operation\Create */
     private $servOper;
 
     public function __construct(
         \Praxigento\Core\Api\Helper\Date $hlpData,
         \Praxigento\Accounting\Repo\Dao\Account $daoAcc,
-        \Praxigento\Accounting\Api\Service\Operation $callOper
+        \Praxigento\Accounting\Api\Service\Operation\Create $callOper
     ) {
         $this->hlpData = $hlpData;
         $this->daoAcc = $daoAcc;
@@ -106,7 +106,7 @@ class Transfer
 
     private function transfer($userId, $trans, $note)
     {
-        $req = new \Praxigento\Accounting\Api\Service\Operation\Request();
+        $req = new \Praxigento\Accounting\Api\Service\Operation\Create\Request();
         $req->setAdminUserId($userId);
         $req->setOperationTypeCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
         if (!$note) {
