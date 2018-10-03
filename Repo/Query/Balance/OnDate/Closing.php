@@ -15,25 +15,8 @@ use Praxigento\Core\App\Repo\Query\Expression as AnExpression;
  */
 class Closing
     extends \Praxigento\Core\App\Repo\Query\Builder
+    implements \Praxigento\Accounting\Api\Repo\Query\Balance\OnDate\Closing
 {
-    /**
-     * Tables aliases.
-     */
-    const AS_ACC = 'acc';
-    const AS_BALANCE = 'bal';
-    const AS_DATE_MAX = 'dateMax';
-
-    /**
-     * Attributes aliases.
-     */
-    const A_ACC_ID = 'accId';
-    const A_BALANCE = 'balance';
-    const A_CUST_ID = 'custId';
-    const A_DATE_MAX = 'dateMax';
-
-    /** Bound variables names */
-    const BND_MAX_DATE = QMaxDates::BND_MAX_DATE;
-
     /** @var \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\A\MaxDates */
     private $qMaxDates;
 

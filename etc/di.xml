@@ -10,6 +10,12 @@
     <preference for="Praxigento\Accounting\Api\Helper\SysCustomer"
                 type="Praxigento\Accounting\Helper\SysCustomer"/>
 
+    <!-- **************** -->
+    <!-- API Repo Queries -->
+    <!-- **************** -->
+    <preference for="Praxigento\Accounting\Api\Repo\Query\Balance\OnDate\Closing"
+                type="Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing"/>
+
     <!-- *********** -->
     <!-- API Service -->
     <!-- *********** -->

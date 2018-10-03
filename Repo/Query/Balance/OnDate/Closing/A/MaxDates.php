@@ -5,6 +5,7 @@
 
 namespace Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\A;
 
+use Praxigento\Accounting\Api\Repo\Query\Balance\OnDate\Closing as QClosing;
 use Praxigento\Accounting\Repo\Data\Balance as EBalance;
 
 /**
@@ -27,7 +28,7 @@ class MaxDates
     const A_DATE_MAX = 'balMaxDate';
 
     /** Bound variables names */
-    const BND_MAX_DATE = 'balanceDateMax';
+    const BND_MAX_DATE = QClosing::BND_MAX_DATE;
 
     public function build(\Magento\Framework\DB\Select $source = null)
     {
