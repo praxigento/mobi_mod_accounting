@@ -8,21 +8,21 @@ namespace Praxigento\Accounting\Service\Balance\Get;
 use Praxigento\Accounting\Api\Service\Balance\Get\Turnover\Request as ARequest;
 use Praxigento\Accounting\Api\Service\Balance\Get\Turnover\Response as AResponse;
 use Praxigento\Accounting\Config as Cfg;
-use Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder as QBalanceClose;
+use Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset as QBalanceClose;
 
 class Turnover
     implements \Praxigento\Accounting\Api\Service\Balance\Get\Turnover
 {
     /** @var  \Praxigento\Core\Api\Helper\Period */
     private $hlpPeriod;
-    /** @var \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder */
+    /** @var \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset */
     private $qbBalClose;
     /** @var \Praxigento\Accounting\Repo\Dao\Type\Asset */
     private $daoTypeAsset;
 
     public function __construct(
         \Praxigento\Core\Api\Helper\Period $hlpPeriod,
-        \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder $qbBalClose,
+        \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset $qbBalClose,
         \Praxigento\Accounting\Repo\Dao\Type\Asset $daoTypeAsset
     ) {
         $this->hlpPeriod = $hlpPeriod;

@@ -4,7 +4,7 @@
  * Since: 2018
  */
 
-namespace Test\Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder;
+namespace Test\Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset;
 
 include_once(__DIR__ . '/../../../../../../phpunit_bootstrap.php');
 
@@ -18,8 +18,8 @@ class BuilderTest
      */
     public function test_build()
     {
-        /** @var \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder $obj */
-        $obj = $this->manObj->get(\Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset\Builder::class);
+        /** @var \Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset $obj */
+        $obj = $this->manObj->get(\Praxigento\Accounting\Repo\Query\Balance\OnDate\Closing\ByAsset::class);
         $query = $obj->build();
         $this->assertNotNull('done');
     }
