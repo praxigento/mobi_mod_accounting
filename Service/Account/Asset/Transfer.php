@@ -86,10 +86,23 @@ class Transfer
 
         /* compose result */
         $result = new AResponse();
+        $one = reset($trans);
+        $amount = $one->getValue();
+        $result->setAmount($amount);
         $result->setOperId($operId);
+
         return $result;
     }
 
+    /**
+     * @param $amount
+     * @param $accIdDebit
+     * @param $accIdCredit
+     * @param $dateApplied
+     * @param $note
+     * @return \Praxigento\Accounting\Repo\Data\Transaction[]
+     * @throws \Exception
+     */
     private function prepareTrans($amount, $accIdDebit, $accIdCredit, $dateApplied, $note)
     {
         $tran = new \Praxigento\Accounting\Repo\Data\Transaction();

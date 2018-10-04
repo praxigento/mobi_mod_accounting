@@ -14,7 +14,17 @@ namespace Praxigento\Accounting\Api\Service\Account\Asset\Transfer;
 class Response
     extends \Praxigento\Core\Data
 {
+    const AMOUNT = 'amount';
     const OPER_ID = 'operId';
+
+    /**
+     * @return float
+     */
+    public function getAmount()
+    {
+        $result = parent::get(self::AMOUNT);
+        return $result;
+    }
 
     /**
      * @return int
@@ -23,6 +33,16 @@ class Response
     {
         $result = parent::get(self::OPER_ID);
         return $result;
+    }
+
+    /**
+     *
+     * @param float $data
+     * @return void
+     */
+    public function setAmount($data)
+    {
+        parent::set(self::AMOUNT, $data);
     }
 
     /**
