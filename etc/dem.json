@@ -253,7 +253,7 @@
                   },
                   "TotalDebit": {
                     "alias": "total_debit",
-                    "comment": "Total amount of all debit transactions from account fo period.",
+                    "comment": "Total amount of all debit transactions from account for period.",
                     "nullable": false,
                     "type": {"numeric": {"precision": 12, "scale": 4}}
                   },
