@@ -66,8 +66,8 @@ class Calc
         /* check date to */
         if (is_null($dateTo)) {
             /* use 'yesterday' */
-            $dtMageNow = $this->hlpDate->getMageNow();
-            $today = $this->hlpPeriod->getPeriodCurrent($dtMageNow);
+            $dtNow = $this->hlpDate->getUtcNow();
+            $today = $this->hlpPeriod->getPeriodCurrent($dtNow);
             $dateTo = $this->hlpPeriod->getPeriodPrev($today);
         }
         /* get transactions for period */
