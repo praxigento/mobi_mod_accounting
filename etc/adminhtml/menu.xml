@@ -3,7 +3,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
 
-        <!-- Left pane menu anchor -->
+        <!-- Left pane menu item "Accounting" -->
         <add id="Praxigento_Accounting::accounts"
                 title="Accounting"
                 translate="title"
@@ -11,6 +11,17 @@
                 sortOrder="30"
                 resource="Praxigento_Accounting::admin_accounts"/>
 
+        <!-- "Accounting / Codifiers" groups separator -->
+        <add id="Praxigento_Accounting::accounts_codifiers"
+             title="Codifiers"
+             translate="title"
+             module="Praxigento_Accounting"
+             sortOrder="1000"
+             parent="Praxigento_Accounting::accounts"
+             resource="Praxigento_Accounting::admin_accounts"/>
+
+
+        <!-- "Accounting" group items -->
         <add id="Praxigento_Accounting::accounts_transactions"
              title="Transactions"
              translate="title"
@@ -38,15 +49,8 @@
              action="account/accounts"
              resource="Praxigento_Accounting::admin_accounts_accounts"/>
 
-        <!-- Groups separator -->
-        <add id="Praxigento_Accounting::accounts_codifiers"
-                title="Codifiers"
-                translate="title"
-                module="Praxigento_Accounting"
-                sortOrder="1000"
-                parent="Praxigento_Accounting::accounts"
-                resource="Praxigento_Accounting::admin_accounts"/>
 
+        <!-- "Accounting / Codifiers" group items -->
         <add id="Praxigento_Accounting::accounts_types_asset"
              title="Asset Types"
              translate="title"
