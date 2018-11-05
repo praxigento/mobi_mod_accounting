@@ -11,6 +11,15 @@
                 sortOrder="30"
                 resource="Praxigento_Accounting::admin_accounts"/>
 
+        <!-- "Accounting / Main" groups separator -->
+        <add id="Praxigento_Accounting::accounts_main"
+             title="Main"
+             translate="title"
+             module="Praxigento_Accounting"
+             sortOrder="1000"
+             parent="Praxigento_Accounting::accounts"
+             resource="Praxigento_Accounting::admin_accounts"/>
+
         <!-- "Accounting / Codifiers" groups separator -->
         <add id="Praxigento_Accounting::accounts_codifiers"
              title="Codifiers"
@@ -21,13 +30,13 @@
              resource="Praxigento_Accounting::admin_accounts"/>
 
 
-        <!-- "Accounting" group items -->
+        <!-- "Accounting / Main" group items -->
         <add id="Praxigento_Accounting::accounts_transactions"
              title="Transactions"
              translate="title"
              module="Praxigento_Accounting"
              sortOrder="100"
-             parent="Praxigento_Accounting::accounts"
+             parent="Praxigento_Accounting::accounts_main"
              action="account/transactions"
              resource="Praxigento_Accounting::admin_accounts_transactions"/>
 
@@ -36,7 +45,7 @@
              translate="title"
              module="Praxigento_Accounting"
              sortOrder="200"
-             parent="Praxigento_Accounting::accounts"
+             parent="Praxigento_Accounting::accounts_main"
              action="account/operations"
              resource="Praxigento_Accounting::admin_accounts_operations"/>
 
@@ -45,7 +54,7 @@
              translate="title"
              module="Praxigento_Accounting"
              sortOrder="300"
-             parent="Praxigento_Accounting::accounts"
+             parent="Praxigento_Accounting::accounts_main"
              action="account/accounts"
              resource="Praxigento_Accounting::admin_accounts_accounts"/>
 
