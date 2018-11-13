@@ -7,7 +7,7 @@
 
     <dataSource name="prxgt_accounts_customer_modal_ds">
         <dataProvider name="prxgt_accounts_customer_modal_ds"
-                      class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider"/>
+                      class="Praxigento\Core\App\Ui\DataProvider\Base"/>
 
     </dataSource>
 </modal>

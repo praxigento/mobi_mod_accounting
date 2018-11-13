@@ -90,6 +90,7 @@ class Transfer
         $amount = $one->getValue();
         $result->setAmount($amount);
         $result->setOperId($operId);
+        $result->markSucceed();
 
         return $result;
     }

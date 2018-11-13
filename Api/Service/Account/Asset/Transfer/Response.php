@@ -12,7 +12,7 @@ namespace Praxigento\Accounting\Api\Service\Account\Asset\Transfer;
  *
  */
 class Response
-    extends \Praxigento\Core\Data
+    extends \Praxigento\Core\App\Service\Response
 {
     const AMOUNT = 'amount';
     const OPER_ID = 'operId';
