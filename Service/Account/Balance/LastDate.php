@@ -1,6 +1,7 @@
 <?php
 /**
- * File creator: makhovdmitrii@inbox.ru
+ * Authors: Alex Gusev <alex@flancer64.com>
+ * Since: 2017
  */
 
 namespace Praxigento\Accounting\Service\Account\Balance;

@@ -48,7 +48,6 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="prxgt:acc:balance:calc" xsi:type="object">Praxigento\Accounting\Cli\Balance\Calc</item>
-                <item name="prxgt:acc:balance:reset" xsi:type="object">Praxigento\Accounting\Cli\Balance\Reset</item>
             </argument>
         </arguments>
     </type>
