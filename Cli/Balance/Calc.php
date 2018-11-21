@@ -14,6 +14,16 @@ class Calc
     const OPT_DATESTAMP_DEF = '31171231';
     const OPT_DATESTAMP_NAME = 'date';
     const OPT_DATESTAMP_SHORTCUT = 'd';
+    const OPT_FIX_DEF = 'false';
+    const OPT_FIX_NAME = 'fix';
+    const OPT_FIX_SHORTCUT = 'f';
+    const OPT_RESET_DEF = 'false';
+    const OPT_RESET_FROM_DEF = '10170101';
+    const OPT_RESET_FROM_NAME = 'from';
+    const OPT_RESET_FROM_SHORTCUT = 'f';
+    const OPT_RESET_NAME = 'reset';
+    const OPT_RESET_SHORTCUT = 'r';
+
     /** @var \Praxigento\Accounting\Repo\Dao\Type\Asset */
     protected $daoTypeAsset;
     /** @var \Praxigento\Accounting\Service\Account\Balance\Calc */
@@ -27,7 +37,7 @@ class Calc
         parent::__construct(
             $manObj,
             'prxgt:acc:balance:calc',
-            'Calculate accounts balances.'
+            'Calculate accounts balances (reset history ).'
         );
         $this->daoTypeAsset = $daoTypeAsset;
         $this->servBalance = $servBalance;
@@ -40,8 +50,15 @@ class Calc
             self::OPT_DATESTAMP_NAME,
             self::OPT_DATESTAMP_SHORTCUT,
             \Symfony\Component\Console\Input\InputOption::VALUE_OPTIONAL,
-            'Date from (inclusive) to reset balances (-d 20170308).',
+            'Date to calc balances (-d 20170308).',
             self::OPT_DATESTAMP_DEF
+        );
+        $this->addOption(
+            self::OPT_FIX_NAME,
+            self::OPT_FIX_SHORTCUT,
+            \Symfony\Component\Console\Input\InputOption::VALUE_OPTIONAL,
+            'Set "true" to fix current balances if different.',
+            self::OPT_FIX_DEF
         );
     }
 
@@ -51,7 +68,8 @@ class Calc
     ) {
         /* get CLI input parameters */
         $period = $input->getOption(self::OPT_DATESTAMP_NAME);
-        $output->writeln("<info>Start calculation of the accounts balances (up to $period).<info>");
+        $fix = $input->getOption(self::OPT_FIX_NAME);
+        $output->writeln("<info>Command '" . $this->getName() . "' (period: $period; fix: $fix):<info>");
 
         /* perform action */
         $assets = $this->getAssetTypesIds();
@@ -66,7 +84,7 @@ class Calc
                 $output->writeln("<info>Balances for asset '$typeCode' are NOT calculated.<info>");
             }
         }
-        $output->writeln('<info>Command is completed.<info>');
+        $output->writeln('<info>Command \'' . $this->getName() . '\' is completed.<info>');
     }
 
     /**

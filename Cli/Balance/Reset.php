@@ -47,14 +47,14 @@ class Reset
     ) {
         /* get CLI input parameters */
         $period = $input->getOption(self::OPT_DATESTAMP_NAME);
-        $output->writeln("<info>Start reset of the accounts balances (from '$period').<info>");
+        $output->writeln("<info>Command '" . $this->getName() . "' (period: '$period'):<info>");
 
         /* perform action */
         $req = new \Praxigento\Accounting\Service\Account\Balance\Reset\Request();
         $req->setDateFrom($period);
         $this->balanceReset->exec($req);
 
-        $output->writeln('<info>Command is completed.<info>');
+        $output->writeln('<info>Command \'' . $this->getName() . '\' is completed.<info>');
 
     }
 
