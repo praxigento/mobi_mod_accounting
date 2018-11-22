@@ -33,14 +33,14 @@ class Transaction
     {
         $result = parent::create($data);
         if ($result) {
-            /* update balalnces for accounts */
+            /* update balances for accounts */
             if (is_array($data)) {
                 $data = new Entity($data);
             }
             $value = $data->getValue();
-            $creditAccid = $data->getCreditAccId();
+            $creditAccId = $data->getCreditAccId();
             $debitAccId = $data->getDebitAccId();
-            $this->_repoAccount->updateBalance($creditAccid, 0 + $value);
+            $this->_repoAccount->updateBalance($creditAccId, 0 + $value);
             $this->_repoAccount->updateBalance($debitAccId, 0 - $value);
         }
         return $result;

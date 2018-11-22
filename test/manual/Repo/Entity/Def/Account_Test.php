@@ -27,8 +27,8 @@ class Account_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
     public function test_create()
     {
         $bind = [
-            Entity::A_CUST_ID => static::DEF_CUSTOMER_ID,
-            Entity::A_ASSET_TYPE_ID => static::DEF_ASSET_TYPE_ID
+            Entity::A_CUST_ID => self::DEF_CUSTOMER_ID,
+            Entity::A_ASSET_TYPE_ID => self::DEF_ASSET_TYPE_ID
         ];
         $res = $this->_obj->create($bind);
         $this->assertTrue($res > 0);
@@ -36,7 +36,7 @@ class Account_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
 
     public function test_getByCustomerId()
     {
-        $res = $this->_obj->getByCustomerId(static::DEF_CUSTOMER_ID, static::DEF_ASSET_TYPE_ID);
+        $res = $this->_obj->getByCustomerId(self::DEF_CUSTOMER_ID, self::DEF_ASSET_TYPE_ID);
         $this->assertInstanceOf(Entity::class, $res);
     }
 
@@ -49,7 +49,7 @@ class Account_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
     public function test_updateBalance()
     {
         $DELTA = 2;
-        $res = $this->_obj->updateBalance(static::DEF_ACCOUNT_ID, $DELTA);
+        $res = $this->_obj->updateBalance(self::DEF_ACCOUNT_ID, $DELTA);
         $this->assertEquals(1, $res);
     }
 

@@ -174,20 +174,4 @@ class Balance
         return $result;
     }
 
-    /**
-     * @param $updateData
-     * @return mixed
-     */
-    public function updateBalances($updateData)
-    {
-        $this->conn->beginTransaction();
-        $tbl = $this->resource->getTableName(\Praxigento\Accounting\Repo\Data\Balance::ENTITY_NAME);
-        foreach ($updateData as $accountId => $byDate) {
-            foreach ($byDate as $date => $data) {
-                $this->conn->insert($tbl, $data);
-            }
-        }
-        $this->conn->commit();
-    }
-
 }

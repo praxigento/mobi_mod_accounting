@@ -19,7 +19,7 @@ class Request
      */
     public function getAccounts()
     {
-        $result = $this->get(static::ACCOUNTS);
+        $result = $this->get(self::ACCOUNTS);
         return $result;
     }
 
@@ -30,7 +30,7 @@ class Request
      */
     public function getAssetTypes()
     {
-        $result = $this->get(static::ASSET_TYPES);
+        $result = $this->get(self::ASSET_TYPES);
         return $result;
     }
 
@@ -41,7 +41,7 @@ class Request
      */
     public function getDateFrom()
     {
-        $result = $this->get(static::DATE_FROM);
+        $result = $this->get(self::DATE_FROM);
         return $result;
     }
 
@@ -53,7 +53,7 @@ class Request
      */
     public function setAccounts($data)
     {
-        $this->set(static::ACCOUNTS, $data);
+        $this->set(self::ACCOUNTS, $data);
     }
 
     /**
@@ -64,7 +64,7 @@ class Request
      */
     public function setAssetTypes($data)
     {
-        $this->set(static::ASSET_TYPES, $data);
+        $this->set(self::ASSET_TYPES, $data);
     }
 
     /**
@@ -75,7 +75,7 @@ class Request
      */
     public function setDateFrom($data)
     {
-        $this->set(static::DATE_FROM, $data);
+        $this->set(self::DATE_FROM, $data);
     }
 
 }

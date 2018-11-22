@@ -14,7 +14,7 @@ use Praxigento\Accounting\Service\Account\Balance\Reset\Request as AResetRequest
 /**
  * Re-calculate balances for given asset type.
  */
-class ProcessOneType
+class ProcessOneAccount
 {
     /** Max 'up to' datestamp to get transactions (TODO: increase value after 2999/12/31) */
     private const DATESTAMP_TO = '29991231';
@@ -60,18 +60,18 @@ class ProcessOneType
         $this->ownCollect = $ownCollect;
     }
 
-    public function exec($assetTypeId, $dsBalClose)
+    public function exec($accId, $dsBalClose)
     {
-        $dsLast = $this->getBalancesLastDate($assetTypeId);
+        $dsLast = $this->getBalancesLastDate($accId);
         /* reset balances if requested */
         if ($dsLast > $dsBalClose) {
-            $this->resetBalances($assetTypeId, $dsBalClose);
+            $this->resetBalances($accId, $dsBalClose);
             $dsLast = $dsBalClose;
         }
         /* get closing balances */
-        $balances = $this->getBalanceClosing($assetTypeId, $dsLast);
+        $balances = $this->getBalanceClosing($accId, $dsLast);
         /* get transactions starting from the last date */
-        $trans = $this->getTransactions($assetTypeId, $dsLast);
+        $trans = $this->getTransactions($accId, $dsLast);
         /* collect transactions by date (compose records for balances table) */
         $updates = $this->ownCollect->exec($balances, $trans);
         $this->saveUpdates($updates);
@@ -86,14 +86,14 @@ class ProcessOneType
     /**
      * Get the last datestamp for existing balances for given asset.
      *
-     * @param int $assetTypeId
+     * @param int $accId
      * @return string
      * @throws \Exception
      */
-    private function getBalancesLastDate($assetTypeId)
+    private function getBalancesLastDate($accId)
     {
         $reqLastDate = new ALastDateRequest();
-        $reqLastDate->setAssetTypeId($assetTypeId);
+        $reqLastDate->setAccountId($accId);
         $respLastDate = $this->servBalanceLastDate->exec($reqLastDate);
         $result = $respLastDate->getLastDate();
         return $result;

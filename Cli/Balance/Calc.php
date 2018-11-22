@@ -17,13 +17,13 @@ class Calc
 
     /** @var \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     private $manTrans;
-    /** @var \Praxigento\Accounting\Service\Account\Balance\Calc */
+    /** @var \Praxigento\Accounting\Api\Service\Account\Balance\Calc */
     private $servBalance;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
-        \Praxigento\Accounting\Service\Account\Balance\Calc $servBalance
+        \Praxigento\Accounting\Api\Service\Account\Balance\Calc $servBalance
     ) {
         parent::__construct(
             $manObj,
@@ -57,7 +57,7 @@ class Calc
 
         /* wrap all DB operations with DB transaction */
         $def = $this->manTrans->begin();
-        $req = new \Praxigento\Accounting\Service\Account\Balance\Calc\Request();
+        $req = new \Praxigento\Accounting\Api\Service\Account\Balance\Calc\Request();
         $req->setDaysToReset($days);
         $this->servBalance->exec($req);
         $this->manTrans->commit($def);
