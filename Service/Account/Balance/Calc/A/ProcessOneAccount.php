@@ -6,9 +6,12 @@
 
 namespace Praxigento\Accounting\Service\Account\Balance\Calc\A;
 
-use Praxigento\Accounting\Config as Cfg;
-use Praxigento\Accounting\Repo\Data\Balance as EBalance;
+use Praxigento\Accounting\Api\Repo\Query\Balance\OnDate\Closing as QBalOnDate;
 use Praxigento\Accounting\Api\Service\Account\Balance\LastDate\Request as ALastDateRequest;
+use Praxigento\Accounting\Config as Cfg;
+use Praxigento\Accounting\Repo\Data\Account as EAccount;
+use Praxigento\Accounting\Repo\Data\Balance as EBalance;
+use Praxigento\Accounting\Repo\Data\Transaction as ETrans;
 use Praxigento\Accounting\Service\Account\Balance\Reset\Request as AResetRequest;
 
 /**
@@ -16,8 +19,7 @@ use Praxigento\Accounting\Service\Account\Balance\Reset\Request as AResetRequest
  */
 class ProcessOneAccount
 {
-    /** Max 'up to' datestamp to get transactions (TODO: increase value after 2999/12/31) */
-    private const DATESTAMP_TO = '29991231';
+    private const BND_ACC_ID = 'accId';
 
     /** @var \Praxigento\Accounting\Repo\Dao\Account */
     private $daoAccount;
@@ -31,33 +33,41 @@ class ProcessOneAccount
     private $hlpPeriod;
     /** @var \Psr\Log\LoggerInterface */
     private $logger;
-    /** @var \Praxigento\Accounting\Service\Account\Balance\Calc\A\ProcessOneType\A\CollectTransactions */
-    private $ownCollect;
+    /** @var \Praxigento\Accounting\Api\Repo\Query\Balance\OnDate\Closing */
+    private $qBalancesOnDate;
+    /** @var \Magento\Framework\App\ResourceConnection */
+    private $resource;
     /** @var \Praxigento\Accounting\Service\Account\Balance\LastDate */
     private $servBalanceLastDate;
     /** @var \Praxigento\Accounting\Service\Account\Balance\Reset */
     private $servBalanceReset;
+    /** @var \Praxigento\Accounting\Service\Account\Balance\Calc\A\Z\CollectTransactions */
+    private $zCollect;
 
     public function __construct(
         \Praxigento\Core\Api\App\Logger\Main $logger,
+        \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Accounting\Repo\Dao\Account $daoAccount,
         \Praxigento\Accounting\Repo\Dao\Balance $daoBalance,
         \Praxigento\Accounting\Repo\Dao\Transaction $daoTransaction,
+        \Praxigento\Accounting\Api\Repo\Query\Balance\OnDate\Closing $qBalancesOnDate,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Core\Api\Helper\Period $hlpPeriod,
         \Praxigento\Accounting\Service\Account\Balance\LastDate $servBalanceLastDate,
         \Praxigento\Accounting\Service\Account\Balance\Reset $servBalanceReset,
-        \Praxigento\Accounting\Service\Account\Balance\Calc\A\ProcessOneType\A\CollectTransactions $ownCollect
+        \Praxigento\Accounting\Service\Account\Balance\Calc\A\Z\CollectTransactions $zCollect
     ) {
         $this->logger = $logger;
+        $this->resource = $resource;
         $this->daoAccount = $daoAccount;
         $this->daoBalance = $daoBalance;
         $this->daoTransaction = $daoTransaction;
+        $this->qBalancesOnDate = $qBalancesOnDate;
         $this->hlpDate = $hlpDate;
         $this->hlpPeriod = $hlpPeriod;
         $this->servBalanceLastDate = $servBalanceLastDate;
         $this->servBalanceReset = $servBalanceReset;
-        $this->ownCollect = $ownCollect;
+        $this->zCollect = $zCollect;
     }
 
     public function exec($accId, $dsBalClose)
@@ -69,17 +79,43 @@ class ProcessOneAccount
             $dsLast = $dsBalClose;
         }
         /* get closing balances */
-        $balances = $this->getBalanceClosing($accId, $dsLast);
+        $balance = $this->getBalanceClosing($accId, $dsLast);
         /* get transactions starting from the last date */
         $trans = $this->getTransactions($accId, $dsLast);
-        /* collect transactions by date (compose records for balances table) */
-        $updates = $this->ownCollect->exec($balances, $trans);
-        $this->saveUpdates($updates);
+        if (is_array($trans) && count($trans)) {
+            /* collect transactions by date (compose records for balances table) */
+            $balances = [$accId => $balance];
+            $updates = $this->zCollect->exec($balances, $trans);
+            /* process this account balances only*/
+            $updates = [$accId => $updates[$accId]];
+            /* TODO extract saveUpdates to the Z-class */
+            $this->saveUpdates($updates);
+        } else {
+            $msg = "There is no transactions for account #$accId starting from $dsLast";
+            $this->logger->info($msg);
+        }
     }
 
-    private function getBalanceClosing($assetTypeId, $dsClose)
+
+    private function getBalanceClosing($accId, $dsClose)
     {
-        $result = $this->daoBalance->getOnDate($assetTypeId, $dsClose);
+        $result = 0;
+
+        $query = $this->qBalancesOnDate->build();
+        $conn = $query->getConnection();
+
+        $where = QBalOnDate::AS_ACC . '.' . EAccount::A_ID . '=:' . self::BND_ACC_ID;
+        $query->where($where);
+
+        $bind = [
+            QBalOnDate::BND_MAX_DATE => $dsClose,
+            self::BND_ACC_ID => $accId
+        ];
+        $rs = $conn->fetchAll($query, $bind);
+        if (is_array($rs)) {
+            $entry = reset($rs);
+            $result = $entry[QBalOnDate::A_BALANCE];
+        }
         return $result;
     }
 
@@ -99,24 +135,29 @@ class ProcessOneAccount
         return $result;
     }
 
-    private function getTransactions($assetTypeId, $dsClose)
+    private function getTransactions($accId, $dsClose)
     {
         /* first date should be after closing balance date */
         $tsFrom = $this->hlpPeriod->getTimestampNextFrom($dsClose);
-        $tsTo = $this->hlpPeriod->getTimestampNextFrom(self::DATESTAMP_TO);
-        $result = $this->daoTransaction->getForPeriod($assetTypeId, $tsFrom, $tsTo);
+        $conn = $this->resource->getConnection();
+        $byDateFrom = ETrans::A_DATE_APPLIED . '>=' . $conn->quote($tsFrom);
+        $byAccIdDebit = ETrans::A_DEBIT_ACC_ID . '=' . (int)$accId;
+        $byAccIdCredit = ETrans::A_CREDIT_ACC_ID . '=' . (int)$accId;
+        $where = "($byDateFrom) AND (($byAccIdDebit) OR ($byAccIdCredit))";
+        $order = ETrans::A_DATE_APPLIED . ' ASC';
+        $result = $this->daoTransaction->get($where, $order);
         return $result;
     }
 
     /**
-     * @param int $assetType
+     * @param int $accId
      * @param string $dsFrom
      * @throws \Exception
      */
-    private function resetBalances($assetType, $dsFrom)
+    private function resetBalances($accId, $dsFrom)
     {
         $req = new AResetRequest();
-        $req->setAssetTypes([$assetType]);
+        $req->setAccounts([$accId]);
         $req->setDateFrom($dsFrom);
         $this->servBalanceReset->exec($req);
     }

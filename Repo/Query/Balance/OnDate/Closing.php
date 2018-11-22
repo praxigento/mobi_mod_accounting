@@ -47,8 +47,8 @@ class Closing
         $result->from([$as => $tbl], $cols);
 
         /* LEFT JOIN MAX_DATES */
-        $queryMaDates = $this->qMaxDates->build();
-        $tbl = $queryMaDates;
+        $queryMaxDates = $this->qMaxDates->build();
+        $tbl = $queryMaxDates;
         $as = $asMax;
         $cols = [];
         $on = $asMax . '.' . QMaxDates::A_ACC_ID . '='

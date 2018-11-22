@@ -11,7 +11,7 @@ class Transaction
     extends \Praxigento\Core\App\Repo\Dao
 {
     /** @var \Praxigento\Accounting\Repo\Dao\Account */
-    protected $_repoAccount;
+    private $repoAccount;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
@@ -20,7 +20,28 @@ class Transaction
     )
     {
         parent::__construct($resource, $daoGeneric, Entity::class);
-        $this->_repoAccount = $daoAccount;
+        $this->repoAccount = $daoAccount;
+    }
+
+    /**
+     * @param null $where
+     * @param null $order
+     * @param null $limit
+     * @param null $offset
+     * @param null $columns
+     * @param null $group
+     * @param null $having
+     * @return Entity[]
+     */
+    public function get($where = null,
+                        $order = null,
+                        $limit = null,
+                        $offset = null,
+                        $columns = null,
+                        $group = null,
+                        $having = null)
+    {
+        return parent::get($where, $order, $limit, $offset, $columns, $group, $having);
     }
 
     /**
@@ -40,8 +61,8 @@ class Transaction
             $value = $data->getValue();
             $creditAccId = $data->getCreditAccId();
             $debitAccId = $data->getDebitAccId();
-            $this->_repoAccount->updateBalance($creditAccId, 0 + $value);
-            $this->_repoAccount->updateBalance($debitAccId, 0 - $value);
+            $this->repoAccount->updateBalance($creditAccId, 0 + $value);
+            $this->repoAccount->updateBalance($debitAccId, 0 - $value);
         }
         return $result;
     }
@@ -100,56 +121,6 @@ class Transaction
         $query->order($asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::A_DATE_APPLIED . ' ASC');
         // $sql = (string)$query;
         $result = $this->conn->fetchAll($query, $bind);
-        return $result;
-    }
-
-    /**
-     * Get date for first transaction.
-     *
-     * @param null $assetTypeId
-     *
-     * @return mixed
-     *
-     * SELECT pat.date_applied
-     * FROM prxgt_acc_type_asset pata
-     * LEFT JOIN prxgt_acc_account paa
-     * ON pata.id = paa.asset_type_id
-     * LEFT JOIN prxgt_acc_transaction pat
-     * ON paa.id = pat.debit_acc_id
-     * WHERE pata.id = :assetTypeId
-     * ORDER BY pat.date_applied ASC
-     *
-     * @param null $assetTypeId
-     *
-     * @return string
-     */
-    public function getMinDateApplied($assetTypeId = null)
-    {
-        $asAccount = 'a';
-        $asTrans = 'trn';
-        $tblAccount = $this->resource->getTableName(\Praxigento\Accounting\Repo\Data\Account::ENTITY_NAME);
-        $tblTrans = $this->resource->getTableName(\Praxigento\Accounting\Repo\Data\Transaction::ENTITY_NAME);
-        /* select from account */
-        $query = $this->conn->select();
-        $query->from([$asAccount => $tblAccount], []);
-        /* join transactions on debit account */
-        $on = $asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::A_ID . '='
-            . $asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::A_DEBIT_ACC_ID;
-        $query->joinLeft(
-            [$asTrans => $tblTrans],
-            $on,
-            [\Praxigento\Accounting\Repo\Data\Transaction::A_DATE_APPLIED]
-        );
-        /* where */
-        $query->where($asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::A_ASSET_TYPE_ID . '=:typeId');
-        $bind = ['typeId' => $assetTypeId];
-        $query->where($asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::A_DATE_APPLIED
-            . ' IS NOT NULL');
-        /* order by */
-        $query->order([$asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::A_DATE_APPLIED . ' ASC']);
-        /* perform query */
-        // $sql = (string)$query;
-        $result = $this->conn->fetchOne($query, $bind);
         return $result;
     }
 

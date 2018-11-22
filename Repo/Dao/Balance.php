@@ -37,43 +37,6 @@ class Balance
     }
 
     /**
-     * Get maximal datestamp for existing balance by asset type id or null if no data is found.
-     *
-     * SELECT
-     * `b`.`date`
-     * FROM `prxgt_acc_account` AS `a`
-     * LEFT JOIN `prxgt_acc_balance` AS `b`
-     * ON a.id = b.account_id
-     * WHERE (a.id = :typeId)
-     * ORDER BY `b`.`date` DESC
-     *
-     * @param int $assetTypeId
-     * @return string YYYYMMDD
-     */
-    public function getMaxDate($assetTypeId = null)
-    {
-        $asAccount = 'a';
-        $asBalance = 'b';
-        $tblAccount = $this->resource->getTableName(\Praxigento\Accounting\Repo\Data\Account::ENTITY_NAME);
-        $tblBalance = $this->resource->getTableName(\Praxigento\Accounting\Repo\Data\Balance::ENTITY_NAME);
-        /* select from account */
-        $query = $this->conn->select();
-        $query->from([$asAccount => $tblAccount], []);
-        /* join balance */
-        $on = $asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::A_ID . '='
-            . $asBalance . '.' . \Praxigento\Accounting\Repo\Data\Balance::A_ACCOUNT_ID;
-        $query->joinLeft([$asBalance => $tblBalance], $on, [\Praxigento\Accounting\Repo\Data\Balance::A_DATE]);
-        /* where */
-        $query->where($asAccount . '.' . \Praxigento\Accounting\Repo\Data\Account::A_ASSET_TYPE_ID . '=:typeId');
-        $bind = ['typeId' => $assetTypeId];
-        /* order by */
-        $query->order([$asBalance . '.' . \Praxigento\Accounting\Repo\Data\Balance::A_DATE . ' DESC']);
-        /* perform query */
-        $result = $this->conn->fetchOne($query, $bind);
-        return $result;
-    }
-
-    /**
      * Get balances on concrete date.
      *
      * @param $assetTypeId
