@@ -19,9 +19,12 @@ class Calc
     private $manTrans;
     /** @var \Praxigento\Accounting\Api\Service\Account\Balance\Calc */
     private $servBalance;
+    /** @var \Psr\Log\LoggerInterface */
+    private $logger;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
+        \Praxigento\Core\Api\App\Logger\Main $logger,
         \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
         \Praxigento\Accounting\Api\Service\Account\Balance\Calc $servBalance
     ) {
@@ -30,6 +33,7 @@ class Calc
             'prxgt:acc:balance:calc',
             'Re-calculate accounts balances (reset daily balances up to $days).'
         );
+        $this->logger = $logger;
         $this->manTrans = $manTrans;
         $this->servBalance = $servBalance;
     }
@@ -53,7 +57,9 @@ class Calc
     ) {
         /* get CLI input parameters */
         $days = $input->getOption(self::OPT_DAYS_NAME);
-        $output->writeln("<info>Command '" . $this->getName() . "' (days to reset: $days):<info>");
+        $msg = "Command '" . $this->getName() . "' (days to reset: $days):";
+        $output->writeln("<info>$msg<info>");
+        $this->logger->info($msg);
 
         /* wrap all DB operations with DB transaction */
         $def = $this->manTrans->begin();
@@ -62,6 +68,8 @@ class Calc
         $this->servBalance->exec($req);
         $this->manTrans->commit($def);
 
-        $output->writeln('<info>Command \'' . $this->getName() . '\' is completed.<info>');
+        $msg = "Command '" . $this->getName() . "' is completed.";
+        $output->writeln("<info>$msg<info>");
+        $this->logger->info($msg);
     }
 }

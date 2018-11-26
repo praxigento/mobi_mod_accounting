@@ -110,7 +110,7 @@ class ProcessOneAccount
             self::BND_ACC_ID => $accId
         ];
         $rs = $conn->fetchAll($query, $bind);
-        if (is_array($rs)) {
+        if (is_array($rs) && count($rs)) {
             $entry = reset($rs);
             $result = $entry[QBalOnDate::A_BALANCE];
         }

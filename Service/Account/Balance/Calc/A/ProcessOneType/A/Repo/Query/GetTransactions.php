@@ -63,10 +63,14 @@ class GetTransactions
         $cond = "$as." . EAccount::A_ID . "=$asTrn." . ETran::A_DEBIT_ACC_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
-        /* query tuning */
+        /* WHERE */
         $byDate = "$asTrn." . ETran::A_DATE_APPLIED . ">=:" . self::BND_DATE_APPL;
         $byAssetType = "$asAcc." . EAccount::A_ASSET_TYPE_ID . "=:" . self::BND_ASSET_TYPE;
         $result->where("($byDate) AND ($byAssetType)");
+
+        /* ORDER */
+        $byDateApplAsc = ETran::A_DATE_APPLIED . ' ASC';
+        $result->order($byDateApplAsc);
 
         return $result;
     }
