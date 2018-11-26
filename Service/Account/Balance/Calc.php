@@ -136,7 +136,8 @@ class Calc
     private function getDateBalanceClose($dateResetFrom, $daysToReset)
     {
         if (!empty($dateResetFrom)) {
-            $result = $this->hlpPeriod->getPeriodCurrent($dateResetFrom);
+            $applied = $this->hlpPeriod->getPeriodCurrent($dateResetFrom);
+            $result = $this->hlpPeriod->getPeriodPrev($applied);
         } else {
             $days = abs((int)$daysToReset);
             if ($days < 0) {
