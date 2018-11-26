@@ -119,7 +119,6 @@ class Transaction
         ];
         /* order by */
         $query->order($asTrans . '.' . \Praxigento\Accounting\Repo\Data\Transaction::A_DATE_APPLIED . ' ASC');
-        // $sql = (string)$query;
         $result = $this->conn->fetchAll($query, $bind);
         return $result;
     }

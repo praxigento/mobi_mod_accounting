@@ -31,7 +31,7 @@ class Reset
     }
 
     /**
-     * Reset balance history for all accounts on dates after requested.
+     * Reset balance history for all accounts on dates after requested (excl.).
      *
      * @param ARequest $request
      * @return AResponse

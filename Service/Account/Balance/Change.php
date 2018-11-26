@@ -12,10 +12,6 @@ use Praxigento\Accounting\Service\Account\Balance\Change\Response as AResponse;
 
 class Change
 {
-    /** @var \Praxigento\Core\Api\Helper\Date */
-    private $hlpDate;
-    /** @var \Praxigento\Core\Api\App\Repo\Transaction\Manager */
-    private $manTrans;
     /** @var \Praxigento\Accounting\Repo\Dao\Account */
     private $daoAccount;
     /** @var \Praxigento\Accounting\Repo\Dao\Log\Change\Admin */
@@ -26,10 +22,10 @@ class Change
     private $daoTransaction;
     /** @var \Praxigento\Accounting\Repo\Dao\Type\Operation */
     private $daoTypeOper;
+    /** @var \Praxigento\Core\Api\Helper\Date */
+    private $hlpDate;
 
     public function __construct(
-        \Praxigento\Core\Api\App\Logger\Main $logger,
-        \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
         \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Accounting\Repo\Dao\Account $daoAccount,
         \Praxigento\Accounting\Repo\Dao\Operation $daoOperation,
@@ -37,7 +33,6 @@ class Change
         \Praxigento\Accounting\Repo\Dao\Type\Operation $daoTypeOper,
         \Praxigento\Accounting\Repo\Dao\Log\Change\Admin $daoLogChangeAdmin
     ) {
-        $this->manTrans = $manTrans;
         $this->hlpDate = $hlpDate;
         $this->daoAccount = $daoAccount;
         $this->daoOperation = $daoOperation;
@@ -57,43 +52,37 @@ class Change
         $accCustId = $request->getCustomerAccountId();
         $adminUserId = $request->getAdminUserId();
         $value = $request->getChangeValue();
-        $def = $this->manTrans->begin();
-        try {
-            /* get account's asset type by ID */
-            $assetTypeId = $this->daoAccount->getAssetTypeId($accCustId);
-            /* get system account id for given asset type */
-            $accSysId = $this->daoAccount->getSystemAccountId($assetTypeId);
-            /* get operation type by code and date performed */
-            $operTypeId = $this->daoTypeOper->getIdByCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
-            $dateNow = $this->hlpDate->getUtcNowForDb();
-            /* create operation */
-            $operation = new \Praxigento\Accounting\Repo\Data\Operation();
-            $operation->setTypeId($operTypeId);
-            $operation->setDatePerformed($dateNow);
-            $operId = $this->daoOperation->create($operation);
-            /* create transaction */
-            $trans = new \Praxigento\Accounting\Repo\Data\Transaction();
-            $trans->setOperationId($operId);
-            $trans->setDateApplied($dateNow);
-            if ($value > 0) {
-                $trans->setDebitAccId($accSysId);
-                $trans->setCreditAccId($accCustId);
-            } else {
-                $trans->setDebitAccId($accCustId);
-                $trans->setCreditAccId($accSysId);
-            }
-            $trans->setValue(abs($value));
-            $this->daoTransaction->create($trans);
-            /* log details (operator name who performs the operation) */
-            $log = new \Praxigento\Accounting\Repo\Data\Log\Change\Admin();
-            $log->setOperationRef($operId);
-            $log->setUserRef($adminUserId);
-            $this->daoLogChangeAdmin->create($log);
-            $this->manTrans->commit($def);
-            $result->markSucceed();
-        } finally {
-            $this->manTrans->end($def);
+        /* get account's asset type by ID */
+        $assetTypeId = $this->daoAccount->getAssetTypeId($accCustId);
+        /* get system account id for given asset type */
+        $accSysId = $this->daoAccount->getSystemAccountId($assetTypeId);
+        /* get operation type by code and date performed */
+        $operTypeId = $this->daoTypeOper->getIdByCode(Cfg::CODE_TYPE_OPER_CHANGE_BALANCE);
+        $dateNow = $this->hlpDate->getUtcNowForDb();
+        /* create operation */
+        $operation = new \Praxigento\Accounting\Repo\Data\Operation();
+        $operation->setTypeId($operTypeId);
+        $operation->setDatePerformed($dateNow);
+        $operId = $this->daoOperation->create($operation);
+        /* create transaction */
+        $trans = new \Praxigento\Accounting\Repo\Data\Transaction();
+        $trans->setOperationId($operId);
+        $trans->setDateApplied($dateNow);
+        if ($value > 0) {
+            $trans->setDebitAccId($accSysId);
+            $trans->setCreditAccId($accCustId);
+        } else {
+            $trans->setDebitAccId($accCustId);
+            $trans->setCreditAccId($accSysId);
         }
+        $trans->setValue(abs($value));
+        $this->daoTransaction->create($trans);
+        /* log details (operator name who performs the operation) */
+        $log = new \Praxigento\Accounting\Repo\Data\Log\Change\Admin();
+        $log->setOperationRef($operId);
+        $log->setUserRef($adminUserId);
+        $this->daoLogChangeAdmin->create($log);
+        $result->markSucceed();
         return $result;
     }
 }

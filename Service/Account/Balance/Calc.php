@@ -66,7 +66,7 @@ class Calc
             (count($accountsIds) > 0)
         ) {
             $total = count($accountsIds);
-            $this->logger->info("Total $total accounts will be re-calculated from '$dsBalanceClose'.");
+            $this->logger->info("Total $total accounts will be re-calculated from '$dsBalanceClose' (excl.).");
             foreach ($accountsIds as $one) {
                 $accId = (int)$one;
                 $this->logger->info("Re-calc balances for account #$accId.");
@@ -134,7 +134,7 @@ class Calc
     private function getDateBalanceClose($daysToReset)
     {
         $days = abs((int)$daysToReset);
-        if ($days < self::DEF_DAYS_TO_RESET) {
+        if ($days < 0) {
             $days = self::DEF_DAYS_TO_RESET;
         }
         $dtNow = $this->hlpDate->getUtcNow();

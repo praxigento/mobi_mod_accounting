@@ -129,7 +129,6 @@ class Balance
         $whereByDate = $asBal . '.' . \Praxigento\Accounting\Repo\Data\Balance::A_DATE . ' IS NOT NULL';
         $query->where("$whereByAssetType AND $whereByDate");
         $bind['asset_type_id'] = (int)$assetTypeId;
-        // $sql = (string)$qMain;
         $rows = $conn->fetchAll($query, $bind);
         foreach ($rows as $one) {
             $result[$one[\Praxigento\Accounting\Repo\Data\Account::A_ID]] = $one;

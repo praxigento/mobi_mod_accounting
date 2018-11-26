@@ -21,9 +21,9 @@ class CalcTest
         /** @var AService $obj */
         $obj = $this->manObj->create(AService::class);
         $req = new ARequest();
-        $req->setAssetTypeIds([1, 3]);
-        $req->setAccountsIds([401, 404, 408]);
-        $req->setDaysToReset(31);
+//        $req->setAssetTypeIds([1, 3]);
+//        $req->setAccountsIds([401, 404, 408]);
+        $req->setDaysToReset(1000);
         $res = $obj->exec($req);
         $this->assertInstanceOf(AResponse::class, $res);
     }
