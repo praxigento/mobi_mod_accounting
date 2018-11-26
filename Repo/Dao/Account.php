@@ -31,11 +31,6 @@ class Account
         $this->daoTypeAsset = $daoTypeAsset;
     }
 
-    public function cacheReset()
-    {
-        $this->cachedSysCustId = null;
-    }
-
     /**
      * @param \Praxigento\Accounting\Repo\Data\Account|array $data
      * @return int
@@ -89,24 +84,6 @@ class Account
         foreach ($rs as $one) {
             $item = new Entity($one);
             $result[$item->getId()] = $item;
-        }
-        return $result;
-    }
-
-    /**
-     * Get all customer accounts.
-     *
-     * @param int $customerId
-     * @return \Praxigento\Accounting\Repo\Data\Account[]|null
-     */
-    public function getAllByCustomerId($customerId)
-    {
-        $result = null;
-        $where = '(' . Entity::A_CUST_ID . '=' . (int)$customerId . ')';
-        $found = $this->get($where);
-        if ($found) {
-            /* TODO: use equal approach - '[]' instead of 'null' if not found */
-            $result = $found;
         }
         return $result;
     }

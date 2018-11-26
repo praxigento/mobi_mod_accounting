@@ -55,10 +55,11 @@ class Calc
         $accountsIds = $request->getAccountsIds();
         $assetTypeCodes = $request->getAssetTypeCodes();
         $assetTypeIds = $request->getAssetTypeIds();
+        $dateResetFrom = $request->getDateResetFrom();
         $daysToReset = (int)$request->getDaysToReset();
 
         /** validate pre-processing conditions */
-        $dsBalanceClose = $this->getDateBalanceClose($daysToReset);
+        $dsBalanceClose = $this->getDateBalanceClose($dateResetFrom, $daysToReset);
 
         /** perform processing */
         if (
@@ -128,18 +129,23 @@ class Calc
     /**
      * Calculate datestamp for the last day of balances to leave w/o reset.
      *
-     * @param $daysToReset
-     * @return string
+     * @param string $daysToReset
+     * @param int $daysToReset
+     * @return string YYYYMMDD
      */
-    private function getDateBalanceClose($daysToReset)
+    private function getDateBalanceClose($dateResetFrom, $daysToReset)
     {
-        $days = abs((int)$daysToReset);
-        if ($days < 0) {
-            $days = self::DEF_DAYS_TO_RESET;
+        if (!empty($dateResetFrom)) {
+            $result = $this->hlpPeriod->getPeriodCurrent($dateResetFrom);
+        } else {
+            $days = abs((int)$daysToReset);
+            if ($days < 0) {
+                $days = self::DEF_DAYS_TO_RESET;
+            }
+            $dtNow = $this->hlpDate->getUtcNow();
+            $dtMod = $dtNow->modify("-$days days");
+            $result = $this->hlpPeriod->getPeriodCurrent($dtMod);
         }
-        $dtNow = $this->hlpDate->getUtcNow();
-        $dtMod = $dtNow->modify("-$days days");
-        $result = $this->hlpPeriod->getPeriodCurrent($dtMod);
         return $result;
     }
 

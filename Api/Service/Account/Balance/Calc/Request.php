@@ -14,10 +14,11 @@ namespace Praxigento\Accounting\Api\Service\Account\Balance\Calc;
 class Request
     extends \Praxigento\Core\App\Service\Request
 {
-    const ACCOUNTS_IDS = 'accounts_ids';
-    const ASSET_TYPE_CODES = 'asset_type_codes';
-    const ASSET_TYPE_IDS = 'asset_type_ids';
-    const DAYS_TO_RESET = "days_to_reset";
+    const ACCOUNTS_IDS = 'accountsIds';
+    const ASSET_TYPE_CODES = 'assetTypeCodes';
+    const ASSET_TYPE_IDS = 'assetTypeIds';
+    const DATE_RESET_FROM = "dateResetFrom";
+    const DAYS_TO_RESET = "daysToReset";
 
     /**
      * @return int[]
@@ -43,6 +44,16 @@ class Request
     public function getAssetTypeIds()
     {
         $result = $this->get(self::ASSET_TYPE_IDS);
+        return $result;
+    }
+
+    /**
+     * Timestamp to reset balances (incl.)
+     * @return string
+     */
+    public function getDateResetFrom()
+    {
+        $result = $this->get(self::DATE_RESET_FROM);
         return $result;
     }
 
@@ -80,6 +91,17 @@ class Request
     public function setAssetTypeIds($data)
     {
         $this->set(self::ASSET_TYPE_IDS, $data);
+    }
+
+    /**
+     * Timestamp to reset balances (incl.)
+     *
+     * @param string $data
+     * @return void
+     */
+    public function setDateResetFrom($data)
+    {
+        $this->set(self::DATE_RESET_FROM, $data);
     }
 
     /**

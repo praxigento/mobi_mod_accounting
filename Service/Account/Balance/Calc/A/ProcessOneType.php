@@ -27,6 +27,7 @@ class ProcessOneType
     /** @var \Praxigento\Accounting\Api\Repo\Query\Balance\OnDate\Closing */
     private $qBalancesOnDate;
     /** @var \Praxigento\Accounting\Service\Account\Balance\Calc\A\ProcessOneType\A\Repo\Query\GetTransactions */
+    private $qGetTrans;
     /** @var \Praxigento\Accounting\Service\Account\Balance\LastDate */
     private $servBalanceLastDate;
     /** @var \Praxigento\Accounting\Service\Account\Balance\Reset */
