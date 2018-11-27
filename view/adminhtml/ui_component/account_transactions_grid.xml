@@ -73,19 +73,17 @@
             </settings>
         </column>
 
-        <column name="debit"
-                component="Praxigento_Core/js/grid/columns/integer">
+        <column name="debit">
             <settings>
-                <dataType>number</dataType>
+                <dataType>text</dataType>
                 <filter>text</filter>
                 <label translate="true">Debit</label>
             </settings>
         </column>
 
-        <column name="credit"
-                component="Praxigento_Core/js/grid/columns/integer">
+        <column name="credit">
             <settings>
-                <dataType>number</dataType>
+                <dataType>text</dataType>
                 <filter>text</filter>
                 <label translate="true">Credit</label>
             </settings>
