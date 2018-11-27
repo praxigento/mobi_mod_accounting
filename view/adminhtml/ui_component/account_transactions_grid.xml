@@ -87,7 +87,8 @@
             </settings>
         </column>
 
-        <column name="value">
+        <column name="value"
+                component="Praxigento_Core/js/grid/columns/number">
             <settings>
                 <dataType>price</dataType>
                 <filter>text</filter>

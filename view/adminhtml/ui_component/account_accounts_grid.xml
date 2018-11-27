@@ -71,7 +71,8 @@
             </settings>
         </column>
 
-        <column name="balance">
+        <column name="balance"
+                component="Praxigento_Core/js/grid/columns/number">
             <settings>
                 <dataType>price</dataType>
                 <filter>textRange</filter>
