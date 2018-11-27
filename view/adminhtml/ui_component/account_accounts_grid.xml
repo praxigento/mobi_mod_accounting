@@ -46,7 +46,8 @@
     <!-- **************************************************** -->
     <columns name="account_accounts_columns">
 
-        <column name="id">
+        <column name="id"
+                component="Praxigento_Core/js/grid/columns/integer">
             <settings>
                 <dataType>number</dataType>
                 <filter>text</filter>
@@ -72,7 +73,7 @@
         </column>
 
         <column name="balance"
-                component="Praxigento_Core/js/grid/columns/number">
+                component="Praxigento_Core/js/grid/columns/decimal">
             <settings>
                 <dataType>price</dataType>
                 <filter>textRange</filter>
