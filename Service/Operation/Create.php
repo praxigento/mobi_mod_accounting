@@ -26,8 +26,14 @@ class Create
     private $hlpDate;
     /** @var \Praxigento\Accounting\Service\Operation\Create\A\Add */
     private $ownAdd;
+    /** @var \Magento\Backend\Model\Auth\Session */
+    private $sessAdmin;
+    /** @var \Magento\Customer\Model\Session */
+    private $sessCust;
 
     public function __construct(
+        \Magento\Backend\Model\Auth\Session $sessAdmin,
+        \Magento\Customer\Model\Session $sessCust,
         \Praxigento\Accounting\Repo\Dao\Operation $daoOper,
         \Praxigento\Accounting\Repo\Dao\Type\Operation $daoTypeOper,
         \Praxigento\Accounting\Repo\Dao\Log\Change\Admin $daoELogChangeAdmin,
@@ -35,6 +41,8 @@ class Create
         \Praxigento\Core\Api\Helper\Date $hlpDate,
         \Praxigento\Accounting\Service\Operation\Create\A\Add $ownAdd
     ) {
+        $this->sessAdmin = $sessAdmin;
+        $this->sessCust = $sessCust;
         $this->daoTypeOper = $daoTypeOper;
         $this->daoOper = $daoOper;
         $this->daoELogChangeAdmin = $daoELogChangeAdmin;
@@ -83,6 +91,8 @@ class Create
             $transIds = $this->ownAdd->exec($operId, $transactions, $datePerformed, $asRef);
             $result->setOperationId($operId);
             $result->setTransactionsIds($transIds);
+            /* extract IDs from sessions if both are empty */
+            list($customerId, $adminUserId) = $this->validateLogIds($customerId, $adminUserId);
             /* log customer link */
             if ($customerId) {
                 $log = new \Praxigento\Accounting\Repo\Data\Log\Change\Customer();
@@ -102,4 +112,27 @@ class Create
         return $result;
     }
 
+    /**
+     * Extract IDs from sessions if both are empty.
+     *
+     * @param int $custId .
+     * @param int $adminId
+     * @return int[]
+     */
+    private function validateLogIds($custId, $adminId)
+    {
+
+        if (!$custId && !$adminId) {
+            /* both are empty */
+            $customer = $this->sessCust->getCustomer();
+            if ($customer) {
+                $custId = $customer->getId();
+            }
+            $user = $this->sessAdmin->getUser();
+            if ($user instanceof \Magento\User\Model\User) {
+                $adminId = $user->getId();
+            }
+        }
+        return [$custId, $adminId];
+    }
 }
