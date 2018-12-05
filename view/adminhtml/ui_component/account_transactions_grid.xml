@@ -73,6 +73,22 @@
             </settings>
         </column>
 
+        <column name="user">
+            <settings>
+                <dataType>text</dataType>
+                <filter>text</filter>
+                <label translate="true">User</label>
+            </settings>
+        </column>
+
+        <column name="customer">
+            <settings>
+                <dataType>text</dataType>
+                <filter>text</filter>
+                <label translate="true">Customer</label>
+            </settings>
+        </column>
+
         <column name="debit">
             <settings>
                 <dataType>text</dataType>
