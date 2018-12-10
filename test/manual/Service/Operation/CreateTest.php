@@ -23,6 +23,7 @@ class CreateTest
         $tran = new \Praxigento\Accounting\Repo\Data\Transaction();
         $tran->setDebitAccId(5430);
         $tran->setCreditAccId(2393);
+        $tran->setCreditAccId(5430);
         $tran->setValue(1.4321);
         $tran->setNote('manual test');
         $result = [$tran];

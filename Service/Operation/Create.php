@@ -9,6 +9,7 @@ namespace Praxigento\Accounting\Service\Operation;
 use Praxigento\Accounting\Api\Service\Operation\Create\Request as ARequest;
 use Praxigento\Accounting\Api\Service\Operation\Create\Response as AResponse;
 use Praxigento\Accounting\Repo\Data\Operation as EOperation;
+use Praxigento\Accounting\Repo\Data\Transaction as ETrans;
 
 
 class Create
@@ -24,6 +25,15 @@ class Create
     private $daoTypeOper;
     /** @var \Praxigento\Core\Api\Helper\Date */
     private $hlpDate;
+    /** @var \Psr\Log\LoggerInterface */
+    private $logger;
+    /**
+     * Don't delete transaction from this service.
+     * Better this service will break outer transaction than we will clean up data manually.
+     *
+     * @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager
+     */
+    private $manTrans;
     /** @var \Praxigento\Accounting\Service\Operation\Create\A\Add */
     private $ownAdd;
     /** @var \Magento\Backend\Model\Auth\Session */
@@ -34,6 +44,8 @@ class Create
     public function __construct(
         \Magento\Backend\Model\Auth\Session $sessAdmin,
         \Magento\Customer\Model\Session $sessCust,
+        \Praxigento\Core\Api\App\Logger\Main $logger,
+        \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
         \Praxigento\Accounting\Repo\Dao\Operation $daoOper,
         \Praxigento\Accounting\Repo\Dao\Type\Operation $daoTypeOper,
         \Praxigento\Accounting\Repo\Dao\Log\Change\Admin $daoELogChangeAdmin,
@@ -43,6 +55,8 @@ class Create
     ) {
         $this->sessAdmin = $sessAdmin;
         $this->sessCust = $sessCust;
+        $this->logger = $logger;
+        $this->manTrans = $manTrans;
         $this->daoTypeOper = $daoTypeOper;
         $this->daoOper = $daoOper;
         $this->daoELogChangeAdmin = $daoELogChangeAdmin;
@@ -71,7 +85,8 @@ class Create
         $asRef = $request->getAsTransRef();
         $customerId = $request->getCustomerId();
         $adminUserId = $request->getAdminUserId();
-        /* Better this nested transaction will break outer transaction than we will clean up data manually */
+
+
         if (empty($datePerformed)) {
             $datePerformed = $this->hlpDate->getUtcNowForDb();
         }
@@ -86,28 +101,47 @@ class Create
         if (!is_null($note)) {
             $bindToAdd[EOperation::A_NOTE] = $note;
         }
-        $operId = $this->daoOper->create($bindToAdd);
-        if ($operId) {
-            $transIds = $this->ownAdd->exec($operId, $transactions, $datePerformed, $asRef);
-            $result->setOperationId($operId);
-            $result->setTransactionsIds($transIds);
-            /* extract IDs from sessions if both are empty */
-            list($customerId, $adminUserId) = $this->validateLogIds($customerId, $adminUserId);
-            /* log customer link */
-            if ($customerId) {
-                $log = new \Praxigento\Accounting\Repo\Data\Log\Change\Customer();
-                $log->setCustomerRef($customerId);
-                $log->setOperationRef($operId);
-                $this->daoELogChangeCust->create($log);
+        $validTrans = $this->validateTransactions($transactions);
+        if ($validTrans == AResponse::ERR_NO_ERROR) {
+            /**
+             * Better this nested transaction will break outer transaction than we will clean up data manually.
+             */
+            $def = $this->manTrans->begin();
+            try {
+
+                $operId = $this->daoOper->create($bindToAdd);
+                if ($operId) {
+                    $transIds = $this->ownAdd->exec($operId, $transactions, $datePerformed, $asRef);
+                    $result->setOperationId($operId);
+                    $result->setTransactionsIds($transIds);
+                    /* extract IDs from sessions if both are empty */
+                    list($customerId, $adminUserId) = $this->prepareLogIds($customerId, $adminUserId);
+                    /* log customer link */
+                    if ($customerId) {
+                        $log = new \Praxigento\Accounting\Repo\Data\Log\Change\Customer();
+                        $log->setCustomerRef($customerId);
+                        $log->setOperationRef($operId);
+                        $this->daoELogChangeCust->create($log);
+                    }
+                    /* log admin link */
+                    if ($adminUserId) {
+                        $log = new \Praxigento\Accounting\Repo\Data\Log\Change\Admin();
+                        $log->setUserRef($adminUserId);
+                        $log->setOperationRef($operId);
+                        $this->daoELogChangeAdmin->create($log);
+                    }
+                    $this->manTrans->commit($def);
+                    $result->markSucceed();
+                }
+
+            } finally {
+                /* rollback transaction if not committed (on exception, for example) */
+                $this->manTrans->end($def);
             }
-            /* log admin link */
-            if ($adminUserId) {
-                $log = new \Praxigento\Accounting\Repo\Data\Log\Change\Admin();
-                $log->setUserRef($adminUserId);
-                $log->setOperationRef($operId);
-                $this->daoELogChangeAdmin->create($log);
-            }
-            $result->markSucceed();
+        } else {
+            $dump = var_export($request, true);
+            $this->logger->error("Validation error: $validTrans. Details: $dump.");
+            $result->setErrorCode($validTrans);
         }
         return $result;
     }
@@ -119,7 +153,7 @@ class Create
      * @param int $adminId
      * @return int[]
      */
-    private function validateLogIds($custId, $adminId)
+    private function prepareLogIds($custId, $adminId)
     {
 
         if (!$custId && !$adminId) {
@@ -134,5 +168,25 @@ class Create
             }
         }
         return [$custId, $adminId];
+    }
+
+    /**
+     * Validate transactions.
+     *
+     * @param ETrans[] $trans
+     * @return string
+     */
+    private function validateTransactions($trans)
+    {
+        $result = AResponse::ERR_NO_ERROR;
+        foreach ($trans as $one) {
+            $accDbt = $one->getDebitAccId();
+            $accCrd = $one->getCreditAccId();
+            if ($accDbt == $accCrd) {
+                $result = AResponse::ERR_ONE_ACCOUNT_FOR_DEBIT_AND_CREDIT;
+                break;
+            }
+        }
+        return $result;
     }
 }

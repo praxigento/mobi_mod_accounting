@@ -14,5 +14,5 @@ namespace Praxigento\Accounting\Api\Service\Operation\Create;
 class Response
     extends \Praxigento\Core\App\Service\Response
 {
-
+    const ERR_ONE_ACCOUNT_FOR_DEBIT_AND_CREDIT = 'one_account_for_debit_and_credit';
 }
