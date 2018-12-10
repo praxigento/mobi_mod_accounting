@@ -82,16 +82,20 @@ class Transfer
         }
         /* compose transaction and create operation */
         $trans = $this->prepareTrans($amount, $accIdDebit, $accIdCredit, $dateApplied, $note);
-        $operId = $this->transfer($userId, $trans, $note);
+        list($err, $operId) = $this->transfer($userId, $trans, $note);
 
         /* compose result */
         $result = new AResponse();
         $one = reset($trans);
         $amount = $one->getValue();
         $result->setAmount($amount);
-        $result->setOperId($operId);
-        $result->markSucceed();
-
+        if ($err == AResponse::ERR_NO_ERROR) {
+            $result->setOperId($operId);
+            $result->markSucceed();
+        } else {
+            $result->setErrorCode($err);
+            $result->setErrorMessage($err);
+        }
         return $result;
     }
 
@@ -136,7 +140,8 @@ class Transfer
         $datePerformed = $this->hlpData->getUtcNowForDb();
         $req->setDatePerformed($datePerformed);
         $resp = $this->servOper->exec($req);
-        $result = $resp->getOperationId();
-        return $result;
+        $err = $resp->getErrorCode();
+        $operId = $resp->getOperationId();
+        return [$err, $operId];
     }
 }
