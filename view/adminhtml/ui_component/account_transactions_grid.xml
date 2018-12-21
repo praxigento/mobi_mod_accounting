@@ -47,7 +47,7 @@
     <columns name="account_transactions_columns">
 
         <column name="transId"
-                component="Praxigento_Core/js/grid/columns/integer">
+                component="Praxigento_Core/js/grid/column/integer">
             <settings>
                 <dataType>number</dataType>
                 <filter>textRange</filter>
@@ -57,7 +57,7 @@
         </column>
 
         <column name="operId"
-                component="Praxigento_Core/js/grid/columns/integer">
+                component="Praxigento_Core/js/grid/column/integer">
             <settings>
                 <dataType>number</dataType>
                 <filter>textRange</filter>
@@ -106,7 +106,7 @@
         </column>
 
         <column name="value"
-                component="Praxigento_Core/js/grid/columns/decimal">
+                component="Praxigento_Core/js/grid/column/decimal">
             <settings>
                 <dataType>price</dataType>
                 <filter>text</filter>
