@@ -7,7 +7,7 @@ namespace Praxigento\Accounting\Controller\Adminhtml\Operations;
 use Praxigento\Accounting\Config as Cfg;
 
 class Index
-    extends \Praxigento\Accounting\Controller\Adminhtml\Base
+    extends \Praxigento\Core\App\Action\Back\Base
 {
     public function __construct(
         \Magento\Backend\App\Action\Context $context
