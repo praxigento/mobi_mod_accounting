@@ -91,19 +91,21 @@
             </settings>
         </column>
 
-        <column name="debit">
+        <column name="debitCustName"
+                component="Praxigento_Accounting/js/grid/account/transactions/column/link/debit_name">
             <settings>
                 <dataType>text</dataType>
                 <filter>text</filter>
-                <label translate="true">Debit</label>
+                <label translate="true">Debit Cust.</label>
             </settings>
         </column>
 
-        <column name="credit">
+        <column name="creditCustName"
+                component="Praxigento_Accounting/js/grid/account/transactions/column/link/credit_name">
             <settings>
                 <dataType>text</dataType>
                 <filter>text</filter>
-                <label translate="true">Credit</label>
+                <label translate="true">Credit Cust.</label>
             </settings>
         </column>
 
