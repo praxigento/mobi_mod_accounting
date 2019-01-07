@@ -11,6 +11,7 @@ use Praxigento\Accounting\Api\Service\Transaction\Get\Response as AResponse;
 
 /**
  * Get list of transactions according to some searching criteria.
+ * TODO: this interface is not implemented yet.
  */
 interface Get
 {

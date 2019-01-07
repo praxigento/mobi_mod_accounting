@@ -5,10 +5,10 @@
 
 namespace Praxigento\Accounting\Service\Transaction;
 
+use Praxigento\Accounting\Config as Cfg;
 use Praxigento\Accounting\Repo\Data\Transaction as ETransaction;
 use Praxigento\Accounting\Service\Transaction\Create\Request as ARequest;
 use Praxigento\Accounting\Service\Transaction\Create\Response as AResponse;
-
 
 class Create
 {
@@ -41,6 +41,15 @@ class Create
         $dateApplied = $request->getDateApplied();
         $value = $request->getValue();
         $note = $request->getNote();
+
+        /* limit amount by MIN & MAX */
+        if (
+            ($value > Cfg::LIMIT_AMOUNT_MAX) ||
+            ($value < Cfg::LIMIT_AMOUNT_MIN)
+        ) {
+            throw new \Exception("Illegal value for amount transaction: $value.");
+        }
+
         /* get account type for debit account */
         $debitAcc = $this->daoAcc->getById($debitAccId);
         $debitAssetTypeId = $debitAcc->getAssetTypeId();

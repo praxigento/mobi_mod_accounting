@@ -17,11 +17,12 @@ class Config
     const ACL_ACCOUNTS_TRANSACTIONS = 'admin_accounts_transactions';
     const ACL_ACCOUNTS_TYPES_ASSET = 'admin_accounts_types_asset';
     const ACL_ACCOUNTS_TYPES_OPER = 'admin_accounts_types_oper';
-
     const CODE_TYPE_OPER_CHANGE_BALANCE = 'BALANCE_CHANGE';
-
     /** DCP name for system customer (accounting) */
     const CUST_SYS_NAME = 'SYS';
+
+    const LIMIT_AMOUNT_MAX = 99999999.9999;
+    const LIMIT_AMOUNT_MIN = -99999999.9999;
 
     const MENU_ACCOUNTS_ACCOUNTS = self::ACL_ACCOUNTS_ACCOUNTS;
     const MENU_ACCOUNTS_ACCOUNTS2 = self::ACL_ACCOUNTS_ACCOUNTS2;

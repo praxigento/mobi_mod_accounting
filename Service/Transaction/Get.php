@@ -21,7 +21,7 @@ class Get
     {
         assert($request instanceof ARequest);
         $result = new AResponse();
-
+        throw new \Exception("This method is not implemented yet.");
         return $result;
     }
 

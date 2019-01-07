@@ -52,6 +52,7 @@
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="prxgt:acc:balance:calc" xsi:type="object">Praxigento\Accounting\Cli\Balance\Calc</item>
+                <item name="prxgt:acc:balance:validate" xsi:type="object">Praxigento\Accounting\Cli\Balance\Validate</item>
             </argument>
         </arguments>
     </type>
