@@ -21,9 +21,9 @@ class Query
     const A_ASSET = 'asset';
     const A_BALANCE = 'balance';
     const A_CUST_EMAIL = 'custEmail';
+    const A_CUST_ID = 'custId';
     const A_CUST_NAME = 'custName';
     const A_ID = 'id';
-
     /**#@- */
 
     /**
@@ -64,8 +64,6 @@ class Query
      * ON pata.id = paa.asset_type_id
      * LEFT JOIN `customer_entity` AS `ce`
      * ON ce.entity_id = paa.customer_id
-     *
-     * @inheritdoc
      */
     protected function getQueryItems()
     {
@@ -100,7 +98,8 @@ class Query
         $exp = $this->getExpForCustName();
         $cols = [
             self::A_CUST_NAME => $exp,
-            self::A_CUST_EMAIL => Cfg::E_CUSTOMER_A_EMAIL
+            self::A_CUST_EMAIL => Cfg::E_CUSTOMER_A_EMAIL,
+            self::A_CUST_ID => Cfg::E_CUSTOMER_A_ENTITY_ID
         ];
         $cond = $as . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAcc . '.' . EAccount::A_CUST_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);

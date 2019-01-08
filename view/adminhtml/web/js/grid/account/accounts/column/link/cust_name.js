@@ -5,8 +5,8 @@ define([
 
     return Column.extend({
         defaults: {
-            /** @see \Praxigento\Accounting\Ui\DataProvider\Grid\Transaction\Query::A_CREDIT_CUST_ID */
-            idAttrName: "creditCustId",
+            /** @see \Praxigento\Accounting\Ui\DataProvider\Grid\Account\Query::A_CUST_ID */
+            idAttrName: "custId",
             route: "/customer/index/edit/id/"
         }
     });

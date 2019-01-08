@@ -56,7 +56,8 @@
             </settings>
         </column>
 
-        <column name="custName">
+        <column name="custName"
+                component="Praxigento_Accounting/js/grid/account/accounts/column/link/cust_name">
             <settings>
                 <dataType>text</dataType>
                 <filter>text</filter>
