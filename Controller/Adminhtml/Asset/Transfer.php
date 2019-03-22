@@ -52,7 +52,8 @@ class Transfer
         $auth = $this->getAuthenticator();
         $userId = $auth->getCurrentUserId($request);
 
-        /* analyze logged in users */
+        /* prepare input data */
+        $amount = $this->filterAmount($amount);
 
         /** perform processing */
         $req = new \Praxigento\Accounting\Api\Service\Account\Asset\Transfer\Request();
@@ -68,6 +69,18 @@ class Transfer
         /** compose result */
         $result = new AResponse();
         $result->setData($resp);
+        return $result;
+    }
+
+    /**
+     * Remove all spaces from amount value.
+     *
+     * @param mixed $amount
+     * @return string
+     */
+    private function filterAmount($amount)
+    {
+        $result = str_replace(' ', '', $amount);
         return $result;
     }
 }

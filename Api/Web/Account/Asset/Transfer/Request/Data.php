@@ -17,7 +17,9 @@ class Data
     const IS_DIRECT = 'isDirect';
 
     /**
-     * @return float
+     * SAN-507: use data as string in request and convert to float later.
+     *
+     * @return string
      */
     public function getAmount() {
         $result = parent::get(self::AMOUNT);
@@ -66,7 +68,9 @@ class Data
     }
 
     /**
-     * @param float $data
+     * SAN-507: use data as string in request and convert to float later.
+     *
+     * @param string $data
      * @return void
      */
     public function setAmount($data) {
