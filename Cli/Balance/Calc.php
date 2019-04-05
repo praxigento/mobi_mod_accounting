@@ -15,17 +15,19 @@ class Calc
     const OPT_DAYS_NAME = 'days';
     const OPT_DAYS_SHORTCUT = 'd';
 
-    /** @var \Praxigento\Core\Api\App\Repo\Transaction\Manager */
-    private $manTrans;
-    /** @var \Praxigento\Accounting\Api\Service\Account\Balance\Calc */
-    private $servBalance;
+    /** @var \Magento\Framework\DB\Adapter\AdapterInterface */
+    private $conn;
     /** @var \Psr\Log\LoggerInterface */
     private $logger;
+    /** @var \Magento\Framework\App\ResourceConnection */
+    private $resource;
+    /** @var \Praxigento\Accounting\Api\Service\Account\Balance\Calc */
+    private $servBalance;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Api\App\Logger\Main $logger,
-        \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
+        \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Accounting\Api\Service\Account\Balance\Calc $servBalance
     ) {
         parent::__construct(
@@ -34,7 +36,8 @@ class Calc
             'Re-calculate accounts balances (reset daily balances up to $days).'
         );
         $this->logger = $logger;
-        $this->manTrans = $manTrans;
+        $this->resource = $resource;
+        $this->conn = $resource->getConnection();
         $this->servBalance = $servBalance;
     }
 
@@ -62,12 +65,17 @@ class Calc
         $this->logger->info($msg);
 
         /* wrap all DB operations with DB transaction */
-        $def = $this->manTrans->begin();
-        $req = new \Praxigento\Accounting\Api\Service\Account\Balance\Calc\Request();
-        $req->setDaysToReset($days);
-        $this->servBalance->exec($req);
-        $this->manTrans->commit($def);
-
+        $this->conn->beginTransaction();
+        try {
+            $req = new \Praxigento\Accounting\Api\Service\Account\Balance\Calc\Request();
+            $req->setDaysToReset($days);
+            $this->servBalance->exec($req);
+            $this->conn->commit();
+        } catch (\Throwable $e) {
+            $output->writeln('<info>Command \'' . $this->getName() . '\' failed. Reason: '
+                . $e->getMessage() . '<info>');
+            $this->conn->rollBack();
+        }
         $msg = "Command '" . $this->getName() . "' is completed.";
         $output->writeln("<info>$msg<info>");
         $this->logger->info($msg);

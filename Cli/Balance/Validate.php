@@ -15,15 +15,18 @@ use Praxigento\Accounting\Service\Account\Balance\Validate\Response as AResponse
 class Validate
     extends \Praxigento\Core\App\Cli\Cmd\Base
 {
+    /** @var \Magento\Framework\DB\Adapter\AdapterInterface */
+    private $conn;
     /** @var \Psr\Log\LoggerInterface */
     private $logger;
-    /** @var \Praxigento\Core\Api\App\Repo\Transaction\Manager */
-    private $manTrans;
+    /** @var \Magento\Framework\App\ResourceConnection */
+    private $resource;
     /** @var \Praxigento\Accounting\Service\Account\Balance\Validate */
     private $servValidate;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
+        \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Api\App\Logger\Main $logger,
         \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
         \Praxigento\Accounting\Service\Account\Balance\Validate $servValidate
@@ -34,7 +37,8 @@ class Validate
             'Validate current balances for customers accounts.'
         );
         $this->logger = $logger;
-        $this->manTrans = $manTrans;
+        $this->resource = $resource;
+        $this->conn = $resource->getConnection();
         $this->servValidate = $servValidate;
     }
 
@@ -48,14 +52,17 @@ class Validate
         $this->logger->info($msg);
 
         /* wrap all DB operations with DB transaction */
-        $def = $this->manTrans->begin();
+        $this->conn->beginTransaction();
+        try {
+            $req = new ARequest();
+            $this->servValidate->exec($req);
 
-        $req = new ARequest();
-        /** @var AResponse $resp */
-        $resp = $this->servValidate->exec($req);
-
-        $this->manTrans->commit($def);
-
+            $this->conn->commit();
+        } catch (\Throwable $e) {
+            $output->writeln('<info>Command \'' . $this->getName() . '\' failed. Reason: '
+                . $e->getMessage() . '.<info>');
+            $this->conn->rollBack();
+        }
         $msg = "Command '" . $this->getName() . "' is completed.";
         $output->writeln("<info>$msg<info>");
         $this->logger->info($msg);
