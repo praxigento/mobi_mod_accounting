@@ -39,6 +39,7 @@
         <columnsControls name="columns_controls"/>
         <filters name="listing_filters"/>
         <paging name="listing_paging"/>
+        <exportButton name="export_button"/>
     </listingToolbar>
 
     <!-- **************************************************** -->
@@ -70,6 +71,14 @@
                 <dataType>text</dataType>
                 <filter>text</filter>
                 <label translate="true">Email</label>
+            </settings>
+        </column>
+
+        <column name="custGroup">
+            <settings>
+                <dataType>text</dataType>
+                <filter>text</filter>
+                <label translate="true">Group</label>
             </settings>
         </column>
 

@@ -14,6 +14,7 @@ class Query
     /**#@+ Tables aliases for external usage ('camelCase' naming) */
     const AS_ACCOUNT = 'paa';
     const AS_CUSTOMER = 'ce';
+    const AS_GROUP = 'cg';
     const AS_TYPE_ASSET = 'pata';
     /**#@- */
 
@@ -21,6 +22,7 @@ class Query
     const A_ASSET = 'asset';
     const A_BALANCE = 'balance';
     const A_CUST_EMAIL = 'custEmail';
+    const A_CUST_GROUP = 'custGroup';
     const A_CUST_ID = 'custId';
     const A_CUST_NAME = 'custName';
     const A_ID = 'id';
@@ -41,9 +43,10 @@ class Query
         if (is_null($this->mapper)) {
             $map = [
                 self::A_ASSET => self::AS_TYPE_ASSET . '.' . ETypeAsset::A_CODE,
-                self::A_CUST_NAME => $this->getExpForCustName(),
-                self::A_CUST_EMAIL => self::AS_CUSTOMER . '.' . Cfg::E_CUSTOMER_A_EMAIL,
                 self::A_BALANCE => self::AS_ACCOUNT . '.' . EAccount::A_BALANCE,
+                self::A_CUST_EMAIL => self::AS_CUSTOMER . '.' . Cfg::E_CUSTOMER_A_EMAIL,
+                self::A_CUST_GROUP => self::AS_GROUP . '.' . Cfg::E_CUSTGROUP_A_CODE,
+                self::A_CUST_NAME => $this->getExpForCustName(),
                 self::A_ID => self::AS_ACCOUNT . '.' . EAccount::A_ID
             ];
             $this->mapper = new \Praxigento\Core\App\Repo\Query\Criteria\Def\Mapper($map);
@@ -52,27 +55,15 @@ class Query
         return $result;
     }
 
-    /**
-     * SELECT
-     * `paa`.`id`,
-     * `paa`.`balance`,
-     * `prxgt_acc_type_asset`.`code` AS `asset`,
-     * (CONCAT(firstname, ' ', lastname)) AS `custName`,
-     * `ce`.`email` AS `custEmail`
-     * FROM `prxgt_acc_account` AS `paa`
-     * LEFT JOIN `prxgt_acc_type_asset`
-     * ON pata.id = paa.asset_type_id
-     * LEFT JOIN `customer_entity` AS `ce`
-     * ON ce.entity_id = paa.customer_id
-     */
     protected function getQueryItems()
     {
         $result = $this->conn->select();
 
         /* define tables aliases for internal usage (in this method) */
         $asAcc = self::AS_ACCOUNT;
-        $asCust = self::AS_CUSTOMER;
         $asAsset = self::AS_TYPE_ASSET;
+        $asCust = self::AS_CUSTOMER;
+        $asGroup = self::AS_GROUP;
 
         /* SELECT FROM prxgt_acc_account */
         $tbl = $this->resource->getTableName(EAccount::ENTITY_NAME);
@@ -102,6 +93,15 @@ class Query
             self::A_CUST_ID => Cfg::E_CUSTOMER_A_ENTITY_ID
         ];
         $cond = $as . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asAcc . '.' . EAccount::A_CUST_ID;
+        $result->joinLeft([$as => $tbl], $cond, $cols);
+
+        /* LEFT JOIN customer_group */
+        $tbl = $this->resource->getTableName(Cfg::ENTITY_MAGE_CUSTOMER_GROUP);
+        $as = $asGroup;
+        $cols = [
+            self::A_CUST_GROUP => Cfg::E_CUSTGROUP_A_CODE
+        ];
+        $cond = $as . '.' . Cfg::E_CUSTGROUP_A_ID . '=' . $asCust . '.' . Cfg::E_CUSTOMER_A_GROUP_ID;
         $result->joinLeft([$as => $tbl], $cond, $cols);
 
         /* return  result */
