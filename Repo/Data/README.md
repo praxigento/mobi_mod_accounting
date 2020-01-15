@@ -1,3 +1,3 @@
 # Notice
 
-Data object files for every Repo\Entity\* placed in Repo\Entity\Data\*
+Data object files for every Repo\Entity\* are placed in Repo\Entity\Data\*
