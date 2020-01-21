@@ -13,10 +13,8 @@ interface SysCustomer
 {
 
     /**
-     * Get customer's current balance for given asset.
+     * Get ID of the system customer.
      *
-     * @param int $custId
-     * @param string $assetTypeCode
      * @return int ID of the system customer.
      */
     public function getId();
