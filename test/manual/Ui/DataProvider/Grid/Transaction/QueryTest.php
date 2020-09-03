@@ -14,7 +14,7 @@ class QueryTest
     /** @var \Praxigento\Accounting\Ui\DataProvider\Grid\Transaction\Query */
     private $obj;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->obj = $this->manObj->create(\Praxigento\Accounting\Ui\DataProvider\Grid\Transaction\Query::class);
     }

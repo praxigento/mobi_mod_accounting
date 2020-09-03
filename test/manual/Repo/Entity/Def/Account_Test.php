@@ -18,7 +18,7 @@ class Account_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery
     /** @var  \Praxigento\Accounting\Repo\Dao\Account */
     private $_obj;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->_obj = ObjectManager::getInstance()->create(\Praxigento\Accounting\Repo\Dao\Account::class);
