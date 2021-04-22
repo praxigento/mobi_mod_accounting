@@ -1,6 +1,6 @@
 <?php
 /**
- * User: makhovdmitrii@inbox.ru
+ * User: dmitriimakhov@gmail.com
  */
 
 namespace Praxigento\Accounting\Service\Operation;
